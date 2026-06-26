@@ -1,0 +1,41 @@
+{
+	"name": "tassiaQCA",
+	"short_name": "Tassia",
+	"description": "Community-centric e-commerce and business discovery platform.",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#ffffff",
+	"background_color": "#000000",
+	"orientation": "portrait-primary",
+	"icons": [
+		{
+			"src": "/web-app-manifest-192x192.png?v=20260625",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/web-app-manifest-512x512.png?v=20260625",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	],
+	"categories": ["nairobi businesses", "community marketplace"],
+	"screenshots": [
+		{
+			"src": "/home.jpeg",
+			"sizes": "1280x720",
+			"type": "image/jpeg",
+			"form_factor": "wide",
+			"label": "tassiaQCA Desktop View"
+		},
+		{
+			"src": "/screenshot-mobile.jpeg",
+			"sizes": "360x720",
+			"type": "image/jpeg",
+			"form_factor": "narrow",
+			"label": "tassiaQCA Mobile View"
+		}
+	]
+}

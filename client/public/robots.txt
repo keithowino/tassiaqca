@@ -1,0 +1,11 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://tassiaqca.vercel.app/sitemap.xml
+
+# Disallow admin/private routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth
