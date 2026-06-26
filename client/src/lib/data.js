@@ -1,6 +1,7 @@
 const metadata = {
 	name: "TassiaQCA",
 	slug: "Tassia Complex Marketplace",
+	tagline: "Quiet Compound Assets",
 	description:
 		"Community-centric e-commerce and business discovery platform for Tassia Complex and Embakasi East residents.",
 	keywords:

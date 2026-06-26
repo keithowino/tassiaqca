@@ -33,6 +33,7 @@ import AdminReviews from "./pages/admin/AdminReviews";
 import AdminCommunity from "./pages/admin/AdminCommunity";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminCategories from "./pages/admin/AdminCategories";
+import About from "./pages/About";
 
 function DashboardRedirect() {
 	const { user, loading } = useAuth();
@@ -99,6 +100,7 @@ const App = () => {
 					<Route index element={<Home />} />
 					<Route path="/discover" element={<Discovery />} />
 					<Route path="/community" element={<Community />} />
+					<Route path="/about" element={<About />} />
 					<Route
 						path="/business/:slug"
 						element={<BusinessProfile />}

@@ -314,3 +314,39 @@ export const updateBusinessStatus = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+
+// // Update business status (admin only) - FIXED to accept direct updates
+// export const updateBusinessStatus = async (req, res) => {
+// 	try {
+// 		console.log(req);
+// 		const { isVerified, isActive } = req.body;
+// 		const business = await Business.findById(req.params.id);
+
+// 		if (!business) {
+// 			return res.status(404).json({ message: "Business not found" });
+// 		}
+
+// 		if (req.user.role !== "admin") {
+// 			return res.status(403).json({ message: "Admin access required" });
+// 		}
+
+// 		// Update only the fields that are provided
+// 		const updateData = {};
+// 		if (isVerified !== undefined) updateData.isVerified = isVerified;
+// 		if (isActive !== undefined) updateData.isActive = isActive;
+
+// 		const updated = await Business.findByIdAndUpdate(
+// 			req.params.id,
+// 			updateData,
+// 			{ returnDocument: "after", runValidators: true },
+// 		);
+
+// 		res.json({
+// 			message: "Business updated successfully",
+// 			business: updated,
+// 		});
+// 	} catch (error) {
+// 		console.error("Update business status error:", error);
+// 		res.status(500).json({ message: error.message });
+// 	}
+// };

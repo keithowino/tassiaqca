@@ -47,18 +47,37 @@ export default function AdminBusinesses() {
 		return "pending";
 	};
 
+	// const updateBusinessStatus = async (businessId, action) => {
+	// 	try {
+	// 		let updateData = {};
+	// 		if (action === "verify") {
+	// 			updateData = { isVerified: true, isActive: true };
+	// 		} else if (action === "suspend") {
+	// 			updateData = { isActive: false, isVerified: false };
+	// 		} else if (action === "activate") {
+	// 			updateData = { isActive: true };
+	// 		}
+
+	// 		await businessAPI.update(businessId, updateData);
+	// 		setRefetchKey((prev) => prev + 1);
+	// 	} catch (error) {
+	// 		console.error("Error updating business:", error);
+	// 		alert(error.response?.data?.message || "Failed to update business");
+	// 	}
+	// };
+
 	const updateBusinessStatus = async (businessId, action) => {
 		try {
-			let updateData = {};
+			let status = "";
 			if (action === "verify") {
-				updateData = { isVerified: true, isActive: true };
+				status = "approved";
 			} else if (action === "suspend") {
-				updateData = { isActive: false, isVerified: false };
+				status = "rejected";
 			} else if (action === "activate") {
-				updateData = { isActive: true };
+				status = "approved";
 			}
 
-			await businessAPI.update(businessId, updateData);
+			await businessAPI.updateStatus(businessId, { status });
 			setRefetchKey((prev) => prev + 1);
 		} catch (error) {
 			console.error("Error updating business:", error);

@@ -12,6 +12,7 @@ import {
 	Compass,
 	Users,
 	ShoppingBag,
+	BookOpenIcon,
 } from "lucide-react";
 import { useAuth } from "../../lib/context/AuthContext";
 import { useCart } from "../../lib/context/CartContext";
@@ -118,7 +119,6 @@ export default function Header() {
 						</div> */}
 						<div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
 							<img src="/favicon.svg" alt="" />
-							{/* <img src="/web-app-manifest-512x512.png" alt="" /> */}
 						</div>
 
 						<span className="font-bold text-gray-900 text-lg leading-none">
@@ -151,6 +151,13 @@ export default function Header() {
 						>
 							<Users size={16} />
 							Community
+						</Link>
+						<Link
+							to="/about"
+							className="hover:text-orange-500 transition-colors flex items-center gap-1"
+						>
+							<BookOpenIcon size={16} />
+							About
 						</Link>
 						{user && (
 							<Link
@@ -331,53 +338,14 @@ export default function Header() {
 							<Users size={18} className="text-gray-500" />
 							Community
 						</Link>
-						{user && (
-							<>
-								<Link
-									to="/orders"
-									onClick={() => setMenuOpen(false)}
-									className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-								>
-									<ShoppingBag
-										size={18}
-										className="text-gray-500"
-									/>
-									My Orders
-								</Link>
-								<Link
-									to="/profile"
-									onClick={() => setMenuOpen(false)}
-									className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-								>
-									👤 My Profile
-								</Link>
-								{(getUserRole() === "business_owner" ||
-									getUserRole() === "admin") && (
-									<Link
-										to="/dashboard"
-										onClick={() => setMenuOpen(false)}
-										className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-									>
-										🏪 Business Dashboard
-									</Link>
-								)}
-								{getUserRole() === "admin" && (
-									<Link
-										to="/admin"
-										onClick={() => setMenuOpen(false)}
-										className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-									>
-										⚙️ Admin Panel
-									</Link>
-								)}
-								<button
-									onClick={handleSignOut}
-									className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-red-600 font-medium hover:bg-red-50 transition-colors"
-								>
-									🚪 Sign Out
-								</button>
-							</>
-						)}
+						<Link
+							to="/about"
+							onClick={() => setMenuOpen(false)}
+							className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+						>
+							<BookOpenIcon size={18} className="text-gray-500" />
+							About
+						</Link>
 					</div>
 				)}
 			</header>

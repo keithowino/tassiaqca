@@ -450,6 +450,78 @@ export default function Home() {
 							List My Business <ArrowRight size={16} />
 						</Link>
 					</section>
+
+					{/* Testimonials Section */}
+					<section className="py-8">
+						<div className="text-center mb-8">
+							<h2 className="text-2xl font-bold text-gray-900 mb-2">
+								What Our Community Says
+							</h2>
+							<p className="text-gray-500 text-sm">
+								Real stories from real people in Tassia Complex
+							</p>
+						</div>
+
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+							{[
+								{
+									name: "Grace Muthoni",
+									role: "Resident, Tassia Complex",
+									content:
+										"TassiaQCA has made it so easy to discover new businesses right in my neighborhood. I've found my favorite local restaurant and salon through this platform!",
+									avatar: "GM",
+								},
+								{
+									name: "Peter Ochieng",
+									role: "Business Owner, Mama Njeri's Kitchen",
+									content:
+										"Since listing my business on TassiaQCA, I've seen a significant increase in customers. The platform has helped me reach more residents in Tassia Complex.",
+									avatar: "PO",
+								},
+								{
+									name: "Sarah Wanjiru",
+									role: "Resident & Community Member",
+									content:
+										"I love the community board feature! It keeps me informed about local events, deals, and announcements. TassiaQCA truly brings our community together.",
+									avatar: "SW",
+								},
+							].map((testimonial) => (
+								<div
+									key={testimonial.name}
+									className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow"
+								>
+									<div className="flex items-center gap-4 mb-4">
+										<div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shrink-0">
+											<span className="text-white font-bold text-sm">
+												{testimonial.avatar}
+											</span>
+										</div>
+										<div>
+											<p className="font-semibold text-gray-900">
+												{testimonial.name}
+											</p>
+											<p className="text-xs text-gray-500">
+												{testimonial.role}
+											</p>
+										</div>
+									</div>
+									<p className="text-gray-600 text-sm leading-relaxed">
+										"{testimonial.content}"
+									</p>
+									<div className="flex gap-0.5 mt-3">
+										{[...Array(5)].map((_, i) => (
+											<span
+												key={i}
+												className="text-amber-400"
+											>
+												★
+											</span>
+										))}
+									</div>
+								</div>
+							))}
+						</div>
+					</section>
 				</div>
 			</div>
 		</>

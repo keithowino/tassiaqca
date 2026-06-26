@@ -51,14 +51,7 @@ export default function BottomNav() {
 	];
 
 	// Add role-specific items
-	if (isAdmin) {
-		navItems.push({
-			to: "/admin",
-			icon: ShieldCheck,
-			label: "Admin",
-			requiresAuth: true,
-		});
-	} else if (isBusinessOwner) {
+	if (isBusinessOwner) {
 		navItems.push({
 			to: "/dashboard",
 			icon: Store,

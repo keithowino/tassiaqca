@@ -1,12 +1,12 @@
-# tassiaQCA
+# TassiaQCA
 
-![tassiaQCA Banner](./client/public/banner.jfif)
+![TassiaQCA Banner](./client/public/banner.jfif)
 
 ## Overview
 
-tassiaQCA is a community-centric e-commerce and business discovery platform built specifically for the Tassia Complex in Embakasi, Nairobi. As local entrepreneurship continues to grow, many small businesses still struggle with digital visibility while residents often miss nearby products and services.
+TassiaQCA is a community-centric e-commerce and business discovery platform built specifically for the Tassia Complex in Embakasi, Nairobi. As local entrepreneurship continues to grow, many small businesses still struggle with digital visibility while residents often miss nearby products and services.
 
-tassiaQCA bridges this gap by creating a centralized local marketplace where businesses can showcase their offerings and community members can discover, shop, and engage with nearby vendors—all in one place.
+TassiaQCA bridges this gap by creating a centralized local marketplace where businesses can showcase their offerings and community members can discover, shop, and engage with nearby vendors—all in one place.
 
 ### The Problem
 
@@ -160,7 +160,7 @@ server/
 ## Project Structure
 
 ```bash
-tassiaQCA/
+tassiaqca/
 ├── client/                    # React frontend application
 │   ├── public/               # Static assets
 │   ├── src/
@@ -203,7 +203,7 @@ Before running the project locally, ensure you have:
 
 ```bash
 git clone https://github.com/keithowino/tassiaqca.git
-cd tassiaQCA
+cd tassiaqca
 ```
 
 ### Backend Setup:

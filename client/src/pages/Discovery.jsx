@@ -401,25 +401,23 @@ export default function Discovery() {
 							<Map size={16} /> Map
 						</button>
 					</div>
-					<p className="flex gap-2 text-sm text-gray-500">
-						<div>
+					<span className="flex gap-2 text-sm text-gray-500">
+						<p>
 							{filteredAndSortedBusinesses.length} business
 							{filteredAndSortedBusinesses.length !== 1
 								? "es"
 								: ""}{" "}
 							found
-						</div>
-						<div>
-							{hasActiveFilters && (
-								<button
-									onClick={clearAllFilters}
-									className="text-sm text-orange-500 flex items-center gap-1 hover:text-orange-600 transition-colors"
-								>
-									<X size={13} /> Clear all filters
-								</button>
-							)}
-						</div>
-					</p>
+						</p>
+						{hasActiveFilters && (
+							<button
+								onClick={clearAllFilters}
+								className="text-sm text-orange-500 flex items-center gap-1 hover:text-orange-600 transition-colors"
+							>
+								Clear filters
+							</button>
+						)}
+					</span>
 				</div>
 
 				{/* Rest of your content - either list or map view */}
