@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import {
 	Search,
 	ArrowRight,
-	TrendingUp,
 	Star,
 	MapPin,
 	Zap,
 	Pin,
+	Users,
+	Award,
 } from "lucide-react";
 import { businessAPI, categoryAPI, communityAPI } from "../lib/api";
 import BusinessCard from "../components/business/BusinessCard";
@@ -35,7 +36,9 @@ export default function Home() {
 		totalBusinesses: 0,
 		totalReviews: 0,
 		todayOrders: 0,
+		activeUsers: 0,
 	});
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -61,10 +64,7 @@ export default function Home() {
 						}),
 					]);
 
-				// Process businesses
-				let allBusinesses = businessesRes.data || [];
-
-				// Filter active businesses
+				const allBusinesses = businessesRes.data || [];
 				const activeBusinesses = allBusinesses.filter(
 					(biz) => biz.isActive === true,
 				);
@@ -77,6 +77,7 @@ export default function Home() {
 						0,
 					),
 					todayOrders: Math.floor(Math.random() * 50) + 20, // Placeholder - replace with actual API call
+					activeUsers: 1240, // TODO: fetch real
 				});
 
 				// Set featured businesses (verified + high rating)
@@ -84,19 +85,25 @@ export default function Home() {
 					.filter((biz) => biz.isVerified === true)
 					.sort(
 						(a, b) =>
-							(b.averageRating || b.average_rating || 0) -
-							(a.averageRating || a.average_rating || 0),
+							(b.averageRating || 0) - (a.averageRating || 0),
 					)
 					.slice(0, 6);
 
 				setFeaturedBusinesses(featured);
+
+				// // Trending (most viewed or recent orders)
+				// const trendingItems = [...activeBusinesses]
+				// 	.sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0))
+				// 	.slice(0, 4);
+				// setTrending(trendingItems);
+
 				setBusinesses(activeBusinesses);
 
 				// Process categories
-				let categoryData = categoriesRes.data;
+				let categoryData = categoriesRes.data || [];
 
 				// If no categories from API, extract dynamically from businesses
-				if (!categoryData || categoryData.length === 0) {
+				if (!categoryData.length) {
 					categoryData =
 						extractCategoriesFromBusinesses(activeBusinesses);
 				}
@@ -107,11 +114,7 @@ export default function Home() {
 				const postsData = postsRes.data?.posts || postsRes.data || [];
 				setPosts(postsData.slice(0, 3)); // Limit to 3 posts for preview
 			} catch (error) {
-				console.error("Error fetching home page data:", error);
-				console.error(
-					"Error details:",
-					error.response?.data || error.message,
-				);
+				console.error("Home data fetch error:", error);
 			} finally {
 				setLoading(false);
 			}
@@ -208,13 +211,13 @@ export default function Home() {
 							<span>Tassia Complex, Embakasi East, Nairobi</span>
 						</div>
 						<h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-2">
-							Your Community,
+							Your Neighborhood,
 							<br />
-							One Tap Away
+							<span className="text-amber-200">One Tap Away</span>
 						</h1>
-						<p className="text-white/90 text-base mb-6">
-							Discover local businesses, order food, book
-							services, and connect with your neighbors.
+						<p className="text-lg text-orange-100 mb-8 max-w-md mx-auto">
+							Support local businesses. Get what you need today.
+							Build connections that matter in Tassia.
 						</p>
 						<form
 							onSubmit={handleSearch}
@@ -240,14 +243,24 @@ export default function Home() {
 					</div>
 				</section>
 
-				{/* Stats Banner */}
-				<div className="bg-white border-b border-gray-100 px-4 py-3">
-					<div className="max-w-xl mx-auto flex items-center justify-around gap-6">
+				{/* STATS Banner */}
+				<div className="bg-white border-b sticky top-0 z-40 shadow-sm">
+					<div className="max-w-5xl mx-auto px-4 py-4 flex flex-wrap justify-around gap-6 text-center">
 						{[
 							{
 								icon: (
-									<TrendingUp
-										size={18}
+									<Users
+										size={20}
+										className="text-orange-500"
+									/>
+								),
+								label: "Residents",
+								value: `${stats.activeUsers}+`,
+							},
+							{
+								icon: (
+									<Award
+										size={20}
 										className="text-orange-500"
 									/>
 								),
@@ -257,7 +270,7 @@ export default function Home() {
 							{
 								icon: (
 									<Star
-										size={18}
+										size={20}
 										className="text-amber-500"
 									/>
 								),
@@ -266,22 +279,19 @@ export default function Home() {
 							},
 							{
 								icon: (
-									<Zap size={18} className="text-green-500" />
+									<Zap size={20} className="text-green-500" />
 								),
 								label: "Orders Today",
 								value: `${stats.todayOrders}+`,
 							},
-						].map((stat) => (
-							<div
-								key={stat.label}
-								className="flex items-center gap-2"
-							>
+						].map((stat, i) => (
+							<div key={i} className="flex items-center gap-3">
 								{stat.icon}
 								<div>
-									<p className="font-bold text-gray-900 text-sm leading-none">
+									<p className="font-bold text-xl text-gray-900">
 										{stat.value}
 									</p>
-									<p className="text-xs text-gray-500">
+									<p className="text-xs text-gray-500 -mt-0.5">
 										{stat.label}
 									</p>
 								</div>
@@ -434,21 +444,74 @@ export default function Home() {
 						</section>
 					)}
 
+					{/* HOW IT WORKS */}
+					<section className="bg-gray-50 rounded-3xl p-8 md:p-12">
+						<div className="text-center mb-10">
+							<h2 className="text-3xl font-bold mb-3">
+								How TassiaQCA Works
+							</h2>
+							<p className="text-gray-600 max-w-md mx-auto">
+								From discovery to delivery — built for our
+								community
+							</p>
+						</div>
+						<div className="grid md:grid-cols-3 gap-8">
+							{[
+								{
+									step: "1",
+									title: "Discover",
+									desc: "Browse verified local businesses and services within Tassia Complex.",
+								},
+								{
+									step: "2",
+									title: "Order or Book",
+									desc: "Place orders, book services, or message directly — all in one place.",
+								},
+								{
+									step: "3",
+									title: "Support & Connect",
+									desc: "Leave reviews, join the community board, and grow together.",
+								},
+							].map((item) => (
+								<div
+									key={item.step}
+									className="bg-white rounded-2xl p-6 shadow-sm text-center"
+								>
+									<div className="w-12 h-12 mx-auto bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4">
+										{item.step}
+									</div>
+									<h3 className="font-semibold text-xl mb-2">
+										{item.title}
+									</h3>
+									<p className="text-gray-600">{item.desc}</p>
+								</div>
+							))}
+						</div>
+					</section>
+
 					{/* CTA Register Business */}
-					<section className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-6 text-white">
-						<h2 className="text-xl font-bold mb-2">
-							Own a Business in Tassia?
+					<section className="bg-gradient-to-r from-gray-900 to-black text-white rounded-3xl p-10 md:p-16 text-center">
+						<h2 className="text-3xl font-bold mb-4">
+							Ready to Join the Movement?
 						</h2>
-						<p className="text-gray-300 text-sm mb-4">
-							List your business for free and reach hundreds of
-							residents daily.
+						<p className="text-xl text-gray-300 max-w-md mx-auto mb-8">
+							Whether you're a resident or a business owner in
+							Tassia — this platform is for you.
 						</p>
-						<Link
-							to="/dashboard/new"
-							className="inline-flex items-center gap-2 bg-orange-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-orange-400 transition-colors"
-						>
-							List My Business <ArrowRight size={16} />
-						</Link>
+						<div className="flex flex-col sm:flex-row gap-4 justify-center">
+							<Link
+								to="/discover"
+								className="bg-orange-500 text-white px-10 py-4 rounded-2xl font-semibold text-lg"
+							>
+								Start Shopping Locally
+							</Link>
+							<Link
+								to="/dashboard/new"
+								className="border border-white/50 hover:bg-white/10 px-10 py-4 rounded-2xl font-semibold text-lg transition"
+							>
+								List My Business Free
+							</Link>
+						</div>
 					</section>
 
 					{/* Testimonials Section */}

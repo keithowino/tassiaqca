@@ -50,8 +50,7 @@ export default function BusinessCard({
 	const openDays = business.open_days;
 	const deliveryAvailable = business.delivery_available;
 	const isVerified = business.isVerified;
-	const averageRating =
-		business.averageRating || business.average_rating || 0;
+	const averageRating = business.averageRating || 0;
 	const reviewCount = business.reviewCount || business.review_count || 0;
 
 	// Determine if business is open

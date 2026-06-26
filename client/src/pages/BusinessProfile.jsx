@@ -670,8 +670,7 @@ export default function BusinessProfile() {
 		business.cover_image ||
 		`https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800`;
 	const businessName = business.businessName || business.name;
-	const averageRating =
-		business.averageRating || business.average_rating || 0;
+	const averageRating = business.averageRating || 0;
 	const reviewCount = business.reviewCount || reviews.length;
 	const isOpen = business.open_days?.includes(today);
 	const groupedProducts = getGroupedProducts();
