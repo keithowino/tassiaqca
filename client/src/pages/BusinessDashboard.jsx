@@ -29,6 +29,7 @@ export default function BusinessDashboard() {
 	const { businessId } = useParams();
 	const isNew = businessId === "new";
 	const { user, profile } = useAuth();
+	const { metadata } = data;
 	const navigate = useNavigate();
 
 	const [business, setBusiness] = useState(null);
@@ -514,7 +515,7 @@ export default function BusinessDashboard() {
 				title={isNew ? "Register Business" : "Business Dashboard"}
 				description={
 					isNew
-						? `List your business on ${data.metadata.name} to reach hundreds of local customers.`
+						? `List your business on ${metadata.name} to reach hundreds of local customers.`
 						: "Manage your business profile, products, orders, and analytics."
 				}
 			/>

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../lib/context/AuthContext";
 import { useCart } from "../../lib/context/CartContext";
+import { MainLogo } from "../common/Logo";
 
 export default function Header() {
 	const { user, profile, signOut } = useAuth();
@@ -86,19 +87,12 @@ export default function Header() {
 				}`}
 			>
 				<div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
-					{/* Logo */}
-					<Link to="/" className="flex items-center gap-2 shrink-0">
-						<div className="w-9 h-9 rounded-lg flex items-center justify-center">
-							<img
-								src="/favicon.svg"
-								alt="TassiaQCA"
-								className="w-8 h-8"
-							/>
-						</div>
-						<span className="font-bold text-xl text-gray-900 tracking-tight">
-							Tassia<span className="text-orange-500">QCA</span>
-						</span>
-					</Link>
+					<MainLogo
+						iconPD="9"
+						iconD="8"
+						text={{ size: "text-xl", color: "text-gray-900" }}
+						bg="light"
+					/>
 
 					{/* Location Badge - Hidden on very small screens */}
 					<div className="hidden sm:flex items-center gap-1.5 bg-orange-50 rounded-full px-3 py-1 text-xs text-gray-600 border border-orange-100">

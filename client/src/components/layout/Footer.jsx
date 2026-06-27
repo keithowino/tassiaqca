@@ -6,8 +6,11 @@ import {
 	IoLogoInstagram,
 	IoLogoTwitter,
 } from "react-icons/io5";
+import { MainLogo } from "../common/Logo";
+import data from "../../lib/data";
 
 export default function Footer() {
+	const { metadata } = data;
 	const currentYear = new Date().getFullYear();
 
 	return (
@@ -16,22 +19,16 @@ export default function Footer() {
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
 					{/* Brand */}
 					<div>
-						<Link to="/" className="flex items-center gap-2 mb-4">
-							<div className="w-10 h-10 flex items-center justify-center">
-								<img
-									src="/favicon.svg"
-									alt="TassiaQCA"
-									className="w-9 h-9"
-								/>
-							</div>
-							<span className="font-bold text-2xl tracking-tight">
-								Tassia
-								<span className="text-orange-500">QCA</span>
-							</span>
-						</Link>
+						<div className="mb-4">
+							<MainLogo
+								iconPD="10"
+								iconD="9"
+								text={{ size: "text-2xl", color: "" }}
+								bg="dark"
+							/>
+						</div>
 						<p className="text-gray-400 text-[15px] leading-relaxed">
-							Quiet Compound Assets — Your trusted community
-							marketplace for Tassia Complex, Embakasi East.
+							{metadata.tagline} — {metadata.description}
 						</p>
 
 						<div className="flex gap-4 mt-6">
@@ -158,8 +155,8 @@ export default function Footer() {
 				{/* Bottom Bar */}
 				<div className="border-t border-gray-800 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
 					<p>
-						© {currentYear} TassiaQCA — Quiet Compound Assets. All
-						rights reserved.
+						© {currentYear} {metadata.name} — {metadata.tagline}.
+						All rights reserved.
 					</p>
 					<div className="flex gap-6">
 						<Link to="/about" className="hover:text-gray-300">

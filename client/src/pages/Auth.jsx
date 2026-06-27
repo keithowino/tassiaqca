@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useAuth } from "../lib/context/AuthContext";
 import { useGoogleLogin } from "@react-oauth/google";
 import data from "../lib/data";
+import { MainLogo } from "../components/common/Logo";
 
 const Auth = () => {
 	const { metadata } = data;
@@ -145,24 +146,15 @@ const Auth = () => {
 							to="/"
 							className="inline-flex items-center gap-2 mb-4"
 						>
-							{/* <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center">
-								<MapPin
-									size={20}
-									className="text-white"
-									strokeWidth={2.5}
-								/>
-							</div> */}
-							<div className="w-16 h-16 flex items-center justify-center">
-								<img
-									src="/web-app-manifest-192x192.png"
-									alt=""
-									className="rounded-xl"
-								/>
-							</div>
-							<span className="font-bold text-gray-900 text-xl">
-								Tassia
-								<span className="text-orange-500">QCA</span>
-							</span>
+							<MainLogo
+								iconPD="16"
+								iconD="14"
+								text={{
+									size: "text-xl",
+									color: "text-gray-900",
+								}}
+								bg="light"
+							/>
 						</Link>
 						<p className="text-gray-500 text-sm">
 							{tab === "signin"

@@ -23,6 +23,7 @@ import data from "../lib/data";
 
 export default function Profile() {
 	const { user, profile, signOut, refreshProfile } = useAuth();
+	const { metadata } = data;
 	const navigate = useNavigate();
 	const [favorites, setFavorites] = useState([]);
 	const [myBusinesses, setMyBusinesses] = useState([]);
@@ -208,8 +209,8 @@ export default function Profile() {
 				}
 				description={
 					user
-						? `View ${getUserFullName()}'s profile, saved businesses, and order history on ${data.metadata.name}.`
-						: `Manage your ${data.metadata.name} profile, view saved businesses, and track orders.`
+						? `View ${getUserFullName()}'s profile, saved businesses, and order history on ${metadata.name}.`
+						: `Manage your ${metadata.name} profile, view saved businesses, and track orders.`
 				}
 			/>
 			<section className="max-w-xl mx-auto px-4 py-4 space-y-4 mb-20">

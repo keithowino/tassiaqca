@@ -73,7 +73,7 @@ export const getMyOrders = async (req, res) => {
 	}
 };
 
-// // Get business orders (for owner)
+// Get business orders (for owner)
 export const getBusinessOrders = async (req, res) => {
 	try {
 		const business = await Business.findById(req.params.businessId);

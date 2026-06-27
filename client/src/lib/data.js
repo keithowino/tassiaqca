@@ -1,5 +1,6 @@
 const metadata = {
 	name: "TassiaQCA",
+	// name: "Teaser",
 	slug: "Tassia Complex Marketplace",
 	tagline: "Quiet Compound Assets",
 	description:

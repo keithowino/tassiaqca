@@ -109,7 +109,6 @@ export default function AdminLayout() {
 					</div>
 					{!collapsed && (
 						<>
-							{/* <span className="text-sm text-gray-600 hidden sm:inline"> */}
 							<span className="text-sm text-gray-600">
 								{profile?.fullName || user?.fullName || "Admin"}
 							</span>

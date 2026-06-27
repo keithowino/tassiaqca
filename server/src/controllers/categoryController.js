@@ -1,7 +1,7 @@
 import Category from "../models/Category.js";
 import Business from "../models/Business.js";
 
-// // Get all categories
+// Get all categories
 export const getAllCategories = async (req, res) => {
 	try {
 		const categories = await Category.find({ isActive: true }).sort({

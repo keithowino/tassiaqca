@@ -10,8 +10,11 @@ import {
 } from "lucide-react";
 import MetaDataInsert from "../lib/MetaDataInsert";
 import { Link } from "react-router-dom";
+import data from "../lib/data";
 
 export default function About() {
+	const { metadata } = data;
+
 	const stats = [
 		{ icon: Users, label: "Community Members", value: "500+" },
 		{ icon: ShoppingBag, label: "Orders Placed", value: "1,000+" },
@@ -43,18 +46,19 @@ export default function About() {
 	return (
 		<>
 			<MetaDataInsert
-				title="About TassiaQCA"
-				description="Learn about TassiaQCA - Quiet Compound Assets. A community-centric platform connecting Tassia Complex residents with local businesses."
+				title="About"
+				description={`Learn about ${metadata.name} - ${metadata.tagline} . ${metadata.description} `}
 			/>
 
 			<div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
 				{/* Hero Section */}
 				<div className="text-center mb-12">
 					<h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-						About <span className="text-orange-500">TassiaQCA</span>
+						About{" "}
+						<span className="text-orange-500">{metadata.name}</span>
 					</h1>
 					<p className="text-lg text-gray-600 max-w-2xl mx-auto">
-						Quiet Compound Assets — Connecting Tassia Complex, one
+						{metadata.tagline} — Connecting Tassia Complex, one
 						community at a time.
 					</p>
 				</div>
@@ -65,7 +69,7 @@ export default function About() {
 						Our Mission
 					</h2>
 					<p className="text-gray-700 leading-relaxed text-base md:text-lg">
-						TassiaQCA exists to bridge the gap between local
+						{metadata.name} exists to bridge the gap between local
 						businesses and residents in Tassia Complex. We believe
 						that when local commerce thrives, communities flourish.
 						Our platform empowers business owners to grow their
@@ -96,7 +100,7 @@ export default function About() {
 				{/* What is TassiaQCA */}
 				<div className="mb-12">
 					<h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-						What is TassiaQCA?
+						What is {metadata.name}?
 					</h2>
 					<div className="grid md:grid-cols-2 gap-6">
 						<div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
@@ -155,8 +159,8 @@ export default function About() {
 						Ready to Join the Community?
 					</h2>
 					<p className="text-gray-300 mb-6 max-w-xl mx-auto">
-						Whether you're a business owner or a resident, TassiaQCA
-						is here to help you connect and grow.
+						Whether you're a business owner or a resident,{" "}
+						{metadata.name} is here to help you connect and grow.
 					</p>
 					<div className="flex flex-wrap justify-center gap-4">
 						<Link
