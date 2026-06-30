@@ -1,0 +1,88 @@
+### Invalid request
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{}
+
+### Register
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Love",
+    "lastName": "Rembo",
+    "email": "rembo1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "rembo@1234"
+}
+
+### Register Invalid email
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Love",
+    "lastName": "Rembo",
+    "email": "rembo1234",
+    "phone": "+254734567890",
+    "password": "rembo@1234"
+}
+
+### Register with weak password
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Love",
+    "lastName": "Rembo",
+    "email": "rembo1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "1234"
+}
+
+### Register missing first name
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "",
+    "lastName": "Rembo",
+    "email": "rembo1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "rembo@1234"
+}
+
+### Login
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "password": "rembo@1234"
+}
+
+### Login wrong password
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "password": "rembo@123"
+}
+
+### Login non-existing email
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1235@gmail.com",
+    "password": "rembo@1234"
+}

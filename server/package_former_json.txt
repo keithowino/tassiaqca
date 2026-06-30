@@ -2,13 +2,13 @@
 	"name": "server",
 	"version": "1.0.0",
 	"description": "",
-	"main": "src/app/server.js",
+	"main": "src/server.js",
 	"scripts": {
-		"seedIdRoles": "node src/scripts/seed-roles.js",
-		"seedBusinessTypes": "node src/scripts/seed-businessTypes.js",
-		"traceWarnings": "nodemon --exec \"node --trace-warnings\" src/app/server.js",
-		"start": "node src/app/server.js",
-		"dev": "nodemon src/app/server.js",
+		"seedCategories": "node src/scripts/seed-categories.js",
+		"seedBusinessTypes": "node src/scripts/Seed-business-types.js",
+		"traceWarnings": "nodemon --exec \"node --trace-warnings\" src/server.js",
+		"start": "node src/server.js",
+		"dev": "nodemon src/server.js",
 		"build": "echo 'No build step needed for server'"
 	},
 	"keywords": [],
@@ -16,18 +16,15 @@
 	"license": "PROPRIETARY",
 	"type": "module",
 	"dependencies": {
-		"bcrypt": "^6.0.0",
+		"bcryptjs": "^3.0.3",
 		"cloudinary": "^1.41.3",
-		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.6",
 		"dotenv": "^17.4.2",
 		"express": "^5.2.1",
 		"jsonwebtoken": "^9.0.3",
 		"mongoose": "^9.7.2",
-		"ms": "^2.1.3",
 		"multer": "^2.2.0",
-		"multer-storage-cloudinary": "^4.0.0",
-		"zod": "^4.4.3"
+		"multer-storage-cloudinary": "^4.0.0"
 	},
 	"devDependencies": {
 		"nodemon": "^3.1.14"
