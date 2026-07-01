@@ -1,0 +1,94 @@
+### Create a new business — No Authentication ("businessType": "PUT_A_VALID_BUSINESS_TYPE_ID_HERE")
+
+POST http://localhost:5000/api/v1/businesses
+Content-Type: application/json
+
+{
+    "name": "Warembo Tupu",
+    "businessType": "6a44e58a1713fbebfdc0b39d"
+}
+
+### Create a new business with invalid token
+
+POST http://localhost:5000/api/v1/businesses
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+{
+    "name": "Warembo Tupu",
+    "businessType": "6a44e58a1713fbebfdc0b39d"
+}
+
+### Update a business with No access token
+
+PATCH http://localhost:5000/api/v1/businesses/6a44ec8df5b248857ae0ec4b
+
+{
+    "name": "Warembo Tupu Ltd"
+}
+
+### Update a business with Invalid access token
+
+PATCH http://localhost:5000/api/v1/businesses/6a44ec8df5b248857ae0ec4b
+Authorization: Bearer invalid-token
+
+{
+    "name": "Warembo Tupu Ltd"
+}
+
+### Update a business with Valid token but random/non-existent businessId
+
+PATCH http://localhost:5000/api/v1/businesses/6a44ec8df5b248857ae0ec4c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ1MzQ4NGRiNjE5NGJmYjhkYTY5YTciLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJpYXQiOjE3ODI5MjAzNDUsImV4cCI6MTc4MjkyMTI0NSwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.0M0caru7wObu7UD-OrqdZfBcnhnU6hnUpJZlqiY2Qk8
+Content-Type: application/json
+
+{
+    "name": "Warembo Tupu Ltd"
+}
+
+### Register
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Love",
+    "lastName": "Rembo",
+    "email": "rembo1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "rembo@1234"
+}
+
+### Login
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "password": "rembo@1234"
+}
+
+### Create a new business (Authorization: Bearer <VALID_ACCESS_TOKEN>)
+
+POST http://localhost:5000/api/v1/businesses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ1M2M2YzI1Zjc4Zjg0MzJlMDBiYWUiLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJpYXQiOjE3ODI5MjIzNjcsImV4cCI6MTc4MjkyMzI2NywiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.NYPxpOAzCyYeHGdgE5MC_c_JLjwh0WBgeYpKsPmBySs
+Content-Type: application/json
+
+{
+    "name": "Warembo Tupu",
+    "description": "Beauty and wellness businesses.",
+    "businessType": "6a44e58a1713fbebfdc0b39d",
+    "phone": "+254712345678",
+    "email": "info@warembootupu.com"
+}
+
+### Update a business with Valid token (register, login create a business)
+
+PATCH http://localhost:5000/api/v1/businesses/6a453cb425f78f8432e00bb1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ1M2M2YzI1Zjc4Zjg0MzJlMDBiYWUiLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJpYXQiOjE3ODI5MjM2MzIsImV4cCI6MTc4MjkyNDUzMiwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.APdfwqJY83NkdcVyrBdIbbNwaSi0PyljvIkxETuKCKs
+Content-Type: application/json
+
+{
+    "name": "Warembo Tupu Ltd"
+}

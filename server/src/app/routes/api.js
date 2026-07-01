@@ -1,6 +1,6 @@
 import { Router } from "express";
-// import authRoutes from "../../modules/auth/index.js";
 import identityRoutes from "../../modules/identity/index.js";
+import businessRoutes from "../../modules/business/index.js";
 
 const router = Router();
 
@@ -11,7 +11,7 @@ router.get("/health", (req, res) => {
 	});
 });
 
-// router.use("/auth", authRoutes);
 router.use("/auth", identityRoutes);
+router.use("/businesses", businessRoutes);
 
 export default router;

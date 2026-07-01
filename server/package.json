@@ -4,8 +4,9 @@
 	"description": "",
 	"main": "src/app/server.js",
 	"scripts": {
-		"seedIdRoles": "node src/scripts/seed-roles.js",
+		"seedMemberRoles": "node src/scripts/seed-roles.js",
 		"seedBusinessTypes": "node src/scripts/seed-businessTypes.js",
+		"seedMemberPermissions": "node src/scripts/seed-permissions.js",
 		"traceWarnings": "nodemon --exec \"node --trace-warnings\" src/app/server.js",
 		"start": "node src/app/server.js",
 		"dev": "nodemon src/app/server.js",

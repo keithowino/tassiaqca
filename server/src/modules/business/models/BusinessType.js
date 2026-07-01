@@ -21,12 +21,6 @@ const businessTypeSchema = new mongoose.Schema(
 			default: "",
 		},
 
-		// capabilities: [
-		// 	{
-		// 		type: mongoose.Schema.Types.ObjectId,
-		// 		ref: "Capability",
-		// 	},
-		// ],
 		capabilities: [
 			{
 				type: String,
