@@ -4,6 +4,7 @@ import validateRequest from "../../../shared/validation/validateRequest.js";
 import registerRequestSchema from "../validators/register.validator.js";
 import loginRequestSchema from "../validators/login.validator.js";
 import refreshRequestSchema from "../validators/refresh.validator.js";
+import userPresenter from "../presenters/user.presenter.js";
 
 class AuthController {
 	async register(req, res, next) {
@@ -62,6 +63,19 @@ class AuthController {
 			return res.status(200).json({
 				success: true,
 				data: result,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async me(req, res, next) {
+		try {
+			return res.status(200).json({
+				success: true,
+				data: {
+					user: userPresenter.public(req.user),
+				},
 			});
 		} catch (error) {
 			next(error);

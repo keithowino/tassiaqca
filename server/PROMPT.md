@@ -1,17 +1,23 @@
-## Test 1 — Invalid JWT
+## Test 1 — No Authorization Header
 
 Response
 
 ```js
-{"success":false,"error":{"code":"UNAUTHORIZED","message":"Invalid refresh token.","details":null}}
+{"success":false,"error":{"code":"UNAUTHORIZED","message":"Authentication required.","details":null}}
 ```
 
-## Test 2 — Expired JWT
+## Test 2 — Invalid Access Token
 
 Response
 
 ```js
-{"success":false,"error":{"code":"UNAUTHORIZED","message":"Refresh token has expired.","details":null}}
+{"success":false,"error":{"code":"UNAUTHORIZED","message":"Invalid access token.","details":null}}
 ```
 
-Now i understand what `JWT_REFRESH_EXPIRES=30d` does, i have witnessed when it is set at 5 seconds the previous token expires, what about `JWT_ACCESS_EXPIRES=15m`.
+## Test 3 — Valid Access Token
+
+Response
+
+```js
+{"success":true,"data":{"user":{"id":"6a44ca670a57f5c8a073921b","firstName":"Love","lastName":"Rembo","email":"rembo1234@gmail.com","avatar":{}}}}
+```

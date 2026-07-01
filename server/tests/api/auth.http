@@ -93,7 +93,7 @@ POST http://localhost:5000/api/v1/auth/refresh
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ0YmY3YTU5OWZlYzZhOTZjNWY4YmYiLCJqdGkiOiJlNTRmNTQ5NS1iYWI4LTRkZmMtODMyNy1hOGU4MzMwMmI4ODIiLCJpYXQiOjE3ODI4OTAzNjIsImV4cCI6MTc4Mjg5MDM2NywiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.l7kQLXspCkJo17cpI_02DnrONGUZPX2BOrHuDEzkRUs"
+    "refreshToken": "<refresh_token_from_login_response>"
 }
 
 ### Invalid Refresh Request
@@ -111,3 +111,17 @@ Content-Type: application/json
 {
     "refreshToken": "this-is-not-a-jwt"
 }
+
+### Authenticateion — No Authorization Header
+
+GET http://localhost:5000/api/v1/auth/me
+
+### Authenticateion — Invalid Access Token
+
+GET http://localhost:5000/api/v1/auth/me
+Authorization: Bearer this-is-not-a-token
+
+### Authenticateion — Valid Access Token (First, log in then copy the returned access token.)
+
+GET http://localhost:5000/api/v1/auth/me
+Authorization: Bearer this-is-not-a-token
