@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import env from "../../../app/config/env.js";
+import AppError from "../../../shared/errors/AppError.js";
+import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
+import { HTTP_STATUS } from "../../../shared/constants/index.js";
 
 class AccessTokenService {
 	generate(user) {
@@ -18,10 +21,26 @@ class AccessTokenService {
 	}
 
 	verify(token) {
-		return jwt.verify(token, env.jwt.accessSecret, {
-			issuer: env.jwt.issuer,
-			audience: env.jwt.audience,
-		});
+		try {
+			return jwt.verify(token, env.jwt.accessSecret, {
+				issuer: env.jwt.issuer,
+				audience: env.jwt.audience,
+			});
+		} catch (error) {
+			if (error.name === "TokenExpiredError") {
+				throw new AppError(
+					"Access token has expired.",
+					HTTP_STATUS.UNAUTHORIZED,
+					ErrorCodes.UNAUTHORIZED,
+				);
+			}
+
+			throw new AppError(
+				"Invalid access token.",
+				HTTP_STATUS.UNAUTHORIZED,
+				ErrorCodes.UNAUTHORIZED,
+			);
+		}
 	}
 }
 

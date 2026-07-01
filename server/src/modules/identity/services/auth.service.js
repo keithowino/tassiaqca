@@ -70,6 +70,10 @@ class AuthService {
 			...tokens,
 		};
 	}
+
+	async refresh(refreshToken, metadata = {}) {
+		return sessionService.rotate(refreshToken, metadata);
+	}
 }
 
 export default new AuthService();

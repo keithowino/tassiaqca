@@ -3,6 +3,7 @@ import authService from "../services/auth.service.js";
 import validateRequest from "../../../shared/validation/validateRequest.js";
 import registerRequestSchema from "../validators/register.validator.js";
 import loginRequestSchema from "../validators/login.validator.js";
+import refreshRequestSchema from "../validators/refresh.validator.js";
 
 class AuthController {
 	async register(req, res, next) {
@@ -35,6 +36,28 @@ class AuthController {
 			);
 
 			const result = await authService.login(body);
+
+			return res.status(200).json({
+				success: true,
+				data: result,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async refresh(req, res, next) {
+		try {
+			const { body } = validateRequest(
+				{
+					body: refreshRequestSchema,
+				},
+				req,
+			);
+
+			const { refreshToken } = body;
+
+			const result = await authService.refresh(refreshToken);
 
 			return res.status(200).json({
 				success: true,

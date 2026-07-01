@@ -86,3 +86,28 @@ Content-Type: application/json
     "email": "rembo1235@gmail.com",
     "password": "rembo@1234"
 }
+
+### Successful Refresh, then Reuse the Old Refresh Token
+
+POST http://localhost:5000/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ0YmY3YTU5OWZlYzZhOTZjNWY4YmYiLCJqdGkiOiJlNTRmNTQ5NS1iYWI4LTRkZmMtODMyNy1hOGU4MzMwMmI4ODIiLCJpYXQiOjE3ODI4OTAzNjIsImV4cCI6MTc4Mjg5MDM2NywiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.l7kQLXspCkJo17cpI_02DnrONGUZPX2BOrHuDEzkRUs"
+}
+
+### Invalid Refresh Request
+
+POST http://localhost:5000/api/v1/auth/refresh
+Content-Type: application/json
+
+{}
+
+### Completely Invalid Token
+
+POST http://localhost:5000/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken": "this-is-not-a-jwt"
+}
