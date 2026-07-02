@@ -31,6 +31,18 @@ class BusinessMemberController {
 			next(error);
 		}
 	}
+
+	async list(req, res, next) {
+		try {
+			const members = await businessMemberService.list(
+				req.params.businessId,
+			);
+
+			return success(res, members, "Members retrieved successfully.");
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 export default new BusinessMemberController();

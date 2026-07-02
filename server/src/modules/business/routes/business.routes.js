@@ -21,5 +21,11 @@ router.post(
 	requirePermission("MEMBER_INVITE"),
 	businessMemberController.invite,
 );
+router.get(
+	"/:businessId/members",
+	authenticate,
+	requirePermission("MEMBER_VIEW"),
+	businessMemberController.list,
+);
 
 export default router;

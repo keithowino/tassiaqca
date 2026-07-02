@@ -59,6 +59,20 @@ class BusinessMemberService {
 			role: role._id,
 		});
 	}
+
+	async list(businessId) {
+		const business = await businessRepository.findById(businessId);
+
+		if (!business) {
+			throw new AppError(
+				"Business not found.",
+				HTTP_STATUS.NOT_FOUND,
+				ErrorCodes.NOT_FOUND,
+			);
+		}
+
+		return businessMemberRepository.findByBusiness(businessId);
+	}
 }
 
 export default new BusinessMemberService();

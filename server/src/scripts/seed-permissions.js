@@ -25,6 +25,10 @@ const permissions = [
 
 	// Members
 	{
+		key: "MEMBER_VIEW",
+		name: "View Members",
+	},
+	{
 		key: "MEMBER_INVITE",
 		name: "Invite Member",
 	},

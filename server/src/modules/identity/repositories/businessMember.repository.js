@@ -16,13 +16,19 @@ async function findByUserAndBusiness(userId, businessId) {
 	});
 }
 
-async function findMembers(businessId) {
-	return BusinessMember.find({
-		business: businessId,
-	})
-		.populate("user")
-		.populate("role");
-}
+/**
+|--------------------------------------------------
+| 	This method was removed to avoid duplications
+
+|	async function findMembers(businessId) {
+|		return BusinessMember.find({
+|			business: businessId,
+|		})
+|			.populate("user")
+|			.populate("role");
+|	}
+|--------------------------------------------------
+*/
 
 async function exists(userId, businessId) {
 	const member = await BusinessMember.exists({
@@ -67,7 +73,7 @@ export default {
 	create,
 	findById,
 	findByUserAndBusiness,
-	findMembers,
+	// findMembers,
 	exists,
 	findByBusiness,
 	findActiveMember,

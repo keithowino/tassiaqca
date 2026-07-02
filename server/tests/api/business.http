@@ -59,7 +59,7 @@ Content-Type: application/json
 ### Create a new business (Login to get Authorization: Bearer <VALID_ACCESS_TOKEN>)
 
 POST http://localhost:5000/api/v1/businesses
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg2NDQwLCJleHAiOjE3ODI5ODczNDAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.hw2VMzD7wXF3L_KfKN_ebXpEPJKjXdsBsehN8A-8BGI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg5NTgxLCJleHAiOjE3ODMwNzU5ODEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.MHrBO6Xjq2nRQOL5KbVktySgTrjpmna3oARsEUy77-M
 Content-Type: application/json
 
 {
@@ -92,13 +92,13 @@ Content-Type: application/json
 
 ### Successful Invite and Duplicate Invite - (POST http://localhost:5000/api/v1/businesses/<businessId>/members, Authorization: Bearer <owner-access-token>, email = use B's)
 
-POST http://localhost:5000/api/v1/businesses/6a463756eed8cb5e2897566f/members
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg3MjE5LCJleHAiOjE3ODI5ODgxMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ojujf1tHly7u3wostWylLjAYob-y8ID61wwEOn7HVZg
+POST http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
 Content-Type: application/json
 
 {
     "email": "rembo1234@gmail.com",
-    "roleId": "6a451ec4b20eb8419e8a8be6"
+    "roleId": "6a46418e44bdd00dfa9adf50"
 }
 
 ### Invite - Unknown User 
@@ -122,3 +122,34 @@ Content-Type: application/json
     "email": "rembo1234@gmail.com",
     "roleId": "6a451ec4b2aeb8419e8a8be6"
 }
+
+### List Business Members with no Access Token (GET http://localhost:5000/api/v1/businesses/<businessId>/members)
+
+GET http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+
+### List Business Members with an invalid token
+
+GET http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+### Login
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "password": "rembo@1234"
+}
+
+# {
+#     "email": "designsolutions1629@gmail.com",
+#     "password": "testPassword@1234"
+# }
+
+### List Business Members (Login as a user who is not a member of the business after which you also test with the owners and also if present a staff's acces token.)
+
+GET http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJiMjAxY2YxNjI2NWU5ZDg2ZTciLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJpYXQiOjE3ODI5OTI2MDQsImV4cCI6MTc4MzA3OTAwNCwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.s-AvMqD4hoBjCMef-dK4gmFXLCKvWjT0OQHO78cBmbM
+Content-Type: application/json
