@@ -28,4 +28,11 @@ router.get(
 	businessMemberController.list,
 );
 
+router.delete(
+	"/:businessId/members/:memberId",
+	authenticate,
+	requirePermission("MEMBER_REMOVE"),
+	businessMemberController.remove,
+);
+
 export default router;

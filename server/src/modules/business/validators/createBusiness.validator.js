@@ -1,5 +1,5 @@
 import { z } from "zod";
-import objectIdSchema from "../../../shared/validation/common/objectId.schema.js";
+import { objectIdSchema } from "../../../shared/validation/index.js";
 
 const createBusinessRequestSchema = z.object({
 	name: z

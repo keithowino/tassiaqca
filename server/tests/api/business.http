@@ -70,6 +70,19 @@ Content-Type: application/json
     "phone": "+254768290857"
 }
 
+### Create a new business (Login to get Authorization: Bearer <VALID_ACCESS_TOKEN>) another business
+
+POST http://localhost:5000/api/v1/businesses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+{
+    "name": "R4 Hub",
+    "description": "All your developer resources. Organized. Accessible. Powered by AI.",
+    "businessType": "6a44e58a1713fbebfdc0b39e",
+    "email": "designsolutions1629@gmail.com",
+    "phone": "+254768290857"
+}
 ### Update a business with Valid token (register, login create a business)
 
 PATCH http://localhost:5000/api/v1/businesses/6a453cb425f78f8432e00bb1
@@ -152,4 +165,76 @@ Content-Type: application/json
 
 GET http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJiMjAxY2YxNjI2NWU5ZDg2ZTciLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJpYXQiOjE3ODI5OTI2MDQsImV4cCI6MTc4MzA3OTAwNCwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.s-AvMqD4hoBjCMef-dK4gmFXLCKvWjT0OQHO78cBmbM
+Content-Type: application/json
+
+### Invite test member to delete.
+
+POST http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+{
+    "email": "maurine1234@gmail.com",
+    "roleId": "6a46418e44bdd00dfa9adf50"
+}
+
+### Delete business member - No Access Token (DELETE http://localhost:5000/api/v1/businesses/{{businessId}}/members/{{memberId}})
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a46798dd75e139172bf574c
+
+### Delete business member — Invalid Access Token
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a46798dd75e139172bf574c
+Authorization: Bearer invalid-token
+
+### Invite test member to another business to attempt deletion on another.
+
+POST http://localhost:5000/api/v1/businesses/6a467d37d75e139172bf574d/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+{
+    "email": "maurine1234@gmail.com",
+    "roleId": "6a46418e44bdd00dfa9adf50"
+}
+
+### Delete business member — User Is Not a Member of the Business (a valid access token, a business the user does not belong to)
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a467e5ad75e139172bf574f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+### Invite test member.
+
+POST http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+{
+    "email": "lee1234@gmail.com",
+    "roleId": "6a46418e44bdd00dfa9adf50"
+}
+
+### Delete business member — Member Without Permission (Owner creates a business, Invite another user as Staff, Login as Staff, Attempt to remove another member.)
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a464d38fd14e273edd28937
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2OTAxNzc5MDg1ZTQ4Y2ZhZTY2MmIiLCJlbWFpbCI6ImxlZTEyMzRAZ21haWwuY29tIiwiaWF0IjoxNzgzMDA5MzAzLCJleHAiOjE3ODMwOTU3MDMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.QO2_Jtfnd6aH9lxd5d9vCGGcokKgRVTrTU2n7WX_Kio
+Content-Type: application/json
+
+### Delete business member — Unknown Member (Use a valid businessId but a fake memberId.)
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a9999999999999999999999
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+### Delete business member — Member Belongs to Another Business (Create Business A, Business B, Invite the same (or different) user into Business B.), try to remove yourself.
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a46432b01cf16265e9d86eb
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+### Delete business member — Successful Removal.
+
+DELETE http://localhost:5000/api/v1/businesses/6a467d37d75e139172bf574d/members/6a467e5ad75e139172bf574f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
 Content-Type: application/json

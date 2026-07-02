@@ -5,6 +5,19 @@ Content-Type: application/json
 
 {}
 
+### Register - user A
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Keith",
+    "lastName": "Owino",
+    "email": "designsolutions1629@gmail.com",
+    "phone": "+254768290857",
+    "password": "testPassword@1234"
+}
+
 ### Register - user B
 
 POST http://localhost:5000/api/v1/auth/register
@@ -18,17 +31,30 @@ Content-Type: application/json
     "password": "rembo@1234"
 }
 
-### Register - user A
+### Register - user C
 
 POST http://localhost:5000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "firstName": "Keith",
-    "lastName": "Owino",
-    "email": "designsolutions1629@gmail.com",
-    "phone": "+254768290857",
-    "password": "testPassword@1234"
+    "firstName": "Maurine",
+    "lastName": "Ougo",
+    "email": "maurine1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "maurine@1234"
+}
+
+### Register - user D
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Lee",
+    "lastName": "Chen",
+    "email": "lee1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "lee@1234"
 }
 
 ### Register Invalid email
