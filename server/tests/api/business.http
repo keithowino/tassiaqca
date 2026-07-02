@@ -46,41 +46,28 @@ Content-Type: application/json
     "name": "Warembo Tupu Ltd"
 }
 
-### Register
-
-POST http://localhost:5000/api/v1/auth/register
-Content-Type: application/json
-
-{
-    "firstName": "Love",
-    "lastName": "Rembo",
-    "email": "rembo1234@gmail.com",
-    "phone": "+254734567890",
-    "password": "rembo@1234"
-}
-
 ### Login
 
 POST http://localhost:5000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "rembo1234@gmail.com",
-    "password": "rembo@1234"
+    "email": "designsolutions1629@gmail.com",
+    "password": "testPassword@1234"
 }
 
-### Create a new business (Authorization: Bearer <VALID_ACCESS_TOKEN>)
+### Create a new business (Login to get Authorization: Bearer <VALID_ACCESS_TOKEN>)
 
 POST http://localhost:5000/api/v1/businesses
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ1M2M2YzI1Zjc4Zjg0MzJlMDBiYWUiLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJpYXQiOjE3ODI5MjIzNjcsImV4cCI6MTc4MjkyMzI2NywiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.NYPxpOAzCyYeHGdgE5MC_c_JLjwh0WBgeYpKsPmBySs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg2NDQwLCJleHAiOjE3ODI5ODczNDAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.hw2VMzD7wXF3L_KfKN_ebXpEPJKjXdsBsehN8A-8BGI
 Content-Type: application/json
 
 {
-    "name": "Warembo Tupu",
-    "description": "Beauty and wellness businesses.",
-    "businessType": "6a44e58a1713fbebfdc0b39d",
-    "phone": "+254712345678",
-    "email": "info@warembootupu.com"
+    "name": "Pickaxe $ Shovel",
+    "description": "I'm Keith Owino — a self-taught developer from Nairobi, Kenya. I build web applications today and i am methodically in the path to learning mechatronics to build automated systems that solve real East African problems: smart agriculture, affordable robotics, and connected IoT infrastructure.",
+    "businessType": "6a44e58a1713fbebfdc0b39e",
+    "email": "designsolutions1629@gmail.com",
+    "phone": "+254768290857"
 }
 
 ### Update a business with Valid token (register, login create a business)
@@ -91,4 +78,47 @@ Content-Type: application/json
 
 {
     "name": "Warembo Tupu Ltd"
+}
+
+### Login
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "designsolutions1629@gmail.com",
+    "password": "testPassword@1234"
+}
+
+### Successful Invite and Duplicate Invite - (POST http://localhost:5000/api/v1/businesses/<businessId>/members, Authorization: Bearer <owner-access-token>, email = use B's)
+
+POST http://localhost:5000/api/v1/businesses/6a463756eed8cb5e2897566f/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg3MjE5LCJleHAiOjE3ODI5ODgxMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ojujf1tHly7u3wostWylLjAYob-y8ID61wwEOn7HVZg
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "roleId": "6a451ec4b20eb8419e8a8be6"
+}
+
+### Invite - Unknown User 
+
+POST http://localhost:5000/api/v1/businesses/6a463756eed8cb5e2897566f/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg3MjE5LCJleHAiOjE3ODI5ODgxMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ojujf1tHly7u3wostWylLjAYob-y8ID61wwEOn7HVZg
+Content-Type: application/json
+
+{
+    "email": "doesnotexist@example.com",
+    "roleId": "6a451ec4b20eb8419e8a8be6"
+}
+
+### Invite user with an invalid role
+
+POST http://localhost:5000/api/v1/businesses/6a463756eed8cb5e2897566f/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg3MjE5LCJleHAiOjE3ODI5ODgxMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ojujf1tHly7u3wostWylLjAYob-y8ID61wwEOn7HVZg
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "roleId": "6a451ec4b2aeb8419e8a8be6"
 }
