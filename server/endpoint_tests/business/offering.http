@@ -1,15 +1,15 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2ZGRkNDk3YTY1NzM5ZjAxYWJmMzY4IiwiaWF0IjoxNzg1NTg0OTY5LCJleHAiOjE3ODU2NzEzNjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T7AnOet6BZSnBlp_3dvL8QMfpvwj7RCxhW9-ONS7IF8
 Content-Type: application/json
 
-{
-  "type": "PRODUCT",
-  "name": "Dell XPS 13",
-  "description": "13-inch developer laptop",
-  "visibility": "PUBLIC"
-}
+# {
+#   "type": "PRODUCT",
+#   "name": "Dell XPS 13",
+#   "description": "13-inch developer laptop",
+#   "visibility": "PUBLIC"
+# }
 
 # {
 #   "type": "PRODUCT",
@@ -25,20 +25,28 @@ Content-Type: application/json
 #   "visibility": "PUBLIC"
 # }
 
+{
+    "type": "PRODUCT",
+    "name": "MacBook Pro M5",
+    "description": "Apple developer laptop",
+    "status": "DRAFT",
+    "visibility": "PUBLIC"
+}
+
 ### List Offerings
 
 GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2ZGRkNDk3YTY1NzM5ZjAxYWJmMzY4IiwiaWF0IjoxNzg1NTg0OTY5LCJleHAiOjE3ODU2NzEzNjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T7AnOet6BZSnBlp_3dvL8QMfpvwj7RCxhW9-ONS7IF8
 
 ### Get Offering
 
-GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6c7a97c4217e5be0e7c214
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6dddf97a65739f01abf369
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2ZGRkNDk3YTY1NzM5ZjAxYWJmMzY4IiwiaWF0IjoxNzg1NTg0OTY5LCJleHAiOjE3ODU2NzEzNjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T7AnOet6BZSnBlp_3dvL8QMfpvwj7RCxhW9-ONS7IF8
 
 ### Update Offering
 
-PATCH http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6c7a97c4217e5be0e7c214
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+PATCH http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6dddf97a65739f01abf369
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2ZGRkNDk3YTY1NzM5ZjAxYWJmMzY4IiwiaWF0IjoxNzg1NTg0OTY5LCJleHAiOjE3ODU2NzEzNjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T7AnOet6BZSnBlp_3dvL8QMfpvwj7RCxhW9-ONS7IF8
 Content-Type: application/json
 
 {
@@ -59,7 +67,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Y
 
 ### Filter by type
 
-GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?type=RENTAL
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?type=PRODUCT
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
 
 ### Filter by status
@@ -75,4 +83,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Y
 ### Search
 
 GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?search=hotels
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2ZGRkNDk3YTY1NzM5ZjAxYWJmMzY4IiwiaWF0IjoxNzg1NTg0OTY5LCJleHAiOjE3ODU2NzEzNjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T7AnOet6BZSnBlp_3dvL8QMfpvwj7RCxhW9-ONS7IF8

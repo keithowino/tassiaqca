@@ -1,400 +1,57 @@
-Let's continue. The next milestone was to evolving the Offering Domain into the platform abstraction described in the architecture specification by introducing the builder/factory pattern and registry-driven defaults and behavior.
-
-## The implementation steps you recommended
-
-1. Phase 1 — Offering Type Registry Integration
-2. Phase 2 — Offering Builder
-    ```bash
-    offering/
-    builders/
-        offering.builder.js
-    ```
-3. Phase 3 — Offering Factory
-4. Phase 4 — Registry-driven
-    - defaults
-    - validation
-5. Phase 5 — Shared Offering Lifecycle
-    -   - preparation for Product/Booking/Rental inheritance.
-
-For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
-
-# TassiaQCA Folder Structure
-
-Generated on: 2026-07-31
-
-```bash
-├── client/
-│   └── ...
-├── server/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── bootstrap/
-│   │   │   │   └── database.js
-│   │   │   ├── config/
-│   │   │   │   ├── cloudinary.js
-│   │   │   │   ├── cors.js
-│   │   │   │   └── env.js
-│   │   │   ├── middleware/
-│   │   │   ├── routes/
-│   │   │   │   └── api.js
-│   │   │   ├── app.js
-│   │   │   └── server.js
-│   │   ├── modules/
-│   │   │   ├── offering/
-│   │   │   │   ├── builders/
-│   │   │   │   │   └── index.js
-│   │   │   │   ├── constants/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── offeringStatus.constants.js
-│   │   │   │   │   └── offeringVisibility.constants.js
-│   │   │   │   ├── controllers/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   └── offering.controller.js
-│   │   │   │   ├── errors/
-│   │   │   │   │   └── index.js
-│   │   │   │   ├── models/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   └── offering.model.js
-│   │   │   │   ├── presenters/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   └── offering.presenter.js
-│   │   │   │   ├── registries/
-│   │   │   │   │   └── index.js
-│   │   │   │   ├── repositories/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   └── offering.repository.js
-│   │   │   │   ├── routes/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   └── offering.routes.js
-│   │   │   │   ├── services/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   └── offering.service.js
-│   │   │   │   ├── validators/
-│   │   │   │   │   ├── businessParamsSchema.js
-│   │   │   │   │   ├── createOfferingSchema.js
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── listOfferingsQuerySchema.js
-│   │   │   │   │   ├── offeringParamsSchema.js
-│   │   │   │   │   └── updateOfferingSchema.js
-│   │   │   │   └── index.js
-│   │   │   └── ...
-│   │   ├── scripts/
-│   │   │   ├── seed-permissions.js
-│   │   │   └── seed-roles.js
-│   │   └── shared/
-│   │       ├── constants/
-│   │       │   ├── auditActions.js
-│   │       │   ├── auditEntityTypes.js
-│   │       │   ├── permissions.js
-│   │       │   └── ...
-│   │       ├── platform/
-│   │       │   ├── offerings/
-│   │       │   │   ├── index.js
-│   │       │   │   ├── offering.constants.js
-│   │       │   │   ├── offering.registry.js
-│   │       │   │   └── offeringCategory.constants.js
-│   │       │   ├── registry/
-│   │       │   │   ├── index.js
-│   │       │   │   ├── registry.bootstrap.js
-│   │       │   │   ├── registry.js
-│   │       │   │   ├── registry.utils.js
-│   │       │   │   └── registry.validator.js
-│   │       │   └── ...
-│   │       └── ...
-│   └── ...
-└── ...
-```
-
-```js
-`~\server\src\shared\platform\registry\registry.utils.js`;
-
-export const getById = (registry, id) => registry.get(id);
-
-export const getAll = (registry) => [...registry.values()];
-
-export const exists = (registry, id) => registry.has(id);
-
-export const filterBy = (registry, predicate) =>
-	getAll(registry).filter(predicate);
-
-export const findBy = (registry, predicate) => getAll(registry).find(predicate);
-
-export const groupBy = (registry, selector) => {
-	return getAll(registry).reduce((groups, item) => {
-		const key = selector(item);
-
-		if (!groups[key]) {
-			groups[key] = [];
-		}
-
-		groups[key].push(item);
-
-		return groups;
-	}, {});
-};
-```
-
-```js
-`~\server\src\shared\platform\offerings\offering.registry.js`;
-
-import { OFFERING_TYPES } from "./offering.constants.js";
-import { OFFERING_CATEGORIES } from "./offeringCategory.constants.js";
-
-import { createRegistry } from "../registry/registry.js";
-
-const baseOffering = {
-	capabilities: [],
-
-	modules: [],
-
-	marketplace: {
-		searchable: true,
-		discoverable: true,
-	},
-
-	configuration: {
-		supportsVariants: false,
-		supportsInventory: false,
-		supportsScheduling: false,
-	},
-};
-
-const offerings = [
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.PRODUCT,
-		category: OFFERING_CATEGORIES.PHYSICAL,
-		label: "Product",
-		description: "Physical goods sold by a business.",
-
-		configuration: {
-			...baseOffering.configuration,
-			supportsVariants: true,
-			supportsInventory: true,
-		},
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.SERVICE,
-		category: OFFERING_CATEGORIES.TIME_BASED,
-		label: "Service",
-		description: "Professional or business service.",
-
-		configuration: {
-			...baseOffering.configuration,
-			supportsScheduling: true,
-		},
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.BOOKING,
-		category: OFFERING_CATEGORIES.TIME_BASED,
-		label: "Booking",
-		description: "Reservable appointment or schedule.",
-
-		configuration: {
-			...baseOffering.configuration,
-			supportsScheduling: true,
-		},
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.RENTAL,
-		category: OFFERING_CATEGORIES.PHYSICAL,
-		label: "Rental",
-		description: "Assets rented for a duration.",
-
-		configuration: {
-			...baseOffering.configuration,
-			supportsInventory: true,
-		},
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.MEMBERSHIP,
-		category: OFFERING_CATEGORIES.ACCESS,
-		label: "Membership",
-		description: "Recurring member access.",
-
-		// Default configuration for now
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.SUBSCRIPTION,
-		category: OFFERING_CATEGORIES.ACCESS,
-		label: "Subscription",
-		description: "Recurring subscription.",
-
-		// Default configuration for now
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.COURSE,
-		category: OFFERING_CATEGORIES.DIGITAL,
-		label: "Course",
-		description: "Educational offering.",
-
-		// Default configuration for now
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.EVENT,
-		category: OFFERING_CATEGORIES.EXPERIENCE,
-		label: "Event",
-		description: "Scheduled experience.",
-
-		// Default configuration for now
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.PACKAGE,
-		category: OFFERING_CATEGORIES.EXPERIENCE,
-		label: "Package",
-		description: "Bundle of offerings.",
-
-		// Default configuration for now
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.DIGITAL_DOWNLOAD,
-		category: OFFERING_CATEGORIES.DIGITAL,
-		label: "Digital Download",
-		description: "Downloadable digital asset.",
-
-		// Default configuration for now
-	},
-];
-
-export const offeringRegistry = createRegistry(
-	offerings,
-	(offering) => offering.type,
-);
-
-export default offeringRegistry;
-```
-
-```js
-`~\server\src\modules\offering\models\offering.model.js`;
-
-import mongoose from "mongoose";
-
-import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
-
-import { OFFERING_TYPES } from "../../../shared/platform/offerings/index.js";
-
-const offeringSchema = new mongoose.Schema(
-	{
-		business: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Business",
-			required: true,
-			index: true,
-		},
-
-		type: {
-			type: String,
-			required: true,
-			enum: Object.values(OFFERING_TYPES),
-			index: true,
-		},
-
-		slug: {
-			type: String,
-			required: true,
-			trim: true,
-			lowercase: true,
-			index: true,
-		},
-
-		name: {
-			type: String,
-			required: true,
-			trim: true,
-		},
-
-		shortDescription: {
-			type: String,
-			trim: true,
-			default: "",
-		},
-
-		description: {
-			type: String,
-			default: "",
-		},
-
-		status: {
-			type: String,
-			enum: Object.values(OFFERING_STATUS),
-			default: OFFERING_STATUS.DRAFT,
-			index: true,
-		},
-
-		visibility: {
-			type: String,
-			enum: Object.values(OFFERING_VISIBILITY),
-			default: OFFERING_VISIBILITY.PRIVATE,
-		},
-
-		searchable: {
-			type: Boolean,
-			default: true,
-		},
-
-		featured: {
-			type: Boolean,
-			default: false,
-		},
-
-		publishedAt: Date,
-
-		metadata: {
-			type: mongoose.Schema.Types.Mixed,
-			default: {},
-		},
-
-		createdBy: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-		},
-
-		updatedBy: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-		},
-	},
-	{
-		timestamps: true,
-	},
-);
-
-offeringSchema.index({
-	business: 1,
-	slug: 1,
-});
-
-export const Offering =
-	mongoose.models.Offering || mongoose.model("Offering", offeringSchema);
-```
+Here is the breakdown and current standing of a portion of the application. What are we to work on next show me the plan, i want to know the subsequent steps to come.
+
+## Breakdown of What We have been Working on lately
+
+1. Milestone 1 — Platform Registry Foundation (covered)
+    - Capability Registry
+    - Module Registry
+    - Business Type Registry
+2. Milestone 2 — Business Configuration Model (covered)
+3. Milestone 3 — Configuration Service (covered)
+    - Step 1 — Integrate Business Creation
+    - Step 2 — Business Retrieval
+    - Step 3 — Startup Validation
+    - Step 4 — Domain Events (Preparation)
+4. Milestone 4 — Business Provisioning (covered)
+5. Milestone 5 — Navigation Generation (covered)
+    - 5.1 Navigation Registry
+    - 5.2 Navigation Builder
+    - 5.3 Navigation Service
+    - 5.4 Navigation API
+    - 5.5 Dashboard Registry
+    - 5.6 Dashboard Builder
+    - 5.7 Frontend Dynamic Rendering
+6. Milestone 6 — Configuration Management
+
+---
+
+### Offering Framework
+
+1. Milestone 1 — Offering Domain Foundation (covered)
+2. Milestone 2 — Offering Contract (covered)
+3. Milestone 3 — Offering Registry (covered)
+4. Milestone 4 — Offering Service Layer (covered)
+5. Milestone 5 — Product Adapter
+6. Milestone 6 — Variant Implementation
+
+---
+
+1. Architecture Review (covered)
+2. Create the offering domain skeleton (folders, exports, constants) (covered)
+3. Define the Offering contract and base model (covered)
+4. Implement the Offering Registry and integrate it with the (registry bootstrapping, validation utilities, and registry lookups) (covered)
+5. Build repositories, presenters, and services for generic offering lifecycle operations (covered)
+6. Migrate the existing Product implementation to conform to the Offering contract
+7. Resume Product Variants on top of the new abstraction
+8. Proceed to Marketplace aggregation, which will consume Offerings rather than Products.
+
+---
+
+1. Move the current shared lifecycle to lifecycles/shared/offering.lifecycle.js (no logic changes). (covered)
+2. Create specialized lifecycle files (product.lifecycle.js, rental.lifecycle.js, booking.lifecycle.js, etc.) that simply spread the shared lifecycle. (covered)
+3. Implement lifecycle.factory.js to resolve the appropriate lifecycle based on offering type. (covered)
+4. Refactor offering.service.js so it delegates to the lifecycle factory instead of importing the shared lifecycle directly. (covered)
+5. Run the existing Offering API test suite unchanged to confirm behavior is identical before adding any type-specific business logic. (covered)
 
 ```js
 `~\server\src\modules\offering\controllers\offering.controller.js`;
@@ -538,23 +195,164 @@ export default {
 ```js
 `~\server\src\modules\offering\services\offering.service.js`;
 
+import lifecycleFactory from "../lifecycles/lifecycle.factory.js";
 import { offeringRepository } from "../repositories/index.js";
-import { offeringPresenter } from "../presenters/index.js";
 
-import businessRepository from "../../business/repositories/business.repository.js";
-import { auditLogService } from "../../audit/index.js";
+/**
+ * Delegation layer
+ */
 
-import slugify from "../../../shared/utils/slugify.js";
+/**
+|--------------------------------------------------
+| Private helper functions
+|--------------------------------------------------
+*/
+
+function lifecycleFor(payload) {
+	return lifecycleFactory.resolveLifecycle(payload.data.type);
+}
+
+async function resolveExistingLifecycle({ businessId, offeringId }) {
+	const offering = await offeringRepository.findByBusinessAndId(
+		businessId,
+		offeringId,
+	);
+
+	if (!offering) {
+		return lifecycleFactory.resolveLifecycle("UNKNOWN");
+	}
+
+	return lifecycleFactory.resolveLifecycle(offering.type);
+}
+
+/**
+|--------------------------------------------------
+| Public functions
+|--------------------------------------------------
+*/
+
+/**
+ * The fallback to "PRODUCT" is only a transitional mechanism. For get, update, archive, and restore, the service does not yet know the offering type because it only receives an offeringId. In the next refinement, the resolver should determine the lifecycle by first loading the offering from the repository:
+ */
+
+// async function createOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(payload.data.type);
+
+// 	return lifecycle.create(payload);
+// }
+
+async function createOffering(payload) {
+	return lifecycleFor(payload).create(payload);
+}
+
+// async function listOfferings(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.query?.type ?? payload.type ?? "PRODUCT",
+// 	);
+
+// 	return lifecycle.list(payload);
+// }
+
+async function listOfferings(payload) {
+	// shared for now
+	return lifecycleFactory
+		.resolveLifecycle(payload.query?.type ?? "PRODUCT")
+		.list(payload);
+}
+
+// async function getOffering(payload) {
+// 	// Placeholder until entity-based resolution is introduced.
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.type ?? "PRODUCT",
+// 	);
+
+// 	return lifecycle.get(payload);
+// }
+
+async function getOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
+
+	return lifecycle.get(payload);
+}
+
+// async function updateOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.data?.type ?? payload.type ?? "PRODUCT",
+// 	);
+
+// 	return lifecycle.update(payload);
+// }
+
+async function updateOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
+
+	return lifecycle.update(payload);
+}
+
+// async function archiveOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.type ?? "PRODUCT",
+// 	);
+
+// 	return lifecycle.archive(payload);
+// }
+
+async function archiveOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
+
+	return lifecycle.archive(payload);
+}
+
+// async function restoreOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.type ?? "PRODUCT",
+// 	);
+
+// 	return lifecycle.restore(payload);
+// }
+
+async function restoreOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
+
+	return lifecycle.restore(payload);
+}
+
+export default {
+	createOffering,
+	listOfferings,
+	getOffering,
+	updateOffering,
+	archiveOffering,
+	restoreOffering,
+};
+```
+
+```js
+`~\server\src\modules\offering\lifecycles\shared\offering.lifecycle.js`;
+
+import { offeringRepository } from "../../repositories/index.js";
+import { offeringPresenter } from "../../presenters/index.js";
+
+import businessRepository from "../../../business/repositories/business.repository.js";
+import { auditLogService } from "../../../audit/index.js";
+
+import slugify from "../../../../shared/utils/slugify.js";
 
 import {
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
 	HTTP_STATUS,
-} from "../../../shared/constants/index.js";
+} from "../../../../shared/constants/index.js";
 
-import { OFFERING_STATUS } from "../constants/index.js";
+import { OFFERING_STATUS } from "../../constants/index.js";
 
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
+import { AppError, ErrorCodes } from "../../../../shared/errors/index.js";
+
+import { offeringFactory } from "../../builders/index.js";
+
+/**
+ * This is the foundation for the next evolution. Once Product, Booking, Rental, Membership, Course, etc. become independent domains, each can provide its own lifecycle hooks (beforeCreate, afterCreate, beforeUpdate, publish, archive, pricing, inventory, scheduling, etc.) while continuing to reuse this shared lifecycle instead of duplicating CRUD logic.
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -641,11 +439,11 @@ function buildAuditMetadata(offering) {
 
 /*
 |--------------------------------------------------------------------------
-| Public Service
+| Lifecycle
 |--------------------------------------------------------------------------
 */
 
-async function createOffering({ businessId, data, actor, requestMetadata }) {
+async function create({ businessId, data, actor, requestMetadata }) {
 	await ensureBusinessExists(businessId);
 
 	const name = data.name.trim();
@@ -654,39 +452,32 @@ async function createOffering({ businessId, data, actor, requestMetadata }) {
 
 	const slug = await generateUniqueSlug(businessId, name);
 
-	const offering = await offeringRepository.create({
-		...data,
-
-		business: businessId,
-
-		name,
-
-		slug,
-
-		createdBy: actor.id,
-		updatedBy: actor.id,
-	});
+	const offering = await offeringRepository.create(
+		offeringFactory.createOffering({
+			businessId,
+			data: {
+				...data,
+				name,
+			},
+			slug,
+			actor,
+		}),
+	);
 
 	await auditLogService.log({
 		business: businessId,
-
 		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
 		entityId: offering.id,
-
 		action: AUDIT_ACTIONS.OFFERING_CREATED,
-
 		actor,
-
 		requestMetadata,
-
 		metadata: buildAuditMetadata(offering),
 	});
 
 	return offeringPresenter.present(offering);
 }
 
-async function listOfferings({ businessId, query }) {
+async function list({ businessId, query }) {
 	await ensureBusinessExists(businessId);
 
 	const page = query.page ?? 1;
@@ -715,7 +506,7 @@ async function listOfferings({ businessId, query }) {
 	};
 }
 
-async function getOffering({ businessId, offeringId }) {
+async function get({ businessId, offeringId }) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -723,7 +514,7 @@ async function getOffering({ businessId, offeringId }) {
 	return offeringPresenter.present(offering);
 }
 
-async function updateOffering({
+async function update({
 	businessId,
 	offeringId,
 	data,
@@ -758,29 +549,18 @@ async function updateOffering({
 
 	await auditLogService.log({
 		business: businessId,
-
 		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
 		entityId: offering.id,
-
 		action: AUDIT_ACTIONS.OFFERING_UPDATED,
-
 		actor,
-
 		requestMetadata,
-
 		metadata: buildAuditMetadata(offering),
 	});
 
 	return offeringPresenter.present(offering);
 }
 
-async function archiveOffering({
-	businessId,
-	offeringId,
-	actor,
-	requestMetadata,
-}) {
+async function archive({ businessId, offeringId, actor, requestMetadata }) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -793,29 +573,18 @@ async function archiveOffering({
 
 	await auditLogService.log({
 		business: businessId,
-
 		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
 		entityId: offering.id,
-
 		action: AUDIT_ACTIONS.OFFERING_ARCHIVED,
-
 		actor,
-
 		requestMetadata,
-
 		metadata: buildAuditMetadata(offering),
 	});
 
 	return offeringPresenter.present(offering);
 }
 
-async function restoreOffering({
-	businessId,
-	offeringId,
-	actor,
-	requestMetadata,
-}) {
+async function restore({ businessId, offeringId, actor, requestMetadata }) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -828,17 +597,11 @@ async function restoreOffering({
 
 	await auditLogService.log({
 		business: businessId,
-
 		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
 		entityId: offering.id,
-
 		action: AUDIT_ACTIONS.OFFERING_RESTORED,
-
 		actor,
-
 		requestMetadata,
-
 		metadata: buildAuditMetadata(offering),
 	});
 
@@ -846,65 +609,13 @@ async function restoreOffering({
 }
 
 export default {
-	createOffering,
-	listOfferings,
-	getOffering,
-	updateOffering,
-	archiveOffering,
-	restoreOffering,
+	create,
+	list,
+	get,
+	update,
+	archive,
+	restore,
 };
-```
-
-```js
-`~\server\src\modules\offering\presenters\offering.presenter.js`;
-
-import { getId } from "../../../shared/utils/presenter.js";
-
-class OfferingPresenter {
-	present(offering) {
-		if (!offering) return null;
-
-		const businessId = getId(offering.business);
-
-		return {
-			id: offering.id,
-
-			businessId,
-
-			type: offering.type,
-
-			slug: offering.slug,
-
-			name: offering.name,
-
-			shortDescription: offering.shortDescription,
-
-			description: offering.description,
-
-			status: offering.status,
-
-			visibility: offering.visibility,
-
-			searchable: offering.searchable,
-
-			featured: offering.featured,
-
-			publishedAt: offering.publishedAt,
-
-			metadata: offering.metadata,
-
-			createdAt: offering.createdAt,
-
-			updatedAt: offering.updatedAt,
-		};
-	}
-
-	presentCollection(offerings) {
-		return offerings.map((offering) => this.present(offering));
-	}
-}
-
-export default new OfferingPresenter();
 ```
 
 ```js
@@ -1030,4 +741,388 @@ export default {
 
 	findByBusiness,
 };
+```
+
+```js
+`~\server\src\modules\offering\builders\offering.factory.js`;
+
+import offeringRegistry from "../../../shared/platform/offerings/offering.registry.js";
+
+/**
+ * Its sole responsibility is to resolve the correct builder for an offering type and delegate construction.
+ */
+
+function resolveBuilder(type) {
+	const definition = offeringRegistry.get(type);
+
+	if (!definition) {
+		throw new Error(`Unknown offering type "${type}".`);
+	}
+
+	return definition.builder;
+}
+
+function createOffering(payload) {
+	return resolveBuilder(payload.data.type)(payload);
+}
+
+export default {
+	createOffering,
+};
+```
+
+```js
+`~\server\src\shared\platform\offerings\offering.registry.js`;
+
+import { OFFERING_TYPES } from "./offering.constants.js";
+import { OFFERING_CATEGORIES } from "./offeringCategory.constants.js";
+
+import { createRegistry } from "../registry/registry.js";
+
+import { buildOffering } from "../../../modules/offering/builders/index.js";
+
+import {
+	productLifecycle,
+	serviceLifecycle,
+	bookingLifecycle,
+	rentalLifecycle,
+	membershipLifecycle,
+	subscriptionLifecycle,
+	courseLifecycle,
+	eventLifecycle,
+	packageLifecycle,
+	digitalDownloadLifecycle,
+} from "../../../modules/offering/lifecycles/index.js";
+
+import {
+	OFFERING_STATUS,
+	OFFERING_VISIBILITY,
+} from "../../../modules/offering/constants/index.js";
+
+/**
+ * For now, every type will use the generic OfferingBuilder. As Product, Booking, Rental, Course, etc. evolve, you simply replace the mapping—without touching the service.
+ */
+const baseOffering = {
+	builder: buildOffering,
+
+	lifecycle: null,
+
+	capabilities: [],
+
+	modules: [],
+
+	marketplace: {
+		searchable: true,
+		discoverable: true,
+	},
+
+	configuration: {
+		supportsVariants: false,
+		supportsInventory: false,
+		supportsScheduling: false,
+	},
+
+	defaults: {
+		status: OFFERING_STATUS.DRAFT,
+
+		visibility: OFFERING_VISIBILITY.PRIVATE,
+
+		searchable: true,
+
+		featured: false,
+
+		metadata: {},
+	},
+};
+
+const offerings = [
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.PRODUCT,
+		lifecycle: productLifecycle,
+		category: OFFERING_CATEGORIES.PHYSICAL,
+		label: "Product",
+		description: "Physical goods sold by a business.",
+
+		configuration: {
+			...baseOffering.configuration,
+			supportsVariants: true,
+			supportsInventory: true,
+		},
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.SERVICE,
+		lifecycle: serviceLifecycle,
+		category: OFFERING_CATEGORIES.TIME_BASED,
+		label: "Service",
+		description: "Professional or business service.",
+
+		configuration: {
+			...baseOffering.configuration,
+			supportsScheduling: true,
+		},
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.BOOKING,
+		lifecycle: bookingLifecycle,
+		category: OFFERING_CATEGORIES.TIME_BASED,
+		label: "Booking",
+		description: "Reservable appointment or schedule.",
+
+		configuration: {
+			...baseOffering.configuration,
+			supportsScheduling: true,
+		},
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.RENTAL,
+		lifecycle: rentalLifecycle,
+		category: OFFERING_CATEGORIES.PHYSICAL,
+		label: "Rental",
+		description: "Assets rented for a duration.",
+
+		configuration: {
+			...baseOffering.configuration,
+			supportsInventory: true,
+		},
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.MEMBERSHIP,
+		lifecycle: membershipLifecycle,
+		category: OFFERING_CATEGORIES.ACCESS,
+		label: "Membership",
+		description: "Recurring member access.",
+
+		// Default configuration for now
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.SUBSCRIPTION,
+		lifecycle: subscriptionLifecycle,
+		category: OFFERING_CATEGORIES.ACCESS,
+		label: "Subscription",
+		description: "Recurring subscription.",
+
+		// Default configuration for now
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.COURSE,
+		lifecycle: courseLifecycle,
+		category: OFFERING_CATEGORIES.DIGITAL,
+		label: "Course",
+		description: "Educational offering.",
+
+		// Default configuration for now
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.EVENT,
+		lifecycle: eventLifecycle,
+		category: OFFERING_CATEGORIES.EXPERIENCE,
+		label: "Event",
+		description: "Scheduled experience.",
+
+		// Default configuration for now
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.PACKAGE,
+		lifecycle: packageLifecycle,
+		category: OFFERING_CATEGORIES.EXPERIENCE,
+		label: "Package",
+		description: "Bundle of offerings.",
+
+		// Default configuration for now
+	},
+
+	{
+		...baseOffering,
+
+		type: OFFERING_TYPES.DIGITAL_DOWNLOAD,
+		lifecycle: digitalDownloadLifecycle,
+		category: OFFERING_CATEGORIES.DIGITAL,
+		label: "Digital Download",
+		description: "Downloadable digital asset.",
+
+		// Default configuration for now
+	},
+];
+
+export const offeringRegistry = createRegistry(
+	offerings,
+	(offering) => offering.type,
+);
+
+export default offeringRegistry;
+```
+
+```js
+`~\server\src\shared\platform\registry\registry.js`;
+
+import {
+	exists,
+	filterBy,
+	findBy,
+	getAll,
+	getById,
+	groupBy,
+} from "./registry.utils.js";
+
+export const createRegistry = (items, keySelector = (item) => item.id) => {
+	const registry = new Map();
+
+	for (const item of items) {
+		const key = keySelector(item);
+
+		if (registry.has(key)) {
+			throw new Error(`Duplicate registry key "${key}".`);
+		}
+
+		registry.set(key, Object.freeze(item));
+	}
+
+	Object.freeze(items);
+
+	return Object.freeze({
+		get: (id) => getById(registry, id),
+
+		getAll: () => getAll(registry),
+
+		exists: (id) => exists(registry, id),
+
+		find: (predicate) => findBy(registry, predicate),
+
+		filter: (predicate) => filterBy(registry, predicate),
+
+		groupBy: (selector) => groupBy(registry, selector),
+	});
+};
+```
+
+```js
+`~\server\src\shared\platform\registry\registry.utils.js`;
+
+export const getById = (registry, id) => registry.get(id);
+
+export const getAll = (registry) => [...registry.values()];
+
+export const exists = (registry, id) => registry.has(id);
+
+export const filterBy = (registry, predicate) =>
+	getAll(registry).filter(predicate);
+
+export const findBy = (registry, predicate) => getAll(registry).find(predicate);
+
+export const groupBy = (registry, selector) => {
+	return getAll(registry).reduce((groups, item) => {
+		const key = selector(item);
+
+		if (!groups[key]) {
+			groups[key] = [];
+		}
+
+		groups[key].push(item);
+
+		return groups;
+	}, {});
+};
+```
+
+```js
+`~\server\src\modules\offering\lifecycles\product.lifecycle.js`;
+
+import sharedLifecycle from "./shared/offering.lifecycle.js";
+
+export default {
+	create: sharedLifecycle.create,
+	list: sharedLifecycle.list,
+	get: sharedLifecycle.get,
+	update: sharedLifecycle.update,
+	archive: sharedLifecycle.archive,
+	restore: sharedLifecycle.restore,
+};
+```
+
+```js
+`~\server\src\modules\offering\lifecycles\rental.lifecycle.js`;
+
+import sharedLifecycle from "./shared/offering.lifecycle.js";
+
+export default {
+	create: sharedLifecycle.create,
+	list: sharedLifecycle.list,
+	get: sharedLifecycle.get,
+	update: sharedLifecycle.update,
+	archive: sharedLifecycle.archive,
+	restore: sharedLifecycle.restore,
+};
+```
+
+```js
+`~\server\src\modules\offering\builders\offering.builder.js`;
+
+import offeringRegistry from "../../../shared/platform/offerings/offering.registry.js";
+
+export function buildOffering({ businessId, data, slug, actor }) {
+	const definition = offeringRegistry.get(data.type);
+
+	if (!definition) {
+		throw new Error(`Unknown offering type "${data.type}".`);
+	}
+
+	const defaults = definition.defaults;
+
+	return {
+		business: businessId,
+
+		type: definition.type,
+
+		slug,
+
+		name: data.name.trim(),
+
+		shortDescription: data.shortDescription ?? "",
+
+		description: data.description ?? "",
+
+		status: data.status ?? defaults.status,
+
+		visibility: data.visibility ?? defaults.visibility,
+
+		searchable: data.searchable ?? defaults.searchable,
+
+		featured: data.featured ?? defaults.featured,
+
+		metadata: {
+			...defaults.metadata,
+			...(data.metadata ?? {}),
+		},
+
+		createdBy: actor.id,
+
+		updatedBy: actor.id,
+	};
+}
 ```

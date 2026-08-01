@@ -1071,11 +1071,72 @@ Maintenance
 
 ---
 
+- I recommend we proceed by implementing
+    1. Phase 2 (Offering Builder) (covered)
+    2. Offering Factory and refactor offering.service.js
+    3. registry-driven defaults and lifecycle behavior.
+
+---
+
+After introducing specialized builders:
+
+```bash
+Factory
+    │
+    ├── PRODUCT ─────────► ProductBuilder
+    │                         │
+    │                         ├── registry defaults
+    │                         ├── variant initialization
+    │                         ├── inventory initialization
+    │                         └── pricing initialization
+    │
+    ├── RENTAL ─────────► RentalBuilder
+    │                         ├── rental policies
+    │                         ├── availability
+    │                         └── deposits
+    │
+    ├── BOOKING ────────► BookingBuilder
+    │                         ├── duration
+    │                         ├── schedule
+    │                         └── calendar
+    │
+    └── SERVICE ────────► ServiceBuilder
+```
+
+---
+
+Next Phase (Phase 5)
+
+After this refactoring, the next major milestone is Shared Offering Lifecycle. Instead of services directly mutating fields such as:
+
+---
+
+## I recommend implementing this phase incrementally:
+
+1. Create offering.lifecycle.js and move the current service logic there with no behavioral changes. (covered)
+2. Refactor offering.service.js into a thin delegation layer. (covered)
+3. Verify that all existing Offering API tests still pass unchanged. (covered)
+4. Once parity is confirmed, introduce specialized lifecycles (Product, Rental, Booking, etc.) that extend the shared lifecycle. This minimizes risk while establishing the inheritance model described in your architecture specification.
+
+---
+
+## Recommended implementation order
+
+To keep risk low, I'd implement this incrementally:
+
+1. Move the current shared lifecycle to lifecycles/shared/offering.lifecycle.js (no logic changes). (covered)
+2. Create specialized lifecycle files (product.lifecycle.js, rental.lifecycle.js, booking.lifecycle.js, etc.) that simply spread the shared lifecycle. (covered)
+3. Implement lifecycle.factory.js to resolve the appropriate lifecycle based on offering type. (covered)
+4. Refactor offering.service.js so it delegates to the lifecycle factory instead of importing the shared lifecycle directly. (covered)
+5. Run the existing Offering API test suite unchanged to confirm behavior is identical before adding any type-specific business logic. (covered)
+
+---
+
 - We may begin testing, In each test give me the complete http request example for me to test.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(frontend): Create the the offering framework."
+git commit -m "feat(offering): Create a specialized offering lifecycle."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

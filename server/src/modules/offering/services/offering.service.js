@@ -1,308 +1,123 @@
+import lifecycleFactory from "../lifecycles/lifecycle.factory.js";
 import { offeringRepository } from "../repositories/index.js";
-import { offeringPresenter } from "../presenters/index.js";
 
-import businessRepository from "../../business/repositories/business.repository.js";
-import { auditLogService } from "../../audit/index.js";
+/**
+ * Delegation layer
+ */
 
-import slugify from "../../../shared/utils/slugify.js";
-
-import {
-	AUDIT_ACTIONS,
-	AUDIT_ENTITY_TYPES,
-	HTTP_STATUS,
-} from "../../../shared/constants/index.js";
-
-import { OFFERING_STATUS } from "../constants/index.js";
-
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
-
-/*
-|--------------------------------------------------------------------------
-| Private Helpers
-|--------------------------------------------------------------------------
+/**
+|--------------------------------------------------
+| Private helper functions
+|--------------------------------------------------
 */
 
-async function ensureBusinessExists(businessId) {
-	const business = await businessRepository.findById(businessId);
-
-	if (!business) {
-		throw new AppError(
-			"Business not found.",
-			HTTP_STATUS.NOT_FOUND,
-			ErrorCodes.NOT_FOUND,
-		);
-	}
-
-	return business;
+function lifecycleFor(payload) {
+	return lifecycleFactory.resolveLifecycle(payload.data.type);
 }
 
-async function ensureOfferingExists(businessId, offeringId) {
+async function resolveExistingLifecycle({ businessId, offeringId }) {
 	const offering = await offeringRepository.findByBusinessAndId(
 		businessId,
 		offeringId,
 	);
 
 	if (!offering) {
-		throw new AppError(
-			"Offering not found.",
-			HTTP_STATUS.NOT_FOUND,
-			ErrorCodes.NOT_FOUND,
-		);
+		return lifecycleFactory.resolveLifecycle("UNKNOWN");
 	}
 
-	return offering;
+	return lifecycleFactory.resolveLifecycle(offering.type);
 }
 
-async function ensureOfferingNameIsUnique(businessId, name, excludeId = null) {
-	const existing = await offeringRepository.findByBusinessAndName(
-		businessId,
-		name,
-		excludeId,
-	);
-
-	if (existing) {
-		throw new AppError(
-			"An offering with this name already exists.",
-			HTTP_STATUS.CONFLICT,
-			ErrorCodes.CONFLICT,
-		);
-	}
-}
-
-async function generateUniqueSlug(businessId, name, excludeId = null) {
-	const baseSlug = slugify(name);
-
-	let slug = baseSlug;
-
-	let counter = 2;
-
-	while (
-		await offeringRepository.existsByBusinessAndSlug(
-			businessId,
-			slug,
-			excludeId,
-		)
-	) {
-		slug = `${baseSlug}-${counter++}`;
-	}
-
-	return slug;
-}
-
-function buildAuditMetadata(offering) {
-	return {
-		name: offering.name,
-		type: offering.type,
-		status: offering.status,
-		visibility: offering.visibility,
-		slug: offering.slug,
-	};
-}
-
-/*
-|--------------------------------------------------------------------------
-| Public Service
-|--------------------------------------------------------------------------
+/**
+|--------------------------------------------------
+| Public functions
+|--------------------------------------------------
 */
 
-async function createOffering({ businessId, data, actor, requestMetadata }) {
-	await ensureBusinessExists(businessId);
+/**
+ * The fallback to "PRODUCT" is only a transitional mechanism. For get, update, archive, and restore, the service does not yet know the offering type because it only receives an offeringId. In the next refinement, the resolver should determine the lifecycle by first loading the offering from the repository:
+ */
 
-	const name = data.name.trim();
+// async function createOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(payload.data.type);
 
-	await ensureOfferingNameIsUnique(businessId, name);
+// 	return lifecycle.create(payload);
+// }
 
-	const slug = await generateUniqueSlug(businessId, name);
-
-	const offering = await offeringRepository.create({
-		...data,
-
-		business: businessId,
-
-		name,
-
-		slug,
-
-		createdBy: actor.id,
-		updatedBy: actor.id,
-	});
-
-	await auditLogService.log({
-		business: businessId,
-
-		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
-		entityId: offering.id,
-
-		action: AUDIT_ACTIONS.OFFERING_CREATED,
-
-		actor,
-
-		requestMetadata,
-
-		metadata: buildAuditMetadata(offering),
-	});
-
-	return offeringPresenter.present(offering);
+async function createOffering(payload) {
+	return lifecycleFor(payload).create(payload);
 }
 
-async function listOfferings({ businessId, query }) {
-	await ensureBusinessExists(businessId);
+// async function listOfferings(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.query?.type ?? payload.type ?? "PRODUCT",
+// 	);
 
-	const page = query.page ?? 1;
-	const limit = query.limit ?? 20;
+// 	return lifecycle.list(payload);
+// }
 
-	const skip = (page - 1) * limit;
-
-	const { data, total } = await offeringRepository.findByBusiness(
-		businessId,
-		{
-			...query,
-			skip,
-			limit,
-		},
-	);
-
-	return {
-		data: offeringPresenter.presentCollection(data),
-
-		pagination: {
-			total,
-			page,
-			limit,
-			totalPages: Math.ceil(total / limit),
-		},
-	};
+async function listOfferings(payload) {
+	// shared for now
+	return lifecycleFactory
+		.resolveLifecycle(payload.query?.type ?? "PRODUCT")
+		.list(payload);
 }
 
-async function getOffering({ businessId, offeringId }) {
-	await ensureBusinessExists(businessId);
+// async function getOffering(payload) {
+// 	// Placeholder until entity-based resolution is introduced.
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.type ?? "PRODUCT",
+// 	);
 
-	const offering = await ensureOfferingExists(businessId, offeringId);
+// 	return lifecycle.get(payload);
+// }
 
-	return offeringPresenter.present(offering);
+async function getOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
+
+	return lifecycle.get(payload);
 }
 
-async function updateOffering({
-	businessId,
-	offeringId,
-	data,
-	actor,
-	requestMetadata,
-}) {
-	await ensureBusinessExists(businessId);
+// async function updateOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.data?.type ?? payload.type ?? "PRODUCT",
+// 	);
 
-	const offering = await ensureOfferingExists(businessId, offeringId);
+// 	return lifecycle.update(payload);
+// }
 
-	if (data.name) {
-		const name = data.name.trim();
+async function updateOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
 
-		if (name !== offering.name) {
-			await ensureOfferingNameIsUnique(businessId, name, offering.id);
-
-			offering.name = name;
-
-			offering.slug = await generateUniqueSlug(
-				businessId,
-				name,
-				offering.id,
-			);
-		}
-	}
-
-	Object.assign(offering, data);
-
-	offering.updatedBy = actor.id;
-
-	await offeringRepository.save(offering);
-
-	await auditLogService.log({
-		business: businessId,
-
-		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
-		entityId: offering.id,
-
-		action: AUDIT_ACTIONS.OFFERING_UPDATED,
-
-		actor,
-
-		requestMetadata,
-
-		metadata: buildAuditMetadata(offering),
-	});
-
-	return offeringPresenter.present(offering);
+	return lifecycle.update(payload);
 }
 
-async function archiveOffering({
-	businessId,
-	offeringId,
-	actor,
-	requestMetadata,
-}) {
-	await ensureBusinessExists(businessId);
+// async function archiveOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.type ?? "PRODUCT",
+// 	);
 
-	const offering = await ensureOfferingExists(businessId, offeringId);
+// 	return lifecycle.archive(payload);
+// }
 
-	offering.status = OFFERING_STATUS.ARCHIVED;
+async function archiveOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
 
-	offering.updatedBy = actor.id;
-
-	await offeringRepository.save(offering);
-
-	await auditLogService.log({
-		business: businessId,
-
-		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
-		entityId: offering.id,
-
-		action: AUDIT_ACTIONS.OFFERING_ARCHIVED,
-
-		actor,
-
-		requestMetadata,
-
-		metadata: buildAuditMetadata(offering),
-	});
-
-	return offeringPresenter.present(offering);
+	return lifecycle.archive(payload);
 }
 
-async function restoreOffering({
-	businessId,
-	offeringId,
-	actor,
-	requestMetadata,
-}) {
-	await ensureBusinessExists(businessId);
+// async function restoreOffering(payload) {
+// 	const lifecycle = lifecycleRegistry.resolveLifecycle(
+// 		payload.type ?? "PRODUCT",
+// 	);
 
-	const offering = await ensureOfferingExists(businessId, offeringId);
+// 	return lifecycle.restore(payload);
+// }
 
-	offering.status = OFFERING_STATUS.ACTIVE;
+async function restoreOffering(payload) {
+	const lifecycle = await resolveExistingLifecycle(payload);
 
-	offering.updatedBy = actor.id;
-
-	await offeringRepository.save(offering);
-
-	await auditLogService.log({
-		business: businessId,
-
-		entityType: AUDIT_ENTITY_TYPES.OFFERING,
-
-		entityId: offering.id,
-
-		action: AUDIT_ACTIONS.OFFERING_RESTORED,
-
-		actor,
-
-		requestMetadata,
-
-		metadata: buildAuditMetadata(offering),
-	});
-
-	return offeringPresenter.present(offering);
+	return lifecycle.restore(payload);
 }
 
 export default {
