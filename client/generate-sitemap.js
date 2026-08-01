@@ -9,15 +9,11 @@ const baseUrl = "https://tassiaqca.vercel.app";
 
 const staticRoutes = [
 	"",
-	"/auth",
-	"/discover",
-	"/community",
-	"/business/:slug",
-	"/profile",
-	"/orders",
-	"/dashboard",
-	"/dashboard/:businessId",
-	"/checkout/:businessId",
+	"/marketplace",
+	"/business",
+	"/business/hub",
+	"/business/onboarding",
+	"/admin",
 ];
 
 // Generate sitemap XML

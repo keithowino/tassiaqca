@@ -57,24 +57,20 @@ export default defineConfig(() => {
 		},
 		plugins: [
 			react(),
-			// sitemap({
-			// 	hostname: "https://tassiaqca.vercel.app/",
-			// 	dynamicRoutes: [
-			// 		"/",
-			// 		"/auth",
-			// 		"/discover",
-			// 		"/community",
-			// 		"/business/:slug",
-			// 		"/profile",
-			// 		"/orders",
-			// 		"/dashboard",
-			// 		"/dashboard/:businessId",
-			// 		"/checkout/:businessId",
-			// 	],
-			// 	outDir: "dist",
-			// 	changefreq: "weekly",
-			// 	priority: 0.8,
-			// }),
+			sitemap({
+				hostname: "https://tassiaqca.vercel.app/",
+				dynamicRoutes: [
+					"/",
+					"/marketplace",
+					"/business",
+					"/business/hub",
+					"/business/onboarding",
+					"/admin",
+				],
+				outDir: "dist",
+				changefreq: "weekly",
+				priority: 0.8,
+			}),
 		],
 	};
 });
