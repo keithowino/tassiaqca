@@ -1,0 +1,8 @@
+export const OFFERING_STATUS = {
+	DRAFT: "DRAFT",
+	ACTIVE: "ACTIVE",
+	INACTIVE: "INACTIVE",
+	ARCHIVED: "ARCHIVED",
+};
+
+export default OFFERING_STATUS;

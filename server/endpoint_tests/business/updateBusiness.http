@@ -1,0 +1,9 @@
+### Update a business with (register, login create a business)
+
+PATCH http://localhost:5000/api/v1/businesses/6a4d00ac40ac04915f014c08
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+    "name": "Pickaxe and Shovel"
+}

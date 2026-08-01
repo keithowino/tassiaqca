@@ -1,0 +1,5 @@
+### Audit Logs
+
+GET http://localhost:5000/api/v1/businesses/6a48ff1a26cea622665576af/audit-logs
+Authorization: Bearer {{ access-token }}
+Content-Type: application/json

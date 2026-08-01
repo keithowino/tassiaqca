@@ -1,0 +1,78 @@
+### Create Offering
+
+POST http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+Content-Type: application/json
+
+{
+  "type": "PRODUCT",
+  "name": "Dell XPS 13",
+  "description": "13-inch developer laptop",
+  "visibility": "PUBLIC"
+}
+
+# {
+#   "type": "PRODUCT",
+#   "name": "Dell XPS 17",
+#   "description": "17-inch laptop",
+#   "visibility": "PUBLIC"
+# }
+
+# {
+#   "type": "RENTAL",
+#   "name": "Tsundere Hights",
+#   "description": "Luxury hotels",
+#   "visibility": "PUBLIC"
+# }
+
+### List Offerings
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Get Offering
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6c7a97c4217e5be0e7c214
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Update Offering
+
+PATCH http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6c7a97c4217e5be0e7c214
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+Content-Type: application/json
+
+{
+  "name": "Dell XPS 13 Plus",
+  "description": "Updated description",
+  "visibility": "PRIVATE"
+}
+
+### Archive Offering
+
+PATCH http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6c7a97c4217e5be0e7c214/archive
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Restore Offering
+
+PATCH http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a6c7a97c4217e5be0e7c214/restore
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Filter by type
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?type=RENTAL
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Filter by status
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?status=ACTIVE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Filter by visibility
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?visibility=PUBLIC
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+
+### Search
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings?search=hotels
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I

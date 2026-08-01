@@ -1,0 +1,7 @@
+### Health Check
+
+GET http://localhost:5000/api/v1/health
+
+### Platform Business Types
+
+GET http://localhost:5000/api/v1/platform/business-types

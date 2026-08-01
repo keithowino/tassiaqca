@@ -1,0 +1,17 @@
+export const STOCK_MOVEMENT = {
+	STOCK_IN: "STOCK_IN",
+	STOCK_OUT: "STOCK_OUT",
+	ADJUSTMENT: "ADJUSTMENT",
+};
+
+export const STOCK_MOVEMENT_TYPES = Object.values(STOCK_MOVEMENT);
+
+export const STOCK_MOVEMENT_STATUS = Object.freeze({
+	COMPLETED: "COMPLETED",
+});
+
+export const STOCK_MOVEMENT_STATUS_VALUES = Object.values(
+	STOCK_MOVEMENT_STATUS,
+);
+
+export default STOCK_MOVEMENT_STATUS;

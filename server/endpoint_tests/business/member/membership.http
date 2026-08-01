@@ -1,0 +1,172 @@
+### Successful Invite and Duplicate Invite - (POST http://localhost:5000/api/v1/businesses/<businessId>/members, Authorization: Bearer <owner-access-token>, email = use B's)
+
+POST http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "roleId": "6a4b9d5d9e02d993ed14a824"
+}
+
+### Invite - Unknown User 
+
+POST http://localhost:5000/api/v1/businesses/6a463756eed8cb5e2897566f/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2MzRhYjczNGMyM2I3MTkwMjY2ODEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTg3MjE5LCJleHAiOjE3ODI5ODgxMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ojujf1tHly7u3wostWylLjAYob-y8ID61wwEOn7HVZg
+Content-Type: application/json
+
+{
+    "email": "doesnotexist@example.com",
+    "roleId": "6a451ec4b20eb8419e8a8be6"
+}
+
+### Invite user with an invalid role
+
+POST http://localhost:5000/api/v1/businesses/6a4df4a1b8aa5e348429f03f/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "roleId": "6a4b9d5d9e02d993ed14a824"
+}
+
+### List Business Members with no Access Token (GET http://localhost:5000/api/v1/businesses/<businessId>/members)
+
+GET http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+
+### List Business Members with an invalid token
+
+GET http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+### List Business Members (Login as a user who is not a member of the business after which you also test with the owners and also if present a staff's acces token.)
+
+GET http://localhost:5000/api/v1/businesses/6a4799492cd3c53f5d362224/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ3OTgyNjJjZDNjNTNmNWQzNjIyMjEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgzMDc3MDMyLCJleHAiOjE3ODMxNjM0MzIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zGcDbMbh7qxj4QFlClcMjI4VomhyEdFMvtcp7m2-YaY
+Content-Type: application/json
+
+### Invite test member to delete.
+
+POST http://localhost:5000/api/v1/businesses/6a46ba31d3d139aea5ea9771/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+{
+    "email": "maurine1234@gmail.com",
+    "roleId": "6a46aa61e5034eee6f49dd1a"
+}
+
+### Delete business member - No Access Token (DELETE http://localhost:5000/api/v1/businesses/{{businessId}}/members/{{memberId}})
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a46798dd75e139172bf574c
+
+### Delete business member — Invalid Access Token
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a46798dd75e139172bf574c
+Authorization: Bearer invalid-token
+
+### Invite test member to another business to attempt deletion on another.
+
+POST http://localhost:5000/api/v1/businesses/6a477ab9c63e9650b4e398b2/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+{
+    "email": "lee1234@gmail.com",
+    "roleId": "6a474e5f020d3d0a7fe1ac93"
+}
+
+### Delete business member — User Is Not a Member of the Business (a valid access token, a business the user does not belong to)
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a467e5ad75e139172bf574f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+### Invite test member.
+
+POST http://localhost:5000/api/v1/businesses/6a47b99b48faf427200ea483/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ3OTgyNjJjZDNjNTNmNWQzNjIyMjEiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgzMTY0MTkyLCJleHAiOjE3ODMyNTA1OTIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.otu-zDS4g_yjJalLhIP99yyyg_8Aw_9bmuWVfkBcrpY
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "roleId": "6a474e5f020d3d0a7fe1ac91"
+}
+
+# {
+#     "email": "lee1234@gmail.com",
+#     "roleId": "6a46aa61e5034eee6f49dd1a"
+# }
+
+### Delete business member — Member Without Permission (Owner creates a business, Invite another user as Staff, Login as Staff, Attempt to remove another member.)
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a464d38fd14e273edd28937
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2OTAxNzc5MDg1ZTQ4Y2ZhZTY2MmIiLCJlbWFpbCI6ImxlZTEyMzRAZ21haWwuY29tIiwiaWF0IjoxNzgzMDA5MzAzLCJleHAiOjE3ODMwOTU3MDMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.QO2_Jtfnd6aH9lxd5d9vCGGcokKgRVTrTU2n7WX_Kio
+Content-Type: application/json
+
+### Delete business member — Unknown Member (Use a valid businessId but a fake memberId.)
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a9999999999999999999999
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+### Delete business member — Member Belongs to Another Business (Create Business A, Business B, Invite the same (or different) user into Business B.), try to remove yourself.
+
+DELETE http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a46432b01cf16265e9d86eb
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ2NDJhYjAxY2YxNjI2NWU5ZDg2ZTUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgyOTkxOTM1LCJleHAiOjE3ODMwNzgzMzUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.5s0h_2UcYX4xqXN2q0JE0qyhk5pmbwVsIHBp5oXmFqg
+Content-Type: application/json
+
+### Delete business member — Successful Removal.
+
+DELETE http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/members/6a4dda2ab96d851abb5b734f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+### Member role update - No Access Token (PATCH http://localhost:5000/api/v1/businesses/{{businessId}}/members/{{memberId}}/role, "roleId": "{{staffRoleId}}")
+
+PATCH http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a464d38fd14e273edd28937/role
+Content-Type: application/json
+
+{
+    "roleId": "6a46aa61e5034eee6f49dd18"
+}
+
+### Member role update - Invalid Access Token
+
+PATCH http://localhost:5000/api/v1/businesses/6a46432b01cf16265e9d86ea/members/6a464d38fd14e273edd28937/role
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+{
+    "roleId": "6a46aa61e5034eee6f49dd18"
+}
+
+### Member role update - User Without Permission (Owner creates a business, Invite User B as Staff, Login as User B, User B attempts to change another member's role.), also test with a fake memberId, use a fake role ID, member belonging to another business, assign same role.
+
+PATCH http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/members/6a4dda2ab96d851abb5b734f/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+    "roleId": "6a4b9d5d9e02d993ed14a822"
+}
+
+### Leave Business (POST http://localhost:5000/api/v1/businesses/{{businessId}}/leave)
+
+POST http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/leave
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ZTBiZTRkNDU1ZjRlNjhlNTIiLCJlbWFpbCI6InJlbWJvMTIzNEBnbWFpbC5jb20iLCJzaWQiOiI2YTRkZTA1NjIzN2QwNDkwNjlhMWU4YTEiLCJpYXQiOjE3ODM0ODg1OTgsImV4cCI6MTc4MzU3NDk5OCwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.zjHiTTgMVF8nli2c87o11JoQWceuHDm-cw6pg9B7Djc
+Content-Type: application/json
+
+### Change Business Ownership (PATCH http://localhost:5000/api/v1/businesses/{{businessId}}/ownership/{{memberId}})
+
+PATCH http://localhost:5000/api/v1/businesses/6a48f40e0de39c26020d271f/ownership/6a48f48d0de39c26020d2721
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTQ3NThiYjM4NzA5OTk0YWE3NWZmMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwiaWF0IjoxNzgzMTY1ODE2LCJleHAiOjE3ODMyNTIyMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.6bswt0rj49Vz3gtZq_zkHaD0hg3yGRGOuTEo2A67tm4
+Content-Type: application/json
+
+### Deactivate/ Reactivate a business member (PATCH http://localhost:5000/api/v1/businesses/{{businessId}}/members/{{memberId}}/reactivate)
+
+PATCH http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/members/6a4dda2ab96d851abb5b734f/deactivate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json

@@ -1,0 +1,14 @@
+### Business - create (Login to get Authorization: Bearer <VALID_ACCESS_TOKEN>)
+
+POST http://localhost:5000/api/v1/businesses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE2Yzc5OTZjNDIxN2U1YmUwZTdjMjBmIiwiaWF0IjoxNzg1NDkzOTEwLCJleHAiOjE3ODU1ODAzMTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ia0C5c7He7iuXXSJPqZ7a15PxG1XF3sES6cIeRsK36I
+Content-Type: application/json
+
+# Business A
+{
+    "name": "Dexta Tec",
+    "description": "Retail electronics store",
+    "businessType": "RETAIL",
+    "email": "designsolutions1629@gmail.com",
+    "phone": "+254768290857"
+}

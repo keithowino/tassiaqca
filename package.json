@@ -19,7 +19,8 @@
 		"clean:install": "npm run clean && npm run install:all",
 		"status": "echo 'Server: http://localhost:5000 | Client: http://localhost:3000'",
 		"logs:server": "cd server && npm run dev --silent",
-		"logs:client": "cd client && npm run dev --silent"
+		"logs:client": "cd client && npm run dev --silent",
+		"docs:structure": "node scripts/generate-structure.js"
 	},
 	"repository": {
 		"type": "git",
@@ -36,7 +37,7 @@
 	],
 	"author": "Pickaxe & Shovel",
 	"license": "PROPRIETARY",
-	"type": "commonjs",
+	"type": "module",
 	"bugs": {
 		"url": "https://github.com/keithowino/tassiaqca/issues"
 	},

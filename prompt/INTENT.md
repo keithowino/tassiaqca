@@ -1,0 +1,1082 @@
+# TASSIAQCA - the digital operating system for neighborhood businesses.
+
+## TODO
+
+- Not now, but eventually, `"lint": "eslint"`. We'll introduce ESLint after we've built a reasonable amount of the backend.
+- It will come a moment when i will have introduced payments, delivery, accounting, commissions, Mpesa, receipts, invoices, booking, etc., that assumption begins to break down.
+- Later we can replace Cloudinary with S3 or Azure Blob.
+
+---
+
+## Recommended implementation order
+
+Following the pattern established across the Commerce module, I'd implement Pricing in this sequence:
+
+Shared constants
+ProductPrice model
+Validators
+Repository
+Presenter
+Service
+Controller
+Routes
+REST Client tests
+Git commit
+
+---
+
+## Logout Recommended Implementation Order
+
+- POST /auth/logout (done)
+- POST /auth/logout-all (done)
+- GET /auth/sessions (done)
+- DELETE /auth/sessions/:sessionId (done)
+- Change Password
+- Forgot Password
+- Reset Password
+- Email Verification
+- MFA
+
+Immediately we gain:
+
+- ✅ Multiple devices
+- ✅ Logout one device
+- ✅ Logout everywhere
+- ✅ Session history
+- ✅ Security dashboard
+- ✅ Refresh token rotation
+- ✅ Future MFA support
+- ✅ Device trust
+
+---
+
+## After Categories - The Commerce roadmap becomes:
+
+- I recommend following this sequence because each feature builds on the previous one. Categories complete the product organization layer, which Inventory and Catalog functionality will naturally depend on.
+
+1. Product Catalog (done)
+    - Product CRUD
+    - Archive/Restore
+    - Product Presenter
+
+2. Product Categories (done)
+    - Hierarchical categories
+    - Product-category relationships
+
+3. Inventory (done)
+
+4. Product Images (done)
+    - The plan here was to have a:
+        - Cover image
+        - Gallery
+        - Ordering
+    - But we did not or are yet to handle it this way. when or if needed we will implement it. What we have now, the user can add images and one of the images is set as the primary.
+
+5. Pricing (done)
+
+6. Product Variants
+    - Sizes
+    - Colors
+    - Options
+
+7. Attributes
+
+8. Collections
+
+9. Search
+
+10. Branch Inventory (we need to move forward this can be implemented in the future)
+    - Branch-specific stock
+    - Reorder levels
+    - Pricing
+    - Availability
+
+11. Orders
+
+12. Payments
+
+13. Reporting
+
+14. Public Catalog API
+
+---
+
+```bash
+Inventory
+├── Milestone 1 — Inventory Core        ✅
+├── Milestone 2 — Stock Movements       ✅
+├── Milestone 3 — Reservations
+├── Milestone 4 — Warehouses (future)
+└── Milestone 5 — Transfers (future)
+```
+
+## Future Integrations
+
+Stock Movements design implementation prepares the Commerce module for future features without requiring redesign:
+
+- Orders → automatically create SALE movements.
+- Purchase Orders → create PURCHASE/STOCK_IN movements.
+- Returns → create RETURN movements.
+- Warehouses → create TRANSFER_OUT and TRANSFER_IN movements.
+- Manufacturing → consume components and produce finished goods through movements.
+- Inventory Reports → derive movement history, stock cards, and valuation from the immutable movement ledger.
+
+## Why separate permissions?
+
+- Inventory answers: _"What stock do I currently have?"_
+- Stock Movement answers: _"How did it become that quantity?"_
+- Many employees should be allowed to view inventory but not create stock adjustments.
+- Keeping them separate gives us much finer control later.
+
+---
+
+STOCK_IN
+STOCK_OUT
+ADJUSTMENT
+RETURN
+DAMAGE
+LOST
+SALE
+PURCHASE
+TRANSFER_IN
+TRANSFER_OUT
+
+---
+
+## Pricing
+
+- The immutable ProductPrice model should support variants with a minimal extension:
+    - ProductPrice
+    - product
+    - variant (nullable)
+    - sellingPrice
+    - costPrice
+    - currency
+    - effectiveFrom
+    - effectiveTo
+    - isCurrent
+- Behavior:
+  variant = null → Base product price.
+  variant = ObjectId → Variant-specific override.
+- This avoids creating a separate pricing subsystem while preserving price history.
+
+---
+
+## Permissions
+
+PRODUCT_VARIANT_VIEW
+PRODUCT_VARIANT_CREATE
+PRODUCT_VARIANT_UPDATE
+PRODUCT_VARIANT_DELETE
+PRODUCT_VARIANT_ARCHIVE
+PRODUCT_VARIANT_RESTORE
+
+---
+
+## Future Compatibility
+
+- This design intentionally leaves room for later enhancements without breaking existing APIs:
+    - Reusable Attribute and AttributeValue entities.
+    - Variant-specific pricing (already supported).
+    - Variant-specific inventory (already supported).
+    - Variant-specific images (already supported).
+    - Search and filtering by variant attributes.
+    - Order line items referencing variants.
+    - Branch-specific inventory for variants.
+
+---
+
+## Audit Logging
+
+Log all significant lifecycle events:
+
+PRODUCT_VARIANT_CREATED
+PRODUCT_VARIANT_UPDATED
+PRODUCT_VARIANT_ARCHIVED
+PRODUCT_VARIANT_RESTORED
+PRODUCT_VARIANT_DELETED
+
+---
+
+## Audit entity
+
+PRODUCT_VARIANT
+
+---
+
+## After Product Variants
+
+```bash
+Business
+    │
+    ├── Product
+    │      │
+    │      ├── ProductVariant
+    │      │        │
+    │      │        ├──────────────┐
+    │      │        │              │
+    │      │        ▼              ▼
+    │      │   ProductPrice   Inventory
+    │      │        │              │
+    │      │        └──────┐       │
+    │      │               ▼       ▼
+    │      │          ProductImage
+    │      │
+    │      ├── Base Product Price
+    │      ├── Base Inventory
+    │      └── Base Images
+    │
+    └── Category
+```
+
+---
+
+## Final Implementation Roadmap
+
+### Phase 1 — New Module
+
+- ProductVariant model
+- Repository
+- Service
+- Controller
+- Presenter
+- Validator
+- Routes
+
+## Phase 2 — Extend Existing Modules
+
+### ProductPrice
+
+- Add nullable variant
+- Repository support
+- Service support
+- Presenter support
+- Validators
+- REST tests
+
+### Inventory
+
+- Add nullable variant
+- Repository support
+- Service support
+- Presenter support
+- Validators
+- REST tests
+
+### ProductImage
+
+- Add nullable variant
+- Repository support
+- Service support
+- Presenter support
+- Validators
+- Primary image logic update
+- REST tests
+
+## Phase 3 — API Surface
+
+Introduce nested variant endpoints while keeping related resources reusable:
+
+    ```js
+    /businesses/:businessId/products/:productId/variants
+
+    /businesses/:businessId/products/:productId/variants/:variantId
+
+    /businesses/:businessId/prices
+        ?productId=
+        &variantId=
+
+    /businesses/:businessId/inventory
+        ?productId=
+        &variantId=
+
+    /businesses/:businessId/images
+        ?productId=
+        &variantId=
+    ```
+
+---
+
+## Workflow
+
+Vision
+↓
+Architecture Specification
+↓
+Architecture Review
+↓
+Implementation Plan
+↓
+Implementation
+↓
+REST Testing
+↓
+Frontend Integration
+↓
+Documentation Update
+↓
+Git Commit
+
+---
+
+## What happens after the specification?
+
+Then we return to the backend, but with much greater confidence.
+
+We would follow the roadmap you previously approved:
+
+1. Business Configuration Engine
+2. Offering Framework implementation
+3. Finish Retail Commerce
+4. Marketplace
+5. Industry Modules
+6. Frontend implementation
+
+---
+
+## Proposed Platform Actors
+
+- Visitor
+- Customer
+- Business
+- Business Owner
+- Business Administrator
+- Business Manager
+- Business Staff
+- Platform Administrator
+- Moderator
+- Support
+- Developer
+- QA Tester
+- Integration Client
+- Future Mobile Client
+- Future AI Agent
+
+---
+
+## Proposed Project Diagram
+
+```bash
+                    Platform
+
+                        │
+
+                Platform Gateway
+
+                        │
+
+        ┌───────────────┼───────────────┐
+
+        │               │               │
+
+ Marketplace      Business OS     Administration
+
+                        │
+
+                  Authentication
+
+                        │
+
+                  Identity Layer
+
+                        │
+
+                 Actor Resolution
+
+                        │
+
+             Permissions & Capabilities
+
+                        │
+
+         ┌───────────┬───────────┬───────────┐
+
+         │           │           │
+
+   Commerce      Scheduling    Messaging
+
+         │
+
+    Offer Types
+
+         │
+
+ ┌───────┼────────┬─────────┬──────────┐
+
+ │       │        │         │
+
+Product Service Rental Booking Membership
+```
+
+---
+
+## Domain Architecture
+
+### Responsibility
+
+| Commerce        | Marketplace     | Identity       |
+| :-------------- | :-------------- | :------------- |
+| Catalog         | Discovery       | Authentication |
+| Pricing         | Search          | Authorization  |
+| Inventory       | Nearby          | Membership     |
+| Stock           | Recommendations | Sessions       |
+| Orders          | Collections     | Permissions    |
+| Returns         | Reviews         |                |
+| Offer lifecycle |                 |                |
+
+---
+
+## Proposed implementation plan
+
+This is the sequence I recommend following:
+
+1. Architecture Review (Business Configuration chapters) (done)
+2. Capability Registry (done)
+3. Module Registry (done)
+4. Business Type Registry (done)
+5. Business Configuration Model (done)
+6. Configuration Service (done)
+7. Business Provisioning Pipeline
+8. Configuration API
+9. Navigation API
+10. Frontend integration
+11. Resume Offering Framework
+12. Resume Retail Commerce (Product Variants)
+
+---
+
+## Data Ownership
+
+To maintain clean domain boundaries:
+
+- Business Domain owns the business entity (identity, ownership, lifecycle).
+- Business Configuration Domain owns configuration (modules, capabilities, feature flags, navigation).
+- Commerce Domain owns commerce functionality (products, categories, inventory, etc.).
+- Frontend consumes configuration but does not define it.
+
+---
+
+## Scope Breakdown
+
+Instead of building everything at once, we'll divide the engine into six milestones.
+
+1. Milestone 1 — Platform Registry Foundation (covered)
+    - Capability Registry
+    - Module Registry
+    - Business Type Registry
+2. Milestone 2 — Business Configuration Model (covered)
+3. Milestone 3 — Configuration Service (covered)
+    - Step 1 — Integrate Business Creation
+    - Step 2 — Business Retrieval
+    - Step 3 — Startup Validation
+    - Step 4 — Domain Events (Preparation)
+4. Milestone 4 — Business Provisioning (covered)
+5. Milestone 5 — Navigation Generation (covered)
+    - 5.1 Navigation Registry
+    - 5.2 Navigation Builder
+    - 5.3 Navigation Service
+    - 5.4 Navigation API
+    - 5.5 Dashboard Registry
+    - 5.6 Dashboard Builder
+    - 5.7 Frontend Dynamic Rendering
+6. Milestone 6 — Configuration Management
+
+---
+
+## The New Frontend Roadmap
+
+This is the sequence I now recommend.
+
+Phase 1 — Platform Gateway
+
+```bash
+Home
+About
+Features
+Marketplace Entry
+Business Entry
+Authentication Entry
+```
+
+Phase 2 — Authentication
+
+```bash
+Login (covered)
+Register (covered)
+Forgot Password
+Reset Password
+Email Verification
+```
+
+Phase 3 — Platform Resolution
+
+```bash
+Restore Session
+Resolve Identity
+Resolve Actor
+Resolve Business Membership
+Resolve Active Business
+```
+
+Phase 4 — Business OS
+
+Only now do we begin consuming:
+
+```bash
+/navigation
+/dashboard
+```
+
+---
+
+## The order I would follow
+
+1. Phase A — Authentication UI
+2. Phase B — Backend Integration
+3. Phase C — Session Infrastructure
+4. Phase D — Route Guards
+
+---
+
+- Postpone the handling of:
+
+```bash
+Forgot Password
+Reset Password
+Email Verification
+```
+
+- They are important, but your the backend does not yet support endpoints for these flows.
+
+---
+
+## Implementation recommendation
+
+1. Login (covered)
+2. Register (covered)
+3. Session restore
+4. Logout
+5. Route guards
+6. Business selection (covered)
+7. Business OS bootstrap (covered)
+8. Forgot Password
+9. Reset Password
+10. Email Verification
+
+---
+
+## Remaining Phase
+
+1. Route Security
+2. Business Onboarding Application (covered)
+3. API Layer Standardization
+4. Notification System
+5. Loading Experience
+6. Error Experience
+7. Dynamic Business Shell:
+
+    ```bash
+    /navigation
+
+    /dashboard
+    ```
+
+    - The frontend still needs to consume them.
+
+8. Dynamic Widget Renderer
+9. Marketplace Shell
+10. Administration Shell
+11. Business Switcher
+12. Permissions UI
+
+---
+
+## After the Wizard
+
+Once the wizard is complete, I think the frontend will be in an excellent position to return to backend development.
+
+The next backend milestone would naturally be:
+
+```bash
+Business Configuration Engine v2
+↓
+Module Configuration
+↓
+Capability Configuration
+↓
+Feature Flags
+↓
+Dashboard Configuration
+```
+
+because the onboarding wizard will already have a "Review Configuration" step ready to consume that richer data.
+
+---
+
+Later the onboarding wizard layout might become
+
+```bash
+BUSINESS_INFORMATION
+        ↓
+BUSINESS_IDENTITY
+        ↓
+REVIEW
+```
+
+and eventually
+
+```bash
+BUSINESS_INFORMATION
+        ↓
+BUSINESS_IDENTITY
+        ↓
+LOCATION
+        ↓
+WORKSPACE_CONFIGURATION
+        ↓
+TEAM
+        ↓
+REVIEW
+```
+
+---
+
+## BusinessLayout
+
+```bash
+WorkspaceProvider
+↓
+Sidebar
+↓
+Topbar
+↓
+Dynamic Navigation
+↓
+Outlet
+```
+
+---
+
+## Revised roadmap
+
+This is the sequence I recommend now:
+
+### Phase 1 — Workspace Provisioning Engine
+
+- Return the created business from onboarding. (covered)
+- Introduce a bootstrap session to carry the target business into Bootstrap. (covered)
+- Refactor Bootstrap into Provider → Engine → Loader. (covered)
+- Load identity, business, configuration, navigation, and dashboard during provisioning.
+
+### Phase 2 — Workspace Context (covered)
+
+- Create a WorkspaceProvider and useWorkspace hook.
+- Store the provisioned workspace (business, configuration, navigation, dashboard, permissions) in a shared context.
+
+### Phase 3 — Dynamic Business Workspace
+
+- Refactor BusinessLayout to consume WorkspaceContext. (covered)
+- Generate the sidebar and routes from the navigation returned by the backend. (covered)
+- Remove direct navigation fetching from BusinessWorkspace.
+
+---
+
+## The platform now has multiple actor journeys
+
+Your platform now has at least four completely different entry points.
+
+```bash
+                    Visitor
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+ Marketplace      Start Business    Join Business
+        │              │              │
+        ▼              ▼              ▼
+ Consumer        Business Owner     Business Member
+
+                       │
+                       ▼
+                Business Workspace
+
+And later...
+
+Administrator
+      │
+      ▼
+ Admin Console
+```
+
+---
+
+## Updated Journey Architecture
+
+After this implementation, the complete Journey Engine becomes:
+
+```bash
+                    Visitor
+                       │
+         ┌─────────────┼─────────────┐
+         │             │             │
+         ▼             ▼             ▼
+ Marketplace     Start Business     Administration
+         │             │             │
+         │             ▼             │
+         │      Authentication       │
+         │             │             │
+         │             ▼             │
+         │      Business Welcome     │
+         │       │          │         │
+         │       │          └────── Join Business (future)
+         │       │
+         │       ▼
+         │   Business Onboarding
+         │       │
+         │       ▼
+         │    Bootstrap
+         │       │
+         └──────▶▼
+            Business Workspace
+```
+
+---
+
+## Business Hub Vision
+
+Instead of a static welcome page, the page should become a dashboard about the entrepreneur rather than about a single business.
+
+```bash
+Business Hub
+──────────────────────────────────────────────
+
+Welcome back, Keith
+
+You currently have
+
+✔ 2 Businesses
+✔ 1 Pending Invitation
+✔ 0 Provisioning Tasks
+
+──────────────────────────────────────────────
+
+Continue Working
+
+┌───────────────────────────────┐
+│ Dexta Tech                    │
+│ Retail                        │
+│ Last opened yesterday         │
+│ [Open Workspace]              │
+└───────────────────────────────┘
+
+┌───────────────────────────────┐
+│ Bonifoods                     │
+│ Restaurant                    │
+│ Last opened today             │
+│ [Open Workspace]              │
+└───────────────────────────────┘
+
+──────────────────────────────────────────────
+
+Quick Actions
+
++ Create Business
+
++ Join Business
+
++ Marketplace
+
+──────────────────────────────────────────────
+
+Pending Invitations
+
+No invitations.
+
+──────────────────────────────────────────────
+
+Recent Activity
+
+Business created yesterday...
+```
+
+---
+
+## Business Card
+
+Every business becomes one reusable component.
+
+```bash
+┌─────────────────────────────┐
+
+Logo
+
+Bonifoods
+
+Restaurant
+
+Created Jul 2026
+
+Owner
+
+──────────────
+
+Open Workspace
+
+────────────────
+
+Settings
+
+Delete
+
+└─────────────────────────────┘
+```
+
+Later
+
+```bash
+Unread notifications
+
+Pending orders
+
+Bookings today
+
+Revenue
+
+Staff online
+```
+
+Can all appear here.
+
+---
+
+## Future capability
+
+The beauty of this architecture is that Business Hub naturally grows into a workspace launcher.
+
+Eventually it can contain:
+
+```bash
+Recent Workspaces
+
+Favorites
+
+Pinned Businesses
+
+Invitations
+
+Notifications
+
+Activity
+
+Continue where you left off
+
+Search Businesses
+
+Create Business
+
+Import Business
+
+Accept Invitation
+
+Switch Workspace
+```
+
+---
+
+## Recommended implementation order
+
+Now that the Journey Engine foundation is stable, I recommend this sequence:
+
+Fix BootstrapEngine so it only bootstraps an existing workspace and never redirects to onboarding.
+Complete the Business Welcome journey.
+Complete the Business Hub flow (select workspace → bootstrap → workspace, with no flicker).
+Refactor DashboardRenderer into the new Widget Rendering Engine.
+Introduce real widget types (StatWidget, TableWidget, ChartWidget, etc.) that the Widget Rendering Engine can dynamically resolve based on the widget definition returned by the backend.
+
+This ordering keeps responsibilities clean and avoids introducing the Widget Rendering Engine before the navigation and workspace lifecycle are fully correct.
+
+---
+
+```bash
+Widget Rendering Engine
+        │
+        ├── StatWidget
+        ├── ChartWidget
+        ├── TableWidget
+        ├── ActivityWidget
+        ├── QuickActionsWidget
+        ├── CalendarWidget
+        ├── EmptyWidget
+        └── UnknownWidget
+```
+
+---
+
+## Loading Experience
+
+Eventually we should introduce
+
+```bash
+Skeletons
+
+Spinners
+
+Section Loaders
+
+Page Loaders
+
+Button Loaders
+```
+
+---
+
+## Notification System
+
+We currently have no platform feedback.
+
+Eventually
+
+```bash
+Success
+
+Error
+
+Warning
+
+Loading
+
+Confirmation
+```
+
+should all come from `shared/notifications/` instead of individual pages.
+
+---
+
+## Error Experience
+
+Platform-wide
+
+```bash
+404
+
+403
+
+401
+
+500
+
+Offline
+
+Maintenance
+```
+
+---
+
+## Offering Framework
+
+1. Milestone 1 — Offering Domain Foundation (covered)
+2. Milestone 2 — Offering Contract (covered)
+    - Implement the common contract described in Chapter 10.
+3. Milestone 3 — Offering Registry (covered)
+4. Milestone 4 — Offering Service Layer (covered)
+    - Implement generic services.
+
+    ```bash
+    OfferingRepository
+
+    OfferingService
+
+    OfferingPresenter
+    ```
+
+    - Generic operations:
+
+    ```bash
+    Create
+
+    Update
+
+    Archive
+
+    Publish
+
+    Search
+
+    List
+
+    Discover
+
+    Get Availability
+
+    Change Status
+    ```
+
+5. Milestone 5 — Product Adapter
+    - Only after the Offering Domain is stable should Product be migrated.
+      Instead of:
+
+        ```bash
+        Product
+        ```
+
+        it becomes:
+
+        ```bash
+        Product
+
+        implements
+
+        Offering
+        ```
+
+        Conceptually:
+
+        ```bash
+        Offering
+
+        ↓
+
+        Product
+
+        ↓
+
+        Product Variant
+
+        ↓
+
+        Inventory
+
+        ↓
+
+        Pricing
+
+        ↓
+
+        Media
+        ```
+
+6. Milestone 6 — Variant Implementation
+
+## Recommended Implementation Sequence
+
+1. Architecture Review (covered)
+2. Create the offering domain skeleton (folders, exports, constants) (covered)
+3. Define the Offering contract and base model (covered)
+4. Implement the Offering Registry and integrate it with the (registry bootstrapping, validation utilities, and registry lookups) (covered)
+5. Build repositories, presenters, and services for generic offering lifecycle operations (covered)
+6. Migrate the existing Product implementation to conform to the Offering contract
+7. Resume Product Variants on top of the new abstraction
+    - Once that is in place, we can proceed with controllers, validators, and eventually migrate the existing Product implementation to become a concrete Offering
+8. Proceed to Marketplace aggregation, which will consume Offerings rather than Products.
+
+---
+
+- We may begin testing, In each test give me the complete http request example for me to test.
+
+- Tests ... all passed successfully and or returned the expected responses.
+
+git commit -m "feat(frontend): Create the the offering framework."
+
+For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
+
+---

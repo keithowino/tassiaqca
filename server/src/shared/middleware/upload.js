@@ -1,0 +1,61 @@
+import multer from "multer";
+
+import { AppError, ErrorCodes } from "../errors/index.js";
+
+import { HTTP_STATUS } from "../constants/index.js";
+
+/*
+|--------------------------------------------------------------------------
+| Configuration
+|--------------------------------------------------------------------------
+*/
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+/*
+|--------------------------------------------------------------------------
+| Multer Storage
+|--------------------------------------------------------------------------
+*/
+
+const storage = multer.memoryStorage();
+
+/*
+|--------------------------------------------------------------------------
+| File Filter
+|--------------------------------------------------------------------------
+*/
+
+function fileFilter(req, file, callback) {
+	if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
+		return callback(
+			new AppError(
+				"Only JPEG, PNG and WEBP images are allowed.",
+				HTTP_STATUS.BAD_REQUEST,
+				ErrorCodes.VALIDATION_ERROR,
+			),
+		);
+	}
+
+	callback(null, true);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Upload Middleware
+|--------------------------------------------------------------------------
+*/
+
+const upload = multer({
+	storage,
+
+	fileFilter,
+
+	limits: {
+		fileSize: MAX_FILE_SIZE,
+	},
+});
+
+export default upload;

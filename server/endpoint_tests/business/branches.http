@@ -1,0 +1,67 @@
+### Create a branch (POST http://localhost:5000/api/v1/businesses/{{businessId}}/branches)
+
+POST http://localhost:5000/api/v1/businesses/6a4df4a1b8aa5e348429f03f/branches
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+	"name": "Mlango Kubwa Branch",
+	"description": "Mlango Kubwa main outlet",
+	"phone": "+254700000000",
+	"email": "tassia@example.com",
+	"address": "Huruma",
+	"city": "Nairobi",
+	"county": "Nairobi",
+	"isHeadOffice": true
+}
+
+### List business branches
+
+GET http://localhost:5000/api/v1/businesses/6a4b845cefa6339b5a6fef64/branches
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiODNiYWVmYTYzMzliNWE2ZmVmNjAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YjgzZWZlZmE2MzM5YjVhNmZlZjYzIiwiaWF0IjoxNzgzMzMzODcxLCJleHAiOjE3ODM0MjAyNzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.wOA7BkqimdgYKQMxeMSSFLLxdzcwo2I-u0Smfas4hg4
+Content-Type: application/json
+
+### Update (PATCH http://localhost:5000/api/v1/businesses/{{businessId}}/branches/{{branchId}})
+
+PATCH http://localhost:5000/api/v1/businesses/6a4d00ac40ac04915f014c08/branches/6a4d1b768c092bfe16843117
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+	"name": "Testing"
+}
+
+### Deactivate/ Reactivate a branch (PATCH http://localhost:5000/api/v1/businesses/{{businessId}}/branches/{{branchId}}/deactivate)
+
+PATCH http://localhost:5000/api/v1/businesses/6a4d00ac40ac04915f014c08/branches/6a4d01e140ac04915f014c0e/deactivate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0Y2ZlZWI0MGFjMDQ5MTVmMDE0YzA0IiwiaWF0IjoxNzgzNDMwODkxLCJleHAiOjE3ODM1MTcyOTEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ErATHqUSwC3ANfxtuxvSJdn26v7wAGkVXjUPX8ayqYA
+
+### Assign a member to a branch (POST http://localhost:5000/api/v1/businesses/{{businessId}}/branches/{{branchId}}/members)
+
+POST http://localhost:5000/api/v1/businesses/6a4df4a1b8aa5e348429f03f/branches/6a4df4f7b8aa5e348429f042/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+Content-Type: application/json
+
+{
+    "businessMemberId": "6a4df571b8aa5e348429f044"
+}
+
+### List members of a branch (GET http://localhost:5000/api/v1/businesses/{{businessId}}/branches/{{branchId}}/members)
+
+GET http://localhost:5000/api/v1/businesses/6a4b9e410be4d455f4e68e56/branches/6a4b9f4b0be4d455f4e68e5b/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YjlkZGQwYmU0ZDQ1NWY0ZTY4ZTU1IiwiaWF0IjoxNzgzMzQwNTA5LCJleHAiOjE3ODM0MjY5MDksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.MS4V6c5PauT4ObGZTlRbol0yS82jhCWYPbx75qDnKCU
+
+### List branches assigned to a member (GET http://localhost:5000/api/v1/businesses/{{businessId}}/members/{{memberId}}/branches)
+
+GET http://localhost:5000/api/v1/businesses/6a4d00ac40ac04915f014c08/members/6a4d00f240ac04915f014c0a/branches
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0Y2ZlZWI0MGFjMDQ5MTVmMDE0YzA0IiwiaWF0IjoxNzgzNDMwODkxLCJleHAiOjE3ODM1MTcyOTEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ErATHqUSwC3ANfxtuxvSJdn26v7wAGkVXjUPX8ayqYA
+
+### Deactive/ Activate branch assignment (PATCH http://localhost:5000/api/v1/businesses/:businessId/branches/:branchId/members/:memberId/deactivate)
+
+PATCH http://localhost:5000/api/v1/businesses/6a4d00ac40ac04915f014c08/branches/6a4d013b40ac04915f014c0c/members/6a4d00f240ac04915f014c0a/deactivate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0Y2ZlZWI0MGFjMDQ5MTVmMDE0YzA0IiwiaWF0IjoxNzgzNDMwODkxLCJleHAiOjE3ODM1MTcyOTEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ErATHqUSwC3ANfxtuxvSJdn26v7wAGkVXjUPX8ayqYA
+
+###  Single primary Support (PATCH http://localhost:5000/api/v1/businesses/:businessId/branches/:branchId/members/:memberId/primary)
+
+PATCH http://localhost:5000/api/v1/businesses/6a4d00ac40ac04915f014c08/branches/6a4d013b40ac04915f014c0c/members/6a4d00f240ac04915f014c0a/primary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0Y2ZlZWI0MGFjMDQ5MTVmMDE0YzA0IiwiaWF0IjoxNzgzNDMwODkxLCJleHAiOjE3ODM1MTcyOTEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ErATHqUSwC3ANfxtuxvSJdn26v7wAGkVXjUPX8ayqYA

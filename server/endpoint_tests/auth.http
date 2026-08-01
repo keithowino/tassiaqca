@@ -1,0 +1,195 @@
+### Register - user A
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Keith",
+    "lastName": "Owino",
+    "email": "designsolutions1629@gmail.com",
+    "phone": "+254768290857",
+    "password": "keith@1234"
+}
+
+# # User B
+
+# {
+#     "firstName": "Love",
+#     "lastName": "Rembo",
+#     "email": "rembo1234@gmail.com",
+#     "phone": "+254734567890",
+#     "password": "rembo@1234"
+# }
+
+# # User C
+
+# {
+#     "firstName": "Maurine",
+#     "lastName": "Ougo",
+#     "email": "maurine1234@gmail.com",
+#     "phone": "+254734567890",
+#     "password": "maurine@1234"
+# }
+
+# # User D
+
+# {
+#     "firstName": "Lee",
+#     "lastName": "Chen",
+#     "email": "lee1234@gmail.com",
+#     "phone": "+254734567890",
+#     "password": "lee@1234"
+# }
+
+### Register Invalid email
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Love",
+    "lastName": "Rembo",
+    "email": "rembo1234",
+    "phone": "+254734567890",
+    "password": "rembo@1234"
+}
+
+### Register with weak password
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Love",
+    "lastName": "Rembo",
+    "email": "rembo1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "1234"
+}
+
+### Register missing first name
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "",
+    "lastName": "Rembo",
+    "email": "rembo1234@gmail.com",
+    "phone": "+254734567890",
+    "password": "rembo@1234"
+}
+
+### Invalid request
+
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{}
+
+### Login
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "designsolutions1629@gmail.com",
+    "password": "keith@1234"
+}
+
+# {
+#     "email": "rembo1234@gmail.com",
+#     "password": "rembo@1234"
+# }
+
+### Login wrong password
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1234@gmail.com",
+    "password": "rembo@123"
+}
+
+### Login non-existing email
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "rembo1235@gmail.com",
+    "password": "rembo@1234"
+}
+
+### Successful Refresh ("refreshToken": "<refresh_token_from_login_response>"), then Reuse the Old Refresh Token
+
+POST http://localhost:5000/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJqdGkiOiI1OWU3ODg5ZC03ZmU3LTQ3M2QtODI2ZS0zOGUwMTA2M2MzYTAiLCJpYXQiOjE3ODMyNTg3MTYsImV4cCI6MTc4NDQ2ODMxNiwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.mrjmZa25J2y09eGIlTx1TFsdwBsXrX9ftBZc7hBz2gs"
+}
+
+### Invalid Refresh Request
+
+POST http://localhost:5000/api/v1/auth/refresh
+Content-Type: application/json
+
+{}
+
+### Completely Invalid Token
+
+POST http://localhost:5000/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken": "this-is-not-a-jwt"
+}
+
+### Authenticateion — No Authorization Header
+
+GET http://localhost:5000/api/v1/auth/me
+
+### Authenticateion — Invalid Access Token
+
+GET http://localhost:5000/api/v1/auth/me
+Authorization: Bearer this-is-not-a-token
+
+### Authenticateion — Valid Access Token (First, log in then copy the returned access token.)
+
+GET http://localhost:5000/api/v1/auth/me
+Authorization: Bearer this-is-not-a-token
+
+### Logout ("refreshToken": "{{refreshToken}}")
+
+POST http://localhost:5000/api/v1/auth/logout
+Content-Type: application/json
+
+{
+	"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhMmNkNTNmYTQwMGJjZmUyNTc4NzgiLCJqdGkiOiI3NzFjY2U4My1iZTZjLTQ4MDMtYmRlZi01OWE1MjNmZWIxYmIiLCJpYXQiOjE3ODMyNDY0NjAsImV4cCI6MTc4NDQ1NjA2MCwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.k2mueQGjtU51Xa25y7WFsSo-h3cTov97oBD1pI3l4hs"
+}
+
+### User A's sessions
+
+GET http://localhost:5000/api/v1/auth/sessions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTVlZGFhMDkyYjQ1MGIxZWVmNjY5IiwiaWF0IjoxNzgzMjU4ODQyLCJleHAiOjE3ODMzNDUyNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T70UXY3fsVc4sXnGqEecquTQmtWXVQsRfQgDE6iTIMw
+Content-Type: application/json
+
+### User B's sessions
+
+GET http://localhost:5000/api/v1/auth/sessions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTViZGZhMDkyYjQ1MGIxZWVmNjY2IiwiaWF0IjoxNzgzMjU4MDc5LCJleHAiOjE3ODMzNDQ0NzksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.GV4AQoPLbYr5DkzEZ7Omxlc3R14N7P5h5ccz2hWAXlo
+Content-Type: application/json
+
+### revoke/ delete 1 of User A's sessions
+
+DELETE http://localhost:5000/api/v1/auth/sessions/6a4a57d7a258d76a2029bbb1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTUwZDQ3N2VjOGZkMmY2ZjgwNTdhIiwiaWF0IjoxNzgzMjU1MjUyLCJleHAiOjE3ODMzNDE2NTIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DlBIxE1Sxq5gIgRs3f23lpXC4A6ANNh_SmiUoduaruA
+Content-Type: application/json
+
+### Revoke other User A's sessions
+
+DELETE http://localhost:5000/api/v1/auth/sessions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTVlZGFhMDkyYjQ1MGIxZWVmNjY5IiwiaWF0IjoxNzgzMjU4ODQyLCJleHAiOjE3ODMzNDUyNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T70UXY3fsVc4sXnGqEecquTQmtWXVQsRfQgDE6iTIMw
+Content-Type: application/json
