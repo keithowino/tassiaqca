@@ -107,12 +107,56 @@ function buildAuditMetadata(offering) {
 
 /*
 |--------------------------------------------------------------------------
+| Lifecycle Hooks
+|--------------------------------------------------------------------------
+|
+| Specialized lifecycles (Product, Rental, Booking, etc.) override these
+| hooks to inject domain-specific behavior without duplicating the shared
+| lifecycle implementation.
+|
+*/
+
+const defaultHooks = {
+	async beforeCreate() {},
+
+	async afterCreate() {},
+
+	async beforeUpdate() {},
+
+	async afterUpdate() {},
+
+	async beforeArchive() {},
+
+	async afterArchive() {},
+
+	async beforeRestore() {},
+
+	async afterRestore() {},
+};
+
+/*
+|--------------------------------------------------------------------------
 | Lifecycle
 |--------------------------------------------------------------------------
 */
 
-async function create({ businessId, data, actor, requestMetadata }) {
+async function create({
+	businessId,
+	data,
+	actor,
+	requestMetadata,
+	hooks = defaultHooks,
+}) {
 	await ensureBusinessExists(businessId);
+
+	const context = {
+		businessId,
+		data,
+		actor,
+		requestMetadata,
+	};
+
+	await hooks.beforeCreate(context);
 
 	const name = data.name.trim();
 
@@ -132,6 +176,10 @@ async function create({ businessId, data, actor, requestMetadata }) {
 		}),
 	);
 
+	context.offering = offering;
+
+	await hooks.afterCreate(context);
+
 	await auditLogService.log({
 		business: businessId,
 		entityType: AUDIT_ENTITY_TYPES.OFFERING,
@@ -145,7 +193,7 @@ async function create({ businessId, data, actor, requestMetadata }) {
 	return offeringPresenter.present(offering);
 }
 
-async function list({ businessId, query }) {
+async function list({ businessId, query, hooks = defaultHooks }) {
 	await ensureBusinessExists(businessId);
 
 	const page = query.page ?? 1;
@@ -174,7 +222,7 @@ async function list({ businessId, query }) {
 	};
 }
 
-async function get({ businessId, offeringId }) {
+async function get({ businessId, offeringId, hooks = defaultHooks }) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -188,10 +236,21 @@ async function update({
 	data,
 	actor,
 	requestMetadata,
+	hooks = defaultHooks,
 }) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
+
+	const context = {
+		businessId,
+		offering,
+		data,
+		actor,
+		requestMetadata,
+	};
+
+	await hooks.beforeUpdate(context);
 
 	if (data.name) {
 		const name = data.name.trim();
@@ -215,6 +274,8 @@ async function update({
 
 	await offeringRepository.save(offering);
 
+	await hooks.afterUpdate(context);
+
 	await auditLogService.log({
 		business: businessId,
 		entityType: AUDIT_ENTITY_TYPES.OFFERING,
@@ -228,16 +289,32 @@ async function update({
 	return offeringPresenter.present(offering);
 }
 
-async function archive({ businessId, offeringId, actor, requestMetadata }) {
+async function archive({
+	businessId,
+	offeringId,
+	actor,
+	requestMetadata,
+	hooks = defaultHooks,
+}) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
+
+	const context = {
+		offering,
+		actor,
+		requestMetadata,
+	};
+
+	await hooks.beforeArchive(context);
 
 	offering.status = OFFERING_STATUS.ARCHIVED;
 
 	offering.updatedBy = actor.id;
 
 	await offeringRepository.save(offering);
+
+	await hooks.afterArchive(context);
 
 	await auditLogService.log({
 		business: businessId,
@@ -252,16 +329,32 @@ async function archive({ businessId, offeringId, actor, requestMetadata }) {
 	return offeringPresenter.present(offering);
 }
 
-async function restore({ businessId, offeringId, actor, requestMetadata }) {
+async function restore({
+	businessId,
+	offeringId,
+	actor,
+	requestMetadata,
+	hooks = defaultHooks,
+}) {
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
+
+	const context = {
+		offering,
+		actor,
+		requestMetadata,
+	};
+
+	await hooks.beforeRestore(context);
 
 	offering.status = OFFERING_STATUS.ACTIVE;
 
 	offering.updatedBy = actor.id;
 
 	await offeringRepository.save(offering);
+
+	await hooks.afterRestore(context);
 
 	await auditLogService.log({
 		business: businessId,
@@ -277,6 +370,8 @@ async function restore({ businessId, offeringId, actor, requestMetadata }) {
 }
 
 export default {
+	hooks: defaultHooks,
+
 	create,
 	list,
 	get,

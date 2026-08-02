@@ -18,9 +18,6 @@ export default function CTASection() {
 				</Text>
 
 				<div className="flex flex-wrap justify-center gap-4 mt-10">
-					{/* <Button as={Link} to="/marketplace" size="lg">
-						Explore Marketplace
-					</Button> */}
 					<Button
 						as={JourneyLink}
 						intent={PlatformIntent.MARKETPLACE}
@@ -29,15 +26,6 @@ export default function CTASection() {
 						Explore Marketplace
 					</Button>
 
-					{/* <Button
-						as={Link}
-						to="/register"
-						size="lg"
-						variant="outline"
-						className="border-white text-white hover:bg-white hover:text-black"
-					>
-						Start Your Business
-					</Button> */}
 					<Button
 						as={JourneyLink}
 						intent={PlatformIntent.START_BUSINESS}

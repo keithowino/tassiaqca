@@ -1,9 +1,10 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-07-31
+Generated on: 2026-08-02
 
 ```bash
 ├── client/
+│   ├── public/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── bootstrap/
@@ -407,6 +408,8 @@ Generated on: 2026-07-31
 │   │   │   │   │   └── index.js
 │   │   │   │   └── index.js
 │   │   │   ├── commerce/
+│   │   │   │   ├── adapters/
+│   │   │   │   │   └── product.adapter.js
 │   │   │   │   ├── controllers/
 │   │   │   │   │   ├── category.controller.js
 │   │   │   │   │   ├── index.js
@@ -554,7 +557,9 @@ Generated on: 2026-07-31
 │   │   │   │   └── index.js
 │   │   │   ├── offering/
 │   │   │   │   ├── builders/
-│   │   │   │   │   └── index.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── offering.builder.js
+│   │   │   │   │   └── offering.factory.js
 │   │   │   │   ├── constants/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── offeringStatus.constants.js
@@ -564,6 +569,21 @@ Generated on: 2026-07-31
 │   │   │   │   │   └── offering.controller.js
 │   │   │   │   ├── errors/
 │   │   │   │   │   └── index.js
+│   │   │   │   ├── lifecycles/
+│   │   │   │   │   ├── shared/
+│   │   │   │   │   │   └── offering.lifecycle.js
+│   │   │   │   │   ├── booking.lifecycle.js
+│   │   │   │   │   ├── course.lifecycle.js
+│   │   │   │   │   ├── digitalDownload.lifecycle.js
+│   │   │   │   │   ├── event.lifecycle.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── lifecycle.factory.js
+│   │   │   │   │   ├── membership.lifecycle.js
+│   │   │   │   │   ├── package.lifecycle.js
+│   │   │   │   │   ├── product.lifecycle.js
+│   │   │   │   │   ├── rental.lifecycle.js
+│   │   │   │   │   ├── service.lifecycle.js
+│   │   │   │   │   └── subscription.lifecycle.js
 │   │   │   │   ├── models/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── offering.model.js

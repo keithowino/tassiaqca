@@ -1132,11 +1132,332 @@ To keep risk low, I'd implement this incrementally:
 
 ---
 
+## What comes next
+
+The roadmap in your architecture and in the implementation notes points to:
+
+- Migrate Product onto the Offering abstraction
+- Resume Product Variants
+- Marketplace aggregation consuming Offerings instead of Products
+
+---
+
+## Implementation plan
+
+### Milestone 6 — Product Specialization
+
+- Instead of treating Product as the primary entity, Product becomes an extension of Offering.
+
+1. Step 1 — Product Adapter
+2. Step 2 — Product-specific Hooks
+    - Once the adapter exists we can begin overriding lifecycle hooks. For example:
+
+    ```bash
+    product.lifecycle.js
+    beforeCreate()
+    afterCreate()
+    beforeUpdate()
+    afterPublish()
+    ```
+
+    Eventually:
+
+    ```bash
+    beforeCreate()
+    generate SKU
+
+    afterCreate()
+        create inventory
+
+    afterPublish()
+        publish to marketplace
+
+    afterArchive()
+        deactivate inventory
+    ```
+
+3. Step 3 — Product Model Simplification
+
+Several fields currently duplicated in Product should disappear because they now belong to Offering. Examples include:
+
+name
+slug
+description
+status
+visibility
+searchable
+featured
+
+Product keeps only fields such as:
+
+```bash
+offering
+sku
+brand
+weight
+dimensions
+barcode
+```
+
+4. Step 4 — Resume Product Variants
+
+Only after Product is fully adapted should we continue with:
+
+```bash
+Product
+
+↓
+
+Variants
+
+↓
+
+Variant Values
+
+↓
+
+Pricing
+
+↓
+
+Inventory
+```
+
+5. Step 5 — Marketplace
+
+When Marketplace arrives it no longer queries Product.
+
+Instead it queries:
+
+```bash
+Offerings
+
+↓
+
+Product
+Rental
+Booking
+Course
+Membership
+Package
+```
+
+## Recommended next implementation milestone should be:
+
+1. Create the Product Adapter.
+2. Refactor the existing Product module to use product.lifecycle.js.
+3. Move Product-specific business rules into lifecycle hooks.
+4. Remove duplicated generic fields from the Product domain.
+5. Resume Product Variants on top of the new architecture.
+
+---
+
+## Recommendation
+
+1. Add lifecycle hook system
+2. Move Product rules into ProductLifecycle
+3. Verify Offering Product works
+4. Make Commerce Product delegate
+5. Remove duplicate Product service
+6. Resume Product Variants
+
+---
+
+1. Milestone 1 - Introduce lifecycle hooks
+
+- Your shared lifecycle should stop containing hardcoded behavior. Instead it becomes extensible. For example:
+
+```bash
+create()
+
+↓
+
+beforeCreate()
+
+↓
+
+shared create logic
+
+↓
+
+afterCreate()
+```
+
+2. Milestone 2 - Once hooks exist...
+
+- ProductLifecycle becomes:
+
+```bash
+SharedLifecycle
+
+↓
+
+beforeCreate()
+
+↓
+
+SKU validation
+
+↓
+
+Category validation
+
+↓
+
+Inventory defaults
+
+↓
+
+continue shared create
+```
+
+3. Milestone 3 - Only after ProductLifecycle actually contains Product behavior...
+
+- then Commerce Product Service becomes:
+
+```bash
+create()
+
+↓
+
+OfferingService.createOffering()
+```
+
+instead of:
+
+```bash
+ProductRepository.create()
+```
+
+4. Milestone 4 - Only then do we delete
+
+```bash
+ensureProductExists()
+
+generateUniqueSlug()
+
+ensureProductNameUnique()
+
+audit logging
+
+archive()
+
+restore()
+
+etc...
+```
+
+---
+
+## Recommended next implementation sequence
+
+I recommend the following sequence:
+
+1. Enhance shared/offering.lifecycle.js to support lifecycle hooks (beforeCreate, afterCreate, beforeUpdate, afterUpdate, beforeArchive, afterArchive, beforeRestore, afterRestore).
+2. Implement Product-specific hooks in product.lifecycle.js, initially moving SKU normalization and SKU uniqueness validation there while leaving behavior unchanged.
+3. Verify that all Offering Product endpoints still pass existing tests.
+4. Refactor the legacy Commerce product.service.js into a thin adapter that delegates to the Offering service.
+5. Remove duplicated generic logic from the Commerce Product module.
+6. Continue with Product Variants on top of the unified Offering architecture.
+
+---
+
+## The direction I recommend
+
+Instead of making lifecycle hooks directly manipulate repositories, introduce a Product Adapter.
+
+That keeps the lifecycle focused on orchestration while the adapter owns Product persistence.
+
+The flow becomes:
+
+```bash
+Offering Lifecycle
+        │
+        │
+        ▼
+Product Adapter
+        │
+        ▼
+Product Repository
+        │
+        ▼
+Product Model
+```
+
+This separation becomes extremely valuable once you add
+
+Variants
+Inventory
+Pricing
+Categories
+Images
+Bundles
+
+because all Product-specific persistence remains behind one interface.
+
+## I recommend implementing the milestones in this order:
+
+✅ Add offering reference to Product.js. (covered)
+✅ Extend product.repository.js with offering-based queries. (covered)
+✅ Create commerce/adapters/product.adapter.js. (covered)
+✅ Refactor product.lifecycle.js to use the adapter. (covered)
+✅ Test Offering create/update/archive/restore synchronization. (covered)
+✅ Only then begin simplifying product.service.js by progressively delegating its persistence logic to the adapter or the new Offering flow while keeping the existing Commerce API intact.
+
+---
+
+## Step 4
+
+After fixing Step 1 and Step 2, rerun:
+
+Create Product with SKU
+Duplicate SKU
+Update SKU
+Duplicate SKU Update
+
+---
+
+```bash
+Offering
+        │
+        │
+        ├──────── ProductExtension
+        │
+        ├──────── BookingExtension
+        │
+        ├──────── RentalExtension
+        │
+        ├──────── CourseExtension
+        │
+        └──────── MembershipExtension
+```
+
+---
+
+## My recommended roadmap
+
+I would avoid deleting the Product collection immediately because the rest of Commerce still depends on it. Instead, I'd proceed in controlled stages:
+
+1. Complete the migration to Offering-first APIs.
+   Make POST, PATCH, ARCHIVE, and RESTORE go exclusively through the Offering module.
+   Treat the existing /products mutation endpoints as legacy compatibility endpoints or begin deprecating them.
+2. Introduce the projection contract and registry-based adapter resolution.
+   Remove the hard-coded dependency on product.adapter.js from product.lifecycle.js.
+   Let the offering registry provide the appropriate projection adapter for each offering type.
+3. Refactor the Product model into a true extension/projection.
+   Gradually remove duplicated fields (name, slug, description, status, etc.) from the Product document.
+   Keep only product-specific attributes such as sku, category, physical dimensions, inventory policy, and similar fields.
+4. Convert Commerce read APIs into projections over Offerings.
+   GET /products becomes "Offerings of type PRODUCT enriched with ProductExtension data."
+   Other domain-specific modules follow the same pattern.
+
+---
+
 - We may begin testing, In each test give me the complete http request example for me to test.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create a specialized offering lifecycle."
+git commit -m "feat(offering): execute Product Adapter migration."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

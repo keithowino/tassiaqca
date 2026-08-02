@@ -97,11 +97,7 @@ export default function BusinessInformationForm() {
 			{error && <FormError>{error}</FormError>}
 
 			<FormActions>
-				{/* <Button type="submit" disabled={loading}> */}
-				<Button type="submit">
-					{/* {loading ? "Creating Business..." : "Create Business"} */}
-					Continue
-				</Button>
+				<Button type="submit">Continue</Button>
 			</FormActions>
 		</Form>
 	);

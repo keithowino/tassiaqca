@@ -64,29 +64,29 @@ async function ensureProductNameIsUnique(businessId, name, excludeId = null) {
 	}
 }
 
-function normalizeSku(sku) {
-	return sku?.trim().toUpperCase() ?? null;
-}
+// function normalizeSku(sku) {
+// 	return sku?.trim().toUpperCase() ?? null;
+// }
 
-async function ensureSkuIsUnique(businessId, sku, excludeId = null) {
-	if (!sku) {
-		return;
-	}
+// async function ensureSkuIsUnique(businessId, sku, excludeId = null) {
+// 	if (!sku) {
+// 		return;
+// 	}
 
-	const existing = await productRepository.findByBusinessAndSku(
-		businessId,
-		sku,
-		excludeId,
-	);
+// 	const existing = await productRepository.findByBusinessAndSku(
+// 		businessId,
+// 		sku,
+// 		excludeId,
+// 	);
 
-	if (existing) {
-		throw new AppError(
-			"A product with this SKU already exists.",
-			HTTP_STATUS.CONFLICT,
-			ErrorCodes.CONFLICT,
-		);
-	}
-}
+// 	if (existing) {
+// 		throw new AppError(
+// 			"A product with this SKU already exists.",
+// 			HTTP_STATUS.CONFLICT,
+// 			ErrorCodes.CONFLICT,
+// 		);
+// 	}
+// }
 
 /**
  * No duplicate-key exceptions.

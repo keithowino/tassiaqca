@@ -15,6 +15,19 @@ const findByBusinessAndId = async (businessId, productId) => {
 	});
 };
 
+const findByOffering = async (offeringId) => {
+	return Product.findOne({
+		offering: offeringId,
+	});
+};
+
+const findByOfferingAndBusiness = async (businessId, offeringId) => {
+	return Product.findOne({
+		business: businessId,
+		offering: offeringId,
+	});
+};
+
 const findBySlug = async (businessId, slug) => {
 	return Product.findOne({
 		business: businessId,
@@ -116,6 +129,10 @@ export default {
 	create,
 	findById,
 	findByBusinessAndId,
+
+	findByOffering,
+	findByOfferingAndBusiness,
+
 	findBySlug,
 	findByBusinessAndName,
 	findByBusinessAndSku,

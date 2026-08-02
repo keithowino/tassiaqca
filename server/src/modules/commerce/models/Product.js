@@ -24,6 +24,14 @@ const productSchema = new mongoose.Schema(
 			index: true,
 		},
 
+		offering: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Offering",
+			required: true,
+			unique: true,
+			index: true,
+		},
+
 		slug: {
 			type: String,
 			required: true,
@@ -53,7 +61,6 @@ const productSchema = new mongoose.Schema(
 		sku: {
 			type: String,
 			trim: true,
-			default: null,
 		},
 
 		category: {

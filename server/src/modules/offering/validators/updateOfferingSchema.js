@@ -9,6 +9,12 @@ export const updateOfferingRequestSchema = z
 
 		description: z.string().trim().max(5000).optional(),
 
+		shortDescription: z.string().trim().max(300).optional(),
+
+		sku: z.string().trim().max(100).optional(),
+
+		categoryId: objectIdSchema.nullable().optional(),
+
 		status: z.enum(Object.values(OFFERING_STATUS)).optional(),
 
 		visibility: z.enum(Object.values(OFFERING_VISIBILITY)).optional(),

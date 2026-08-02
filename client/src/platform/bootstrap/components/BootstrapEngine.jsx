@@ -20,14 +20,6 @@ export default function BootstrapEngine() {
 			try {
 				const session = bootstrapSession.get();
 
-				// if (!session?.businessId) {
-				// 	navigate("/business/onboarding", {
-				// 		replace: true,
-				// 	});
-
-				// 	return;
-				// }
-
 				if (!session?.businessId) {
 					navigate("/business/hub", {
 						replace: true,

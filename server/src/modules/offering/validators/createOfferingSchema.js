@@ -11,6 +11,12 @@ export const createOfferingRequestSchema = z.object({
 
 	description: z.string().trim().max(5000).optional(),
 
+	shortDescription: z.string().trim().max(300).optional(),
+
+	sku: z.string().trim().max(100).optional(),
+
+	categoryId: objectIdSchema.nullable().optional(),
+
 	status: z
 		.enum(Object.values(OFFERING_STATUS))
 		.default(OFFERING_STATUS.DRAFT),

@@ -63,9 +63,6 @@ export default function BusinessOnboardingProvider({ children }) {
 		try {
 			const result = await onboardingService.createBusiness(values);
 
-			// bootstrapSession.begin({
-			// 	businessId: result.business.id,
-			// });
 			bootstrapSession.begin({
 				businessId: result.id,
 			});
