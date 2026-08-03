@@ -31,43 +31,6 @@ const createOffering = asyncHandler(async (req, res) => {
 	return success(res, offering, "Offering created successfully.");
 });
 
-const listOfferings = asyncHandler(async (req, res) => {
-	const { params, query } = validateRequest(
-		{
-			params: businessParamsSchema,
-			query: listOfferingsQuerySchema,
-		},
-		req,
-	);
-
-	const offerings = await offeringService.listOfferings({
-		businessId: params.businessId,
-		query,
-		actor: req.user,
-		requestMetadata: req.requestMetadata,
-	});
-
-	return success(res, offerings);
-});
-
-const getOffering = asyncHandler(async (req, res) => {
-	const { params } = validateRequest(
-		{
-			params: offeringParamsSchema,
-		},
-		req,
-	);
-
-	const offering = await offeringService.getOffering({
-		businessId: params.businessId,
-		offeringId: params.offeringId,
-		actor: req.user,
-		requestMetadata: req.requestMetadata,
-	});
-
-	return success(res, offering);
-});
-
 const updateOffering = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
@@ -86,6 +49,43 @@ const updateOffering = asyncHandler(async (req, res) => {
 	});
 
 	return success(res, offering, "Offering updated successfully.");
+});
+
+const listOfferings = asyncHandler(async (req, res) => {
+	const { params, query } = validateRequest(
+		{
+			params: businessParamsSchema,
+			query: listOfferingsQuerySchema,
+		},
+		req,
+	);
+
+	const offerings = await offeringService.listOfferings({
+		businessId: params.businessId,
+		query,
+		actor: req.user,
+		requestMetadata: req.requestMetadata,
+	});
+
+	return success(res, offerings, "Offerings retrieved successfully.");
+});
+
+const getOffering = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: offeringParamsSchema,
+		},
+		req,
+	);
+
+	const offering = await offeringService.getOffering({
+		businessId: params.businessId,
+		offeringId: params.offeringId,
+		actor: req.user,
+		requestMetadata: req.requestMetadata,
+	});
+
+	return success(res, offering, "Offering retrieved successfully.");
 });
 
 const archiveOffering = asyncHandler(async (req, res) => {

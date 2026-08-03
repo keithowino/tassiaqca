@@ -1,3 +1,5 @@
+import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
 import offeringRegistry from "../../../shared/platform/offerings/offering.registry.js";
 
 /**
@@ -11,12 +13,28 @@ import offeringRegistry from "../../../shared/platform/offerings/offering.regist
 function resolveLifecycle(type) {
 	const definition = offeringRegistry.get(type);
 
+	// if (!definition) {
+	// 	throw new Error(`Unknown offering type "${type}".`);
+	// }
+
 	if (!definition) {
-		throw new Error(`Unknown offering type "${type}".`);
+		throw new AppError(
+			`Unknown offering type "${type}".`,
+			HTTP_STATUS.NOT_FOUND,
+			ErrorCodes.NOT_FOUND,
+		);
 	}
 
+	// if (!definition.lifecycle) {
+	// 	throw new Error(`No lifecycle registered for offering type "${type}".`);
+	// }
+
 	if (!definition.lifecycle) {
-		throw new Error(`No lifecycle registered for offering type "${type}".`);
+		throw new AppError(
+			`No lifecycle registered for offering type "${type}".`,
+			HTTP_STATUS.NOT_FOUND,
+			ErrorCodes.NOT_FOUND,
+		);
 	}
 
 	return definition.lifecycle;
