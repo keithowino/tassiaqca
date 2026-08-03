@@ -1,11 +1,15 @@
 const HTTP_STATUS = Object.freeze({
-	// Success
+	/**
+	 * Success
+	 */
 	OK: 200,
 	CREATED: 201,
 	ACCEPTED: 202,
 	NO_CONTENT: 204,
 
-	// Client Errors
+	/**
+	 * Client Errors
+	 */
 	BAD_REQUEST: 400,
 	UNAUTHORIZED: 401,
 	FORBIDDEN: 403,
@@ -13,7 +17,9 @@ const HTTP_STATUS = Object.freeze({
 	CONFLICT: 409,
 	UNPROCESSABLE_ENTITY: 422,
 
-	// Server Errors
+	/**
+	 * Server Errors
+	 */
 	INTERNAL_SERVER_ERROR: 500,
 });
 

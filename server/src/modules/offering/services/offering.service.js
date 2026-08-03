@@ -1,5 +1,6 @@
 import lifecycleFactory from "../lifecycles/lifecycle.factory.js";
 import { offeringRepository } from "../repositories/index.js";
+import { offeringRegistry } from "../../../shared/platform/offerings/index.js";
 
 /**
  * Delegation layer
@@ -11,21 +12,31 @@ import { offeringRepository } from "../repositories/index.js";
 |--------------------------------------------------
 */
 
-function lifecycleFor(payload) {
-	return lifecycleFactory.resolveLifecycle(payload.data.type);
+function registrationFor(type) {
+	const registration = offeringRegistry.get(type);
+
+	if (!registration) {
+		return {
+			lifecycle: lifecycleFactory.resolveLifecycle("UNKNOWN"),
+		};
+	}
+
+	return registration;
 }
 
-async function resolveExistingLifecycle({ businessId, offeringId }) {
+async function resolveExistingRegistration({ businessId, offeringId }) {
 	const offering = await offeringRepository.findByBusinessAndId(
 		businessId,
 		offeringId,
 	);
 
 	if (!offering) {
-		return lifecycleFactory.resolveLifecycle("UNKNOWN");
+		return {
+			lifecycle: lifecycleFactory.resolveLifecycle("UNKNOWN"),
+		};
 	}
 
-	return lifecycleFactory.resolveLifecycle(offering.type);
+	return registrationFor(offering.type);
 }
 
 /**
@@ -39,38 +50,62 @@ async function resolveExistingLifecycle({ businessId, offeringId }) {
  */
 
 async function createOffering(payload) {
-	return lifecycleFor(payload).create(payload);
-}
+	const registration = registrationFor(payload.data.type);
 
-async function listOfferings(payload) {
-	// shared for now
-	return lifecycleFactory
-		.resolveLifecycle(payload.query?.type ?? "PRODUCT")
-		.list(payload);
-}
-
-async function getOffering(payload) {
-	const lifecycle = await resolveExistingLifecycle(payload);
-
-	return lifecycle.get(payload);
+	return registration.lifecycle.create({
+		...payload,
+		registration,
+	});
 }
 
 async function updateOffering(payload) {
-	const lifecycle = await resolveExistingLifecycle(payload);
+	const registration = await resolveExistingRegistration(payload);
 
-	return lifecycle.update(payload);
+	return registration.lifecycle.update({
+		...payload,
+		registration,
+	});
+}
+
+async function listOfferings(payload) {
+	/**
+	 * For now you can also do.
+	 *
+	 * Although list() doesn't use it yet.
+	 */
+	const registration = registrationFor(payload.query?.type ?? "PRODUCT");
+
+	return registration.lifecycle.list({
+		...payload,
+		registration,
+	});
+}
+
+async function getOffering(payload) {
+	const registration = await resolveExistingRegistration(payload);
+
+	return registration.lifecycle.get({
+		...payload,
+		registration,
+	});
 }
 
 async function archiveOffering(payload) {
-	const lifecycle = await resolveExistingLifecycle(payload);
+	const registration = await resolveExistingRegistration(payload);
 
-	return lifecycle.archive(payload);
+	return registration.lifecycle.archive({
+		...payload,
+		registration,
+	});
 }
 
 async function restoreOffering(payload) {
-	const lifecycle = await resolveExistingLifecycle(payload);
+	const registration = await resolveExistingRegistration(payload);
 
-	return lifecycle.restore(payload);
+	return registration.lifecycle.restore({
+		...payload,
+		registration,
+	});
 }
 
 export default {

@@ -35,13 +35,19 @@ class SessionService {
 	}
 
 	async rotate(refreshToken, metadata = {}) {
-		// 1. Verify JWT signature.
+		/**
+		 * 1. Verify JWT signature.
+		 */
 		refreshTokenService.verify(refreshToken);
 
-		// 2. Hash the received token.
+		/**
+		 * 2. Hash the received token.
+		 */
 		const refreshTokenHash = hashToken(refreshToken);
 
-		// 3. Find the matching active session.
+		/**
+		 * 3. Find the matching active session.
+		 */
 		const session =
 			await sessionRepository.findByRefreshTokenHash(refreshTokenHash);
 
@@ -53,7 +59,9 @@ class SessionService {
 			);
 		}
 
-		// 4. Load the user.
+		/**
+		 * 4. Load the user.
+		 */
 		const user = await userRepository.findById(session.user);
 
 		if (!user || !user.active) {
@@ -64,15 +72,21 @@ class SessionService {
 			);
 		}
 
-		// 5. Revoke the old session.
+		/**
+		 * 5. Revoke the old session.
+		 */
 		await sessionRepository.revoke(session);
 
-		// 6. Issue a brand-new session.
+		/**
+		 * 6. Issue a brand-new session.
+		 */
 		return this.create(user, metadata);
 	}
 
 	async logout(refreshToken) {
-		// Verify signature and expiration first.
+		/**
+		 * Verify signature and expiration first.
+		 */
 		refreshTokenService.verify(refreshToken);
 
 		const refreshTokenHash = hashToken(refreshToken);

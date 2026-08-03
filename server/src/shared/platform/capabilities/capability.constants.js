@@ -1,5 +1,7 @@
 export const CAPABILITIES = Object.freeze({
-	// Commerce
+	/**
+	 * Commerce
+	 */
 	PRODUCT_CATALOG: "PRODUCT_CATALOG",
 	PRODUCT_VARIANTS: "PRODUCT_VARIANTS",
 	CATEGORIES: "CATEGORIES",
@@ -9,38 +11,54 @@ export const CAPABILITIES = Object.freeze({
 	PRICING: "PRICING",
 	PROMOTIONS: "PROMOTIONS",
 
-	// Services
+	/**
+	 * Services
+	 */
 	SERVICES: "SERVICES",
 	BOOKINGS: "BOOKINGS",
 	CALENDAR: "CALENDAR",
 
-	// Customers
+	/**
+	 * Customers
+	 */
 	CUSTOMERS: "CUSTOMERS",
 	CRM: "CRM",
 	REVIEWS: "REVIEWS",
 	LOYALTY: "LOYALTY",
 
-	// Finance
+	/**
+	 * Finance
+	 */
 	PAYMENTS: "PAYMENTS",
 	FINANCE: "FINANCE",
 	BILLING: "BILLING",
 
-	// Operations
+	/**
+	 * Operations
+	 */
 	STAFF: "STAFF",
 	DELIVERY: "DELIVERY",
 
-	// Analytics
+	/**
+	 * Analytics
+	 */
 	ANALYTICS: "ANALYTICS",
 	REPORTING: "REPORTING",
 
-	// Communication
+	/**
+	 * Communication
+	 */
 	NOTIFICATIONS: "NOTIFICATIONS",
 	MESSAGING: "MESSAGING",
 
-	// Marketplace
+	/**
+	 * Marketplace
+	 */
 	MARKETPLACE: "MARKETPLACE",
 
-	// Membership
+	/**
+	 * Membership
+	 */
 	SUBSCRIPTIONS: "SUBSCRIPTIONS",
 	MEMBERSHIPS: "MEMBERSHIPS",
 });

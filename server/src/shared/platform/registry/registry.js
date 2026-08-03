@@ -7,6 +7,13 @@ import {
 	groupBy,
 } from "./registry.utils.js";
 
+/**
+ * Registry already stores:
+ * - builder
+ * - lifecycle
+ * - configuration
+ * - projection
+ */
 export const createRegistry = (items, keySelector = (item) => item.id) => {
 	const registry = new Map();
 

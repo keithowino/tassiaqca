@@ -145,8 +145,10 @@ async function create({
 	data,
 	actor,
 	requestMetadata,
-	hooks = defaultHooks,
+	registration = {},
 }) {
+	const hooks = registration.lifecycle?.hooks ?? defaultHooks;
+
 	await ensureBusinessExists(businessId);
 
 	const context = {
@@ -154,6 +156,7 @@ async function create({
 		data,
 		actor,
 		requestMetadata,
+		registration,
 	};
 
 	await hooks.beforeCreate(context);
@@ -193,7 +196,9 @@ async function create({
 	return offeringPresenter.present(offering);
 }
 
-async function list({ businessId, query, hooks = defaultHooks }) {
+async function list({ businessId, query, registration = {} }) {
+	const hooks = registration.lifecycle?.hooks ?? defaultHooks;
+
 	await ensureBusinessExists(businessId);
 
 	const page = query.page ?? 1;
@@ -222,7 +227,9 @@ async function list({ businessId, query, hooks = defaultHooks }) {
 	};
 }
 
-async function get({ businessId, offeringId, hooks = defaultHooks }) {
+async function get({ businessId, offeringId, registration = {} }) {
+	const hooks = registration.lifecycle?.hooks ?? defaultHooks;
+
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -236,8 +243,10 @@ async function update({
 	data,
 	actor,
 	requestMetadata,
-	hooks = defaultHooks,
+	registration = {},
 }) {
+	const hooks = registration.lifecycle?.hooks ?? defaultHooks;
+
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -248,6 +257,7 @@ async function update({
 		data,
 		actor,
 		requestMetadata,
+		registration,
 	};
 
 	await hooks.beforeUpdate(context);
@@ -294,8 +304,10 @@ async function archive({
 	offeringId,
 	actor,
 	requestMetadata,
-	hooks = defaultHooks,
+	registration = {},
 }) {
+	const hooks = registration.lifecycle?.hooks ?? defaultHooks;
+
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -304,6 +316,7 @@ async function archive({
 		offering,
 		actor,
 		requestMetadata,
+		registration,
 	};
 
 	await hooks.beforeArchive(context);
@@ -334,8 +347,10 @@ async function restore({
 	offeringId,
 	actor,
 	requestMetadata,
-	hooks = defaultHooks,
+	registration = {},
 }) {
+	const hooks = registration.lifecycle?.hooks ?? defaultHooks;
+
 	await ensureBusinessExists(businessId);
 
 	const offering = await ensureOfferingExists(businessId, offeringId);
@@ -344,6 +359,7 @@ async function restore({
 		offering,
 		actor,
 		requestMetadata,
+		registration,
 	};
 
 	await hooks.beforeRestore(context);

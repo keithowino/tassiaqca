@@ -7,7 +7,6 @@ const journeys = [
 		description:
 			"Browse businesses, products, services, and communities around you.",
 		action: "Explore",
-		// href: "/marketplace",
 		intent: PlatformIntent.MARKETPLACE,
 	},
 
@@ -17,7 +16,6 @@ const journeys = [
 		description:
 			"Create your business workspace and begin operating online.",
 		action: "Get Started",
-		// href: "/register",
 		intent: PlatformIntent.START_BUSINESS,
 	},
 
@@ -27,7 +25,6 @@ const journeys = [
 		description:
 			"Accept an invitation and collaborate with your organization.",
 		action: "Join",
-		// href: "/login",
 		intent: PlatformIntent.JOIN_BUSINESS,
 	},
 
@@ -37,7 +34,6 @@ const journeys = [
 		description:
 			"Access your Marketplace, Business OS, or Administration workspace.",
 		action: "Sign In",
-		// href: "/login",
 		intent: PlatformIntent.MARKETPLACE,
 	},
 ];

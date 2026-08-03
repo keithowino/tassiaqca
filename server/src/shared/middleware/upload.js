@@ -10,7 +10,10 @@ import { HTTP_STATUS } from "../constants/index.js";
 |--------------------------------------------------------------------------
 */
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+/**
+ * 5 MB
+ */
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 

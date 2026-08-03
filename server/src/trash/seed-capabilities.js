@@ -62,11 +62,15 @@ async function seedCapabilities() {
 		await mongoose.connect(process.env.MONGODB_URI);
 		console.log("✅ Connected to MongoDB");
 
-		// Clear existing capabilities
+		/**
+		 * Clear existing capabilities
+		 */
 		await Capability.deleteMany();
 		console.log("🧹 Cleared existing capabilities");
 
-		// Insert new capabilities
+		/**
+		 * Insert new capabilities
+		 */
 		const result = await Capability.insertMany(capabilities);
 		console.log(`✅ Inserted ${result.length} capabilities`);
 

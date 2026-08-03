@@ -8,7 +8,9 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.join(__dirname, "..");
 const OUTPUT_FILE = path.join(ROOT, "docs", "folder-structure.md");
 
-// Directories and files to ignore
+/**
+ * Directories and files to ignore
+ */
 const IGNORE = [
 	"node_modules",
 	".git",
@@ -39,7 +41,9 @@ const IGNORE = [
 	"docs",
 ];
 
-// Directories to show full contents (not just folder)
+/**
+ * Directories to show full contents (not just folder)
+ */
 const SHOW_FILES = [
 	"client/src/app",
 	"client/src/pages",
@@ -50,7 +54,10 @@ const SHOW_FILES = [
 
 function shouldIgnore(filePath) {
 	const parts = filePath.split(path.sep);
-	// Check if any part matches ignore patterns
+
+	/**
+	 * Check if any part matches ignore patterns
+	 */
 	return parts.some((part) => {
 		return IGNORE.some((pattern) => {
 			if (pattern.includes("*")) {
@@ -88,7 +95,10 @@ function generateTree(dir, prefix = "", isLast = true, output = []) {
 
 		if (isDir) {
 			const newPrefix = prefix + (isLastItem ? "    " : "│   ");
-			// Only show files if this is a directory we care about
+
+			/**
+			 * Only show files if this is a directory we care about
+			 */
 			const showFiles = shouldShowFiles(fullPath);
 			generateTree(fullPath, newPrefix, isLastItem, output, showFiles);
 		}
@@ -97,7 +107,9 @@ function generateTree(dir, prefix = "", isLast = true, output = []) {
 	return output;
 }
 
-// Generate markdown
+/**
+ * Generate markdown
+ */
 function generateMarkdown(tree) {
 	const header = `# TassiaQCA Folder Structure
 
@@ -111,11 +123,15 @@ ${tree.join("\n")}
 	return header;
 }
 
-// Main execution
+/**
+ * Main execution
+ */
 const tree = generateTree(ROOT);
 const markdown = generateMarkdown(tree);
 
-// Ensure docs directory exists
+/**
+ * Ensure docs directory exists
+ */
 const docsDir = path.join(ROOT, "docs");
 if (!fs.existsSync(docsDir)) {
 	fs.mkdirSync(docsDir, { recursive: true });

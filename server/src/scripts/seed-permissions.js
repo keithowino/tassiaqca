@@ -9,7 +9,9 @@ dotenv.config({
 });
 
 const permissions = [
-	// Business
+	/**
+	 * Business
+	 */
 	{
 		key: "BUSINESS_CREATE",
 		name: "Create Business",
@@ -31,7 +33,9 @@ const permissions = [
 		name: "View Audit Logs",
 	},
 
-	// Members
+	/**
+	 * Members
+	 */
 	{
 		key: "MEMBER_INVITE",
 		name: "Invite Member",
@@ -49,7 +53,9 @@ const permissions = [
 		name: "Remove Member",
 	},
 
-	// Branches
+	/**
+	 * Branches
+	 */
 	{
 		key: "BRANCH_CREATE",
 		name: "Create Branch",
@@ -83,7 +89,9 @@ const permissions = [
 		name: "Remove Branch Member",
 	},
 
-	// Offering
+	/**
+	 * Offering
+	 */
 	{
 		key: "OFFERING_CREATE",
 		name: "Create Offering",
@@ -105,7 +113,9 @@ const permissions = [
 		name: "Restore Offering",
 	},
 
-	// Products
+	/**
+	 * Products
+	 */
 	{
 		key: "PRODUCT_CREATE",
 		name: "Create Product",
@@ -123,7 +133,9 @@ const permissions = [
 		name: "Delete Product",
 	},
 
-	// Categories
+	/**
+	 * Categories
+	 */
 	{
 		key: "CATEGORY_VIEW",
 		name: "View Categories",
@@ -141,7 +153,9 @@ const permissions = [
 		name: "Delete Categories",
 	},
 
-	// Inventory
+	/**
+	 * Inventory
+	 */
 	{
 		key: "INVENTORY_VIEW",
 		name: "View Inventory",
@@ -159,7 +173,9 @@ const permissions = [
 		name: "Delete Inventory",
 	},
 
-	// Stock Movement
+	/**
+	 * Stock Movement
+	 */
 	{
 		key: "STOCK_MOVEMENT_CREATE",
 		name: "Create Stock Movement Inventory",
@@ -173,7 +189,9 @@ const permissions = [
 		name: "Export Stock Movement Inventory",
 	},
 
-	// Product Image
+	/**
+	 * Product Image
+	 */
 	{
 		key: "PRODUCT_IMAGE_CREATE",
 		name: "Create Product Image",
@@ -195,7 +213,9 @@ const permissions = [
 		name: "Set Primary Product Image",
 	},
 
-	// Product Price
+	/**
+	 * Product Price
+	 */
 	{
 		key: "PRODUCT_PRICE_CREATE",
 		name: "Create Product Price",
@@ -205,7 +225,9 @@ const permissions = [
 		name: "View Product Price",
 	},
 
-	// Product Variant
+	/**
+	 * Product Variant
+	 */
 	{
 		key: "PRODUCT_VARIANT_VIEW",
 		name: "View Product Variant",
@@ -231,7 +253,9 @@ const permissions = [
 		name: "Restore Product Variant",
 	},
 
-	// Services
+	/**
+	 * Services
+	 */
 	{
 		key: "SERVICE_CREATE",
 		name: "Create Service",
@@ -245,7 +269,9 @@ const permissions = [
 		name: "Delete Service",
 	},
 
-	// Reviews
+	/**
+	 * Reviews
+	 */
 	{
 		key: "REVIEW_REPLY",
 		name: "Reply to Reviews",

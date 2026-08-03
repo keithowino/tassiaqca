@@ -1,6 +1,5 @@
 import sharedLifecycle from "./shared/offering.lifecycle.js";
 import productRepository from "../../commerce/repositories/product.repository.js";
-import productAdapter from "../../commerce/adapters/product.adapter.js";
 import { HTTP_STATUS } from "../../../shared/constants/index.js";
 import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
 
@@ -9,6 +8,10 @@ import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
 | Private helper
 |--------------------------------------------------
 */
+
+function getProjection(context) {
+	return context.registration.projection;
+}
 
 function normalizeSku(sku) {
 	return sku?.trim().toUpperCase() ?? null;
@@ -32,12 +35,12 @@ async function ensureSkuIsUnique(businessId, sku, excludeId = null) {
 	}
 }
 
-async function loadProduct(context) {
+async function loadProjection(context) {
 	if (context.product) {
 		return context.product;
 	}
 
-	context.product = await productAdapter.findByOffering(context.offering.id);
+	context.product = await getProjection(context).find(context.offering.id);
 
 	return context.product;
 }
@@ -52,11 +55,11 @@ const hooks = {
 	},
 
 	async afterCreate(context) {
-		context.product = await productAdapter.createFromOffering(context);
+		context.product = await getProjection(context).create(context);
 	},
 
 	async beforeUpdate(context) {
-		await loadProduct(context);
+		await loadProjection(context);
 
 		if (context.data.sku !== undefined) {
 			context.data.sku = normalizeSku(context.data.sku);
@@ -72,23 +75,23 @@ const hooks = {
 	},
 
 	async afterUpdate(context) {
-		await productAdapter.updateFromOffering(context);
+		await getProjection(context).update(context);
 	},
 
 	async beforeArchive(context) {
-		await loadProduct(context);
+		await loadProjection(context);
 	},
 
 	async afterArchive(context) {
-		await productAdapter.archiveFromOffering(context);
+		await getProjection(context).archive(context);
 	},
 
 	async beforeRestore(context) {
-		await loadProduct(context);
+		await loadProjection(context);
 	},
 
 	async afterRestore(context) {
-		await productAdapter.restoreFromOffering(context);
+		await getProjection(context).restore(context);
 	},
 };
 
@@ -100,31 +103,46 @@ export default {
 	create(payload) {
 		return sharedLifecycle.create({
 			...payload,
-			hooks,
+			registration: {
+				lifecycle: { hooks },
+				...payload.registration,
+			},
 		});
 	},
 
 	update(payload) {
 		return sharedLifecycle.update({
 			...payload,
-			hooks,
+			registration: {
+				lifecycle: { hooks },
+				...payload.registration,
+			},
 		});
 	},
 
+	/**
+	 * I am not sure whether i am to make list and get API's to have a similar implementation as create, update, archive and restore. I will leave it for now and come back to it later if needed.
+	 */
 	list: sharedLifecycle.list,
 	get: sharedLifecycle.get,
 
 	archive(payload) {
 		return sharedLifecycle.archive({
 			...payload,
-			hooks,
+			registration: {
+				lifecycle: { hooks },
+				...payload.registration,
+			},
 		});
 	},
 
 	restore(payload) {
 		return sharedLifecycle.restore({
 			...payload,
-			hooks,
+			registration: {
+				lifecycle: { hooks },
+				...payload.registration,
+			},
 		});
 	},
 };

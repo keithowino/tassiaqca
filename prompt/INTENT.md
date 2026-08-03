@@ -1453,6 +1453,125 @@ I would avoid deleting the Product collection immediately because the rest of Co
 
 ---
 
+## Revised migration order
+
+1. Phase 1 — Introduce Projection Contracts (registry-driven) (covered)
+
+This is the foundation.
+
+Instead of this
+
+```bash
+Offering Lifecycle
+        │
+        ▼
+Product Adapter
+```
+
+we build
+
+```bash
+Offering Lifecycle
+        │
+        ▼
+    Registry
+        │
+        ▼
+Projection Adapter
+        │
+        ├── Product Projection
+        ├── Booking Projection
+        ├── Rental Projection
+        └── ...
+```
+
+2. Phase 2 — Registry-driven resolution
+3. Phase 3 — Refactor Product document
+4. Phase 4 — Offering becomes canonical
+5. Phase 5 — Commerce read model
+
+---
+
+## I would implement them in this order:
+
+1. Projection contract (registry-driven)
+2. Slim Product projection
+3. Commerce reads over Offerings
+4. Deprecate legacy Product mutations
+
+---
+
+## Recommended Implementation
+
+I would proceed in four commits:
+
+### Commit 1 (done)
+
+git commit -m "feat(offering): Introduce the Projection Contract."
+
+- Create a generic projection interface (implemented as a convention in JavaScript).
+- Add projection to offering.registry.js.
+- Remove direct product.adapter knowledge from the lifecycle by resolving the projection through the registry.
+
+### Commit 2
+
+git commit -m "feat(offering): Refactor Product into a true projection."
+
+- Remove duplicated fields (name, slug, description, status, etc.) from the Product model and adapter.
+- Keep only product-specific data such as sku, category, inventory behavior, physical dimensions, shipping metadata, and similar attributes.
+
+### Commit 3
+
+git commit -m "feat(offering): Move Commerce reads to projection composition."
+
+- Refactor GET /products to retrieve Product offerings from the Offering repository and enrich them with - Product projection data before presentation.
+- Update GET /products/:id similarly.
+
+### Commit 4
+
+git commit -m "feat(offering): Deprecate Product mutations."
+
+- Mark /products POST/PATCH/DELETE/RESTORE as legacy compatibility endpoints.
+- Internally delegate them to the Offering lifecycle so there is only one mutation path.
+- Encourage clients to migrate to /offerings.
+
+---
+
+## Project structure after Phase 1
+
+I would introduce a new folder under the Offering module for shared projection infrastructure:
+
+```bash
+server/src/modules/offering/
+├── projections/
+│   ├── projection.contract.js
+│   ├── noop.projection.js
+│   └── index.js
+```
+
+Then, in Commerce, keep the product implementation where it belongs:
+
+```bash
+server/src/modules/commerce/
+├── adapters/
+│   └── product.adapter.js   // Implements the projection contract for now
+```
+
+The registry wires them together:
+
+```bash
+Offering Registry
+        │
+        ├── PRODUCT ─────────► product.adapter.js
+        ├── BOOKING ─────────► noop.projection.js
+        ├── RENTAL ──────────► noop.projection.js
+        └── ...
+```
+
+This gives us a clean plugin architecture immediately, while allowing us to rename product.adapter.js to product.projection.js in a later refactoring with no behavioral changes.
+
+---
+
 - We may begin testing, In each test give me the complete http request example for me to test.
 
 - Tests ... all passed successfully and or returned the expected responses.

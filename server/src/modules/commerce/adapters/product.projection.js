@@ -1,4 +1,5 @@
 import productRepository from "../repositories/product.repository.js";
+import { projectionContract } from "../../offering/projections/index.js";
 
 /*
 |--------------------------------------------------------------------------
@@ -106,9 +107,15 @@ async function restoreFromOffering(context) {
 }
 
 export default {
-	createFromOffering,
-	findByOffering,
-	updateFromOffering,
-	archiveFromOffering,
-	restoreFromOffering,
+	...projectionContract,
+
+	find: findByOffering,
+
+	create: createFromOffering,
+
+	update: updateFromOffering,
+
+	archive: archiveFromOffering,
+
+	restore: restoreFromOffering,
 };
