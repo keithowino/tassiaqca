@@ -1,1 +1,10 @@
 export { default as productProjection } from "./product.projection.js";
+export { default as serviceProjection } from "./service.projection.js";
+export { default as rentalProjection } from "./rental.projection.js";
+export { default as membershipProjection } from "./membership.projection.js";
+export { default as subscriptionProjection } from "./subscription.projection.js";
+export { default as courseProjection } from "./course.projection.js";
+export { default as eventProjection } from "./event.projection.js";
+export { default as packageProjection } from "./package.projection.js";
+export { default as digitalDownloadProjection } from "./digitalDownload.projection.js";
+export { default as bookingProjection } from "./booking.projection.js";

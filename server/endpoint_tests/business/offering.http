@@ -1,7 +1,7 @@
 ### Create Offering
 
-POST http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3MDQ4OTE2ZjgyMGU0NDM5MjU2ODE2IiwiaWF0IjoxNzg1NzQzNTA1LCJleHAiOjE3ODU4Mjk5MDUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZQB769uLMKV7oWBKlrMk8314pj26OaMUa881AM0VO4Q
+POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3MmQ1NWE4Yjk0ZTRmMTIzMmQ0MTExIiwiaWF0IjoxNzg1OTEwNjE5LCJleHAiOjE3ODU5OTcwMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.hzdEQz05AAbnM6JSR--0qsim_L3pV4KxwRrWFcQNS_g
 Content-Type: application/json
 
 # {
@@ -11,13 +11,28 @@ Content-Type: application/json
 #   "visibility": "PUBLIC"
 # }
 
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell XPS 15",
+#     "shortDescription": "Developer Laptop",
+#     "description": "Intel Core Ultra",
+#     "sku": " dx15-001 ",
+#     "categoryId": null
+# }
+
+# {
+#     "type": "SERVICE",
+#     "name": "Takko Repair",
+#     "shortDescription": "Car repair.",
+#     "description": "Automotive repair services"
+# }
+
+
 {
-    "type": "PRODUCT",
-    "name": "Dell XPS 15",
-    "shortDescription": "Developer Laptop",
-    "description": "Intel Core Ultra",
-    "sku": " dx15-001 ",
-    "categoryId": null
+    "type": "BOOKING",
+    "name": "Tassia Hall",
+    "shortDescription": "Booking",
+    "description": "Booking space."
 }
 
 # {

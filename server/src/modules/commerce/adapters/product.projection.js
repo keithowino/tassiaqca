@@ -125,7 +125,7 @@
 
 // // ...
 
-import productRepository from "../repositories/product.repository.js";
+import { productRepository } from "../repositories/index.js";
 import { projectionContract } from "../../offering/projections/index.js";
 
 /**

@@ -25,7 +25,7 @@ export default function errorHandler(err, req, res, next) {
 
 		error: {
 			code: err.code,
-			message: err.message,
+			message: err.message || "Something went wrong!",
 			details: err.details,
 		},
 	});

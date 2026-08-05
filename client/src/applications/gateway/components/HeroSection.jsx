@@ -40,7 +40,7 @@ export default function HeroSection() {
 					<Button
 						as={JourneyLink}
 						intent={PlatformIntent.MARKETPLACE}
-						className="absolute right-2 top-2 bottom-2"
+						className="absolute right-0.5 top-0.5 bottom-0.5"
 					>
 						Explore
 					</Button>

@@ -1,3 +1,5 @@
+import { HTTP_STATUS } from "../../constants/index.js";
+import { AppError, ErrorCodes } from "../../errors/index.js";
 import {
 	exists,
 	filterBy,
@@ -8,9 +10,13 @@ import {
 } from "./registry.utils.js";
 
 /**
- * Registry already stores:
+ * Registry-driven architecture now exists:
+ *
+ * - Business Types
+ * - Modules
+ * - Capabilities
  * - builder
- * - lifecycle
+ * - Offering lifecycle
  * - configuration
  * - projection
  */
@@ -21,7 +27,11 @@ export const createRegistry = (items, keySelector = (item) => item.id) => {
 		const key = keySelector(item);
 
 		if (registry.has(key)) {
-			throw new Error(`Duplicate registry key "${key}".`);
+			throw new AppError(
+				`Duplicate registry key "${key}".`,
+				HTTP_STATUS.CONFLICT,
+				ErrorCodes.CONFLICT,
+			);
 		}
 
 		registry.set(key, Object.freeze(item));

@@ -142,7 +142,7 @@ import mongoose from "mongoose";
  * - searchable
  * - metadata
  *
- * now lives in the Offering aggregate.
+ * lives in the Offering aggregate.
  */
 const productSchema = new mongoose.Schema(
 	{

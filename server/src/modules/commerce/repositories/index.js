@@ -1,0 +1,10 @@
+export { default as serviceRepository } from "./service.repository.js";
+export { default as productRepository } from "./product.repository.js";
+export { default as rentalRepository } from "./rental.repository.js";
+export { default as membershipRepository } from "./membership.repository.js";
+export { default as subscriptionRepository } from "./subscription.repository.js";
+export { default as courseRepository } from "./course.repository.js";
+export { default as eventRepository } from "./event.repository.js";
+export { default as packageRepository } from "./package.repository.js";
+export { default as digitalDownloadRepository } from "./digitalDownload.repository.js";
+export { default as bookingRepository } from "./booking.repository.js";

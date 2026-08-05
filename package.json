@@ -20,6 +20,9 @@
 		"status": "echo 'Server: http://localhost:5000 | Client: http://localhost:3000'",
 		"logs:server": "cd server && npm run dev --silent",
 		"logs:client": "cd client && npm run dev --silent",
+		"traceServerWarnings": "cd server && npm run traceWarnings",
+		"traceClientWarnings": "cd client && npm run traceWarnings",
+		"traceWarnings": "concurrently \"npm run traceServerWarnings\" \"npm run traceClientWarnings\" --names \"TRACEWARNING\"",
 		"docs:structure": "node scripts/generate-structure.js"
 	},
 	"repository": {

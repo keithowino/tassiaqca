@@ -23,8 +23,18 @@ import {
 	OFFERING_VISIBILITY,
 } from "../../../modules/offering/constants/index.js";
 
-import { productProjection } from "../../../modules/commerce/adapters/index.js";
-
+import {
+	productProjection,
+	serviceProjection,
+	rentalProjection,
+	membershipProjection,
+	subscriptionProjection,
+	courseProjection,
+	eventProjection,
+	packageProjection,
+	digitalDownloadProjection,
+	bookingProjection,
+} from "../../../modules/commerce/adapters/index.js";
 import { noopProjection } from "../../../modules/offering/projections/index.js";
 
 /**
@@ -92,7 +102,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: serviceProjection,
 		category: OFFERING_CATEGORIES.TIME_BASED,
 		label: "Service",
 		description: "Professional or business service.",
@@ -112,7 +122,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: bookingProjection,
 		category: OFFERING_CATEGORIES.TIME_BASED,
 		label: "Booking",
 		description: "Reservable appointment or schedule.",
@@ -132,7 +142,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: rentalProjection,
 		category: OFFERING_CATEGORIES.PHYSICAL,
 		label: "Rental",
 		description: "Assets rented for a duration.",
@@ -152,7 +162,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: membershipProjection,
 		category: OFFERING_CATEGORIES.ACCESS,
 		label: "Membership",
 		description: "Recurring member access.",
@@ -171,7 +181,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: subscriptionProjection,
 		category: OFFERING_CATEGORIES.ACCESS,
 		label: "Subscription",
 		description: "Recurring subscription.",
@@ -190,7 +200,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: courseProjection,
 		category: OFFERING_CATEGORIES.DIGITAL,
 		label: "Course",
 		description: "Educational offering.",
@@ -209,7 +219,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: eventProjection,
 		category: OFFERING_CATEGORIES.EXPERIENCE,
 		label: "Event",
 		description: "Scheduled experience.",
@@ -228,7 +238,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: packageProjection,
 		category: OFFERING_CATEGORIES.EXPERIENCE,
 		label: "Package",
 		description: "Bundle of offerings.",
@@ -247,7 +257,7 @@ const offerings = [
 		/**
 		 * Default projection for now.
 		 */
-		projection: noopProjection,
+		projection: digitalDownloadProjection,
 		category: OFFERING_CATEGORIES.DIGITAL,
 		label: "Digital Download",
 		description: "Downloadable digital asset.",
@@ -256,6 +266,28 @@ const offerings = [
 		 * Default configuration for now
 		 */
 	},
+
+	/**
+	 * Future offerings guide.
+	 */
+	// {
+	// 	...baseOffering,
+
+	// 	type: OFFERING_TYPES.DIGITAL_DOWNLOAD,
+	// 	lifecycle: digitalDownloadLifecycle,
+
+	// 	/**
+	// 	 * Default projection for now.
+	// 	 */
+	// 	projection: noopProjection,
+	// 	category: OFFERING_CATEGORIES.DIGITAL,
+	// 	label: "Digital Download",
+	// 	description: "Downloadable digital asset.",
+
+	// 	/**
+	// 	 * Default configuration for now
+	// 	 */
+	// },
 ];
 
 export const offeringRegistry = createRegistry(

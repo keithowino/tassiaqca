@@ -146,7 +146,7 @@
 
 // // ...
 
-import Product from "../models/Product.js";
+import { Product } from "../models/index.js";
 
 /*
 |--------------------------------------------------------------------------

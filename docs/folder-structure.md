@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-02
+Generated on: 2026-08-05
 
 ```bash
 ├── client/
@@ -409,7 +409,8 @@ Generated on: 2026-08-02
 │   │   │   │   └── index.js
 │   │   │   ├── commerce/
 │   │   │   │   ├── adapters/
-│   │   │   │   │   └── product.adapter.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── product.projection.js
 │   │   │   │   ├── controllers/
 │   │   │   │   │   ├── category.controller.js
 │   │   │   │   │   ├── index.js
@@ -590,6 +591,10 @@ Generated on: 2026-08-02
 │   │   │   │   ├── presenters/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── offering.presenter.js
+│   │   │   │   ├── projections/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── noop.projection.js
+│   │   │   │   │   └── projection.contract.js
 │   │   │   │   ├── registries/
 │   │   │   │   │   └── index.js
 │   │   │   │   ├── repositories/

@@ -1105,11 +1105,160 @@ physicalAttributes
 
 ---
 
+## Next Planned Work (According to the Architecture Specification)
+
+The foundation of the Offering Framework is now complete. The next phases focus on enriching the abstraction rather than returning to Product-centric design.
+
+### Phase 1 — Complete the Offering Framework
+
+Continue implementing the remaining projection types:
+
+- Service
+- Rental
+- Membership
+- Booking
+- Event
+- Course
+- Subscription
+- Package
+- Digital Download
+
+Each projection should:
+
+implement the projection contract
+remain lightweight
+own only type-specific data
+rely on Offering for shared lifecycle
+
+### Phase 2 — Retail Commerce
+
+Expand the Product projection into a complete retail implementation:
+
+- Product Variants
+- Variant Attributes
+- Attribute Values
+- SKU generation strategy
+- Inventory per Variant
+- Pricing per Variant
+- Images per Variant
+- Variant lifecycle
+- Variant presenters and repositories
+
+The goal is for Product to become a thin retail specialization of the generic Offering architecture.
+
+### Phase 3 — Marketplace
+
+Build the Marketplace on top of Offerings rather than Products:
+
+- Unified offering catalog
+- Cross-business discovery
+- Search
+- Filters
+- Categories
+- Recommendations
+- Featured offerings
+- Marketplace aggregation
+
+The Marketplace should work regardless of offering type.
+
+### Phase 4 — Business Modules
+
+Develop additional industry modules that consume the Offering Framework:
+
+- Restaurant
+- Hospitality
+- Healthcare
+- Education
+- Professional Services
+- Community Services
+- Membership Organizations
+
+These modules should extend the platform without modifying the core Offering architecture.
+
+---
+
+## Lifecycle changes
+
+Notice something interesting.
+
+Your current
+
+```bash
+service.lifecycle.js
+```
+
+is
+
+```bash
+create: sharedLifecycle.create
+```
+
+which works.
+
+However Product became
+
+```js
+create(payload){
+   return sharedLifecycle.create({
+      ...
+      registration:{
+          lifecycle:{hooks},
+          ...
+      }
+   })
+}
+```
+
+because Product has hooks.
+
+Once Service gains
+
+```bash
+beforeCreate
+
+afterCreate
+
+beforeUpdate
+```
+
+its lifecycle will naturally evolve into exactly the Product pattern.
+
+So we do not need to prematurely add hooks today.
+
+Only add them once the projection starts having business rules.
+
+---
+
+## Implementation priority
+
+I would implement them in this order:
+
+✅ Service Projection
+✅ Rental Projection
+✅ Membership Projection
+✅ Subscription Projection
+✅ Course Projection
+✅ Event Projection
+✅ Package Projection
+✅ Digital Download Projection
+✅ Booking Projection
+
+---
+
+- For the Service Projection, we created the:
+    - Model
+    - Repository
+    - Projection
+    - Updated offering registry
+    - Updated it's lifecycle
+
+---
+
 - We may begin testing, In each test give me the complete http request example for me to test.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Deprecate Product mutations."
+git commit -m "feat(offering): Implement the remaining Projection."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

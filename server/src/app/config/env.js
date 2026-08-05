@@ -8,7 +8,7 @@ export default {
 	nodeEnv: process.env.NODE_ENV,
 	port: process.env.PORT,
 	mongoUri: process.env.MONGODB_URI,
-	clientUrl: process.env.CLIENT_URL,
+	clientUrl: process.env.CLIENT_URL || "http://localhost:3000",
 	jwt: {
 		accessSecret: process.env.JWT_ACCESS_SECRET,
 		refreshSecret: process.env.JWT_REFRESH_SECRET,

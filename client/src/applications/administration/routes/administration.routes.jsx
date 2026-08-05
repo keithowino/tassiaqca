@@ -2,8 +2,11 @@ import { AuthenticatedRoute } from "../../../platform/routing";
 
 function AdministrationPlaceholder() {
 	return (
-		<div style={{ padding: "2rem" }}>
-			<h1>Administration</h1>
+		<div className="container mx-auto h-screen w-screen">
+			<div className="flex flex-col h-full items-center justify-center">
+				<h1>Administration</h1>
+				<i>Busy, Busy Me...</i>
+			</div>
 		</div>
 	);
 }

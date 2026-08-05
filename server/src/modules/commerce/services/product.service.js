@@ -336,7 +336,7 @@
 
 // // ...
 
-import productRepository from "../repositories/product.repository.js";
+import { productRepository } from "../repositories/index.js";
 import productPresenter from "../presenters/product.presenter.js";
 
 import businessRepository from "../../business/repositories/business.repository.js";
