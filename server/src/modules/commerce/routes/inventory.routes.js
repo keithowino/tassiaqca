@@ -17,40 +17,33 @@ const router = Router({
 |--------------------------------------------------------------------------
 */
 
-router.post(
-	"/",
-	authenticate,
-	requirePermission(Permissions.INVENTORY_CREATE),
-	inventoryController.create,
-);
+router.use(authenticate);
 
-router.get(
-	"/",
-	authenticate,
-	requirePermission(Permissions.INVENTORY_VIEW),
-	inventoryController.list,
-);
+router
+	.route("/")
+	.get(
+		requirePermission(Permissions.INVENTORY_VIEW),
+		inventoryController.list,
+	)
+	.post(
+		requirePermission(Permissions.INVENTORY_CREATE),
+		inventoryController.create,
+	);
 
-router.get(
-	"/:inventoryId",
-	authenticate,
-	requirePermission(Permissions.INVENTORY_VIEW),
-	inventoryController.getById,
-);
-
-router.patch(
-	"/:inventoryId",
-	authenticate,
-	requirePermission(Permissions.INVENTORY_UPDATE),
-	inventoryController.update,
-);
-
-router.delete(
-	"/:inventoryId",
-	authenticate,
-	requirePermission(Permissions.INVENTORY_DELETE),
-	inventoryController.archive,
-);
+router
+	.route("/:inventoryId")
+	.get(
+		requirePermission(Permissions.INVENTORY_VIEW),
+		inventoryController.getById,
+	)
+	.patch(
+		requirePermission(Permissions.INVENTORY_UPDATE),
+		inventoryController.update,
+	)
+	.delete(
+		requirePermission(Permissions.INVENTORY_DELETE),
+		inventoryController.archive,
+	);
 
 router.patch(
 	"/:inventoryId/restore",

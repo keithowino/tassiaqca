@@ -2,7 +2,7 @@ export { default as HTTP_STATUS } from "./httpStatus.js";
 export { default as COOKIE_NAMES } from "./cookies.js";
 export { default as AUDIT_ACTIONS } from "./auditActions.js";
 export { default as AUDIT_ENTITY_TYPES } from "./auditEntityTypes.js";
-export { default as OFFERING_TYPES } from "./offeringTypes.js";
+// export { default as OFFERING_TYPES } from "./offeringTypes.js";
 export { default as Permissions } from "./permissions.js";
 export * from "./ProductStatus.js";
 export * from "./categoryStatus.js";

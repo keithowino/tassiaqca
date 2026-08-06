@@ -12,47 +12,39 @@ const router = Router({
 	mergeParams: true,
 });
 
-router.post(
-	"/",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_IMAGE_CREATE),
-	upload.single("image"),
-	productImageController.create,
-);
+router.use(authenticate);
 
-router.get(
-	"/",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_IMAGE_VIEW),
-	productImageController.list,
-);
+router
+	.route("/")
+	.get(
+		requirePermission(Permissions.PRODUCT_IMAGE_VIEW),
+		productImageController.list,
+	)
+	.post(
+		requirePermission(Permissions.PRODUCT_IMAGE_CREATE),
+		upload.single("image"),
+		productImageController.create,
+	);
 
-router.get(
-	"/:imageId",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_IMAGE_VIEW),
-	productImageController.getById,
-);
-
-router.patch(
-	"/:imageId",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_IMAGE_UPDATE),
-	productImageController.update,
-);
+router
+	.route("/:imageId")
+	.get(
+		requirePermission(Permissions.PRODUCT_IMAGE_VIEW),
+		productImageController.getById,
+	)
+	.patch(
+		requirePermission(Permissions.PRODUCT_IMAGE_UPDATE),
+		productImageController.update,
+	)
+	.delete(
+		requirePermission(Permissions.PRODUCT_IMAGE_DELETE),
+		productImageController.remove,
+	);
 
 router.patch(
 	"/:imageId/primary",
-	authenticate,
 	requirePermission(Permissions.PRODUCT_IMAGE_UPDATE),
 	productImageController.setPrimary,
-);
-
-router.delete(
-	"/:imageId",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_IMAGE_DELETE),
-	productImageController.remove,
 );
 
 export default router;

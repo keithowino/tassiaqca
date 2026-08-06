@@ -14,7 +14,7 @@ import {
  *
  * - Business Types
  * - Modules
- * - Capabilities
+ * - Business Capabilities
  * - builder
  * - Offering lifecycle
  * - configuration

@@ -11,23 +11,21 @@ const router = Router({
 	mergeParams: true,
 });
 
-router.post(
-	"/",
-	authenticate,
-	requirePermission(Permissions.STOCK_MOVEMENT_CREATE),
-	stockMovementController.create,
-);
+router.use(authenticate);
 
-router.get(
-	"/",
-	authenticate,
-	requirePermission(Permissions.STOCK_MOVEMENT_VIEW),
-	stockMovementController.list,
-);
+router
+	.route("/")
+	.get(
+		requirePermission(Permissions.STOCK_MOVEMENT_VIEW),
+		stockMovementController.list,
+	)
+	.post(
+		requirePermission(Permissions.STOCK_MOVEMENT_CREATE),
+		stockMovementController.create,
+	);
 
 router.get(
 	"/:movementId",
-	authenticate,
 	requirePermission(Permissions.STOCK_MOVEMENT_VIEW),
 	stockMovementController.getById,
 );

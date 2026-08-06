@@ -1,0 +1,64 @@
+export const OFFERING_COMPONENTS = Object.freeze({
+	/**
+	 * Commercial
+	 */
+	PRICING: "PRICING",
+
+	INVENTORY: "INVENTORY",
+
+	VARIANTS: "VARIANTS",
+
+	CATEGORIES: "CATEGORIES",
+
+	/**
+	 * Content
+	 */
+	MEDIA: "MEDIA",
+
+	ATTRIBUTES: "ATTRIBUTES",
+
+	TAGS: "TAGS",
+
+	SEO: "SEO",
+
+	METADATA: "METADATA",
+
+	/**
+	 * Scheduling
+	 */
+	SCHEDULING: "SCHEDULING",
+
+	CALENDAR: "CALENDAR",
+
+	BOOKING: "BOOKING",
+
+	/**
+	 * Access
+	 */
+	MEMBERSHIP: "MEMBERSHIP",
+
+	SUBSCRIPTION: "SUBSCRIPTION",
+
+	REGISTRATION: "REGISTRATION",
+
+	/**
+	 * Digital
+	 */
+	DOWNLOAD: "DOWNLOAD",
+
+	/**
+	 * Education
+	 */
+	ENROLLMENT: "ENROLLMENT",
+
+	INSTRUCTOR: "INSTRUCTOR",
+
+	DURATION: "DURATION",
+
+	/**
+	 * Events
+	 */
+	CAPACITY: "CAPACITY",
+
+	LOCATION: "LOCATION",
+});

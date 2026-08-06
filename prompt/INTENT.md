@@ -1109,7 +1109,7 @@ physicalAttributes
 
 The foundation of the Offering Framework is now complete. The next phases focus on enriching the abstraction rather than returning to Product-centric design.
 
-### Phase 1 — Complete the Offering Framework
+### Phase 1 — Complete the Offering Framework (covered)
 
 Continue implementing the remaining projection types:
 
@@ -1229,22 +1229,6 @@ Only add them once the projection starts having business rules.
 
 ---
 
-## Implementation priority
-
-I would implement them in this order:
-
-✅ Service Projection
-✅ Rental Projection
-✅ Membership Projection
-✅ Subscription Projection
-✅ Course Projection
-✅ Event Projection
-✅ Package Projection
-✅ Digital Download Projection
-✅ Booking Projection
-
----
-
 - For the Service Projection, we created the:
     - Model
     - Repository
@@ -1254,11 +1238,75 @@ I would implement them in this order:
 
 ---
 
+## Recommended next implementation order
+
+Given the current state of the project, I would implement the capability system in this sequence:
+
+1. Capability Registry – Define a registry of reusable platform capabilities (Pricing, Inventory, Media, Scheduling, etc.).
+2. Pricing Capability – This is foundational and will be shared by nearly every offering type.
+3. Media/Assets Capability – Replace product-specific images with a reusable media capability applicable to Products, Courses, Events, and Digital Downloads.
+4. Inventory Capability – Extend beyond products so Rentals and other physical offerings can share the same inventory infrastructure.
+5. Scheduling Capability – Power Services, Bookings, Courses, and Events from a single scheduling domain.
+6. Capability Composition – Drive behavior, configuration, and eventually frontend workspace generation from the capabilities declared in offering.registry.js.
+
+---
+
+## The implementation plan I recommend
+
+1. Phase 1 — Introduce an Offering Component Registry
+2. Phase 2 — Replace Boolean Configuration in the Offering Registry
+3. Phase 3 — Build Component Pipelines
+
+Introduce lifecycle handlers for each reusable component.
+
+Examples include:
+
+Pricing Pipeline
+Inventory Pipeline
+Media Pipeline
+Scheduling Pipeline
+Registration Pipeline
+
+These pipelines execute only when the offering declares the corresponding component.
+
+4. Phase 4 — Move Projection Logic into Components
+
+As each component matures, extract common responsibilities from projection adapters into reusable component services. For example:
+
+Pricing service
+Media service
+Inventory service
+Scheduling service
+
+This reduces duplication across Product, Course, Event, Rental, and other offering types.
+
+5. Phase 5 — Enable Dynamic APIs and UI
+
+Finally, leverage the declared components to dynamically compose:
+
+REST responses
+validation rules
+frontend forms
+workspace widgets
+marketplace presentation
+
+---
+
+## Implementation order
+
+1. Create the component contract (component.contract.js).
+2. Implement the component pipeline (component.pipeline.js) that discovers and executes components declared in the offering registry.
+3. Create no-op implementations for all current components (pricing, inventory, media, scheduling, calendar, booking, membership, subscription, registration, download, enrollment, instructor, duration, capacity, location, etc.).
+4. Wire the pipeline into the shared offering lifecycle so component hooks execute alongside the existing projection hooks.
+5. Incrementally enrich each component with real behavior (pricing persistence, media management, inventory updates, scheduling logic, etc.) without changing the lifecycle orchestration.
+
+---
+
 - We may begin testing, In each test give me the complete http request example for me to test.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Implement the remaining Projection."
+git commit -m "feat(offering): Replace Boolean Configuration in the Offering Registry."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

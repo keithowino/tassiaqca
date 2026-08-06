@@ -11,23 +11,21 @@ const router = Router({
 	mergeParams: true,
 });
 
-router.post(
-	"/",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_PRICE_CREATE),
-	productPriceController.create,
-);
+router.use(authenticate);
 
-router.get(
-	"/",
-	authenticate,
-	requirePermission(Permissions.PRODUCT_PRICE_VIEW),
-	productPriceController.list,
-);
+router
+	.route("/")
+	.get(
+		requirePermission(Permissions.PRODUCT_PRICE_VIEW),
+		productPriceController.list,
+	)
+	.post(
+		requirePermission(Permissions.PRODUCT_PRICE_CREATE),
+		productPriceController.create,
+	);
 
 router.get(
 	"/:priceId",
-	authenticate,
 	requirePermission(Permissions.PRODUCT_PRICE_VIEW),
 	productPriceController.getById,
 );

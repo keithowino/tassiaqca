@@ -4,12 +4,6 @@ POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3MmQ1NWE4Yjk0ZTRmMTIzMmQ0MTExIiwiaWF0IjoxNzg1OTEwNjE5LCJleHAiOjE3ODU5OTcwMTksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.hzdEQz05AAbnM6JSR--0qsim_L3pV4KxwRrWFcQNS_g
 Content-Type: application/json
 
-# {
-#   "type": "PRODUCT",
-#   "name": "Dell XPS 13",
-#   "description": "13-inch developer laptop",
-#   "visibility": "PUBLIC"
-# }
 
 # {
 #     "type": "PRODUCT",
@@ -20,20 +14,20 @@ Content-Type: application/json
 #     "categoryId": null
 # }
 
-# {
-#     "type": "SERVICE",
-#     "name": "Takko Repair",
-#     "shortDescription": "Car repair.",
-#     "description": "Automotive repair services"
-# }
-
-
 {
-    "type": "BOOKING",
-    "name": "Tassia Hall",
-    "shortDescription": "Booking",
-    "description": "Booking space."
+    "type": "SERVICE",
+    "name": "Takko Repair",
+    "shortDescription": "Car repair.",
+    "description": "Automotive repair services"
 }
+
+
+# {
+#     "type": "BOOKING",
+#     "name": "Tassia Hall",
+#     "shortDescription": "Booking",
+#     "description": "Booking space."
+# }
 
 # {
 #     "type": "PRODUCT",
