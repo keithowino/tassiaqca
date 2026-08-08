@@ -1,5 +1,7 @@
 node_modules
 
+trash
+
 # Environment variables
 .env
 .env.*

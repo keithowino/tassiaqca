@@ -3,6 +3,14 @@ import { createRegistry } from "../registry/index.js";
 import { OFFERING_COMPONENTS } from "./offeringComponent.constants.js";
 import { OFFERING_COMPONENT_CATEGORIES } from "./offeringComponentCategory.constants.js";
 
+import pricingComponent from "../../../modules/offering/components/pricing/pricing.component.js";
+
+/**
+ * From this point onward, adding a new reusable concern becomes entirely declarative:
+ * 1. Create a component implementation.
+ * 2. Register it in offeringComponent.registry.js.
+ * 3. Add it to an offering's components array.
+ */
 const components = [
 	/**
 	 * Commercial
@@ -12,6 +20,7 @@ const components = [
 		id: OFFERING_COMPONENTS.PRICING,
 		name: "Pricing",
 		description: "Provides pricing information for an offering.",
+		implementation: pricingComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
@@ -24,6 +33,7 @@ const components = [
 		id: OFFERING_COMPONENTS.INVENTORY,
 		name: "Inventory",
 		description: "Tracks inventory and stock availability.",
+		// implementation: inventoryComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
@@ -36,6 +46,7 @@ const components = [
 		id: OFFERING_COMPONENTS.VARIANTS,
 		name: "Variants",
 		description: "Supports multiple purchasable variants.",
+		// implementation: variantsComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
@@ -48,6 +59,7 @@ const components = [
 		id: OFFERING_COMPONENTS.CATEGORIES,
 		name: "Categories",
 		description: "Assigns offerings to categories.",
+		// implementation: categoriesComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
@@ -64,6 +76,7 @@ const components = [
 		id: OFFERING_COMPONENTS.MEDIA,
 		name: "Media",
 		description: "Stores media assets associated with an offering.",
+		// implementation: mediaComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -76,6 +89,7 @@ const components = [
 		id: OFFERING_COMPONENTS.ATTRIBUTES,
 		name: "Attributes",
 		description: "Supports custom attributes for an offering.",
+		// implementation: attributesComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -88,6 +102,7 @@ const components = [
 		id: OFFERING_COMPONENTS.TAGS,
 		name: "Tags",
 		description: "Provides tagging for search and organization.",
+		// implementation: tagsComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -100,6 +115,7 @@ const components = [
 		id: OFFERING_COMPONENTS.SEO,
 		name: "SEO",
 		description: "Stores search engine optimization metadata.",
+		// implementation: seoComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -112,6 +128,7 @@ const components = [
 		id: OFFERING_COMPONENTS.METADATA,
 		name: "Metadata",
 		description: "Stores arbitrary structured metadata.",
+		// implementation: metadataComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.SHARED,
 		enabled: true,
 		experimental: false,
@@ -128,6 +145,7 @@ const components = [
 		id: OFFERING_COMPONENTS.SCHEDULING,
 		name: "Scheduling",
 		description: "Provides scheduling support.",
+		// implementation: schedulingComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
 		enabled: true,
 		experimental: false,
@@ -140,6 +158,7 @@ const components = [
 		id: OFFERING_COMPONENTS.CALENDAR,
 		name: "Calendar",
 		description: "Provides calendar integration.",
+		// implementation: calendarComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
 		enabled: true,
 		experimental: false,
@@ -152,6 +171,7 @@ const components = [
 		id: OFFERING_COMPONENTS.BOOKING,
 		name: "Booking",
 		description: "Provides booking functionality.",
+		// implementation: bookingComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
 		enabled: true,
 		experimental: false,
@@ -168,6 +188,7 @@ const components = [
 		id: OFFERING_COMPONENTS.MEMBERSHIP,
 		name: "Membership",
 		description: "Provides membership access.",
+		// implementation: membershipComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
 		enabled: true,
 		experimental: false,
@@ -180,6 +201,7 @@ const components = [
 		id: OFFERING_COMPONENTS.SUBSCRIPTION,
 		name: "Subscription",
 		description: "Provides recurring subscription support.",
+		// implementation: subscriptionComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
 		enabled: true,
 		experimental: false,
@@ -192,6 +214,7 @@ const components = [
 		id: OFFERING_COMPONENTS.REGISTRATION,
 		name: "Registration",
 		description: "Supports registrations and enrollments.",
+		// implementation: registrationComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
 		enabled: true,
 		experimental: false,
@@ -208,6 +231,7 @@ const components = [
 		id: OFFERING_COMPONENTS.DOWNLOAD,
 		name: "Download",
 		description: "Provides downloadable assets.",
+		// implementation: downloadComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.DIGITAL,
 		enabled: true,
 		experimental: false,
@@ -224,6 +248,7 @@ const components = [
 		id: OFFERING_COMPONENTS.ENROLLMENT,
 		name: "Enrollment",
 		description: "Supports learner enrollment.",
+		// implementation: enrollmentComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
 		enabled: true,
 		experimental: false,
@@ -236,6 +261,7 @@ const components = [
 		id: OFFERING_COMPONENTS.INSTRUCTOR,
 		name: "Instructor",
 		description: "Stores instructor information.",
+		// implementation: instructorComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
 		enabled: true,
 		experimental: false,
@@ -248,6 +274,7 @@ const components = [
 		id: OFFERING_COMPONENTS.DURATION,
 		name: "Duration",
 		description: "Stores duration information.",
+		// implementation: durationComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
 		enabled: true,
 		experimental: false,
@@ -264,6 +291,7 @@ const components = [
 		id: OFFERING_COMPONENTS.CAPACITY,
 		name: "Capacity",
 		description: "Controls attendee capacity.",
+		// implementation: capacityComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EVENTS,
 		enabled: true,
 		experimental: false,
@@ -276,6 +304,7 @@ const components = [
 		id: OFFERING_COMPONENTS.LOCATION,
 		name: "Location",
 		description: "Stores event location.",
+		// implementation: locationComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EVENTS,
 		enabled: true,
 		experimental: false,

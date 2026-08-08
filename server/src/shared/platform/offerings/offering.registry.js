@@ -58,12 +58,6 @@ const baseOffering = {
 		discoverable: true,
 	},
 
-	// configuration: {
-	// 	supportsVariants: false,
-	// 	supportsInventory: false,
-	// 	supportsScheduling: false,
-	// },
-
 	defaults: {
 		status: OFFERING_STATUS.DRAFT,
 
@@ -88,11 +82,6 @@ const offerings = [
 		label: "Product",
 		description: "Physical goods sold by a business.",
 
-		// configuration: {
-		// 	...baseOffering.configuration,
-		// 	supportsVariants: true,
-		// 	supportsInventory: true,
-		// },
 		components: [
 			OFFERING_COMPONENTS.PRICING,
 			OFFERING_COMPONENTS.MEDIA,
@@ -112,10 +101,6 @@ const offerings = [
 		label: "Service",
 		description: "Professional or business service.",
 
-		// configuration: {
-		// 	...baseOffering.configuration,
-		// 	supportsScheduling: true,
-		// },
 		components: [
 			OFFERING_COMPONENTS.PRICING,
 			OFFERING_COMPONENTS.MEDIA,
@@ -134,10 +119,6 @@ const offerings = [
 		label: "Booking",
 		description: "Reservable appointment or schedule.",
 
-		// configuration: {
-		// 	...baseOffering.configuration,
-		// 	supportsScheduling: true,
-		// },
 		components: [
 			OFFERING_COMPONENTS.PRICING,
 			OFFERING_COMPONENTS.SCHEDULING,
@@ -157,10 +138,6 @@ const offerings = [
 		label: "Rental",
 		description: "Assets rented for a duration.",
 
-		// configuration: {
-		// 	...baseOffering.configuration,
-		// 	supportsInventory: true,
-		// },
 		components: [
 			OFFERING_COMPONENTS.PRICING,
 			OFFERING_COMPONENTS.MEDIA,
@@ -298,10 +275,6 @@ const offerings = [
 	// 	category: OFFERING_CATEGORIES.DIGITAL,
 	// 	label: "Digital Download",
 	// 	description: "Downloadable digital asset.",
-
-	// 	/**
-	// 	 * Default configuration for now
-	// 	 */
 	// },
 ];
 

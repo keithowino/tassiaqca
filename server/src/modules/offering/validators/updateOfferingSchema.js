@@ -4,7 +4,7 @@ import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
 import { objectIdSchema } from "../../../shared/validation/index.js";
 
 export const updateOfferingRequestSchema = z
-	.object({
+	.looseObject({
 		name: z.string().trim().min(2).max(200).optional(),
 
 		description: z.string().trim().max(5000).optional(),

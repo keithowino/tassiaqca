@@ -1294,11 +1294,71 @@ marketplace presentation
 
 ## Implementation order
 
-1. Create the component contract (component.contract.js).
-2. Implement the component pipeline (component.pipeline.js) that discovers and executes components declared in the offering registry.
-3. Create no-op implementations for all current components (pricing, inventory, media, scheduling, calendar, booking, membership, subscription, registration, download, enrollment, instructor, duration, capacity, location, etc.).
-4. Wire the pipeline into the shared offering lifecycle so component hooks execute alongside the existing projection hooks.
+1. Create the component contract (component.contract.js). (covered)
+2. Implement the component pipeline (component.pipeline.js) that discovers and executes components declared in the offering registry. (covered)
+3. Create no-op implementations for all current components (pricing, inventory, media, scheduling, calendar, booking, membership, subscription, registration, download, enrollment, instructor, duration, capacity, location, etc.). (covered)
+4. Wire the pipeline into the shared offering lifecycle so component hooks execute alongside the existing projection hooks. (covered)
 5. Incrementally enrich each component with real behavior (pricing persistence, media management, inventory updates, scheduling logic, etc.) without changing the lifecycle orchestration.
+
+---
+
+## I recommend the first implementation milestone
+
+Let's begin by implementing Pricing V1 in the same order we've used throughout the project:
+
+Pricing Model (covered)
+Pricing Builder & Factory (covered)
+Pricing Repository (covered)
+Pricing Presenter (covered)
+Pricing Validation (covered)
+Pricing Service (covered)
+Pricing Component (connects to the component pipeline)
+Pricing Controller & Routes
+REST API testing
+
+---
+
+```js
+services: {
+    eventBus,
+    imageStorage,
+    cache,
+}
+```
+
+---
+
+## Recommended next implementation
+
+1. Refactor pricing.service.js to expose a single setCurrentPrice() method that encapsulates both initial creation and replacement logic. (covered)
+2. Replace the no-op pricing.component.js with a real implementation that invokes pricingService.setCurrentPrice() and stores the result in context.state.pricing. (covered)
+3. Update the offering creation/update validators so they accept an optional nested pricing object. This will allow the component pipeline to receive pricing data as part of the offering payload without introducing separate pricing endpoints. This pattern can then be reused consistently for Inventory, Media, Scheduling, and the other components. (covered)
+
+---
+
+With Pricing now functioning as a real component, the next logical milestone is to apply the same architecture to Inventory. Inventory will follow the same pattern:
+
+an inventory.model.js,
+inventory.builder.js and inventory.factory.js,
+inventory.repository.js,
+inventory.presenter.js,
+inventory.validator.js,
+inventory.service.js,
+
+---
+
+## Recommendation before REST testing
+
+1. Extend component.contract.js with validateCreate() and validateUpdate() no-op hooks. (covered)
+2. Extend component.pipeline.js to execute validateCreate and validateUpdate. (covered)
+3. Have pricing.component.js call its validator from validateCreate()/validateUpdate() instead of inside beforeCreate().
+4. Invoke componentPipeline.validateCreate(context) and componentPipeline.validateUpdate(context) from the shared offering lifecycle before the corresponding beforeCreate()/beforeUpdate() hooks.
+
+---
+
+## One small cleanup recommendation
+
+We should consider extracting the Zod → AppError conversion currently duplicated between validateRequest.js and errorHandler.js into a shared validation/error utility.
 
 ---
 
@@ -1306,7 +1366,7 @@ marketplace presentation
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Replace Boolean Configuration in the Offering Registry."
+git commit -m "feat(offering): Create the Pricing component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

@@ -5,8 +5,18 @@ import { HTTP_STATUS } from "../constants/index.js";
 
 export default function validateRequest({ body, params, query, headers }, req) {
 	try {
+		/**
+		 * console.log("[Validation] Incoming body", req.body);
+		 */
+
+		const parsedBody = body ? body.parse(req.body) : req.body;
+
+		/**
+		 * console.log("[Validation] Parsed body", parsedBody);
+		 */
+
 		return {
-			body: body ? body.parse(req.body) : req.body,
+			body: parsedBody,
 			params: params ? params.parse(req.params) : req.params,
 			query: query ? query.parse(req.query) : req.query,
 			headers: headers ? headers.parse(req.headers) : req.headers,

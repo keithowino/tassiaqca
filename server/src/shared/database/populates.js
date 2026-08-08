@@ -1,4 +1,8 @@
 /**
+ * This file might be discarded, before doing so confirm.
+ */
+
+/**
  * Product aggregate.
  *
  * Used by repositories whose primary aggregate is Product.

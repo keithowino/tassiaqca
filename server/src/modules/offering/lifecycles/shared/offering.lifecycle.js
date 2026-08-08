@@ -18,6 +18,8 @@ import { AppError, ErrorCodes } from "../../../../shared/errors/index.js";
 
 import { offeringFactory } from "../../builders/index.js";
 
+import { componentPipeline } from "../../components/index.js";
+
 /**
  * This is the foundation for the next evolution. Once Product, Booking, Rental, Membership, Course, etc. become independent domains, each can provide its own lifecycle hooks (beforeCreate, afterCreate, beforeUpdate, publish, archive, pricing, inventory, scheduling, etc.) while continuing to reuse this shared lifecycle instead of duplicating CRUD logic.
  */
@@ -115,23 +117,58 @@ function buildAuditMetadata(offering) {
 | lifecycle implementation.
 |
 */
-
 const defaultHooks = {
-	async beforeCreate() {},
+	/*
+	|--------------------------------------------------------------------------
+	| Validation
+	|--------------------------------------------------------------------------
+	*/
 
-	async afterCreate() {},
+	async validateCreate(context) {
+		await componentPipeline.validateCreate(context);
+	},
 
-	async beforeUpdate() {},
+	async validateUpdate(context) {
+		await componentPipeline.validateUpdate(context);
+	},
 
-	async afterUpdate() {},
+	/*
+	|--------------------------------------------------------------------------
+	| Lifecycle
+	|--------------------------------------------------------------------------
+	*/
 
-	async beforeArchive() {},
+	async beforeCreate(context) {
+		await componentPipeline.beforeCreate(context);
+	},
 
-	async afterArchive() {},
+	async afterCreate(context) {
+		await componentPipeline.afterCreate(context);
+	},
 
-	async beforeRestore() {},
+	async beforeUpdate(context) {
+		await componentPipeline.beforeUpdate(context);
+	},
 
-	async afterRestore() {},
+	async afterUpdate(context) {
+		await componentPipeline.afterUpdate(context);
+	},
+
+	async beforeArchive(context) {
+		await componentPipeline.beforeArchive(context);
+	},
+
+	async afterArchive(context) {
+		await componentPipeline.afterArchive(context);
+	},
+
+	async beforeRestore(context) {
+		await componentPipeline.beforeRestore(context);
+	},
+
+	async afterRestore(context) {
+		await componentPipeline.afterRestore(context);
+	},
 };
 
 /*
@@ -157,7 +194,10 @@ async function create({
 		actor,
 		requestMetadata,
 		registration,
+		state: {},
 	};
+
+	await hooks.validateCreate(context);
 
 	await hooks.beforeCreate(context);
 
@@ -258,7 +298,10 @@ async function update({
 		actor,
 		requestMetadata,
 		registration,
+		state: {},
 	};
+
+	await hooks.validateUpdate(context);
 
 	await hooks.beforeUpdate(context);
 
@@ -317,6 +360,7 @@ async function archive({
 		actor,
 		requestMetadata,
 		registration,
+		state: {},
 	};
 
 	await hooks.beforeArchive(context);
@@ -360,6 +404,7 @@ async function restore({
 		actor,
 		requestMetadata,
 		registration,
+		state: {},
 	};
 
 	await hooks.beforeRestore(context);

@@ -4,7 +4,7 @@ import { OFFERING_TYPES } from "../../../shared/platform/offerings/index.js";
 import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
 import { objectIdSchema } from "../../../shared/validation/index.js";
 
-export const createOfferingRequestSchema = z.object({
+export const createOfferingRequestSchema = z.looseObject({
 	type: z.enum(Object.values(OFFERING_TYPES)),
 
 	name: z.string().trim().min(2).max(200),

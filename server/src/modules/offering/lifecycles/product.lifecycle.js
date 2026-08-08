@@ -44,21 +44,89 @@ async function loadProjection(context) {
 
 	return context.product;
 }
+// // commented temporarily
+// const hooks = {
+// 	...sharedLifecycle.hooks,
+
+// 	async beforeCreate(context) {
+// 		context.data.sku = normalizeSku(context.data.sku);
+
+// 		await ensureSkuIsUnique(context.businessId, context.data.sku);
+// 	},
+
+// 	async afterCreate(context) {
+// 		context.product = await getProjection(context).create(context);
+// 	},
+
+// 	async beforeUpdate(context) {
+// 		await loadProjection(context);
+
+// 		if (context.data.sku !== undefined) {
+// 			context.data.sku = normalizeSku(context.data.sku);
+
+// 			if (context.data.sku !== context.product?.sku) {
+// 				await ensureSkuIsUnique(
+// 					context.businessId,
+// 					context.data.sku,
+// 					context.product?.id,
+// 				);
+// 			}
+// 		}
+// 	},
+
+// 	async afterUpdate(context) {
+// 		await getProjection(context).update(context);
+// 	},
+
+// 	async beforeArchive(context) {
+// 		await loadProjection(context);
+// 	},
+
+// 	async afterArchive(context) {
+// 		await getProjection(context).archive(context);
+// 	},
+
+// 	async beforeRestore(context) {
+// 		await loadProjection(context);
+// 	},
+
+// 	async afterRestore(context) {
+// 		await getProjection(context).restore(context);
+// 	},
+// };
 
 const hooks = {
 	...sharedLifecycle.hooks,
 
 	async beforeCreate(context) {
+		await sharedLifecycle.hooks.beforeCreate(context);
+
 		context.data.sku = normalizeSku(context.data.sku);
 
 		await ensureSkuIsUnique(context.businessId, context.data.sku);
 	},
 
 	async afterCreate(context) {
+		await sharedLifecycle.hooks.afterCreate(context);
+
 		context.product = await getProjection(context).create(context);
 	},
 
+	// async afterCreate(context) {
+	// 	console.log("[Product Hook] entered");
+
+	// 	await sharedLifecycle.hooks.afterCreate(context);
+
+	// 	console.log("[Product Hook] shared returned");
+
+	// 	context.product = await getProjection(context).create(context);
+
+	// 	console.log("[Product Hook] projection created");
+	// },
+
 	async beforeUpdate(context) {
+		await sharedLifecycle.hooks.beforeUpdate(context);
+
 		await loadProjection(context);
 
 		if (context.data.sku !== undefined) {
@@ -75,22 +143,32 @@ const hooks = {
 	},
 
 	async afterUpdate(context) {
+		await sharedLifecycle.hooks.afterUpdate(context);
+
 		await getProjection(context).update(context);
 	},
 
 	async beforeArchive(context) {
+		await sharedLifecycle.hooks.beforeArchive(context);
+
 		await loadProjection(context);
 	},
 
 	async afterArchive(context) {
+		await sharedLifecycle.hooks.afterArchive(context);
+
 		await getProjection(context).archive(context);
 	},
 
 	async beforeRestore(context) {
+		await sharedLifecycle.hooks.beforeRestore(context);
+
 		await loadProjection(context);
 	},
 
 	async afterRestore(context) {
+		await sharedLifecycle.hooks.afterRestore(context);
+
 		await getProjection(context).restore(context);
 	},
 };

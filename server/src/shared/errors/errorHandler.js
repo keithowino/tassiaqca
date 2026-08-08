@@ -1,8 +1,22 @@
+import { ZodError } from "zod";
+
 import { HTTP_STATUS } from "../constants/index.js";
 import AppError from "./AppError.js";
 import ErrorCodes from "./ErrorCodes.js";
 
 export default function errorHandler(err, req, res, next) {
+	/**
+	 * This was added to avoid duplicated of the same error handling logic through files
+	 */
+	if (err instanceof ZodError) {
+		err = new AppError(
+			"Validation failed.",
+			HTTP_STATUS.BAD_REQUEST,
+			ErrorCodes.VALIDATION_ERROR,
+			err.issues,
+		);
+	}
+
 	if (!(err instanceof AppError)) {
 		console.error(err);
 
