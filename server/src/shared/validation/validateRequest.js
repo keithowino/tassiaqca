@@ -8,12 +8,14 @@ export default function validateRequest({ body, params, query, headers }, req) {
 		/**
 		 * console.log("[Validation] Incoming body", req.body);
 		 */
+		console.log("[Validation] Incoming body", req.body);
 
 		const parsedBody = body ? body.parse(req.body) : req.body;
 
 		/**
 		 * console.log("[Validation] Parsed body", parsedBody);
 		 */
+		console.log("[Validation] Parsed body", parsedBody);
 
 		return {
 			body: parsedBody,

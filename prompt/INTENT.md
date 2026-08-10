@@ -1071,7 +1071,7 @@ I recommend the following sequence:
 3. Verify that all Offering Product endpoints still pass existing tests. (covered)
 4. Refactor the legacy Commerce product.service.js into a thin adapter that delegates to the Offering service. (covered)
 5. Remove duplicated generic logic from the Commerce Product module. (covered)
-6. Continue with Product Variants on top of the unified Offering architecture.
+6. Continue with Product Variants on top of the unified Offering architecture. (close to being implemented)
 
 ---
 
@@ -1083,25 +1083,6 @@ I recommend the following sequence:
 ✅ Refactor product.lifecycle.js to use the adapter. (covered)
 ✅ Test Offering create/update/archive/restore synchronization. (covered)
 ✅ Only then begin simplifying product.service.js by progressively delegating its persistence logic to the adapter or the new Offering flow while keeping the existing Commerce API intact. (covered)
-
----
-
-The Product model should become something closer to:
-
-```bash
-business
-offering
-
-sku
-category
-
-// future
-dimensions
-weight
-shipping
-inventorySettings
-physicalAttributes
-```
 
 ---
 
@@ -1130,7 +1111,7 @@ remain lightweight
 own only type-specific data
 rely on Offering for shared lifecycle
 
-### Phase 2 — Retail Commerce
+### Phase 2 — Retail Commerce (in progress but taking a different path as compared to what was envisioned before)
 
 Expand the Product projection into a complete retail implementation:
 
@@ -1242,8 +1223,8 @@ Only add them once the projection starts having business rules.
 
 Given the current state of the project, I would implement the capability system in this sequence:
 
-1. Capability Registry – Define a registry of reusable platform capabilities (Pricing, Inventory, Media, Scheduling, etc.).
-2. Pricing Capability – This is foundational and will be shared by nearly every offering type.
+1. Capability Registry – Define a registry of reusable platform capabilities (Pricing, Inventory, Media, Scheduling, etc.). (covered)
+2. Pricing Capability – This is foundational and will be shared by nearly every offering type. (covered)
 3. Media/Assets Capability – Replace product-specific images with a reusable media capability applicable to Products, Courses, Events, and Digital Downloads.
 4. Inventory Capability – Extend beyond products so Rentals and other physical offerings can share the same inventory infrastructure.
 5. Scheduling Capability – Power Services, Bookings, Courses, and Events from a single scheduling domain.
@@ -1253,22 +1234,9 @@ Given the current state of the project, I would implement the capability system 
 
 ## The implementation plan I recommend
 
-1. Phase 1 — Introduce an Offering Component Registry
-2. Phase 2 — Replace Boolean Configuration in the Offering Registry
-3. Phase 3 — Build Component Pipelines
-
-Introduce lifecycle handlers for each reusable component.
-
-Examples include:
-
-Pricing Pipeline
-Inventory Pipeline
-Media Pipeline
-Scheduling Pipeline
-Registration Pipeline
-
-These pipelines execute only when the offering declares the corresponding component.
-
+1. Phase 1 — Introduce an Offering Component Registry (covered)
+2. Phase 2 — Replace Boolean Configuration in the Offering Registry (covered)
+3. Phase 3 — Build Component Pipelines (in progress)
 4. Phase 4 — Move Projection Logic into Components
 
 As each component matures, extract common responsibilities from projection adapters into reusable component services. For example:
@@ -1296,25 +1264,8 @@ marketplace presentation
 
 1. Create the component contract (component.contract.js). (covered)
 2. Implement the component pipeline (component.pipeline.js) that discovers and executes components declared in the offering registry. (covered)
-3. Create no-op implementations for all current components (pricing, inventory, media, scheduling, calendar, booking, membership, subscription, registration, download, enrollment, instructor, duration, capacity, location, etc.). (covered)
-4. Wire the pipeline into the shared offering lifecycle so component hooks execute alongside the existing projection hooks. (covered)
-5. Incrementally enrich each component with real behavior (pricing persistence, media management, inventory updates, scheduling logic, etc.) without changing the lifecycle orchestration.
-
----
-
-## I recommend the first implementation milestone
-
-Let's begin by implementing Pricing V1 in the same order we've used throughout the project:
-
-Pricing Model (covered)
-Pricing Builder & Factory (covered)
-Pricing Repository (covered)
-Pricing Presenter (covered)
-Pricing Validation (covered)
-Pricing Service (covered)
-Pricing Component (connects to the component pipeline)
-Pricing Controller & Routes
-REST API testing
+3. Wire the pipeline into the shared offering lifecycle so component hooks execute alongside the existing projection hooks. (covered)
+4. Incrementally enrich each component with real behavior (pricing persistence, media management, inventory updates, scheduling logic, etc.) without changing the lifecycle orchestration. (in progress)
 
 ---
 
@@ -1325,14 +1276,6 @@ services: {
     cache,
 }
 ```
-
----
-
-## Recommended next implementation
-
-1. Refactor pricing.service.js to expose a single setCurrentPrice() method that encapsulates both initial creation and replacement logic. (covered)
-2. Replace the no-op pricing.component.js with a real implementation that invokes pricingService.setCurrentPrice() and stores the result in context.state.pricing. (covered)
-3. Update the offering creation/update validators so they accept an optional nested pricing object. This will allow the component pipeline to receive pricing data as part of the offering payload without introducing separate pricing endpoints. This pattern can then be reused consistently for Inventory, Media, Scheduling, and the other components. (covered)
 
 ---
 
@@ -1347,18 +1290,215 @@ inventory.service.js,
 
 ---
 
-## Recommendation before REST testing
-
-1. Extend component.contract.js with validateCreate() and validateUpdate() no-op hooks. (covered)
-2. Extend component.pipeline.js to execute validateCreate and validateUpdate. (covered)
-3. Have pricing.component.js call its validator from validateCreate()/validateUpdate() instead of inside beforeCreate().
-4. Invoke componentPipeline.validateCreate(context) and componentPipeline.validateUpdate(context) from the shared offering lifecycle before the corresponding beforeCreate()/beforeUpdate() hooks.
-
----
-
 ## One small cleanup recommendation
 
 We should consider extracting the Zod → AppError conversion currently duplicated between validateRequest.js and errorHandler.js into a shared validation/error utility.
+
+---
+
+We might need to create a pricing API.
+
+---
+
+You mentioned, the key point is not to start implementing Attributes next merely because it appears next on a list and that we should first perform a Component Dependency Review. For every component, we should establish:
+
+- What responsibility does it own?
+- What Offering Types use it?
+- What other components does it depend on?
+- What components may depend on it?
+- Does it operate at Offering level, Variant level, or another entity level?
+- Does it own persistence or merely project/configure existing data?
+- What lifecycle hooks does it participate in?
+- What happens when it is absent?
+- What validation does it perform?
+- What invariants must remain true?
+
+You also recommended to implement the components in this order:
+
+```bash
+PHASE A — Shared Offering Components
+────────────────────────────────────
+
+1. Metadata
+2. Tags
+3. Categories
+4. Media
+5. SEO
+
+
+PHASE B — Offering Structure
+────────────────────────────────────
+
+6. Attributes
+7. Variants
+
+
+PHASE C — Commerce Operations
+────────────────────────────────────
+
+8. Inventory
+
+
+PHASE D — Availability / Time
+────────────────────────────────────
+
+9. Duration
+10. Capacity
+11. Location
+12. Calendar
+13. Scheduling
+
+
+PHASE E — Customer Interaction
+────────────────────────────────────
+
+14. Booking
+15. Registration
+16. Enrollment
+
+
+PHASE F — Specialized Offering Models
+────────────────────────────────────
+
+17. Membership
+18. Subscription
+19. Download
+```
+
+---
+
+```bash
+                         OFFERING
+                            │
+          ┌─────────────────┼──────────────────┐
+          │                 │                  │
+          ↓                 ↓                  ↓
+       CATALOG          COMMERCIAL           TIME
+          │                 │                  │
+    ┌─────┼─────┐       ┌───┴────┐       ┌────┼─────┐
+    ↓     ↓     ↓       ↓        ↓       ↓    ↓     ↓
+ Categories Media Tags Pricing Variants  Calendar Scheduling
+    │                       │       │         │
+    ↓                       │       └────┐    ↓
+ Attributes                 │            │  Booking
+                            │            ↓
+                            │        Inventory
+                            │
+                            └───────────────
+```
+
+---
+
+| Component    | Depends on            | Integrates with           | Likely offering types        |
+| ------------ | --------------------- | ------------------------- | ---------------------------- |
+| Metadata     | Offering              | —                         | All                          |
+| Tags         | Offering              | Catalog                   | All                          |
+| Categories   | Offering              | Catalog                   | Product                      |
+| Media        | Offering              | Variants                  | Most                         |
+| SEO          | Offering              | Catalog                   | Public offerings             |
+| Attributes   | Offering              | Variants                  | Product                      |
+| Variants     | Offering + Attributes | Pricing, Inventory, Media | Product                      |
+| Inventory    | Offering/Variant      | Variants                  | Product/Rental               |
+| Duration     | Offering              | Scheduling/Booking        | Service/Course/Rental        |
+| Calendar     | Scheduling model      | Booking                   | Booking/Event                |
+| Scheduling   | Offering              | Calendar/Booking          | Service/Booking/Rental/Event |
+| Booking      | Scheduling            | Calendar, Capacity        | Booking                      |
+| Capacity     | Offering              | Booking/Registration      | Event/Booking                |
+| Location     | Offering              | Scheduling/Events         | Event/Booking                |
+| Registration | Offering              | Capacity/Enrollment       | Event/Course                 |
+| Enrollment   | Offering              | Instructor/Duration       | Course                       |
+| Instructor   | Offering              | Enrollment                | Course                       |
+| Membership   | Offering              | Pricing                   | Membership                   |
+| Subscription | Offering              | Pricing                   | Subscription                 |
+| Download     | Offering              | Media                     | Digital                      |
+
+---
+
+```bash
+Offering
+   └── Base Pricing
+
+Variant
+   └── optional price override
+```
+
+I strongly recommend we resolve that before implementing Variants, because otherwise we risk building the Variant component around assumptions that later force us to redesign the Pricing component we just finished.
+
+---
+
+Offering is now the common commercial abstraction.
+
+This is important.
+
+A:
+
+Product
+Service
+Rental
+Course
+Membership
+Event
+
+can all potentially be categorized.
+
+For example:
+
+```bash
+Product
+  → Laptops
+
+Service
+  → Web Development
+
+Course
+  → Programming
+
+Membership
+  → Premium Plans
+
+Event
+  → Technology Events
+```
+
+This is precisely the kind of cross-industry abstraction the Offering Framework is intended to provide. The architecture specification states that the framework should support products, services, rentals, memberships, bookings, packages and future offering types through a common model.
+
+---
+
+## Implementation sequence from here
+
+We should not immediately test Offering categories.
+
+First:
+
+```bash
+Category Model
+      ↓
+Category Repository
+      ↓
+Category Service
+      ↓
+Category Presenter
+      ↓
+Category Validation
+      ↓
+Category Controller
+      ↓
+Category Routes
+      ↓
+Category API tests
+      ↓
+Categories Offering Component
+      ↓
+Offering ↔ Category integration tests
+```
+
+---
+
+```bash
+db.products.dropIndex("business_1_name_1")
+
+db.products.getIndexes()
+```
 
 ---
 
@@ -1366,7 +1506,7 @@ We should consider extracting the Zod → AppError conversion currently duplicat
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the Pricing component."
+git commit -m "feat(business domain): Create and begin API testing for the category domain."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

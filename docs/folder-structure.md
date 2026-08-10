@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-06
+Generated on: 2026-08-09
 
 ```bash
 ├── client/
@@ -421,78 +421,41 @@ Generated on: 2026-08-06
 │   │   │   │   │   ├── service.projection.js
 │   │   │   │   │   └── subscription.projection.js
 │   │   │   │   ├── controllers/
-│   │   │   │   │   ├── category.controller.js
 │   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── inventory.controller.js
-│   │   │   │   │   ├── product.controller.js
-│   │   │   │   │   ├── productImage.controller.js
-│   │   │   │   │   ├── productPrice.controller.js
-│   │   │   │   │   └── stockMovement.controller.js
+│   │   │   │   │   └── product.controller.js
 │   │   │   │   ├── models/
 │   │   │   │   │   ├── Booking.js
 │   │   │   │   │   ├── Course.js
 │   │   │   │   │   ├── DigitalDownload.js
 │   │   │   │   │   ├── Event.js
 │   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── Inventory.js
 │   │   │   │   │   ├── Membership.js
 │   │   │   │   │   ├── Package.js
 │   │   │   │   │   ├── Product.js
-│   │   │   │   │   ├── ProductCategory.js
-│   │   │   │   │   ├── ProductImage.js
-│   │   │   │   │   ├── ProductPrice.js
-│   │   │   │   │   ├── ProductVariant.js
 │   │   │   │   │   ├── Rental.js
 │   │   │   │   │   ├── Service.js
-│   │   │   │   │   ├── StockMovement.js
 │   │   │   │   │   └── Subscription.js
 │   │   │   │   ├── presenters/
-│   │   │   │   │   ├── category.presenter.js
-│   │   │   │   │   ├── inventory.presenter.js
-│   │   │   │   │   ├── product.presenter.js
-│   │   │   │   │   ├── productImage.presenter.js
-│   │   │   │   │   ├── productPrice.presenter.js
-│   │   │   │   │   └── stockMovement.presenter.js
+│   │   │   │   │   └── product.presenter.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── booking.repository.js
-│   │   │   │   │   ├── category.repository.js
 │   │   │   │   │   ├── course.repository.js
 │   │   │   │   │   ├── digitalDownload.repository.js
 │   │   │   │   │   ├── event.repository.js
 │   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── inventory.repository.js
 │   │   │   │   │   ├── membership.repository.js
 │   │   │   │   │   ├── package.repository.js
 │   │   │   │   │   ├── product.repository.js
-│   │   │   │   │   ├── productImage.repository.js
-│   │   │   │   │   ├── productPrice.repository.js
-│   │   │   │   │   ├── productVariant.repository.js
 │   │   │   │   │   ├── rental.repository.js
 │   │   │   │   │   ├── service.repository.js
-│   │   │   │   │   ├── stockMovement.repository.js
 │   │   │   │   │   └── subscription.repository.js
 │   │   │   │   ├── routes/
-│   │   │   │   │   ├── category.routes.js
-│   │   │   │   │   ├── inventory.routes.js
 │   │   │   │   │   ├── product.routes.js
-│   │   │   │   │   ├── productImage.routes.js
-│   │   │   │   │   ├── productPrice.routes.js
-│   │   │   │   │   ├── README.md
-│   │   │   │   │   └── stockMovement.routes.js
+│   │   │   │   │   └── README.md
 │   │   │   │   ├── services/
-│   │   │   │   │   ├── category.service.js
-│   │   │   │   │   ├── inventory.service.js
-│   │   │   │   │   ├── product.service.js
-│   │   │   │   │   ├── productImage.service.js
-│   │   │   │   │   ├── productPrice.service.js
-│   │   │   │   │   └── stockMovement.service.js
+│   │   │   │   │   └── product.service.js
 │   │   │   │   ├── validators/
-│   │   │   │   │   ├── category.validator.js
-│   │   │   │   │   ├── inventory.validator.js
-│   │   │   │   │   ├── product.validator.js
-│   │   │   │   │   ├── productImage.validator.js
-│   │   │   │   │   ├── productPrice.validator.js
-│   │   │   │   │   └── stockMovement.validator.js
+│   │   │   │   │   └── product.validator.js
 │   │   │   │   └── index.js
 │   │   │   ├── communication/
 │   │   │   ├── community/
@@ -591,30 +554,52 @@ Generated on: 2026-08-06
 │   │   │   │   │   ├── offering.builder.js
 │   │   │   │   │   └── offering.factory.js
 │   │   │   │   ├── components/
-│   │   │   │   │   ├── attributes.component.js
-│   │   │   │   │   ├── booking.component.js
-│   │   │   │   │   ├── calendar.component.js
-│   │   │   │   │   ├── capacity.component.js
-│   │   │   │   │   ├── categories.component.js
+│   │   │   │   │   ├── categories/
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── categories.schema.js
+│   │   │   │   │   │   └── categories.component.js
+│   │   │   │   │   ├── media/
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── media.schema.js
+│   │   │   │   │   │   └── media.component.js
+│   │   │   │   │   ├── metadata/
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── metadata.schema.js
+│   │   │   │   │   │   └── metadata.component.js
+│   │   │   │   │   ├── pricing/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── pricing.builder.js
+│   │   │   │   │   │   │   └── pricing.factory.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── pricing.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── pricing.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── pricing.repository.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── pricing.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── createPricing.schema.js
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── pricingParams.schema.js
+│   │   │   │   │   │   │   └── updatePricing.schema.js
+│   │   │   │   │   │   └── pricing.component.js
+│   │   │   │   │   ├── seo/
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── seo.schema.js
+│   │   │   │   │   │   └── seo.component.js
+│   │   │   │   │   ├── tags/
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── tags.schema.js
+│   │   │   │   │   │   └── tags.component.js
 │   │   │   │   │   ├── component.contract.js
 │   │   │   │   │   ├── component.pipeline.js
-│   │   │   │   │   ├── download.component.js
-│   │   │   │   │   ├── duration.component.js
-│   │   │   │   │   ├── enrollment.component.js
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── instructor.component.js
-│   │   │   │   │   ├── inventory.component.js
-│   │   │   │   │   ├── location.component.js
-│   │   │   │   │   ├── media.component.js
-│   │   │   │   │   ├── membership.component.js
-│   │   │   │   │   ├── metadata.component.js
-│   │   │   │   │   ├── pricing.component.js
-│   │   │   │   │   ├── registration.component.js
-│   │   │   │   │   ├── scheduling.component.js
-│   │   │   │   │   ├── seo.component.js
-│   │   │   │   │   ├── subscription.component.js
-│   │   │   │   │   ├── tags.component.js
-│   │   │   │   │   └── variants.component.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── constants/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── offeringStatus.constants.js

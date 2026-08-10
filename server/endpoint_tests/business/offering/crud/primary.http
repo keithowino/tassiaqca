@@ -1,0 +1,246 @@
+### Create Offering
+
+POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ODRiYjJlODViZTllNjg0MmRhYTc0IiwiaWF0IjoxNzg2MjY4NTk1LCJleHAiOjE3ODYzNTQ5OTUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.9ae_d_SK7sq4SLlaJcyblJnyq8kbUWjxFWk32h0e0fE
+Content-Type: application/json
+
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell XPS 15",
+#     "shortDescription": "Developer Laptop",
+#     "description": "Intel Core Ultra",
+#     "sku": " dx15-001 ",
+#     "categoryId": null
+# }
+
+# {
+#     "type": "SERVICE",
+#     "name": "Takko Repair",
+#     "shortDescription": "Car repair.",
+#     "description": "Automotive repair services"
+# }
+
+
+# {
+#     "type": "BOOKING",
+#     "name": "Tassia Hall",
+#     "shortDescription": "Booking",
+#     "description": "Booking space."
+# }
+
+# Pricing
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell XPS 13",
+#     "shortDescription": "Developer Laptop",
+#     "description": "Intel Core Ultra",
+#     "sku": " dx13-001 ",
+#     "categoryId": null,
+
+#     "pricing": {
+#         "amount": 185000,
+#         "currency": "KES",
+#         "billingModel": "ONE_TIME",
+#         "costPrice": 160000,
+#         "changeReason": "Initial launch price"
+#     }
+# }
+
+# Pricing - invalid pricing metadata
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell XPS 14",
+#     "sku": " dx14-001 ",
+
+#     "pricing": {
+#         "amount": 185000, 
+#         "currency": "EURO"
+#     }
+# }
+
+# Metadata
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 7440",
+#     "sku": "DL7440-001",
+
+#     "metadata": {
+#         "brand": "Dell",
+#         "model": "Latitude 7440",
+#         "processor": "Intel Core i7",
+#         "ram": "16GB",
+#         "storage": "512GB SSD"
+#     }
+# }
+
+# Metadata - with different value types
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Precision 5680",
+#     "sku": "DP5680-001",
+
+#     "metadata": {
+#         "brand": "Dell",
+#         "warrantyYears": 3,
+#         "refurbished": false,
+#         "specifications": {
+#             "processor": "Intel Core i9",
+#             "ram": "32GB",
+#             "storage": "1TB SSD"
+#         },
+#         "features": [
+#             "Thunderbolt",
+#             "Fingerprint Reader",
+#             "Backlit Keyboard"
+#         ]
+#     }
+# }
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Precision 5570",
+#     "sku": "DP5570-001",
+
+#     "metadata": "Dell laptop"
+# }
+
+# Tag
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 5550",
+#     "sku": "DL5550-001",
+
+#     "tags": [
+#         "laptop",
+#         "dell",
+#         "developer"
+#     ]
+# }
+
+# Category
+{
+    "type": "PRODUCT",
+    "name": "Dell XPS 15",
+    "shortDescription": "Developer Laptop",
+    "description": "Intel Core Ultra",
+    "sku": " dx15-001 ",
+    "categoryId": "COMMERCIAL"
+}
+
+# Tag - Duplicate tags / normalization
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 5570",
+#     "sku": "DL5570-001",
+
+#     "tags": [
+#         "Laptop",
+#         "BUSINESS",
+#         "dell",
+#         "laptop",
+#         " Developer ",
+#         "DELL"
+#     ]
+# }
+
+# Tag - invalid type
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 5580",
+#     "sku": "DL5580-001",
+
+#     "tags": [
+#         "laptop",
+#         "",
+#         "dell"
+#     ]
+# }
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell XPS 17",
+#     "sku": "DX17-001"
+# }
+
+# {
+#   "type": "RENTAL",
+#   "name": "Tsundere Hights",
+#   "description": "Luxury hotels",
+#   "visibility": "PUBLIC"
+# }
+
+# {
+#     "type": "PRODUCT",
+#     "name": "MacBook Pro M5",
+#     "description": "Apple developer laptop",
+#     "status": "DRAFT",
+#     "visibility": "PUBLIC"
+# }
+
+### List Offerings
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3MDQ4OTE2ZjgyMGU0NDM5MjU2ODE2IiwiaWF0IjoxNzg1NzQzNTA1LCJleHAiOjE3ODU4Mjk5MDUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZQB769uLMKV7oWBKlrMk8314pj26OaMUa881AM0VO4Q
+
+### Get Offering
+
+GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a70b4a6a44b5abec1b7f9b7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3MDQ4OTE2ZjgyMGU0NDM5MjU2ODE2IiwiaWF0IjoxNzg1NzQzNTA1LCJleHAiOjE3ODU4Mjk5MDUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZQB769uLMKV7oWBKlrMk8314pj26OaMUa881AM0VO4Q
+
+### Update Offering
+
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a78673ead6f6d5801db3189
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ODRiYjJlODViZTllNjg0MmRhYTc0IiwiaWF0IjoxNzg2MjY4NTk1LCJleHAiOjE3ODYzNTQ5OTUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.9ae_d_SK7sq4SLlaJcyblJnyq8kbUWjxFWk32h0e0fE
+Content-Type: application/json
+
+# {
+#   "name": "Dell XPS 13 Plus",
+#   "description": "Updated description",
+#   "visibility": "PRIVATE"
+# }
+
+# {
+#   "name": "Dell XPS 15 Plus",
+#   "description": "Updated last description",
+#   "sku": "DEV-200"
+# }
+
+# {
+#     "name": "Dell XPS 15 Gen 2"
+# }
+
+# {
+#     "sku": "DEV-200"
+# }
+
+# Pricing
+# {
+#     "pricing": {
+#         "amount": 215000,
+#         "currency": "KES",
+#         "changeReason": "Price adjustment"
+#     }
+# }
+
+# Metadata
+# {
+#     "metadata": {
+#         "brand": "Dell",
+#         "ram": "32GB",
+#         "storage": "1TB SSD"
+#     }
+# }
+
+# Tag
+{
+    "tags": [
+        "Business",
+        "Developer",
+        "DELL"
+    ]
+}
+
+# {
+#     "description": "Updated description"
+# }

@@ -82,9 +82,21 @@ const offerings = [
 		label: "Product",
 		description: "Physical goods sold by a business.",
 
+		/**
+		 * This order is intentional
+		 *
+		 * The pipeline itself executes in registry order. Your current implementation already resolves the registered component implementations and executes the requested lifecycle hook sequentially.
+		 */
 		components: [
 			OFFERING_COMPONENTS.PRICING,
+
+			OFFERING_COMPONENTS.METADATA,
+			OFFERING_COMPONENTS.TAGS,
+			OFFERING_COMPONENTS.CATEGORIES,
+
 			OFFERING_COMPONENTS.MEDIA,
+			OFFERING_COMPONENTS.SEO,
+
 			OFFERING_COMPONENTS.INVENTORY,
 			OFFERING_COMPONENTS.VARIANTS,
 		],

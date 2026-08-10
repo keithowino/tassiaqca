@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
 
 /**
- * db.products.getIndexes()
- *
- * db.products.dropIndex("business_1_name_1")
- */
-
-/**
  * Product Projection
  *
  * Stores only Product-specific information.

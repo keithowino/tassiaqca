@@ -1,0 +1,93 @@
+### Category - create (POST http://localhost:5000/api/v1/businesses/:businessId/categories, {"name": "Electronics", "description": "Electronic devices and accessories"})
+
+POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ODRiYjJlODViZTllNjg0MmRhYTc0IiwiaWF0IjoxNzg2MjY4NTk1LCJleHAiOjE3ODYzNTQ5OTUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.9ae_d_SK7sq4SLlaJcyblJnyq8kbUWjxFWk32h0e0fE
+Content-Type: application/json
+
+# {
+# 	"name": "Electronics",
+# 	"description": "Electronic devices and accessories"
+# }
+
+# Create Child Category ({"name": "Laptops", "parentCategoryId": "<electronicsId>"})
+
+{
+	"name": "Laptops",
+	"parentId": "6a796887ff59bcc2e0a9933c"
+}
+
+### Category - read (GET http://localhost:5000/api/v1/businesses/:businessId/categories)
+
+GET http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+### Category - read 1 (GET http://localhost:5000/api/v1/businesses/:businessId/categories/:categoryId)
+
+GET http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a510919a0f00edab39a3f0f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+### Category - update (PATCH http://localhost:5000/api/v1/businesses/:businessId/categories/:categoryId, {"name": "Computer Hardware", "description": "Updated description"})
+
+PATCH http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a5106dea0f00edab39a3f0d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+{
+	"parentCategoryId": "6a510919a0f00edab39a3f0f"
+}
+
+### Category - delete
+
+DELETE http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a510919a0f00edab39a3f0f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+### Category - restore
+
+PATCH http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a510919a0f00edab39a3f0f/restore
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+### Category - Parent Validation, Self Parent Validation
+
+POST http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+{
+	"name": "Gaming Laptops",
+	"description": "High-performance gaming laptops",
+	"parentCategoryId": "6a510919a0f00edab39f1f0l"
+}
+
+### Category - Self Parent Validation
+
+PATCH http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a5114bea0f00edab39a3f1a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+{
+	"parentCategoryId": "6a5114bea0f00edab39a3f1a"
+}
+
+### Category - Validation
+
+POST http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+Content-Type: application/json
+
+# {
+# 	"description": "Electronic devices and accessories"
+# }
+
+# {
+# 	"name": "",
+# 	"description": "Electronic devices"
+# }
+
+{
+	"name": "Gaming",
+	"parentCategoryId": "abc123"
+}

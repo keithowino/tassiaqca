@@ -15,6 +15,37 @@ export function buildOffering({ businessId, data, slug, actor }) {
 
 	const defaults = definition.defaults;
 
+	// return {
+	// 	business: businessId,
+
+	// 	type: definition.type,
+
+	// 	slug,
+
+	// 	name: data.name.trim(),
+
+	// 	shortDescription: data.shortDescription ?? "",
+
+	// 	description: data.description ?? "",
+
+	// 	status: data.status ?? defaults.status,
+
+	// 	visibility: data.visibility ?? defaults.visibility,
+
+	// 	searchable: data.searchable ?? defaults.searchable,
+
+	// 	featured: data.featured ?? defaults.featured,
+
+	// 	metadata: {
+	// 		...defaults.metadata,
+	// 		...(data.metadata ?? {}),
+	// 	},
+
+	// 	createdBy: actor.id,
+
+	// 	updatedBy: actor.id,
+	// };
+
 	return {
 		business: businessId,
 
@@ -35,6 +66,20 @@ export function buildOffering({ businessId, data, slug, actor }) {
 		searchable: data.searchable ?? defaults.searchable,
 
 		featured: data.featured ?? defaults.featured,
+
+		categories: data.categories ?? [],
+
+		tags: data.tags ?? [],
+
+		// media: data.media ?? [],
+
+		// seo: data.seo ?? {
+		// 	title: "",
+		// 	description: "",
+		// 	keywords: [],
+		// 	canonicalUrl: "",
+		// 	ogImage: "",
+		// },
 
 		metadata: {
 			...defaults.metadata,

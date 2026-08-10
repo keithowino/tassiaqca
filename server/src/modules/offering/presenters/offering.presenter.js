@@ -31,7 +31,22 @@ class OfferingPresenter {
 
 			publishedAt: offering.publishedAt,
 
-			metadata: offering.metadata,
+			// categories: offering.categories ?? [],
+			categories: offering.categories?.map(getId) ?? [],
+
+			tags: offering.tags ?? [],
+
+			media: offering.media ?? [],
+
+			seo: offering.seo ?? {
+				title: "",
+				description: "",
+				keywords: [],
+				canonicalUrl: "",
+				ogImage: "",
+			},
+
+			metadata: offering.metadata ?? {},
 
 			createdAt: offering.createdAt,
 

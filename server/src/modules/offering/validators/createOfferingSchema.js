@@ -15,7 +15,10 @@ export const createOfferingRequestSchema = z.looseObject({
 
 	sku: z.string().trim().max(100).optional(),
 
-	categoryId: objectIdSchema.nullable().optional(),
+	/**
+	 * Do not remove the commented line below till i confirm it is not needed
+	 */
+	// categoryId: objectIdSchema.nullable().optional(),
 
 	status: z
 		.enum(Object.values(OFFERING_STATUS))
@@ -26,6 +29,46 @@ export const createOfferingRequestSchema = z.looseObject({
 		.default(OFFERING_VISIBILITY.PUBLIC),
 
 	categoryIds: z.array(objectIdSchema).default([]),
+
+	media: z
+		.array(
+			z.object({
+				assetId: z.string().trim().min(1).max(200),
+
+				type: z.enum(["IMAGE", "VIDEO", "DOCUMENT", "AUDIO"]),
+
+				url: z.string().trim().url(),
+
+				alt: z.string().trim().max(300).optional(),
+
+				title: z.string().trim().max(200).optional(),
+
+				position: z.number().int().min(0).optional(),
+
+				featured: z.boolean().optional(),
+
+				metadata: z.record(z.string(), z.unknown()).optional(),
+			}),
+		)
+		.max(100)
+		.optional(),
+
+	seo: z
+		.object({
+			title: z.string().trim().max(200).optional(),
+
+			description: z.string().trim().max(320).optional(),
+
+			keywords: z
+				.array(z.string().trim().min(1).max(100))
+				.max(50)
+				.optional(),
+
+			canonicalUrl: z.string().trim().url().optional(),
+
+			ogImage: z.string().trim().url().optional(),
+		})
+		.optional(),
 
 	tags: z.array(z.string().trim()).default([]),
 

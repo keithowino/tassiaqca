@@ -197,6 +197,9 @@ async function create({
 		state: {},
 	};
 
+	// rm
+	console.log("[Lifecycle] Incoming data", context.data);
+
 	await hooks.validateCreate(context);
 
 	await hooks.beforeCreate(context);
@@ -206,6 +209,9 @@ async function create({
 	await ensureOfferingNameIsUnique(businessId, name);
 
 	const slug = await generateUniqueSlug(businessId, name);
+
+	// rm
+	console.log("[Lifecycle] Data before Offering repository", context.data);
 
 	const offering = await offeringRepository.create(
 		offeringFactory.createOffering({
@@ -218,6 +224,9 @@ async function create({
 			actor,
 		}),
 	);
+
+	// rm
+	console.log("[Lifecycle] Created Offering", offering);
 
 	context.offering = offering;
 

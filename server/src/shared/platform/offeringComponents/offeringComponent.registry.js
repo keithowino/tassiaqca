@@ -4,6 +4,11 @@ import { OFFERING_COMPONENTS } from "./offeringComponent.constants.js";
 import { OFFERING_COMPONENT_CATEGORIES } from "./offeringComponentCategory.constants.js";
 
 import pricingComponent from "../../../modules/offering/components/pricing/pricing.component.js";
+import metadataComponent from "../../../modules/offering/components/metadata/metadata.component.js";
+import tagsComponent from "../../../modules/offering/components/tags/tags.component.js";
+import categoriesComponent from "../../../modules/offering/components/categories/categories.component.js";
+import mediaComponent from "../../../modules/offering/components/media/media.component.js";
+import seoComponent from "../../../modules/offering/components/seo/seo.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -59,7 +64,7 @@ const components = [
 		id: OFFERING_COMPONENTS.CATEGORIES,
 		name: "Categories",
 		description: "Assigns offerings to categories.",
-		// implementation: categoriesComponent,
+		implementation: categoriesComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
@@ -76,7 +81,7 @@ const components = [
 		id: OFFERING_COMPONENTS.MEDIA,
 		name: "Media",
 		description: "Stores media assets associated with an offering.",
-		// implementation: mediaComponent,
+		implementation: mediaComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -102,7 +107,7 @@ const components = [
 		id: OFFERING_COMPONENTS.TAGS,
 		name: "Tags",
 		description: "Provides tagging for search and organization.",
-		// implementation: tagsComponent,
+		implementation: tagsComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -115,7 +120,7 @@ const components = [
 		id: OFFERING_COMPONENTS.SEO,
 		name: "SEO",
 		description: "Stores search engine optimization metadata.",
-		// implementation: seoComponent,
+		implementation: seoComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
 		enabled: true,
 		experimental: false,
@@ -128,7 +133,7 @@ const components = [
 		id: OFFERING_COMPONENTS.METADATA,
 		name: "Metadata",
 		description: "Stores arbitrary structured metadata.",
-		// implementation: metadataComponent,
+		implementation: metadataComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.SHARED,
 		enabled: true,
 		experimental: false,
