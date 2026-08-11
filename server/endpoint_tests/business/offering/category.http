@@ -1,25 +1,56 @@
-### Category - create (POST http://localhost:5000/api/v1/businesses/:businessId/categories, {"name": "Electronics", "description": "Electronic devices and accessories"})
+### Category -  (POST http://localhost:5000/api/v1/businesses/:businessId/categories, {"name": "Electronics", "description": "Electronic devices and accessories"})
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ODRiYjJlODViZTllNjg0MmRhYTc0IiwiaWF0IjoxNzg2MjY4NTk1LCJleHAiOjE3ODYzNTQ5OTUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.9ae_d_SK7sq4SLlaJcyblJnyq8kbUWjxFWk32h0e0fE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
+# Root category
+
 # {
-# 	"name": "Electronics",
-# 	"description": "Electronic devices and accessories"
+#     "name": "Laptops",
+#     "description": "Laptop computers and related devices"
 # }
 
-# Create Child Category ({"name": "Laptops", "parentCategoryId": "<electronicsId>"})
+# Child Category ({"name": "Laptops", "parentId": "<electronicsId>"})
+
+# {
+#     "name": "Business Laptops",
+#     "description": "Laptops designed for business and professional use",
+#     "parentId": "6a7ac95349e3807dddac639c"
+# }
 
 {
-	"name": "Laptops",
-	"parentId": "6a796887ff59bcc2e0a9933c"
+    "name": "Dell Business Laptops",
+    "description": "Dell laptops designed for business and professional use",
+    "parentId": "6a7ac97649e3807dddac639e"
 }
+
+# # Metadata
+
+# {
+#     "name": "Gaming Laptops",
+#     "description": "Gaming laptops and related computers", 
+# 	"parentId": "6a7aaec319fa65d231ef5a5b", 
+#     "metadata": {
+#         "department": "Computing",
+#         "displayOrder": 10,
+#         "featured": true,
+#         "specifications": {
+#             "minRam": "16GB",
+#             "gpuRequired": true
+#         },
+#         "tags": [
+#             "gaming",
+#             "performance"
+#         ]
+#     }
+# }
+
 
 ### Category - read (GET http://localhost:5000/api/v1/businesses/:businessId/categories)
 
-GET http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
 ### Category - read 1 (GET http://localhost:5000/api/v1/businesses/:businessId/categories/:categoryId)
@@ -30,46 +61,46 @@ Content-Type: application/json
 
 ### Category - update (PATCH http://localhost:5000/api/v1/businesses/:businessId/categories/:categoryId, {"name": "Computer Hardware", "description": "Updated description"})
 
-PATCH http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a5106dea0f00edab39a3f0d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories/6a7ac95349e3807dddac639c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
 {
-	"parentCategoryId": "6a510919a0f00edab39a3f0f"
+    "parentId": "6a7aca4449e3807dddac63a0"
 }
 
 ### Category - delete
 
-DELETE http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a510919a0f00edab39a3f0f
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+DELETE http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories/6a7968ccff59bcc2e0a9933e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
 ### Category - restore
 
-PATCH http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a510919a0f00edab39a3f0f/restore
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories/6a7968ccff59bcc2e0a9933e/restore
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
 ### Category - Parent Validation, Self Parent Validation
 
-POST http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
 {
 	"name": "Gaming Laptops",
 	"description": "High-performance gaming laptops",
-	"parentCategoryId": "6a510919a0f00edab39f1f0l"
+	"parentId": "6a7968ccff59bcc2e0a9933e"
 }
 
 ### Category - Self Parent Validation
 
-PATCH http://localhost:5000/api/v1/businesses/6a50f1ce20478765e4be70fa/categories/6a5114bea0f00edab39a3f1a
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUwZjE4OTIwNDc4NzY1ZTRiZTcwZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MGYxOTUyMDQ3ODc2NWU0YmU3MGY5IiwiaWF0IjoxNzgzNjg5NjIxLCJleHAiOjE3ODM3NzYwMjEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.081fWblecul08_H5Gm3NsYqz9K6asRSRIwd5OVszYbw
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories/6a7aafae19fa65d231ef5a5d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
 Content-Type: application/json
 
 {
-	"parentCategoryId": "6a5114bea0f00edab39a3f1a"
+	"parentId": "6a7ab07b19fa65d231ef5a5f"
 }
 
 ### Category - Validation

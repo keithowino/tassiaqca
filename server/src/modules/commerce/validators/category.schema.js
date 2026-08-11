@@ -28,7 +28,8 @@ export const updateCategorySchema = z
 			.string()
 			.trim()
 			.min(2, "Category name must be at least 2 characters.")
-			.max(200, "Category name cannot exceed 200 characters."),
+			.max(200, "Category name cannot exceed 200 characters.")
+			.optional(),
 
 		description: z
 			.string()

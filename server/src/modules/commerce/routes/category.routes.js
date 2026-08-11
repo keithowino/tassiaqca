@@ -40,7 +40,7 @@ router.patch(
 	categoryController.update,
 );
 
-router.patch(
+router.delete(
 	"/:categoryId",
 	authenticate,
 	requirePermission(Permissions.CATEGORY_DELETE),

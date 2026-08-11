@@ -119,11 +119,49 @@ async function ensureNameIsUnique(businessId, name, excludeId = null) {
 	return slug;
 }
 
+async function ensureNoCircularHierarchy(businessId, categoryId, parentId) {
+	let currentParentId = parentId;
+
+	while (currentParentId) {
+		/**
+		 * The proposed parent is the category being updated.
+		 * Therefore assigning it would create a cycle.
+		 */
+		if (String(currentParentId) === String(categoryId)) {
+			throw new AppError(
+				"Circular category hierarchy detected.",
+				HTTP_STATUS.BAD_REQUEST,
+				ErrorCodes.BAD_REQUEST,
+			);
+		}
+
+		const parent = await categoryRepository.findByBusinessAndId(
+			businessId,
+			currentParentId,
+		);
+
+		if (!parent) {
+			break;
+		}
+
+		/*
+		 * `findByBusinessAndId()` populates `parent`, so the value may be:
+		 *
+		 * - an ObjectId
+		 * - a populated Category document
+		 * - null
+		 *
+		 * Always continue traversal using the actual parent ID.
+		 */
+		currentParentId = parent.parent?._id ?? parent.parent ?? null;
+	}
+}
+
 function buildAuditMetadata(category) {
 	return {
 		name: category.name,
 		slug: category.slug,
-		parent: category.parent,
+		parentId: category.parent?._id ?? category.parent ?? null,
 		status: category.status,
 		position: category.position,
 	};
@@ -251,6 +289,8 @@ async function update({
 
 	if (data.parentId !== undefined) {
 		await ensureParentIsValid(businessId, data.parentId, category.id);
+
+		await ensureNoCircularHierarchy(businessId, category.id, data.parentId);
 
 		category.parent = data.parentId;
 	}
