@@ -11,6 +11,11 @@ Content-Type: application/json
 #     "description": "Laptop computers and related devices"
 # }
 
+{
+    "name": "Accessories",
+    "description": "Computer accessories"
+}
+
 # Child Category ({"name": "Laptops", "parentId": "<electronicsId>"})
 
 # {
@@ -19,11 +24,11 @@ Content-Type: application/json
 #     "parentId": "6a7ac95349e3807dddac639c"
 # }
 
-{
-    "name": "Dell Business Laptops",
-    "description": "Dell laptops designed for business and professional use",
-    "parentId": "6a7ac97649e3807dddac639e"
-}
+# {
+#     "name": "Dell Business Laptops",
+#     "description": "Dell laptops designed for business and professional use",
+#     "parentId": "6a7ac97649e3807dddac639e"
+# }
 
 # # Metadata
 

@@ -1506,7 +1506,7 @@ db.products.getIndexes()
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(business domain): Test Category API."
+git commit -m "feat(business domain): Test Offering media API."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

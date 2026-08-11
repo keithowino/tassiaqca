@@ -31,7 +31,6 @@ class OfferingPresenter {
 
 			publishedAt: offering.publishedAt,
 
-			// categories: offering.categories ?? [],
 			categories: offering.categories?.map(getId) ?? [],
 
 			tags: offering.tags ?? [],

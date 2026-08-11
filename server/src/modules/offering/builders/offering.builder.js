@@ -71,7 +71,7 @@ export function buildOffering({ businessId, data, slug, actor }) {
 
 		tags: data.tags ?? [],
 
-		// media: data.media ?? [],
+		media: data.media ?? [],
 
 		// seo: data.seo ?? {
 		// 	title: "",
