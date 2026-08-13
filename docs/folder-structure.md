@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-09
+Generated on: 2026-08-12
 
 ```bash
 ├── client/
@@ -421,10 +421,12 @@ Generated on: 2026-08-09
 │   │   │   │   │   ├── service.projection.js
 │   │   │   │   │   └── subscription.projection.js
 │   │   │   │   ├── controllers/
+│   │   │   │   │   ├── category.controller.js
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── product.controller.js
 │   │   │   │   ├── models/
 │   │   │   │   │   ├── Booking.js
+│   │   │   │   │   ├── Category.js
 │   │   │   │   │   ├── Course.js
 │   │   │   │   │   ├── DigitalDownload.js
 │   │   │   │   │   ├── Event.js
@@ -436,9 +438,11 @@ Generated on: 2026-08-09
 │   │   │   │   │   ├── Service.js
 │   │   │   │   │   └── Subscription.js
 │   │   │   │   ├── presenters/
+│   │   │   │   │   ├── category.presenter.js
 │   │   │   │   │   └── product.presenter.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── booking.repository.js
+│   │   │   │   │   ├── category.repository.js
 │   │   │   │   │   ├── course.repository.js
 │   │   │   │   │   ├── digitalDownload.repository.js
 │   │   │   │   │   ├── event.repository.js
@@ -450,11 +454,14 @@ Generated on: 2026-08-09
 │   │   │   │   │   ├── service.repository.js
 │   │   │   │   │   └── subscription.repository.js
 │   │   │   │   ├── routes/
+│   │   │   │   │   ├── category.routes.js
 │   │   │   │   │   ├── product.routes.js
 │   │   │   │   │   └── README.md
 │   │   │   │   ├── services/
+│   │   │   │   │   ├── category.service.js
 │   │   │   │   │   └── product.service.js
 │   │   │   │   ├── validators/
+│   │   │   │   │   ├── category.schema.js
 │   │   │   │   │   └── product.validator.js
 │   │   │   │   └── index.js
 │   │   │   ├── communication/
@@ -554,6 +561,11 @@ Generated on: 2026-08-09
 │   │   │   │   │   ├── offering.builder.js
 │   │   │   │   │   └── offering.factory.js
 │   │   │   │   ├── components/
+│   │   │   │   │   ├── attributes/
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── attributes.schema.js
+│   │   │   │   │   │   ├── attributes.component.js
+│   │   │   │   │   │   └── index.js
 │   │   │   │   │   ├── categories/
 │   │   │   │   │   │   ├── validators/
 │   │   │   │   │   │   │   └── categories.schema.js

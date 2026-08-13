@@ -13,10 +13,6 @@ import offeringRegistry from "../../../shared/platform/offerings/offering.regist
 function resolveLifecycle(type) {
 	const definition = offeringRegistry.get(type);
 
-	// if (!definition) {
-	// 	throw new Error(`Unknown offering type "${type}".`);
-	// }
-
 	if (!definition) {
 		throw new AppError(
 			`Unknown offering type "${type}".`,
@@ -24,10 +20,6 @@ function resolveLifecycle(type) {
 			ErrorCodes.NOT_FOUND,
 		);
 	}
-
-	// if (!definition.lifecycle) {
-	// 	throw new Error(`No lifecycle registered for offering type "${type}".`);
-	// }
 
 	if (!definition.lifecycle) {
 		throw new AppError(

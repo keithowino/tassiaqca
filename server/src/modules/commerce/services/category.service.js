@@ -1,6 +1,3 @@
-// import { HTTP_STATUS } from "../../../shared/constants/index.js";
-// import CategoryStatus from "../../../shared/constants/categoryStatus.js";
-
 import businessRepository from "../../business/repositories/business.repository.js";
 
 import categoryRepository from "../repositories/category.repository.js";
@@ -181,26 +178,6 @@ async function create({ businessId, data, actor, requestMetadata }) {
 	const slug = await ensureNameIsUnique(businessId, name);
 
 	await ensureParentIsValid(businessId, data.parentId ?? null);
-
-	// return categoryRepository.create({
-	// 	business: businessId,
-
-	// 	name,
-
-	// 	slug,
-
-	// 	description: data.description ?? "",
-
-	// 	parent: data.parentId ?? null,
-
-	// 	position: data.position ?? 0,
-
-	// 	metadata: data.metadata ?? {},
-
-	// 	createdBy: actor.id,
-
-	// 	updatedBy: actor.id,
-	// });
 
 	const category = await categoryRepository.create({
 		...data,
@@ -406,7 +383,7 @@ async function restore({ businessId, categoryId, actor, requestMetadata }) {
  * This allows Offering to verify category assignments without
  * reaching directly into Category persistence.
  */
-async function ensureAssignableCategories(businessId, categoryIds = []) {
+async function ensureAssignableCategories({ businessId, categoryIds = [] }) {
 	if (!categoryIds.length) {
 		return [];
 	}

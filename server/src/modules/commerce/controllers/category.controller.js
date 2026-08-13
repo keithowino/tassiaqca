@@ -33,12 +33,7 @@ class CategoryController {
 				requestMetadata: req.requestMetadata,
 			});
 
-			return success(
-				res,
-				// categoryPresenter.present(category),
-				category,
-				"Category created successfully.",
-			);
+			return success(res, category, "Category created successfully.");
 		} catch (error) {
 			next(error);
 		}

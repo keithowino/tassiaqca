@@ -1,16 +1,15 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
 Content-Type: application/json
 
 # {
 #     "type": "PRODUCT",
-#     "name": "Dell XPS 15",
-#     "shortDescription": "Developer Laptop",
-#     "description": "Intel Core Ultra",
-#     "sku": " dx15-001 ",
-#     "categoryId": null
+#     "name": "Dell XPS 16",
+#     "shortDescription": "High-performance developer laptop",
+#     "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
+#     "sku": " dx16-001 "
 # }
 
 # {
@@ -31,18 +30,20 @@ Content-Type: application/json
 # Pricing
 # {
 #     "type": "PRODUCT",
-#     "name": "Dell XPS 13",
-#     "shortDescription": "Developer Laptop",
-#     "description": "Intel Core Ultra",
-#     "sku": " dx13-001 ",
-#     "categoryId": null,
-
+#     "name": "Lenovo ThinkPad P16",
+#     "shortDescription": "Professional mobile workstation",
+#     "description": "Intel Core Ultra 9, 64GB RAM, 2TB SSD",
 #     "pricing": {
-#         "amount": 185000,
+#         "amount": 385000,
+#         "costPrice": 320000,
 #         "currency": "KES",
 #         "billingModel": "ONE_TIME",
-#         "costPrice": 160000,
-#         "changeReason": "Initial launch price"
+#         "effectiveFrom": "2026-08-13T00:00:00.000Z",
+#         "effectiveTo": null,
+#         "changeReason": "Initial product price",
+#         "metadata": {
+#             "source": "manual"
+#         }
 #     }
 # }
 
@@ -55,6 +56,31 @@ Content-Type: application/json
 #     "pricing": {
 #         "amount": 185000, 
 #         "currency": "EURO"
+#     }
+# }
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Acer Swift Edge",
+#     "shortDescription": "Lightweight developer laptop",
+#     "description": "AMD Ryzen processor, 16GB RAM, 1TB SSD", 
+#     "sku": " ASE14-001 ",
+#     "pricing": {
+#         "amount": 175000,
+#         "currency": "KES",
+#         "billingModel": "ONE_TIME"
+#     }
+# }
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Invalid Pricing Laptop",
+#     "shortDescription": "Testing pricing validation",
+#     "description": "This request should fail",
+#     "pricing": {
+#         "amount": -5000,
+#         "currency": "KES",
+#         "billingModel": "ONE_TIME"
 #     }
 # }
 
@@ -118,16 +144,16 @@ Content-Type: application/json
 # }
 
 # Category
-# {
-#     "type": "PRODUCT",
-#     "name": "Dell Latitude 7490",
-#     "sku": "DL7490-001",
-
-#     "categoryIds": [
-#         "6a7ace9386a66725a277ec44",
-#         "6a7acef386a66725a277ec46"
-#     ]
-# }
+{
+    "type": "PRODUCT",
+    "name": "HP EliteBook 840",
+    "shortDescription": "Business laptop",
+    "description": "Intel Core Ultra, 16GB RAM, 512GB SSD",
+    "sku": "HE840-001",
+    "categoryIds": [
+        "6a7acef386a66725a277ec46"
+    ]
+}
 
 # Media
 # {
@@ -144,33 +170,149 @@ Content-Type: application/json
 #     ]
 # }
 
-{
-    "type": "PRODUCT",
-    "name": "Dell Latitude 7490 Media Types Test",
-    "sku": "DL7490-MEDIA-010",
-    "media": [
-        {
-            "assetId": "asset-image-010",
-            "type": "IMAGE",
-            "url": "https://example.com/images/dell-latitude-7490.jpg"
-        },
-        {
-            "assetId": "asset-video-010",
-            "type": "VIDEO",
-            "url": "https://example.com/videos/dell-latitude-7490.mp4"
-        },
-        {
-            "assetId": "asset-document-010",
-            "type": "DOCUMENT",
-            "url": "https://example.com/documents/dell-latitude-7490-specification.pdf"
-        },
-        {
-            "assetId": "asset-audio-010",
-            "type": "AUDIO",
-            "url": "https://example.com/audio/dell-latitude-7490.mp3"
-        }
-    ]
-}
+# SEO
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 7490 SEO Test",
+#     "sku": "DL7490-SEO-001",
+#     "seo": {
+#         "title": "Dell Latitude 7490 Business Laptop",
+#         "description": "Buy the Dell Latitude 7490 business laptop with reliable performance and professional features.",
+#         "keywords": [
+#             "Dell Latitude 7490",
+#             "business laptop",
+#             "Dell laptop",
+#             "professional laptop"
+#         ],
+#         "canonicalUrl": "https://example.com/products/dell-latitude-7490",
+#         "ogImage": "https://example.com/images/dell-latitude-7490-og.jpg"
+#     }
+# }
+
+# Attribute
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 7490 Attribute Test",
+#     "sku": "DL7490-ATTR-001",
+#     "attributes": [
+#         {
+#             "name": "Color",
+#             "values": [
+#                 "Black",
+#                 "Silver"
+#             ]
+#         },
+#         {
+#             "name": "RAM",
+#             "values": [
+#                 "16GB",
+#                 "32GB"
+#             ]
+#         },
+#         {
+#             "name": "Storage",
+#             "values": [
+#                 "512GB",
+#                 "1TB"
+#             ]
+#         }
+#     ]
+# }
+
+# {
+#     "type": "SERVICE",
+#     "name": "Laptop Maintenance Attribute Test",
+#     "attributes": [
+#         {
+#             "name": "Duration",
+#             "values": [
+#                 "30 Minutes",
+#                 "60 Minutes"
+#             ]
+#         }
+#     ]
+# }
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell Latitude 7490 Complete Offering Test",
+#     "sku": "DL7490-ATTR-016",
+
+#     "description": "Dell Latitude 7490 business laptop.",
+#     "shortDescription": "Business laptop with configurable specifications.",
+
+#     "categoryIds": [
+#         "6a7ace9386a66725a277ec44",
+#         "6a7acef386a66725a277ec46"
+#     ],
+
+#     "tags": [
+#         "Dell",
+#         "Latitude",
+#         "Laptop",
+#         "Business"
+#     ],
+
+#     "attributes": [
+#         {
+#             "name": "Color",
+#             "values": [
+#                 "Black",
+#                 "Silver"
+#             ]
+#         },
+#         {
+#             "name": "RAM",
+#             "values": [
+#                 "16GB",
+#                 "32GB"
+#             ]
+#         },
+#         {
+#             "name": "Storage",
+#             "values": [
+#                 "512GB",
+#                 "1TB"
+#             ]
+#         }
+#     ],
+
+#     "media": [
+#         {
+#             "assetId": "asset-dell-7490-complete-016",
+#             "type": "IMAGE",
+#             "url": "https://example.com/images/dell-latitude-7490.jpg",
+#             "alt": "Dell Latitude 7490",
+#             "title": "Dell Latitude 7490",
+#             "position": 0,
+#             "featured": true,
+#             "metadata": {
+#                 "width": 1920,
+#                 "height": 1080,
+#                 "format": "jpg"
+#             }
+#         }
+#     ],
+
+#     "seo": {
+#         "title": "Dell Latitude 7490",
+#         "description": "Dell Latitude 7490 business laptop.",
+#         "keywords": [
+#             "dell",
+#             "latitude",
+#             "7490",
+#             "laptop"
+#         ],
+#         "canonicalUrl": "https://example.com/products/dell-latitude-7490",
+#         "ogImage": "https://example.com/images/dell-latitude-7490.jpg"
+#     },
+
+#     "metadata": {
+#         "source": "attribute-integration-test",
+#         "testVersion": 1
+#     }
+# }
 
 # Tag - Duplicate tags / normalization
 # {
@@ -222,6 +364,20 @@ Content-Type: application/json
 #     "visibility": "PUBLIC"
 # }
 
+# {
+#     "type": "PRODUCT",
+#     "name": "ASUS ProArt Studiobook",
+#     "shortDescription": "Professional creator workstation",
+#     "description": "High-performance workstation for development and creative workloads", 
+#     "sku": "APS17-001", 
+#     "pricing": {
+#         "amount": 295000,
+#         "currency": "KES",
+#         "billingModel": "ONE_TIME"
+#     },
+#     "categoryIds": ["6a7ace9386a66725a277ec44"]
+# }
+
 ### List Offerings
 
 GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
@@ -229,13 +385,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Y
 
 ### Get Offering
 
-GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings/6a70b4a6a44b5abec1b7f9b7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTY4Nzc3Yzg2MTRjM2Y4Mzg3ZjVkYzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3MDQ4OTE2ZjgyMGU0NDM5MjU2ODE2IiwiaWF0IjoxNzg1NzQzNTA1LCJleHAiOjE3ODU4Mjk5MDUsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZQB769uLMKV7oWBKlrMk8314pj26OaMUa881AM0VO4Q
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ca3a41af304dbe6488652
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3Yzk4ZDk1MGJkM2RhYWEwMDEzNjE1IiwiaWF0IjoxNzg2NTUwNDg5LCJleHAiOjE3ODY2MzY4ODksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.Ag_W8uWRkBqbEQ5Dya2JtqKFVUGuNVxO4ZquXfTl7lo
 
 ### Update Offering
 
-PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ae93bdb5fdb669bd5b52e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3YWE1YzgzZjQ4MzM2M2JiOGU5MTM2IiwiaWF0IjoxNzg2NDIyNzI5LCJleHAiOjE3ODY1MDkxMjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.7tJ70SwLt4UoYiLo7ywoy_4v6FeVbfYZb7z04tFC9HU
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ca3a41af304dbe6488652
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3Yzk4ZDk1MGJkM2RhYWEwMDEzNjE1IiwiaWF0IjoxNzg2NTUwNDg5LCJleHAiOjE3ODY2MzY4ODksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.Ag_W8uWRkBqbEQ5Dya2JtqKFVUGuNVxO4ZquXfTl7lo
 Content-Type: application/json
 
 # {
@@ -291,16 +447,38 @@ Content-Type: application/json
 # }
 
 # Media
+# {
+#     "media": [
+#         {
+#             "assetId": "asset-dell-latitude-7490-001",
+#             "type": "IMAGE",
+#             "url": "https://example.com/images/dell-latitude-7490-updated.jpg",
+#             "alt": "Updated Dell Latitude 7490 laptop",
+#             "title": "Updated Dell Latitude 7490 Main Image",
+#             "position": 0,
+#             "featured": true
+#         }
+#     ]
+# }
+
+# Attribute
 {
-    "media": [
+    "attributes": [
         {
-            "assetId": "asset-dell-7490-updated-011",
-            "type": "IMAGE",
-            "url": "https://example.com/images/dell-latitude-7490-updated.jpg",
-            "alt": "Updated Dell Latitude 7490 image",
-            "title": "Updated Main Image",
-            "position": 0,
-            "featured": true
+            "name": "Color",
+            "values": [
+                "Black",
+                "Silver",
+                "Blue"
+            ]
+        },
+        {
+            "name": "RAM",
+            "values": [
+                "16GB",
+                "32GB",
+                "64GB"
+            ]
         }
     ]
 }

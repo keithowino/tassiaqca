@@ -11,6 +11,7 @@ import { resolveComponents } from "../../../shared/platform/offeringComponents/i
  * It simply executes whichever hook is exposed by the
  * registered component implementation.
  */
+
 async function execute(hook, context) {
 	const { registration } = context;
 
@@ -43,6 +44,16 @@ const validateUpdate = (context) => execute("validateUpdate", context);
 
 /*
 |--------------------------------------------------------------------------
+| Preparation
+|--------------------------------------------------------------------------
+*/
+
+const prepareCreate = (context) => execute("prepareCreate", context);
+
+const prepareUpdate = (context) => execute("prepareUpdate", context);
+
+/*
+|--------------------------------------------------------------------------
 | Lifecycle
 |--------------------------------------------------------------------------
 */
@@ -64,35 +75,21 @@ const beforeRestore = (context) => execute("beforeRestore", context);
 const afterRestore = (context) => execute("afterRestore", context);
 
 export default {
-	/*
-	|--------------------------------------------------------------------------
-	| Validation
-	|--------------------------------------------------------------------------
-	*/
-
 	validateCreate,
-
 	validateUpdate,
 
-	/*
-	|--------------------------------------------------------------------------
-	| Lifecycle
-	|--------------------------------------------------------------------------
-	*/
+	prepareCreate,
+	prepareUpdate,
 
 	beforeCreate,
-
 	afterCreate,
 
 	beforeUpdate,
-
 	afterUpdate,
 
 	beforeArchive,
-
 	afterArchive,
 
 	beforeRestore,
-
 	afterRestore,
 };

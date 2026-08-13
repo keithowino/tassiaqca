@@ -107,36 +107,21 @@ function buildAuditMetadata(offering) {
 	};
 }
 
-/*
-|--------------------------------------------------------------------------
-| Lifecycle Hooks
-|--------------------------------------------------------------------------
-|
-| Specialized lifecycles (Product, Rental, Booking, etc.) override these
-| hooks to inject domain-specific behavior without duplicating the shared
-| lifecycle implementation.
-|
-*/
+/**
+ * #### Lifecycle Hooks
+ *
+ * Specialized lifecycles (Product, Rental, Booking, etc.) override these
+ * hooks to inject domain-specific behavior without duplicating the shared
+ * lifecycle implementation.
+ */
 const defaultHooks = {
-	/*
-	|--------------------------------------------------------------------------
-	| Validation
-	|--------------------------------------------------------------------------
-	*/
-
 	async validateCreate(context) {
 		await componentPipeline.validateCreate(context);
 	},
 
-	async validateUpdate(context) {
-		await componentPipeline.validateUpdate(context);
+	async prepareCreate(context) {
+		await componentPipeline.prepareCreate(context);
 	},
-
-	/*
-	|--------------------------------------------------------------------------
-	| Lifecycle
-	|--------------------------------------------------------------------------
-	*/
 
 	async beforeCreate(context) {
 		await componentPipeline.beforeCreate(context);
@@ -144,6 +129,14 @@ const defaultHooks = {
 
 	async afterCreate(context) {
 		await componentPipeline.afterCreate(context);
+	},
+
+	async validateUpdate(context) {
+		await componentPipeline.validateUpdate(context);
+	},
+
+	async prepareUpdate(context) {
+		await componentPipeline.prepareUpdate(context);
 	},
 
 	async beforeUpdate(context) {
@@ -202,6 +195,8 @@ async function create({
 
 	await hooks.validateCreate(context);
 
+	await hooks.prepareCreate(context);
+
 	await hooks.beforeCreate(context);
 
 	const name = data.name.trim();
@@ -213,16 +208,25 @@ async function create({
 	// rm
 	console.log("[Lifecycle] Data before Offering repository", context.data);
 
+	const offeringData = {
+		businessId,
+		data: {
+			type: data.type,
+			name,
+			shortDescription: data.shortDescription,
+			description: data.description,
+			status: data.status,
+			visibility: data.visibility,
+			searchable: data.searchable,
+			featured: data.featured,
+			metadata: data.metadata,
+		},
+		slug,
+		actor,
+	};
+
 	const offering = await offeringRepository.create(
-		offeringFactory.createOffering({
-			businessId,
-			data: {
-				...data,
-				name,
-			},
-			slug,
-			actor,
-		}),
+		offeringFactory.createOffering(offeringData),
 	);
 
 	// rm
@@ -330,7 +334,36 @@ async function update({
 		}
 	}
 
-	Object.assign(offering, data);
+	if (data.shortDescription !== undefined) {
+		offering.shortDescription = data.shortDescription;
+	}
+
+	if (data.description !== undefined) {
+		offering.description = data.description;
+	}
+
+	if (data.status !== undefined) {
+		offering.status = data.status;
+	}
+
+	if (data.visibility !== undefined) {
+		offering.visibility = data.visibility;
+	}
+
+	if (data.searchable !== undefined) {
+		offering.searchable = data.searchable;
+	}
+
+	if (data.featured !== undefined) {
+		offering.featured = data.featured;
+	}
+
+	if (data.metadata !== undefined) {
+		offering.metadata = {
+			...(offering.metadata ?? {}),
+			...data.metadata,
+		};
+	}
 
 	offering.updatedBy = actor.id;
 

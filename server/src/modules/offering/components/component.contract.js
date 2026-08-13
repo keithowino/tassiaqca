@@ -1,14 +1,8 @@
 /**
  * Offering Component Contract
  *
- * Every reusable offering component (Pricing, Inventory, Media,
- * Scheduling, Registration, etc.) implements this contract.
- *
- * Components participate in the Offering lifecycle through
- * validation hooks and lifecycle hooks executed by the
- * Component Pipeline.
- *
- * Implementations may override only the hooks they require.
+ * Components own their own data and participate in the
+ * Offering lifecycle through the Component Pipeline.
  */
 
 const noop = async () => {};
@@ -25,6 +19,25 @@ export const componentContract = Object.freeze({
 	},
 
 	async validateUpdate() {
+		return noop();
+	},
+
+	/*
+	|--------------------------------------------------------------------------
+	| Preparation
+	|--------------------------------------------------------------------------
+	|
+	| Components may normalize/prepare their own data here.
+	| They must not inject component-owned fields into
+	| the Offering document.
+	|
+	*/
+
+	async prepareCreate() {
+		return noop();
+	},
+
+	async prepareUpdate() {
 		return noop();
 	},
 

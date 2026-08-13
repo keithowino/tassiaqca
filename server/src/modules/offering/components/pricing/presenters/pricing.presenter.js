@@ -18,11 +18,9 @@ function present(pricing) {
 	return {
 		id: pricing.id,
 
-		// // Keep commented for now till i confirm why it chose business: pricing.business,
-		// businessId,
-		business: pricing.business,
+		business: getId(pricing.business),
 
-		offering: pricing.offering,
+		offering: getId(pricing.offering),
 
 		amount: toNumber(pricing.amount),
 

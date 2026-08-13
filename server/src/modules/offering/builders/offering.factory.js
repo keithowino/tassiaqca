@@ -9,10 +9,6 @@ import offeringRegistry from "../../../shared/platform/offerings/offering.regist
 function resolveBuilder(type) {
 	const definition = offeringRegistry.get(type);
 
-	// if (!definition) {
-	// 	throw new Error(`Unknown offering type "${type}".`);
-	// }
-
 	if (!definition) {
 		throw new AppError(
 			`Unknown offering type "${type}".`,

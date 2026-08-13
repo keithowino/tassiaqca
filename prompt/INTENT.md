@@ -1502,11 +1502,307 @@ db.products.getIndexes()
 
 ---
 
+## Attributes first implementation
+
+```bash
+Offering
+   │
+   ├── Metadata
+   ├── Tags
+   ├── Categories
+   ├── Media
+   ├── SEO
+   │
+   └── Attributes
+          │
+          ├── Color
+          │     ├── Black
+          │     ├── Silver
+          │     └── Blue
+          │
+          ├── RAM
+          │     ├── 8GB
+          │     ├── 16GB
+          │     └── 32GB
+          │
+          └── Storage
+                ├── 256GB
+                ├── 512GB
+                └── 1TB
+```
+
+## Attribute definition ≠ Variant.
+
+An attribute describes a dimension of variation. A variant represents a concrete combination of attribute values.
+
+For example:
+
+```bash
+Attributes
+├── Color
+├── RAM
+└── Storage
+
+Variant
+├── Color: Black
+├── RAM: 16GB
+└── Storage: 512GB
+```
+
+---
+
+## Attribute component config
+
+### One important correction to the architecture
+
+There is one thing I would not do yet.
+
+Do not put this into the Attribute component:
+
+```bash
+slug
+attributeId
+valueId
+variantId
+```
+
+And don't create a separate Attribute MongoDB collection yet.
+
+For the current Offering Framework, the attribute definition is part of the Offering's structure. The architecture already treats Catalog as responsible for Attributes, while the Offering Framework provides the reusable lifecycle mechanism.
+
+We can later extract attributes into first-class catalog entities if the platform's requirements justify it.
+
+For now:
+
+```bash
+Offering
+│
+├── categories
+├── tags
+├── attributes
+│   ├── Color
+│   │   ├── Black
+│   │   └── Silver
+│   │
+│   ├── RAM
+│   │   ├── 16GB
+│   │   └── 32GB
+│   │
+│   └── Storage
+│       ├── 512GB
+│       └── 1TB
+│
+└── variants        ← next component
+```
+
+That is considerably cleaner than prematurely introducing another persistence layer.
+
+---
+
+Components own
+
+Data whose existence depends on a component being enabled:
+
+```bash
+Pricing
+Media
+Categories
+Attributes
+Tags
+SEO
+Inventory
+Variants
+Scheduling
+Calendar
+Booking
+Membership
+Subscription
+Registration
+Download
+Enrollment
+Instructor
+Duration
+Capacity
+Location
+...
+```
+
+---
+
+## The lifecycle then becomes the orchestration boundary
+
+The resulting architecture should be:
+
+```bash
+                 Offering Service
+                       │
+                       ▼
+                Lifecycle Factory
+                       │
+                       ▼
+              Shared Offering Lifecycle
+                       │
+          ┌────────────┴────────────┐
+          │                         │
+     Core Offering             Components
+          │                         │
+          ▼                    Component Pipeline
+     Builder                       │
+          │              ┌──────────┼──────────┐
+          ▼              ▼          ▼          ▼
+      Offering        Pricing    Media    Categories ...
+       Model
+```
+
+And for an Offering type such as Product:
+
+```bash
+POST /offerings
+       │
+       ▼
+Product registration
+       │
+       ├── shared lifecycle
+       │       ├── core validation
+       │       ├── component validation
+       │       ├── component preparation
+       │       ├── build Offering
+       │       └── save Offering
+       │
+       ├── Product projection
+       │
+       └── components
+               ├── Pricing
+               ├── Categories
+               ├── Media
+               ├── Tags
+               ├── Attributes
+               └── SEO
+```
+
+---
+
+## Component Target Structure
+
+```bash
+├── builders/
+├── models/
+├── repositories/
+├── services/
+├── presenters/
+├── validators/
+├── categories.component.js
+└── index.js
+```
+
+---
+
+As we convert the components, we should eventually move toward:
+
+```bash
+Shared Offering Lifecycle
+        │
+        ▼
+MongoDB session/transaction
+        │
+        ├── create Offering
+        ├── create Pricing
+        ├── create Categories
+        ├── create Media
+        ├── create Tags
+        ├── create Attributes
+        └── create SEO
+        │
+        ▼
+Commit
+```
+
+But I would not introduce that transaction refactor in this step.
+
+First establish ownership correctly. Then we can make the lifecycle transaction-aware without simultaneously changing every component.
+
+---
+
+## Refactor order
+
+Step 1 — Core boundary (covered)
+Step 2 — Component contract/pipeline (covered)
+Step 3 — Pricing (covered)
+Step 4 — Categories
+Step 5 — Media
+Step 6 — Attributes
+Step 7 — Tags
+Step 8 — SEO
+Step 9 — REST regression testing
+
+Verify:
+
+```bash
+Create Product
+Create Product + Pricing
+Create Product + Categories
+Create Product + Media
+Create Product + Tags
+Create Product + Attributes
+Create Product + SEO
+Create Product with all components
+Update Offering
+Update individual component data
+Archive
+Restore
+```
+
+---
+
+One thing I would not do yet
+
+I would not add controllers/routes for Categories.
+
+Categories are currently an Offering component participating in the Offering lifecycle. We should first make this path work:
+
+```bash
+POST /offerings
+      ↓
+Offering
+      +
+Category assignments
+      +
+Pricing
+```
+
+and verify the persistence boundary through REST.
+
+After that, we can decide whether Categories needs independent API operations such as:
+
+```bash
+GET    /offerings/:offeringId/categories
+PUT    /offerings/:offeringId/categories
+```
+
+---
+
+We may proceed to converting the Categories component to follow the following structure using Pricing as a reference point:
+
+```bash
+├── builders/
+├── models/
+├── repositories/
+├── services/
+├── presenters/
+├── validators/
+├── categories.component.js
+└── index.js
+```
+
+Here is the current state of the current state of the categories component:
+
+---
+
 - We may begin testing, In each test give me the complete http request example for me to test.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(business domain): Test Offering media API."
+git commit -m "feat(offering): Refactor offering component ownership."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 
