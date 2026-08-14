@@ -1,5 +1,5 @@
 import { Router } from "express";
-import identityRoutes from "../../modules/identity/index.js";
+import { authRoutes as identityRoutes } from "../../modules/identity/index.js";
 import { platformRoutes } from "../../modules/platform/index.js";
 import businessRoutes from "../../modules/business/index.js";
 import { auditRoutes } from "../../modules/audit/index.js";

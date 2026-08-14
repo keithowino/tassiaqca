@@ -1798,11 +1798,11 @@ Here is the current state of the current state of the categories component:
 
 ---
 
-- We may begin testing, In each test give me the complete http request example for me to test.
+- We may proceed to testing, In each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Refactor offering component ownership."
+git commit -m "feat(offering): Build the REST actions for the categories offering component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

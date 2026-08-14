@@ -6,6 +6,7 @@ import authenticate from "../../identity/middleware/authenticate.js";
 import requirePermission from "../../identity/middleware/requirePermission.js";
 
 import { Permissions } from "../../../shared/constants/index.js";
+import { categoriesRoutes } from "../components/categories/routes/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -46,5 +47,7 @@ router.patch(
 	requirePermission(Permissions.OFFERING_RESTORE),
 	offeringController.restoreOffering,
 );
+
+router.use("/:offeringId/categories", categoriesRoutes);
 
 export default router;

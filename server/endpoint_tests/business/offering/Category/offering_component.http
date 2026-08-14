@@ -1,0 +1,15 @@
+### Get categories assigned to an offering
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7eccd8c76c130dae23f2a9/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
+Content-Type: application/json
+
+### Replace offering categories
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ecaebc76c130dae23f2a5/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
+Content-Type: application/json
+
+{
+    "categoryIds": [
+        "6a7acef386a66725a277ec46"
+    ]
+}

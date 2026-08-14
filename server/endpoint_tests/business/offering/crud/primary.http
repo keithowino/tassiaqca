@@ -144,16 +144,16 @@ Content-Type: application/json
 # }
 
 # Category
-{
-    "type": "PRODUCT",
-    "name": "HP EliteBook 840",
-    "shortDescription": "Business laptop",
-    "description": "Intel Core Ultra, 16GB RAM, 512GB SSD",
-    "sku": "HE840-001",
-    "categoryIds": [
-        "6a7acef386a66725a277ec46"
-    ]
-}
+# {
+#     "type": "PRODUCT",
+#     "name": "HP EliteBook 840",
+#     "shortDescription": "Business laptop",
+#     "description": "Intel Core Ultra, 16GB RAM, 512GB SSD",
+#     "sku": "HE840-001",
+#     "categoryIds": [
+#         "6a7ace9386a66725a277ec44"
+#     ]
+# }
 
 # Media
 # {

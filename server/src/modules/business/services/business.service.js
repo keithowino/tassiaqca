@@ -22,6 +22,25 @@ import * as businessConfigurationService from "../../businessConfiguration/servi
 class BusinessService {
 	/*
 	|--------------------------------------------------------------------------
+	| Public Helpers
+	|--------------------------------------------------------------------------
+	*/
+	async ensureExists(businessId) {
+		const business = await businessRepository.findById(businessId);
+
+		if (!business) {
+			throw new AppError(
+				"Business not found.",
+				HTTP_STATUS.NOT_FOUND,
+				ErrorCodes.NOT_FOUND,
+			);
+		}
+
+		return business;
+	}
+
+	/*
+	|--------------------------------------------------------------------------
 	| Private Helpers
 	|--------------------------------------------------------------------------
 	*/
