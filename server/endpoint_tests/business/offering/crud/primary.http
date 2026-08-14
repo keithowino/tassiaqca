@@ -28,24 +28,24 @@ Content-Type: application/json
 # }
 
 # Pricing
-# {
-#     "type": "PRODUCT",
-#     "name": "Lenovo ThinkPad P16",
-#     "shortDescription": "Professional mobile workstation",
-#     "description": "Intel Core Ultra 9, 64GB RAM, 2TB SSD",
-#     "pricing": {
-#         "amount": 385000,
-#         "costPrice": 320000,
-#         "currency": "KES",
-#         "billingModel": "ONE_TIME",
-#         "effectiveFrom": "2026-08-13T00:00:00.000Z",
-#         "effectiveTo": null,
-#         "changeReason": "Initial product price",
-#         "metadata": {
-#             "source": "manual"
-#         }
-#     }
-# }
+{
+    "type": "PRODUCT",
+    "name": "Lenovo ThinkPad P16",
+    "shortDescription": "Professional mobile workstation",
+    "description": "Intel Core Ultra 9, 64GB RAM, 2TB SSD",
+    "pricing": {
+        "amount": 385000,
+        "costPrice": 320000,
+        "currency": "KES",
+        "billingModel": "ONE_TIME",
+        "effectiveFrom": "2026-08-13T00:00:00.000Z",
+        "effectiveTo": null,
+        "changeReason": "Initial product price",
+        "metadata": {
+            "source": "manual"
+        }
+    }
+}
 
 # Pricing - invalid pricing metadata
 # {

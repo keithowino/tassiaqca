@@ -56,58 +56,42 @@ class CategoriesService {
 	/**
 	 * Replaces all category assignments for an Offering.
 	 *
-	 * Categories are component-owned data.
-	 * The Offering document itself is never modified.
+	 * Validation of the categories payload is performed by the Categories Component before this service is invoked.
 	 *
-	 * Validation is deliberately completed before the transaction begins.
-	 * The transaction therefore only contains the persistence operation.
+	 * Persistence is transactional:
+	 *
+	 * 1. Ensure business exists.
+	 * 2. Ensure Offering exists within this business.
+	 * 3. Validate category IDs
+	 * 4. Ensure categories belong to the business.
+	 * 5. Ensure categories are ACTIVE.
+	 * 6. Start transaction.
+	 * 7. Delete existing assignments.
+	 * 8. Create new assignments.
+	 * 9. Commit.
+	 * 10. Return resulting assignments.
 	 */
 	async setCategories({ businessId, offeringId, categoryIds = [], actor }) {
-		/**
-		 * 1. Ensure business exists.
-		 */
 		await businessService.ensureExists(businessId);
 
-		/**
-		 * 2. Ensure Offering exists within this business.
-		 */
 		await this.ensureOfferingExists(businessId, offeringId);
 
-		/**
-		 * Normalize and deduplicate IDs.
-		 */
 		const uniqueCategoryIds = [...new Set(categoryIds.map(String))];
 
-		/**
-		 * 3. Validate category IDs
-		 */
 		this.validateCategoryIds(uniqueCategoryIds);
 
-		/**
-		 * 4. Ensure categories belong to the business.
-		 * 5. Ensure categories are ACTIVE.
-		 */
 		await categoryService.ensureAssignableCategories({
 			businessId,
 			categoryIds: uniqueCategoryIds,
 		});
 
-		/**
-		 * 6. Start transaction.
-		 */
 		const session = await mongoose.startSession();
 
 		try {
 			session.startTransaction();
 
-			/**
-			 * 7. Delete existing assignments.
-			 */
 			await categoriesRepository.deleteByOffering(offeringId, session);
 
-			/**
-			 * 8. Create new assignments.
-			 */
 			const assignments = uniqueCategoryIds.map((categoryId) =>
 				categoriesFactory.createCategoryAssignment({
 					businessId,
@@ -122,14 +106,8 @@ class CategoriesService {
 				session,
 			);
 
-			/**
-			 * 9. Commit.
-			 */
 			await session.commitTransaction();
 
-			/**
-			 * 10. Return resulting assignments.
-			 */
 			return categoriesPresenter.presentCollection(created);
 		} catch (error) {
 			await session.abortTransaction();
@@ -139,9 +117,6 @@ class CategoriesService {
 		}
 	}
 
-	/**
-	 * Returns all categories assigned to an Offering.
-	 */
 	async getByOffering(offeringId) {
 		const assignments =
 			await categoriesRepository.findByOffering(offeringId);

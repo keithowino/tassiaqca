@@ -1723,12 +1723,43 @@ First establish ownership correctly. Then we can make the lifecycle transaction-
 
 ---
 
+## Pricing Component refactor Implementation order
+
+I would now proceed in this order:
+
+```bash
+1. Refactor PricingService
+   ├── ensureBusinessExists()
+   └── ensureOfferingExists()
+
+2. Update getCurrent()
+3. Update getHistory()
+
+4. Create pricing controller
+5. Create pricing routes
+6. Mount pricing routes in offering.routes.js
+
+7. REST test
+   ├── Get current pricing
+   ├── Get pricing history
+   ├── Replace current pricing
+   ├── Verify old version becomes inactive
+   ├── Verify new version becomes current
+   ├── Invalid offering
+   ├── Offering from another business
+   └── Invalid pricing payload
+
+8. Then move to the next Offering component
+```
+
+---
+
 ## Refactor order
 
 Step 1 — Core boundary (covered)
 Step 2 — Component contract/pipeline (covered)
 Step 3 — Pricing (covered)
-Step 4 — Categories
+Step 4 — Categories (covered)
 Step 5 — Media
 Step 6 — Attributes
 Step 7 — Tags
@@ -1781,20 +1812,7 @@ PUT    /offerings/:offeringId/categories
 
 ---
 
-We may proceed to converting the Categories component to follow the following structure using Pricing as a reference point:
-
-```bash
-├── builders/
-├── models/
-├── repositories/
-├── services/
-├── presenters/
-├── validators/
-├── categories.component.js
-└── index.js
-```
-
-Here is the current state of the current state of the categories component:
+Do not forget to refactor the README.md file after creation and or refactoring of the remaining offering components
 
 ---
 
@@ -1802,7 +1820,7 @@ Here is the current state of the current state of the categories component:
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Build the REST actions for the categories offering component."
+git commit -m "feat(offering): Build the REST actions for the pricing offering component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

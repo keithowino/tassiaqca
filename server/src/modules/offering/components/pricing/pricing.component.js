@@ -2,10 +2,7 @@ import componentContract from "../component.contract.js";
 
 import { pricingService } from "./services/index.js";
 
-import {
-	createPricingSchema,
-	updatePricingSchema,
-} from "./validators/index.js";
+import { setCurrentPricingSchema } from "./validators/index.js";
 
 /**
  * Pricing Component
@@ -23,7 +20,7 @@ export const pricingComponent = {
 			return;
 		}
 
-		createPricingSchema.parse(context.data.pricing);
+		setCurrentPricingSchema.parse(context.data.pricing);
 	},
 
 	validateUpdate(context) {
@@ -31,7 +28,7 @@ export const pricingComponent = {
 			return;
 		}
 
-		updatePricingSchema.parse(context.data.pricing);
+		setCurrentPricingSchema.parse(context.data.pricing);
 	},
 
 	/**

@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-12
+Generated on: 2026-08-14
 
 ```bash
 ├── client/
@@ -567,8 +567,34 @@ Generated on: 2026-08-12
 │   │   │   │   │   │   ├── attributes.component.js
 │   │   │   │   │   │   └── index.js
 │   │   │   │   │   ├── categories/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── categories.builder.js
+│   │   │   │   │   │   │   ├── categories.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── categories.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── categories.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── categories.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── categories.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── categories.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── categories.service.js
+│   │   │   │   │   │   │   └── index.js
 │   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   └── categories.schema.js
+│   │   │   │   │   │   │   ├── categories.request.schema.js
+│   │   │   │   │   │   │   ├── categories.schema.js
+│   │   │   │   │   │   │   ├── createCategories.schema.js
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── updateCategories.schema.js
 │   │   │   │   │   │   └── categories.component.js
 │   │   │   │   │   ├── media/
 │   │   │   │   │   │   ├── validators/
@@ -583,6 +609,9 @@ Generated on: 2026-08-12
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   ├── pricing.builder.js
 │   │   │   │   │   │   │   └── pricing.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── pricing.controller.js
 │   │   │   │   │   │   ├── models/
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── pricing.model.js
@@ -592,14 +621,16 @@ Generated on: 2026-08-12
 │   │   │   │   │   │   ├── repositories/
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── pricing.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── pricing.routes.js
 │   │   │   │   │   │   ├── services/
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── pricing.service.js
 │   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   ├── createPricing.schema.js
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   ├── pricingParams.schema.js
-│   │   │   │   │   │   │   └── updatePricing.schema.js
+│   │   │   │   │   │   │   └── setCurrentPricing.schema.js
 │   │   │   │   │   │   └── pricing.component.js
 │   │   │   │   │   ├── seo/
 │   │   │   │   │   │   ├── validators/

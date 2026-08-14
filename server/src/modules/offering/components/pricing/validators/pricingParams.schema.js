@@ -5,5 +5,5 @@ export const pricingParamsSchema = z.object({
 
 	offeringId: z.string(),
 
-	pricingId: z.string(),
+	// pricingId: z.string(),
 });

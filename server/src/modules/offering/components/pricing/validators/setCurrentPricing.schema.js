@@ -6,7 +6,7 @@ import {
 	OFFERING_PRICE_STATUS,
 } from "../../../../../shared/constants/index.js";
 
-export const createPricingSchema = z.object({
+export const setCurrentPricingSchema = z.object({
 	amount: z.coerce.number().min(0),
 
 	costPrice: z.coerce.number().min(0).nullable().optional(),
