@@ -1,69 +1,169 @@
-We may proceed to converting the Media component to follow the following structure using the Pricing and or Categories offering components as a point of reference:
+## Test 2 — Set Offering Media
 
-```bash
-├── builders/
-├── controllers/
-├── models/
-├── presenters/
-├── repositories/
-├── routes/
-├── services/
-├── validators/
-└── media.component.js
+```http
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ef51c7591965d44febf83/media
+Authorization: Bearer {{access token}}
+Content-Type: application/json
+
+{
+	"media": [
+		{
+			"assetId": "asset-001",
+			"type": "IMAGE",
+			"url": "https://example.com/product-front.jpg",
+			"alt": "Product front view",
+			"title": "Product front",
+			"position": 0,
+			"featured": true,
+			"metadata": {}
+		},
+		{
+			"assetId": "asset-002",
+			"type": "IMAGE",
+			"url": "https://example.com/product-back.jpg",
+			"alt": "Product back view",
+			"title": "Product back",
+			"position": 1,
+			"featured": false,
+			"metadata": {}
+		}
+	]
+}
 ```
 
-Here is the current implementation of the media offering component and more; Determining its persistence boundary and service contract before creating any REST operations.
+```js
+// Response
 
-# Portion of The TassiaQCA Folder Structure
+{"success":true,"message":"Offering media updated successfully.","data":[{"id":"6a802789d83f791e06852d5f","business":"6a72d57f8b94e4f1232d4112","offering":"6a7ef51c7591965d44febf83","assetId":"asset-001","type":"IMAGE","url":"https://example.com/product-front.jpg","alt":"Product front view","title":"Product front","position":0,"featured":true,"metadata":{},"createdBy":"6a72d55a8b94e4f1232d4110","updatedBy":"6a72d55a8b94e4f1232d4110","createdAt":"2026-08-15T08:47:05.312Z","updatedAt":"2026-08-15T08:47:05.312Z"},{"id":"6a802789d83f791e06852d60","business":"6a72d57f8b94e4f1232d4112","offering":"6a7ef51c7591965d44febf83","assetId":"asset-002","type":"IMAGE","url":"https://example.com/product-back.jpg","alt":"Product back view","title":"Product back","position":1,"featured":false,"metadata":{},"createdBy":"6a72d55a8b94e4f1232d4110","updatedBy":"6a72d55a8b94e4f1232d4110","createdAt":"2026-08-15T08:47:05.312Z","updatedAt":"2026-08-15T08:47:05.312Z"}]}
+```
 
-```bash
-├── client/
-│   └── ...
-├── server/
-│   ├── src/
-│   │   ├── modules/
-│   │   │   ├── offering/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── categories/
-│   │   │   │   │   │   ├── builders/
-│   │   │   │   │   │   │   ├── categories.builder.js
-│   │   │   │   │   │   │   ├── categories.factory.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── controllers/
-│   │   │   │   │   │   │   ├── categories.controller.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── models/
-│   │   │   │   │   │   │   ├── categories.model.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── presenters/
-│   │   │   │   │   │   │   ├── categories.presenter.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── repositories/
-│   │   │   │   │   │   │   ├── categories.repository.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── routes/
-│   │   │   │   │   │   │   ├── categories.routes.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── services/
-│   │   │   │   │   │   │   ├── categories.service.js
-│   │   │   │   │   │   │   └── index.js
-│   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   ├── categories.request.schema.js
-│   │   │   │   │   │   │   ├── categories.schema.js
-│   │   │   │   │   │   │   ├── createCategories.schema.js
-│   │   │   │   │   │   │   ├── index.js
-│   │   │   │   │   │   │   └── updateCategories.schema.js
-│   │   │   │   │   │   └── categories.component.js
-│   │   │   │   │   ├── media/
-│   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   └── media.schema.js
-│   │   │   │   │   │   └── media.component.js
-│   │   │   │   │   └── ...
-│   │   │   │   └── ...
-│   │   │   └── ...
-│   │   └── ...
-│   └── ...
-└── ...
+Tests 1 — Get Offering Media, 3 — Verify replacement, 4 — Replace with a different collection, 5 — Clear all media, 6 — Validation: invalid media type, 7 — Validation: invalid URL, 8 — Validation: missing asset ID, 9 — Validation: invalid position all passed successfully and or returned the expected responses.
+
+You mentioned an architectural duplication in the current media component implementation; both `media.component.js` and `mediaService.setMedia()` normalize media.
+
+```js
+`~\server\src\modules\offering\components\media\services\media.service.js`;
+
+import mongoose from "mongoose";
+
+import { mediaFactory } from "../builders/index.js";
+import { mediaPresenter } from "../presenters/index.js";
+import { mediaRepository } from "../repositories/index.js";
+
+import { offeringRepository } from "../../../repositories/index.js";
+import businessService from "../../../../business/services/business.service.js";
+
+import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
+import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+
+class MediaService {
+	async ensureOfferingExists(businessId, offeringId) {
+		const offering = await offeringRepository.findByBusinessAndId(
+			businessId,
+			offeringId,
+		);
+
+		if (!offering) {
+			throw new AppError(
+				"Offering not found.",
+				HTTP_STATUS.NOT_FOUND,
+				ErrorCodes.NOT_FOUND,
+			);
+		}
+
+		return offering;
+	}
+
+	/**
+	 * Replaces the complete media collection for an Offering.
+	 *
+	 * Media assets themselves belong to the Files platform service.
+	 * This service only persists the Offering -> media asset relationship
+	 * and Offering-specific presentation metadata.
+	 */
+	async setMedia({ businessId, offeringId, media = [], actor }) {
+		/**
+		 * 1. Ensure business exists.
+		 */
+		await businessService.ensureExists(businessId);
+
+		/**
+		 * 2. Ensure Offering exists within this business.
+		 */
+		await this.ensureOfferingExists(businessId, offeringId);
+
+		/**
+		 * 3. Normalize media collection.
+		 */
+		const normalizedMedia = media.map((item, index) => ({
+			...item,
+			position: item.position ?? index,
+			alt: item.alt?.trim() ?? "",
+			title: item.title?.trim() ?? "",
+			featured: item.featured ?? false,
+			metadata: item.metadata ?? {},
+		}));
+
+		/**
+		 * 4. Start transaction.
+		 */
+		const session = await mongoose.startSession();
+
+		try {
+			session.startTransaction();
+
+			/**
+			 * 5. Remove existing media assignments.
+			 */
+			await mediaRepository.deleteByOffering(offeringId, session);
+
+			/**
+			 * 6. Build new assignments.
+			 */
+			const assignments = normalizedMedia.map((item) =>
+				mediaFactory.createMediaAssignment({
+					businessId,
+					offeringId,
+					data: item,
+					actor,
+				}),
+			);
+
+			/**
+			 * 7. Persist assignments.
+			 */
+			const created = await mediaRepository.createMany(
+				assignments,
+				session,
+			);
+
+			/**
+			 * 8. Commit.
+			 */
+			await session.commitTransaction();
+
+			/**
+			 * 9. Return resulting media assignments.
+			 */
+			return mediaPresenter.presentCollection(created);
+		} catch (error) {
+			await session.abortTransaction();
+			throw error;
+		} finally {
+			await session.endSession();
+		}
+	}
+
+	async getByOffering(offeringId) {
+		const media = await mediaRepository.findByOffering(offeringId);
+
+		return mediaPresenter.presentCollection(media);
+	}
+}
+
+export const mediaService = new MediaService();
+
+export default mediaService;
 ```
 
 ```js
@@ -72,6 +172,7 @@ Here is the current implementation of the media offering component and more; Det
 import componentContract from "../component.contract.js";
 
 import mediaSchema from "./validators/media.schema.js";
+import { mediaService } from "./services/index.js";
 
 function normalizeMedia(media = []) {
 	return media.map((item, index) => ({
@@ -123,546 +224,43 @@ export const mediaComponent = {
 
 		context.data.media = normalizeMedia(context.data.media);
 	},
-};
-
-export default mediaComponent;
-```
-
-```js
-`~\server\src\modules\offering\components\media\validators\media.schema.js`;
-
-import { z } from "zod";
-
-const mediaItemSchema = z.object({
-	assetId: z.string().trim().min(1).max(200),
-
-	type: z.enum(["IMAGE", "VIDEO", "DOCUMENT", "AUDIO"]),
-
-	url: z.string().trim().url(),
-
-	alt: z.string().trim().max(300).optional(),
-
-	title: z.string().trim().max(200).optional(),
-
-	position: z.number().int().min(0).optional(),
-
-	featured: z.boolean().optional(),
-
-	metadata: z.record(z.string(), z.unknown()).optional(),
-});
-
-export const mediaSchema = z.array(mediaItemSchema).max(100);
-
-export default mediaSchema;
-```
-
-```js
-`~\server\src\modules\offering\routes\offering.routes.js`;
-
-import { Router } from "express";
-
-import { offeringController } from "../controllers/index.js";
-
-import authenticate from "../../identity/middleware/authenticate.js";
-import requirePermission from "../../identity/middleware/requirePermission.js";
-
-import { Permissions } from "../../../shared/constants/index.js";
-import { categoriesRoutes } from "../components/categories/routes/index.js";
-import { pricingRoutes } from "../components/pricing/routes/index.js";
-
-const router = Router({
-	mergeParams: true,
-});
-
-router.use(authenticate);
-
-router
-	.route("/")
-	.get(
-		requirePermission(Permissions.OFFERING_VIEW),
-		offeringController.listOfferings,
-	)
-	.post(
-		requirePermission(Permissions.OFFERING_CREATE),
-		offeringController.createOffering,
-	);
-
-router
-	.route("/:offeringId")
-	.get(
-		requirePermission(Permissions.OFFERING_VIEW),
-		offeringController.getOffering,
-	)
-	.patch(
-		requirePermission(Permissions.OFFERING_UPDATE),
-		offeringController.updateOffering,
-	);
-
-router.patch(
-	"/:offeringId/archive",
-	requirePermission(Permissions.OFFERING_ARCHIVE),
-	offeringController.archiveOffering,
-);
-
-router.patch(
-	"/:offeringId/restore",
-	requirePermission(Permissions.OFFERING_RESTORE),
-	offeringController.restoreOffering,
-);
-
-router.use("/:offeringId/categories", categoriesRoutes);
-
-router.use("/:offeringId/pricing", pricingRoutes);
-
-export default router;
-```
-
-```js
-`~\server\src\modules\offering\components\categories\builders\categories.builder.js`;
-
-class CategoriesBuilder {
-	constructor() {
-		this.categories = {};
-	}
-
-	setBusiness(businessId) {
-		this.categories.business = businessId;
-		return this;
-	}
-
-	setOffering(offeringId) {
-		this.categories.offering = offeringId;
-		return this;
-	}
-
-	setCategory(categoryId) {
-		this.categories.category = categoryId;
-		return this;
-	}
-
-	setCreatedBy(userId) {
-		this.categories.createdBy = userId;
-		return this;
-	}
-
-	setUpdatedBy(userId) {
-		this.categories.updatedBy = userId;
-		return this;
-	}
-
-	build() {
-		return Object.freeze({
-			...this.categories,
-		});
-	}
-}
-
-export default CategoriesBuilder;
-```
-
-```js
-`~\server\src\modules\offering\components\categories\builders\categories.factory.js`;
-
-import CategoriesBuilder from "./categories.builder.js";
-
-function createCategoryAssignment({
-	businessId,
-	offeringId,
-	categoryId,
-	actor,
-}) {
-	return new CategoriesBuilder()
-		.setBusiness(businessId)
-		.setOffering(offeringId)
-		.setCategory(categoryId)
-		.setCreatedBy(actor.id)
-		.setUpdatedBy(actor.id)
-		.build();
-}
-
-export default {
-	createCategoryAssignment,
-};
-```
-
-```js
-`~\server\src\modules\offering\components\categories\categories.component.js`;
-
-import componentContract from "../component.contract.js";
-
-import {
-	createCategoriesSchema,
-	updateCategoriesSchema,
-} from "./validators/index.js";
-
-import { categoriesService } from "./services/index.js";
-import categoryService from "../../../commerce/services/category.service.js";
-
-export const categoriesComponent = {
-	...componentContract,
-
-	async validateCreate(context) {
-		if (context.data.categoryIds === undefined) {
-			return;
-		}
-
-		const { categoryIds } = createCategoriesSchema.parse({
-			categoryIds: context.data.categoryIds,
-		});
-
-		await categoryService.ensureAssignableCategories({
-			businessId: context.businessId,
-			categoryIds,
-		});
-	},
-
-	async validateUpdate(context) {
-		if (context.data.categoryIds === undefined) {
-			return;
-		}
-
-		const { categoryIds } = updateCategoriesSchema.parse({
-			categoryIds: context.data.categoryIds,
-		});
-
-		await categoryService.ensureAssignableCategories({
-			businessId: context.businessId,
-			categoryIds,
-		});
-	},
 
 	async afterCreate(context) {
 		const { businessId, offering, data, actor, state } = context;
 
-		if (data.categoryIds === undefined) {
+		if (data.media === undefined) {
 			return;
 		}
 
-		const categories = await categoriesService.setCategories({
+		const media = await mediaService.setMedia({
 			businessId,
 			offeringId: offering.id,
-			categoryIds: data.categoryIds,
+			media: data.media,
 			actor,
 		});
 
-		state.categories = categories;
+		state.media = media;
 	},
 
 	async afterUpdate(context) {
 		const { businessId, offering, data, actor, state } = context;
 
-		if (data.categoryIds === undefined) {
+		if (data.media === undefined) {
 			return;
 		}
 
-		const categories = await categoriesService.setCategories({
+		const media = await mediaService.setMedia({
 			businessId,
 			offeringId: offering.id,
-			categoryIds: data.categoryIds,
+			media: data.media,
 			actor,
 		});
 
-		state.categories = categories;
+		state.media = media;
 	},
 };
 
-export default categoriesComponent;
+export default mediaComponent;
 ```
 
-```js
-`~\server\src\modules\offering\components\categories\controllers\categories.controller.js`;
-
-import asyncHandler from "../../../../../shared/utils/asyncHandler.js";
-import { success } from "../../../../../shared/utils/apiResponse.js";
-import { validateRequest } from "../../../../../shared/validation/index.js";
-
-import { categoriesService } from "../services/index.js";
-
-import {
-	businessOfferingParamsSchema,
-	setCategoriesRequestSchema,
-} from "../validators/index.js";
-
-const getCategories = asyncHandler(async (req, res) => {
-	const { params } = validateRequest(
-		{
-			params: businessOfferingParamsSchema,
-		},
-		req,
-	);
-
-	const categories = await categoriesService.getByOffering(params.offeringId);
-
-	return success(
-		res,
-		categories,
-		"Offering categories retrieved successfully.",
-	);
-});
-
-const setCategories = asyncHandler(async (req, res) => {
-	const { params, body } = validateRequest(
-		{
-			params: businessOfferingParamsSchema,
-			body: setCategoriesRequestSchema,
-		},
-		req,
-	);
-
-	const categories = await categoriesService.setCategories({
-		businessId: params.businessId,
-		offeringId: params.offeringId,
-		categoryIds: body.categoryIds,
-		actor: req.user,
-	});
-
-	return success(
-		res,
-		categories,
-		"Offering categories updated successfully.",
-	);
-});
-
-export default {
-	getCategories,
-	setCategories,
-};
-```
-
-```js
-`~\server\src\modules\offering\components\categories\services\categories.service.js`;
-
-import mongoose from "mongoose";
-
-import { categoriesFactory } from "../builders/index.js";
-import { categoriesPresenter } from "../presenters/index.js";
-import { categoriesRepository } from "../repositories/index.js";
-
-import categoryService from "../../../../commerce/services/category.service.js";
-
-import { offeringRepository } from "../../../repositories/index.js";
-
-import businessService from "../../../../business/services/business.service.js";
-
-import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
-
-/**
- * #### POST and DELETE?
- *
- * As per the AI's recommendation, adding them later merely to make the REST API look CRUD-complete would introduce unnecessary semantics.
- */
-class CategoriesService {
-	/**
-	 * Ensures that the supplied category IDs are valid MongoDB ObjectIds.
-	 */
-	validateCategoryIds(categoryIds) {
-		for (const categoryId of categoryIds) {
-			if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-				throw new AppError(
-					`Invalid category ID: ${categoryId}.`,
-					HTTP_STATUS.BAD_REQUEST,
-					ErrorCodes.BAD_REQUEST,
-				);
-			}
-		}
-	}
-
-	/**
-	 * Ensures that the Offering exists and belongs to the supplied business.
-	 */
-	async ensureOfferingExists(businessId, offeringId) {
-		const offering = await offeringRepository.findByBusinessAndId(
-			businessId,
-			offeringId,
-		);
-
-		if (!offering) {
-			throw new AppError(
-				"Offering not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		return offering;
-	}
-	/**
-	 * Replaces all category assignments for an Offering.
-	 *
-	 * Validation of the categories payload is performed by the Categories Component before this service is invoked.
-	 *
-	 * Persistence is transactional:
-	 *
-	 * 1. Ensure business exists.
-	 * 2. Ensure Offering exists within this business.
-	 * 3. Validate category IDs
-	 * 4. Ensure categories belong to the business.
-	 * 5. Ensure categories are ACTIVE.
-	 * 6. Start transaction.
-	 * 7. Delete existing assignments.
-	 * 8. Create new assignments.
-	 * 9. Commit.
-	 * 10. Return resulting assignments.
-	 */
-	async setCategories({ businessId, offeringId, categoryIds = [], actor }) {
-		await businessService.ensureExists(businessId);
-
-		await this.ensureOfferingExists(businessId, offeringId);
-
-		const uniqueCategoryIds = [...new Set(categoryIds.map(String))];
-
-		this.validateCategoryIds(uniqueCategoryIds);
-
-		await categoryService.ensureAssignableCategories({
-			businessId,
-			categoryIds: uniqueCategoryIds,
-		});
-
-		const session = await mongoose.startSession();
-
-		try {
-			session.startTransaction();
-
-			await categoriesRepository.deleteByOffering(offeringId, session);
-
-			const assignments = uniqueCategoryIds.map((categoryId) =>
-				categoriesFactory.createCategoryAssignment({
-					businessId,
-					offeringId,
-					categoryId,
-					actor,
-				}),
-			);
-
-			const created = await categoriesRepository.createMany(
-				assignments,
-				session,
-			);
-
-			await session.commitTransaction();
-
-			return categoriesPresenter.presentCollection(created);
-		} catch (error) {
-			await session.abortTransaction();
-			throw error;
-		} finally {
-			await session.endSession();
-		}
-	}
-
-	async getByOffering(offeringId) {
-		const assignments =
-			await categoriesRepository.findByOffering(offeringId);
-
-		return categoriesPresenter.presentCollection(assignments);
-	}
-}
-
-export const categoriesService = new CategoriesService();
-
-export default categoriesService;
-```
-
-```js
-`~\server\src\modules\offering\components\categories\repositories\categories.repository.js`;
-
-import { OfferingCategory } from "../models/index.js";
-
-class CategoriesRepository {
-	async create(data, session = null) {
-		const [assignment] = await OfferingCategory.create([data], {
-			session,
-		});
-
-		return assignment;
-	}
-
-	async createMany(data, session = null) {
-		if (!data.length) {
-			return [];
-		}
-
-		return OfferingCategory.insertMany(data, {
-			session,
-		});
-	}
-
-	async findByOffering(offeringId) {
-		return OfferingCategory.find({
-			offering: offeringId,
-		})
-			.populate("category")
-			.sort({
-				createdAt: 1,
-			});
-	}
-
-	async findByOfferingAndCategory(offeringId, categoryId) {
-		return OfferingCategory.findOne({
-			offering: offeringId,
-			category: categoryId,
-		});
-	}
-
-	async deleteByOffering(offeringId, session = null) {
-		return OfferingCategory.deleteMany(
-			{
-				offering: offeringId,
-			},
-			{
-				session,
-			},
-		);
-	}
-
-	async deleteByOfferingAndCategories(
-		offeringId,
-		categoryIds,
-		session = null,
-	) {
-		return OfferingCategory.deleteMany(
-			{
-				offering: offeringId,
-				category: {
-					$in: categoryIds,
-				},
-			},
-			{
-				session,
-			},
-		);
-	}
-}
-
-export default new CategoriesRepository();
-```
-
-```js
-`~\server\src\modules\offering\components\categories\routes\categories.routes.js`;
-
-import { Router } from "express";
-
-import { requirePermission } from "../../../../identity/index.js";
-
-import { Permissions } from "../../../../../shared/constants/index.js";
-
-import { categoriesController } from "../controllers/index.js";
-
-const router = Router({
-	mergeParams: true,
-});
-
-router
-	.route("/")
-	.get(
-		requirePermission(Permissions.OFFERING_VIEW),
-		categoriesController.getCategories,
-	)
-	.put(
-		requirePermission(Permissions.OFFERING_UPDATE),
-		categoriesController.setCategories,
-	);
-
-export default router;
-```
+Thus you were recommending that we leave the service responsible for defensive normalization only if the service is intended to be independently callable. Otherwise, the component should own request/component preparation and the service should focus on its domain operation. So what cleanup step are we taking?

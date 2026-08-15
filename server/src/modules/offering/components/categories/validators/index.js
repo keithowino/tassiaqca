@@ -1,9 +1,6 @@
 export { default as categoriesSchema } from "./categories.schema.js";
 
-export {
-	businessOfferingParamsSchema,
-	setCategoriesRequestSchema,
-} from "./categories.request.schema.js";
+export { setCategoriesRequestSchema } from "./categories.request.schema.js";
 
 export { default as createCategoriesSchema } from "./createCategories.schema.js";
 

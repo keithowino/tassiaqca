@@ -4,10 +4,9 @@ import { validateRequest } from "../../../../../shared/validation/index.js";
 
 import { pricingService } from "../services/index.js";
 
-import {
-	pricingParamsSchema,
-	setCurrentPricingSchema,
-} from "../validators/index.js";
+import { setCurrentPricingSchema } from "../validators/index.js";
+
+import { businessOfferingParamsSchema } from "../../shared/validators/params.schema.js";
 
 /**
  * Pricing did need independent API operations, but as domain operations rather than CRUD endpoints.
@@ -16,7 +15,7 @@ import {
 const getCurrentPricing = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
-			params: pricingParamsSchema,
+			params: businessOfferingParamsSchema,
 		},
 		req,
 	);
@@ -36,7 +35,7 @@ const getCurrentPricing = asyncHandler(async (req, res) => {
 const setCurrentPricing = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
-			params: pricingParamsSchema,
+			params: businessOfferingParamsSchema,
 			body: setCurrentPricingSchema,
 		},
 		req,
@@ -55,7 +54,7 @@ const setCurrentPricing = asyncHandler(async (req, res) => {
 const getPricingHistory = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
-			params: pricingParamsSchema,
+			params: businessOfferingParamsSchema,
 		},
 		req,
 	);

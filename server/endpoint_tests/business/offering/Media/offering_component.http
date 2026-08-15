@@ -1,0 +1,61 @@
+### Get offering media
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ef51c7591965d44febf83/media
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MDI2NjJkODNmNzkxZTA2ODUyZDVjIiwiaWF0IjoxNzg2NzgzMzMxLCJleHAiOjE3ODY4Njk3MzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.Gxr0DS9wBPTzowFJDjuTxsxrclPK8TltWmQ6BCVqnB0
+Content-Type: application/json
+
+### Set offering media
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ef51c7591965d44febf83/media
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MDI2NjJkODNmNzkxZTA2ODUyZDVjIiwiaWF0IjoxNzg2NzgzMzMxLCJleHAiOjE3ODY4Njk3MzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.Gxr0DS9wBPTzowFJDjuTxsxrclPK8TltWmQ6BCVqnB0
+Content-Type: application/json
+
+{
+	"media": [
+		{
+			"assetId": "asset-001",
+			"type": "IMAGE",
+			"url": "https://example.com/product-front.jpg",
+			"alt": "Product front view",
+			"title": "Product front",
+			"position": 0,
+			"featured": true,
+			"metadata": {}
+		},
+		{
+			"assetId": "asset-002",
+			"type": "IMAGE",
+			"url": "https://example.com/product-back.jpg",
+			"alt": "Product back view",
+			"title": "Product back",
+			"position": 1,
+			"featured": false,
+			"metadata": {}
+		}
+	]
+}
+
+# {
+# 	"media": [
+# 		{
+# 			"assetId": "asset-003",
+# 			"type": "VIDEO",
+# 			"url": "https://example.com/product-demo.mp4",
+# 			"alt": "Product demonstration",
+# 			"title": "Product demonstration",
+# 			"position": 0,
+# 			"featured": true,
+# 			"metadata": {
+# 				"duration": 45
+# 			}
+# 		},
+# 		{
+# 			"assetId": "asset-004",
+# 			"type": "IMAGE",
+# 			"url": "https://example.com/product-side.jpg",
+# 			"alt": "Product side view",
+# 			"title": "Product side",
+# 			"position": 1,
+# 			"featured": false,
+# 			"metadata": {}
+# 		}
+# 	]
+# }

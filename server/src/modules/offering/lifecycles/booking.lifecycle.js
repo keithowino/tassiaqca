@@ -18,30 +18,44 @@ const hooks = {
 	...sharedLifecycle.hooks,
 
 	async afterCreate(context) {
+		await sharedLifecycle.hooks.afterCreate(context);
+
 		context.booking = await getProjection(context).create(context);
 	},
 
 	async beforeUpdate(context) {
+		await sharedLifecycle.hooks.beforeUpdate(context);
+
 		await loadProjection(context);
 	},
 
 	async afterUpdate(context) {
+		await sharedLifecycle.hooks.afterUpdate(context);
+
 		await getProjection(context).update(context);
 	},
 
 	async beforeArchive(context) {
+		await sharedLifecycle.hooks.beforeArchive(context);
+
 		await loadProjection(context);
 	},
 
 	async afterArchive(context) {
+		await sharedLifecycle.hooks.afterArchive(context);
+
 		await getProjection(context).archive(context);
 	},
 
 	async beforeRestore(context) {
+		await sharedLifecycle.hooks.beforeRestore(context);
+
 		await loadProjection(context);
 	},
 
 	async afterRestore(context) {
+		await sharedLifecycle.hooks.afterRestore(context);
+
 		await getProjection(context).restore(context);
 	},
 };

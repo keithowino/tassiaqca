@@ -398,6 +398,7 @@ async function archive({
 	const offering = await ensureOfferingExists(businessId, offeringId);
 
 	const context = {
+		businessId,
 		offering,
 		actor,
 		requestMetadata,
@@ -442,6 +443,7 @@ async function restore({
 	const offering = await ensureOfferingExists(businessId, offeringId);
 
 	const context = {
+		businessId,
 		offering,
 		actor,
 		requestMetadata,
