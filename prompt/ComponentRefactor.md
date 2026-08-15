@@ -12,7 +12,7 @@ We may proceed to converting the Media component to follow the following structu
 └── media.component.js
 ```
 
-Here is the current implementation of the media offering component and more for reference. Determining its persistence boundary and service contract before creating any REST operations.
+Here is the current implementation of the media offering component and more for reference.
 
 ---
 

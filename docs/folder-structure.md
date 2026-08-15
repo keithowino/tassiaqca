@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-14
+Generated on: 2026-08-15
 
 ```bash
 ├── client/
@@ -597,7 +597,31 @@ Generated on: 2026-08-14
 │   │   │   │   │   │   │   └── updateCategories.schema.js
 │   │   │   │   │   │   └── categories.component.js
 │   │   │   │   │   ├── media/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── media.builder.js
+│   │   │   │   │   │   │   └── media.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── media.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── media.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── media.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── media.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── media.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── media.service.js
 │   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── media.request.schema.js
 │   │   │   │   │   │   │   └── media.schema.js
 │   │   │   │   │   │   └── media.component.js
 │   │   │   │   │   ├── metadata/
@@ -629,13 +653,15 @@ Generated on: 2026-08-14
 │   │   │   │   │   │   │   └── pricing.service.js
 │   │   │   │   │   │   ├── validators/
 │   │   │   │   │   │   │   ├── index.js
-│   │   │   │   │   │   │   ├── pricingParams.schema.js
 │   │   │   │   │   │   │   └── setCurrentPricing.schema.js
 │   │   │   │   │   │   └── pricing.component.js
 │   │   │   │   │   ├── seo/
 │   │   │   │   │   │   ├── validators/
 │   │   │   │   │   │   │   └── seo.schema.js
 │   │   │   │   │   │   └── seo.component.js
+│   │   │   │   │   ├── shared/
+│   │   │   │   │   │   └── validators/
+│   │   │   │   │   │       └── params.schema.js
 │   │   │   │   │   ├── tags/
 │   │   │   │   │   │   ├── validators/
 │   │   │   │   │   │   │   └── tags.schema.js

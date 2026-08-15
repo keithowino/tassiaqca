@@ -35,53 +35,36 @@ class MediaService {
 	 * This service only persists the Offering -> media asset relationship
 	 * and Offering-specific presentation metadata.
 	 */
+
+	/**
+	 * Replaces the complete media collection for an Offering.
+	 *
+	 * Media assets themselves belong to the Files platform service.
+	 * This service only persists the Offering -> media asset relationship and Offering-specific presentation metadata.
+	 *
+	 * Persistence is transactional:
+	 *
+	 * 1. Ensure business exists.
+	 * 2. Ensure Offering exists within this business.
+	 * 3. Start transaction.
+	 * 4. Remove existing media assignments.
+	 * 5. Build new assignments.
+	 * 6. Persist assignments.
+	 * 7. Commit transaction.
+	 * 8. Return resulting media assignments.
+	 */
 	async setMedia({ businessId, offeringId, media = [], actor }) {
-		/**
-		 * 1. Ensure business exists.
-		 */
 		await businessService.ensureExists(businessId);
 
-		/**
-		 * 2. Ensure Offering exists within this business.
-		 */
 		await this.ensureOfferingExists(businessId, offeringId);
 
-		// /**
-		//  * 3. Normalize media collection.
-		//  */
-		// const normalizedMedia = media.map((item, index) => ({
-		// 	...item,
-		// 	position: item.position ?? index,
-		// 	alt: item.alt?.trim() ?? "",
-		// 	title: item.title?.trim() ?? "",
-		// 	featured: item.featured ?? false,
-		// 	metadata: item.metadata ?? {},
-		// }));
-
-		/**
-		 * 4. Start transaction.
-		 */
 		const session = await mongoose.startSession();
 
 		try {
 			session.startTransaction();
 
-			/**
-			 * 5. Remove existing media assignments.
-			 */
 			await mediaRepository.deleteByOffering(offeringId, session);
 
-			/**
-			 * 6. Build new assignments.
-			 */
-			// const assignments = normalizedMedia.map((item) =>
-			// 	mediaFactory.createMediaAssignment({
-			// 		businessId,
-			// 		offeringId,
-			// 		data: item,
-			// 		actor,
-			// 	}),
-			// );
 			const assignments = media.map((item) =>
 				mediaFactory.createMediaAssignment({
 					businessId,
@@ -91,22 +74,13 @@ class MediaService {
 				}),
 			);
 
-			/**
-			 * 7. Persist assignments.
-			 */
 			const created = await mediaRepository.createMany(
 				assignments,
 				session,
 			);
 
-			/**
-			 * 8. Commit.
-			 */
 			await session.commitTransaction();
 
-			/**
-			 * 9. Return resulting media assignments.
-			 */
 			return mediaPresenter.presentCollection(created);
 		} catch (error) {
 			await session.abortTransaction();

@@ -1,69 +1,9 @@
 import componentContract from "../component.contract.js";
 
 import attributesSchema from "./validators/attributes.schema.js";
+import { normalizeAttributes } from "./validators/index.js";
 
-/**
- * Normalize an individual attribute.
- *
- * Attribute names and values retain their display casing, but
- * surrounding whitespace is removed.
- *
- * Duplicate values are removed case-insensitively.
- */
-function normalizeAttribute(attribute) {
-	const name = attribute.name.trim();
-
-	const values = [];
-	const seen = new Set();
-
-	for (const value of attribute.values) {
-		const normalizedValue = value.trim();
-		const key = normalizedValue.toLowerCase();
-
-		if (seen.has(key)) {
-			continue;
-		}
-
-		seen.add(key);
-		values.push(normalizedValue);
-	}
-
-	return {
-		name,
-		values,
-	};
-}
-
-/**
- * Normalize the complete attribute collection.
- *
- * Attribute names are unique case-insensitively.
- *
- * Example:
- *
- * Color
- * color
- *
- * becomes one attribute definition.
- */
-function normalizeAttributes(attributes = []) {
-	const normalized = [];
-	const seen = new Set();
-
-	for (const attribute of attributes) {
-		const normalizedAttribute = normalizeAttribute(attribute);
-		const key = normalizedAttribute.name.toLowerCase();
-
-		if (seen.has(key)) {
-			continue;
-		}
-
-		seen.add(key);
-		normalized.push(normalizedAttribute);
-	}
-
-	return normalized;
-}
+import { attributesService } from "./services/index.js";
 
 export const attributesComponent = {
 	...componentContract,
@@ -98,6 +38,40 @@ export const attributesComponent = {
 		}
 
 		context.data.attributes = normalizeAttributes(context.data.attributes);
+	},
+
+	async afterCreate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.attributes === undefined) {
+			return;
+		}
+
+		const attributes = await attributesService.setAttributes({
+			businessId,
+			offeringId: offering.id,
+			attributes: data.attributes,
+			actor,
+		});
+
+		state.attributes = attributes;
+	},
+
+	async afterUpdate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.attributes === undefined) {
+			return;
+		}
+
+		const attributes = await attributesService.setAttributes({
+			businessId,
+			offeringId: offering.id,
+			attributes: data.attributes,
+			actor,
+		});
+
+		state.attributes = attributes;
 	},
 };
 

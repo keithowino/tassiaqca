@@ -9,6 +9,7 @@ import { Permissions } from "../../../shared/constants/index.js";
 import { categoriesRoutes } from "../components/categories/routes/index.js";
 import { pricingRoutes } from "../components/pricing/routes/index.js";
 import { mediaRoutes } from "../components/media/routes/index.js";
+import { attributesRoutes } from "../components/attributes/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -55,5 +56,7 @@ router.use("/:offeringId/categories", categoriesRoutes);
 router.use("/:offeringId/pricing", pricingRoutes);
 
 router.use("/:offeringId/media", mediaRoutes);
+
+router.use("/:offeringId/attributes", attributesRoutes);
 
 export default router;
