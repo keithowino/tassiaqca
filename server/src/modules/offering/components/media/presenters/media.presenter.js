@@ -1,3 +1,5 @@
+import { getId } from "../../../../../shared/utils/presenter.js";
+
 class MediaPresenter {
 	present(media) {
 		if (!media) {
@@ -6,8 +8,8 @@ class MediaPresenter {
 
 		return {
 			id: media.id,
-			business: media.business,
-			offering: media.offering,
+			business: getId(media.business),
+			offering: getId(media.offering),
 			assetId: media.assetId,
 			type: media.type,
 			url: media.url,
@@ -28,4 +30,6 @@ class MediaPresenter {
 	}
 }
 
-export default new MediaPresenter();
+export const mediaPresenter = new MediaPresenter();
+
+export default mediaPresenter;

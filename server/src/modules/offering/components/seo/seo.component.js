@@ -1,30 +1,8 @@
 import componentContract from "../component.contract.js";
 
-import seoSchema from "./validators/seo.schema.js";
+import { seoService } from "./services/index.js";
 
-function normalizeSeo(seo = {}) {
-	return {
-		...seo,
-
-		title: seo.title?.trim() ?? "",
-
-		description: seo.description?.trim() ?? "",
-
-		keywords: seo.keywords
-			? [
-					...new Set(
-						seo.keywords.map((keyword) =>
-							keyword.trim().toLowerCase(),
-						),
-					),
-				]
-			: [],
-
-		canonicalUrl: seo.canonicalUrl?.trim() ?? "",
-
-		ogImage: seo.ogImage?.trim() ?? "",
-	};
-}
+import { createSeoSchema, updateSeoSchema } from "./validators/index.js";
 
 export const seoComponent = {
 	...componentContract,
@@ -34,7 +12,7 @@ export const seoComponent = {
 			return;
 		}
 
-		seoSchema.parse(context.data.seo);
+		createSeoSchema.parse(context.data.seo);
 	},
 
 	validateUpdate(context) {
@@ -42,23 +20,41 @@ export const seoComponent = {
 			return;
 		}
 
-		seoSchema.parse(context.data.seo);
+		updateSeoSchema.parse(context.data.seo);
 	},
 
-	beforeCreate(context) {
-		if (context.data.seo === undefined) {
+	async afterCreate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.seo === undefined) {
 			return;
 		}
 
-		context.data.seo = normalizeSeo(context.data.seo);
+		const seo = await seoService.setSeo({
+			businessId,
+			offeringId: offering.id,
+			data: data.seo,
+			actor,
+		});
+
+		state.seo = seo;
 	},
 
-	beforeUpdate(context) {
-		if (context.data.seo === undefined) {
+	async afterUpdate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.seo === undefined) {
 			return;
 		}
 
-		context.data.seo = normalizeSeo(context.data.seo);
+		const seo = await seoService.setSeo({
+			businessId,
+			offeringId: offering.id,
+			data: data.seo,
+			actor,
+		});
+
+		state.seo = seo;
 	},
 };
 

@@ -1,3 +1,5 @@
+import { getId } from "../../../../../shared/utils/presenter.js";
+
 class AttributesPresenter {
 	present(attribute) {
 		if (!attribute) {
@@ -6,8 +8,8 @@ class AttributesPresenter {
 
 		return {
 			id: attribute.id,
-			business: attribute.business,
-			offering: attribute.offering,
+			business: getId(attribute.business),
+			offering: getId(attribute.offering),
 			name: attribute.name,
 			values: [...attribute.values],
 			createdBy: attribute.createdBy,
@@ -18,8 +20,10 @@ class AttributesPresenter {
 	}
 
 	presentCollection(attributes = []) {
-		return attributes.map((attribute) => this.present(attribute));
+		return attributes.map((item) => this.present(item));
 	}
 }
 
-export default new AttributesPresenter();
+export const attributesPresenter = new AttributesPresenter();
+
+export default attributesPresenter;

@@ -12,6 +12,7 @@ import { pricingRoutes } from "../components/pricing/routes/index.js";
 import { mediaRoutes } from "../components/media/routes/index.js";
 import { attributesRoutes } from "../components/attributes/index.js";
 import { tagsRoutes } from "../components/tags/index.js";
+import { seoRoutes } from "../components/seo/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -62,5 +63,7 @@ router.use("/:offeringId/media", mediaRoutes);
 router.use("/:offeringId/attributes", attributesRoutes);
 
 router.use("/:offeringId/tags", tagsRoutes);
+
+router.use("/:offeringId/seo", seoRoutes);
 
 export default router;

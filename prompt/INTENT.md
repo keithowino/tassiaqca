@@ -1279,24 +1279,9 @@ services: {
 
 ---
 
-With Pricing now functioning as a real component, the next logical milestone is to apply the same architecture to Inventory. Inventory will follow the same pattern:
-
-an inventory.model.js,
-inventory.builder.js and inventory.factory.js,
-inventory.repository.js,
-inventory.presenter.js,
-inventory.validator.js,
-inventory.service.js,
-
----
-
 ## One small cleanup recommendation
 
 We should consider extracting the Zod → AppError conversion currently duplicated between validateRequest.js and errorHandler.js into a shared validation/error utility.
-
----
-
-We might need to create a pricing API.
 
 ---
 
@@ -1319,17 +1304,17 @@ You also recommended to implement the components in this order:
 PHASE A — Shared Offering Components
 ────────────────────────────────────
 
-1. Metadata
-2. Tags
-3. Categories
-4. Media
-5. SEO
+1. Metadata (covered)
+2. Tags (covered)
+3. Categories (covered)
+4. Media (covered)
+5. SEO (covered)
 
 
 PHASE B — Offering Structure
 ────────────────────────────────────
 
-6. Attributes
+6. Attributes (covered)
 7. Variants
 
 
@@ -1464,36 +1449,6 @@ This is precisely the kind of cross-industry abstraction the Offering Framework 
 
 ---
 
-## Implementation sequence from here
-
-We should not immediately test Offering categories.
-
-First:
-
-```bash
-Category Model
-      ↓
-Category Repository
-      ↓
-Category Service
-      ↓
-Category Presenter
-      ↓
-Category Validation
-      ↓
-Category Controller
-      ↓
-Category Routes
-      ↓
-Category API tests
-      ↓
-Categories Offering Component
-      ↓
-Offering ↔ Category integration tests
-```
-
----
-
 ```bash
 db.products.dropIndex("business_1_name_1")
 
@@ -1565,37 +1520,6 @@ attributeId
 valueId
 variantId
 ```
-
-And don't create a separate Attribute MongoDB collection yet.
-
-For the current Offering Framework, the attribute definition is part of the Offering's structure. The architecture already treats Catalog as responsible for Attributes, while the Offering Framework provides the reusable lifecycle mechanism.
-
-We can later extract attributes into first-class catalog entities if the platform's requirements justify it.
-
-For now:
-
-```bash
-Offering
-│
-├── categories
-├── tags
-├── attributes
-│   ├── Color
-│   │   ├── Black
-│   │   └── Silver
-│   │
-│   ├── RAM
-│   │   ├── 16GB
-│   │   └── 32GB
-│   │
-│   └── Storage
-│       ├── 512GB
-│       └── 1TB
-│
-└── variants        ← next component
-```
-
-That is considerably cleaner than prematurely introducing another persistence layer.
 
 ---
 
@@ -1682,21 +1606,6 @@ Product registration
 
 ---
 
-## Component Target Structure
-
-```bash
-├── builders/
-├── models/
-├── repositories/
-├── services/
-├── presenters/
-├── validators/
-├── categories.component.js
-└── index.js
-```
-
----
-
 As we convert the components, we should eventually move toward:
 
 ```bash
@@ -1723,95 +1632,6 @@ First establish ownership correctly. Then we can make the lifecycle transaction-
 
 ---
 
-## Pricing Component refactor Implementation order
-
-I would now proceed in this order:
-
-```bash
-1. Refactor PricingService
-   ├── ensureBusinessExists()
-   └── ensureOfferingExists()
-
-2. Update getCurrent()
-3. Update getHistory()
-
-4. Create pricing controller
-5. Create pricing routes
-6. Mount pricing routes in offering.routes.js
-
-7. REST test
-   ├── Get current pricing
-   ├── Get pricing history
-   ├── Replace current pricing
-   ├── Verify old version becomes inactive
-   ├── Verify new version becomes current
-   ├── Invalid offering
-   ├── Offering from another business
-   └── Invalid pricing payload
-
-8. Then move to the next Offering component
-```
-
----
-
-## Refactor order
-
-Step 1 — Core boundary (covered)
-Step 2 — Component contract/pipeline (covered)
-Step 3 — Pricing (covered)
-Step 4 — Categories (covered)
-Step 5 — Media (covered)
-Step 6 — Attributes (covered)
-Step 7 — Tags (covered)
-Step 8 — SEO (covered)
-Step 9 — REST regression testing
-
-Verify:
-
-```bash
-Create Product
-Create Product + Pricing
-Create Product + Categories
-Create Product + Media
-Create Product + Tags
-Create Product + Attributes
-Create Product + SEO
-Create Product with all components
-Update Offering
-Update individual component data
-Archive
-Restore
-```
-
----
-
-One thing I would not do yet
-
-I would not add controllers/routes for Categories.
-
-Categories are currently an Offering component participating in the Offering lifecycle. We should first make this path work:
-
-```bash
-POST /offerings
-      ↓
-Offering
-      +
-Category assignments
-      +
-Pricing
-```
-
-and verify the persistence boundary through REST.
-
-After that, we can decide whether Categories needs independent API operations such as:
-
-```bash
-GET    /offerings/:offeringId/categories
-PUT    /offerings/:offeringId/categories
-```
-
----
-
 Do not forget to refactor the README.md file after creation and or refactoring of the remaining offering components
 
 ---
@@ -1820,7 +1640,7 @@ Do not forget to refactor the README.md file after creation and or refactoring o
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Refactor the Tags offering component to facilitate independent REST operations."
+git commit -m "feat(offering): Refactor the SEO offering component to facilitate independent REST operations."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

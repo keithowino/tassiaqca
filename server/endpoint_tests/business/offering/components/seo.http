@@ -1,0 +1,26 @@
+### Get Offering SEO
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a818dc664e7e4b542b3a4e8/seo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MThkOWU2NGU3ZTRiNTQyYjNhNGU3IiwiaWF0IjoxNzg2ODc1Mjk0LCJleHAiOjE3ODY5NjE2OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.HUuLNt-prLFosVCnfuWy7fF5DSKyOLVt009dDfuLNAY
+Content-Type: application/json
+
+### Set Offering SEO
+
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a818dc664e7e4b542b3a4e8/seo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MThkOWU2NGU3ZTRiNTQyYjNhNGU3IiwiaWF0IjoxNzg2ODc1Mjk0LCJleHAiOjE3ODY5NjE2OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.HUuLNt-prLFosVCnfuWy7fF5DSKyOLVt009dDfuLNAY
+Content-Type: application/json
+
+# {
+# 	"title": "Dexta Tech Electronics",
+# 	"description": "Shop quality electronics, computers, accessories and technology products from Dexta Tech.",
+# 	"keywords": [
+# 		"electronics",
+# 		"computers",
+# 		"laptops",
+# 		"accessories"
+# 	],
+# 	"canonicalUrl": "https://example.com/products/dexta-tech-electronics",
+# 	"ogImage": "https://example.com/images/dexta-tech-electronics.jpg"
+# }
+
+{}

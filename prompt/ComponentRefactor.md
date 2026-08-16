@@ -432,6 +432,52 @@ export default categoriesService;
 ```
 
 ```js
+`~\server\src\modules\offering\components\categories\presenters\categories.presenter.js`;
+
+import { getId } from "../../../../../shared/utils/presenter.js";
+
+class CategoriesPresenter {
+	present(assignment) {
+		if (!assignment) {
+			return null;
+		}
+
+		return {
+			id: assignment.id,
+
+			business: getId(assignment.business),
+
+			offering: getId(assignment.offering),
+
+			category: assignment.category
+				? {
+						id: getId(assignment.category),
+						name: assignment.category.name,
+						slug: assignment.category.slug,
+					}
+				: assignment.category,
+
+			createdBy: assignment.createdBy,
+
+			updatedBy: assignment.updatedBy,
+
+			createdAt: assignment.createdAt,
+
+			updatedAt: assignment.updatedAt,
+		};
+	}
+
+	presentCollection(assignments = []) {
+		return assignments.map((item) => this.present(item));
+	}
+}
+
+export const categoriesPresenter = new CategoriesPresenter();
+
+export default categoriesPresenter;
+```
+
+```js
 `~\server\src\modules\offering\components\categories\models\categories.model.js`;
 
 import mongoose from "mongoose";
@@ -491,7 +537,11 @@ categoriesSchema.index({
 	offering: 1,
 });
 
-export default mongoose.model("OfferingCategory", categoriesSchema);
+export const OfferingCategory =
+	mongoose.models.OfferingCategory ||
+	mongoose.model("OfferingCategory", categoriesSchema);
+
+export default OfferingCategory;
 ```
 
 ```js
