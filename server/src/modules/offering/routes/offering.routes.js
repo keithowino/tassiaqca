@@ -6,10 +6,12 @@ import authenticate from "../../identity/middleware/authenticate.js";
 import requirePermission from "../../identity/middleware/requirePermission.js";
 
 import { Permissions } from "../../../shared/constants/index.js";
+
 import { categoriesRoutes } from "../components/categories/routes/index.js";
 import { pricingRoutes } from "../components/pricing/routes/index.js";
 import { mediaRoutes } from "../components/media/routes/index.js";
 import { attributesRoutes } from "../components/attributes/index.js";
+import { tagsRoutes } from "../components/tags/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -58,5 +60,7 @@ router.use("/:offeringId/pricing", pricingRoutes);
 router.use("/:offeringId/media", mediaRoutes);
 
 router.use("/:offeringId/attributes", attributesRoutes);
+
+router.use("/:offeringId/tags", tagsRoutes);
 
 export default router;

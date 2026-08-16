@@ -6,7 +6,7 @@ import { mediaService } from "../services/index.js";
 
 import { setMediaRequestSchema } from "../validators/index.js";
 
-import { businessOfferingParamsSchema } from "../../shared/validators/params.schema.js";
+import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 const getMedia = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
@@ -16,7 +16,10 @@ const getMedia = asyncHandler(async (req, res) => {
 		req,
 	);
 
-	const media = await mediaService.getByOffering(params.offeringId);
+	const media = await mediaService.getByOffering(
+		params.businessId,
+		params.offeringId,
+	);
 
 	return success(res, media, "Offering media retrieved successfully.");
 });

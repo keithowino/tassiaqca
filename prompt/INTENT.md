@@ -1762,8 +1762,8 @@ Step 3 — Pricing (covered)
 Step 4 — Categories (covered)
 Step 5 — Media (covered)
 Step 6 — Attributes (covered)
-Step 7 — Tags
-Step 8 — SEO
+Step 7 — Tags (covered)
+Step 8 — SEO (covered)
 Step 9 — REST regression testing
 
 Verify:
@@ -1816,11 +1816,11 @@ Do not forget to refactor the README.md file after creation and or refactoring o
 
 ---
 
-- We may proceed to testing, In each test give me the complete REST example.
+- We may proceed to testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Refactor the Attributes offering component to facilitate independent REST operations."
+git commit -m "feat(offering): Refactor the Tags offering component to facilitate independent REST operations."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

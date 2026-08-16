@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const categoriesSchema = new mongoose.Schema(
+const tagsSchema = new mongoose.Schema(
 	{
 		business: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -16,11 +16,11 @@ const categoriesSchema = new mongoose.Schema(
 			index: true,
 		},
 
-		category: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Category",
+		tag: {
+			type: String,
 			required: true,
-			index: true,
+			trim: true,
+			maxlength: 100,
 		},
 
 		createdBy: {
@@ -40,23 +40,22 @@ const categoriesSchema = new mongoose.Schema(
 	},
 );
 
-categoriesSchema.index(
+tagsSchema.index(
 	{
 		offering: 1,
-		category: 1,
+		tag: 1,
 	},
 	{
 		unique: true,
 	},
 );
 
-categoriesSchema.index({
+tagsSchema.index({
 	business: 1,
 	offering: 1,
 });
 
-export const OfferingCategory =
-	mongoose.models.OfferingCategory ||
-	mongoose.model("OfferingCategory", categoriesSchema);
+export const OfferingTag =
+	mongoose.models.OfferingTag || mongoose.model("OfferingTag", tagsSchema);
 
-export default OfferingCategory;
+export default OfferingTag;

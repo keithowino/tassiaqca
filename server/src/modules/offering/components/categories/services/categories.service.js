@@ -6,12 +6,13 @@ import { categoriesRepository } from "../repositories/index.js";
 
 import categoryService from "../../../../commerce/services/category.service.js";
 
-import { offeringRepository } from "../../../repositories/index.js";
-
-import businessService from "../../../../business/services/business.service.js";
-
 import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
 import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+
+import {
+	ensureBusinessExists,
+	ensureOfferingExists,
+} from "../../shared/index.js";
 
 /**
  * #### POST and DELETE?
@@ -35,25 +36,6 @@ class CategoriesService {
 	}
 
 	/**
-	 * Ensures that the Offering exists and belongs to the supplied business.
-	 */
-	async ensureOfferingExists(businessId, offeringId) {
-		const offering = await offeringRepository.findByBusinessAndId(
-			businessId,
-			offeringId,
-		);
-
-		if (!offering) {
-			throw new AppError(
-				"Offering not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		return offering;
-	}
-	/**
 	 * Replaces all category assignments for an Offering.
 	 *
 	 * Validation of the categories payload is performed by the Categories Component before this service is invoked.
@@ -72,9 +54,9 @@ class CategoriesService {
 	 * 10. Return resulting assignments.
 	 */
 	async setCategories({ businessId, offeringId, categoryIds = [], actor }) {
-		await businessService.ensureExists(businessId);
+		await ensureBusinessExists(businessId);
 
-		await this.ensureOfferingExists(businessId, offeringId);
+		await ensureOfferingExists(businessId, offeringId);
 
 		const uniqueCategoryIds = [...new Set(categoryIds.map(String))];
 
@@ -117,7 +99,11 @@ class CategoriesService {
 		}
 	}
 
-	async getByOffering(offeringId) {
+	async getByOffering(businessId, offeringId) {
+		await ensureBusinessExists(businessId);
+
+		await ensureOfferingExists(businessId, offeringId);
+
 		const assignments =
 			await categoriesRepository.findByOffering(offeringId);
 

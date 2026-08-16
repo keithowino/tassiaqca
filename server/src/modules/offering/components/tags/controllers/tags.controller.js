@@ -2,13 +2,13 @@ import asyncHandler from "../../../../../shared/utils/asyncHandler.js";
 import { success } from "../../../../../shared/utils/apiResponse.js";
 import { validateRequest } from "../../../../../shared/validation/index.js";
 
-import { categoriesService } from "../services/index.js";
+import { tagsService } from "../services/index.js";
 
-import { setCategoriesRequestSchema } from "../validators/index.js";
+import { setTagsRequestSchema } from "../validators/index.js";
 
 import { businessOfferingParamsSchema } from "../../shared/index.js";
 
-const getCategories = asyncHandler(async (req, res) => {
+const getTags = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
 			params: businessOfferingParamsSchema,
@@ -16,42 +16,34 @@ const getCategories = asyncHandler(async (req, res) => {
 		req,
 	);
 
-	const categories = await categoriesService.getByOffering(
+	const tags = await tagsService.getByOffering(
 		params.businessId,
 		params.offeringId,
 	);
 
-	return success(
-		res,
-		categories,
-		"Offering categories retrieved successfully.",
-	);
+	return success(res, tags, "Offering tags retrieved successfully.");
 });
 
-const setCategories = asyncHandler(async (req, res) => {
+const setTags = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
 			params: businessOfferingParamsSchema,
-			body: setCategoriesRequestSchema,
+			body: setTagsRequestSchema,
 		},
 		req,
 	);
 
-	const categories = await categoriesService.setCategories({
+	const tags = await tagsService.setTags({
 		businessId: params.businessId,
 		offeringId: params.offeringId,
-		categoryIds: body.categoryIds,
+		tags: body.tags,
 		actor: req.user,
 	});
 
-	return success(
-		res,
-		categories,
-		"Offering categories updated successfully.",
-	);
+	return success(res, tags, "Offering tags updated successfully.");
 });
 
 export default {
-	getCategories,
-	setCategories,
+	getTags,
+	setTags,
 };

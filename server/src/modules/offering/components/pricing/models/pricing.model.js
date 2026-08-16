@@ -152,4 +152,8 @@ pricingSchema.index(
 	},
 );
 
-export default mongoose.model("Pricing", pricingSchema);
+export const OfferingPricing =
+	mongoose.models.OfferingPricing ||
+	mongoose.model("OfferingPricing", pricingSchema);
+
+export default OfferingPricing;

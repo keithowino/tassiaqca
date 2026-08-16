@@ -1,10 +1,9 @@
 import componentContract from "../component.contract.js";
 
 import tagsSchema from "./validators/tags.schema.js";
+import { normalizeTags } from "./validators/index.js";
 
-function normalizeTags(tags = []) {
-	return [...new Set(tags.map((tag) => tag.trim().toLowerCase()))];
-}
+import { tagsService } from "./services/index.js";
 
 export const tagsComponent = {
 	...componentContract,
@@ -39,6 +38,40 @@ export const tagsComponent = {
 		}
 
 		context.data.tags = normalizeTags(context.data.tags);
+	},
+
+	async afterCreate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.tags === undefined) {
+			return;
+		}
+
+		const tags = await tagsService.setTags({
+			businessId,
+			offeringId: offering.id,
+			tags: data.tags,
+			actor,
+		});
+
+		state.tags = tags;
+	},
+
+	async afterUpdate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.tags === undefined) {
+			return;
+		}
+
+		const tags = await tagsService.setTags({
+			businessId,
+			offeringId: offering.id,
+			tags: data.tags,
+			actor,
+		});
+
+		state.tags = tags;
 	},
 };
 

@@ -4,11 +4,10 @@ import { pricingFactory } from "../builders/index.js";
 import { pricingPresenter } from "../presenters/index.js";
 import { pricingRepository } from "../repositories/index.js";
 
-import { offeringRepository } from "../../../repositories/index.js";
-import businessService from "../../../../business/services/business.service.js";
-
-import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+import {
+	ensureBusinessExists,
+	ensureOfferingExists,
+} from "../../shared/index.js";
 
 /**
  * Pricing Domain Service
@@ -23,33 +22,6 @@ import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
  * price or a replacement.
  */
 class PricingService {
-	/**
-	 * Ensures that the supplied business exists.
-	 */
-	async ensureBusinessExists(businessId) {
-		return businessService.ensureExists(businessId);
-	}
-
-	/**
-	 * Ensures that the Offering exists and belongs to the supplied business.
-	 */
-	async ensureOfferingExists(businessId, offeringId) {
-		const offering = await offeringRepository.findByBusinessAndId(
-			businessId,
-			offeringId,
-		);
-
-		if (!offering) {
-			throw new AppError(
-				"Offering not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		return offering;
-	}
-
 	/**
 	 * Sets the current price for an Offering.
 	 *
@@ -68,9 +40,9 @@ class PricingService {
 	 * 8. Return created price.
 	 */
 	async setCurrentPrice({ businessId, offeringId, data, actor }) {
-		await this.ensureBusinessExists(businessId);
+		await ensureBusinessExists(businessId);
 
-		await this.ensureOfferingExists(businessId, offeringId);
+		await ensureOfferingExists(businessId, offeringId);
 
 		const session = await mongoose.startSession();
 
@@ -115,9 +87,9 @@ class PricingService {
 	}
 
 	async getCurrent(businessId, offeringId) {
-		await this.ensureBusinessExists(businessId);
+		await ensureBusinessExists(businessId);
 
-		await this.ensureOfferingExists(businessId, offeringId);
+		await ensureOfferingExists(businessId, offeringId);
 
 		const pricing =
 			await pricingRepository.findCurrentByOffering(offeringId);
@@ -126,9 +98,9 @@ class PricingService {
 	}
 
 	async getHistory(businessId, offeringId) {
-		await this.ensureBusinessExists(businessId);
+		await ensureBusinessExists(businessId);
 
-		await this.ensureOfferingExists(businessId, offeringId);
+		await ensureOfferingExists(businessId, offeringId);
 
 		const history =
 			await pricingRepository.findHistoryByOffering(offeringId);

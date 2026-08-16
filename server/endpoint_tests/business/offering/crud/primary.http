@@ -1,16 +1,16 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MThkOWU2NGU3ZTRiNTQyYjNhNGU3IiwiaWF0IjoxNzg2ODc1Mjk0LCJleHAiOjE3ODY5NjE2OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.HUuLNt-prLFosVCnfuWy7fF5DSKyOLVt009dDfuLNAY
 Content-Type: application/json
 
-# {
-#     "type": "PRODUCT",
-#     "name": "Dell XPS 16",
-#     "shortDescription": "High-performance developer laptop",
-#     "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
-#     "sku": " dx16-001 "
-# }
+{
+    "type": "PRODUCT",
+    "name": "Dell XPS 16",
+    "shortDescription": "High-performance developer laptop",
+    "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
+    "sku": " dx16-001 "
+}
 
 # {
 #     "type": "SERVICE",
@@ -28,24 +28,25 @@ Content-Type: application/json
 # }
 
 # Pricing
-{
-    "type": "PRODUCT",
-    "name": "Lenovo ThinkPad P16",
-    "shortDescription": "Professional mobile workstation",
-    "description": "Intel Core Ultra 9, 64GB RAM, 2TB SSD",
-    "pricing": {
-        "amount": 385000,
-        "costPrice": 320000,
-        "currency": "KES",
-        "billingModel": "ONE_TIME",
-        "effectiveFrom": "2026-08-13T00:00:00.000Z",
-        "effectiveTo": null,
-        "changeReason": "Initial product price",
-        "metadata": {
-            "source": "manual"
-        }
-    }
-}
+
+# {
+#     "type": "PRODUCT",
+#     "name": "Lenovo ThinkPad P16",
+#     "shortDescription": "Professional mobile workstation",
+#     "description": "Intel Core Ultra 9, 64GB RAM, 2TB SSD",
+#     "pricing": {
+#         "amount": 385000,
+#         "costPrice": 320000,
+#         "currency": "KES",
+#         "billingModel": "ONE_TIME",
+#         "effectiveFrom": "2026-08-13T00:00:00.000Z",
+#         "effectiveTo": null,
+#         "changeReason": "Initial product price",
+#         "metadata": {
+#             "source": "manual"
+#         }
+#     }
+# }
 
 # Pricing - invalid pricing metadata
 # {
@@ -144,6 +145,7 @@ Content-Type: application/json
 # }
 
 # Category
+
 # {
 #     "type": "PRODUCT",
 #     "name": "HP EliteBook 840",
@@ -156,6 +158,7 @@ Content-Type: application/json
 # }
 
 # Media
+
 # {
 #     "type": "PRODUCT",
 #     "name": "Dell Latitude 7490 Media Test",

@@ -10,24 +10,12 @@ import businessService from "../../../../business/services/business.service.js";
 import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
 import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
 
+import {
+	ensureBusinessExists,
+	ensureOfferingExists,
+} from "../../shared/index.js";
+
 class MediaService {
-	async ensureOfferingExists(businessId, offeringId) {
-		const offering = await offeringRepository.findByBusinessAndId(
-			businessId,
-			offeringId,
-		);
-
-		if (!offering) {
-			throw new AppError(
-				"Offering not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		return offering;
-	}
-
 	/**
 	 * Replaces the complete media collection for an Offering.
 	 *
@@ -54,9 +42,9 @@ class MediaService {
 	 * 8. Return resulting media assignments.
 	 */
 	async setMedia({ businessId, offeringId, media = [], actor }) {
-		await businessService.ensureExists(businessId);
+		await ensureBusinessExists(businessId);
 
-		await this.ensureOfferingExists(businessId, offeringId);
+		await ensureOfferingExists(businessId, offeringId);
 
 		const session = await mongoose.startSession();
 
@@ -90,7 +78,11 @@ class MediaService {
 		}
 	}
 
-	async getByOffering(offeringId) {
+	async getByOffering(businessId, offeringId) {
+		await ensureBusinessExists(businessId);
+
+		await ensureOfferingExists(businessId, offeringId);
+
 		const media = await mediaRepository.findByOffering(offeringId);
 
 		return mediaPresenter.presentCollection(media);

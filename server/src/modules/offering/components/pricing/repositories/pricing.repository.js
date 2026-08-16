@@ -1,5 +1,5 @@
 import { OFFERING_PRICE_STATUS } from "../../../../../shared/constants/index.js";
-import { Pricing } from "../models/index.js";
+import { OfferingPricing } from "../models/index.js";
 
 class PricingRepository {
 	async create(data, session = null) {

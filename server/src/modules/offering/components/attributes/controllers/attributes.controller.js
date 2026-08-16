@@ -5,7 +5,7 @@ import { validateRequest } from "../../../../../shared/validation/index.js";
 import { attributesService } from "../services/index.js";
 
 import { setAttributesRequestSchema } from "../validators/index.js";
-import { businessOfferingParamsSchema } from "../../shared/validators/params.schema.js";
+import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 const getAttributes = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(

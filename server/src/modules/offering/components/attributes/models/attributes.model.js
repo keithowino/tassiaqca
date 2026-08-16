@@ -13,7 +13,6 @@ const attributesSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Offering",
 			required: true,
-			// index: true,
 		},
 
 		name: {

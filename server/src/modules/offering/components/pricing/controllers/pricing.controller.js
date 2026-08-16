@@ -6,7 +6,7 @@ import { pricingService } from "../services/index.js";
 
 import { setCurrentPricingSchema } from "../validators/index.js";
 
-import { businessOfferingParamsSchema } from "../../shared/validators/params.schema.js";
+import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 /**
  * Pricing did need independent API operations, but as domain operations rather than CRUD endpoints.

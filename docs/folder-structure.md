@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-15
+Generated on: 2026-08-16
 
 ```bash
 ├── client/
@@ -562,8 +562,35 @@ Generated on: 2026-08-15
 │   │   │   │   │   └── offering.factory.js
 │   │   │   │   ├── components/
 │   │   │   │   │   ├── attributes/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── attributes.builder.js
+│   │   │   │   │   │   │   ├── attributes.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── attributes.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── attributes.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── attributes.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── attributes.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── attributes.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── attributes.service.js
+│   │   │   │   │   │   │   └── index.js
 │   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   └── attributes.schema.js
+│   │   │   │   │   │   │   ├── attributes.normalizer.js
+│   │   │   │   │   │   │   ├── attributes.schema.js
+│   │   │   │   │   │   │   ├── createAttributes.schema.js
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── setAttributesRequest.schema.js
+│   │   │   │   │   │   │   └── updateAttributes.schema.js
 │   │   │   │   │   │   ├── attributes.component.js
 │   │   │   │   │   │   └── index.js
 │   │   │   │   │   ├── categories/

@@ -1,0 +1,40 @@
+### Get Offering Tags
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a818dc664e7e4b542b3a4e8/tags
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MThkOWU2NGU3ZTRiNTQyYjNhNGU3IiwiaWF0IjoxNzg2ODc1Mjk0LCJleHAiOjE3ODY5NjE2OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.HUuLNt-prLFosVCnfuWy7fF5DSKyOLVt009dDfuLNAY
+Content-Type: application/json
+
+### Set Offering Tags
+
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a818dc664e7e4b542b3a4e8/tags
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MThkOWU2NGU3ZTRiNTQyYjNhNGU3IiwiaWF0IjoxNzg2ODc1Mjk0LCJleHAiOjE3ODY5NjE2OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.HUuLNt-prLFosVCnfuWy7fF5DSKyOLVt009dDfuLNAY
+Content-Type: application/json
+Accept: application/json
+
+# {
+# 	"tags": [
+# 		"Electronics",
+# 		"Smartphone",
+# 		"Android",
+# 		"Featured"
+# 	]
+# }
+
+# Verify Replacement
+
+# {
+# 	"tags": [
+# 		"laptop",
+# 		"computer",
+# 		"technology"
+# 	]
+# }
+
+{
+	"tags": [
+		"  Electronics ",
+		"electronics",
+		"ELECTRONICS",
+		" electronics "
+	]
+}

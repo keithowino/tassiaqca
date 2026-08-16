@@ -1,4 +1,4 @@
-We may proceed to converting the Media component to follow the following structure using the Pricing and or Categories offering components as a point of reference:
+We may proceed to converting the Tags component to follow the following structure using the Pricing, Media and or Categories offering components as a point of reference:
 
 ```bash
 ├── builders/
@@ -22,6 +22,79 @@ Here is the current implementation of the media offering component and more for 
     - `offering.routes.js`
 
 ---
+
+```js
+`~\server\src\modules\offering\builders\offering.builder.js`;
+
+import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
+import offeringRegistry from "../../../shared/platform/offerings/offering.registry.js";
+
+/**
+ * Builds only the core Offering document.
+ *
+ * Component-owned data must never be persisted through this builder.
+ *
+ * Core Offering ownership:
+ * - business
+ * - type
+ * - slug
+ * - name
+ * - shortDescription
+ * - description
+ * - status
+ * - visibility
+ * - searchable
+ * - featured
+ * - metadata
+ * - createdBy
+ * - updatedBy
+ */
+export function buildOffering({ businessId, data, slug, actor }) {
+	const definition = offeringRegistry.get(data.type);
+
+	if (!definition) {
+		throw new AppError(
+			`Unknown offering type "${data.type}".`,
+			HTTP_STATUS.NOT_FOUND,
+			ErrorCodes.NOT_FOUND,
+		);
+	}
+
+	const defaults = definition.defaults ?? {};
+
+	return {
+		business: businessId,
+
+		type: definition.type,
+
+		slug,
+
+		name: data.name.trim(),
+
+		shortDescription: data.shortDescription ?? "",
+
+		description: data.description ?? "",
+
+		status: data.status ?? defaults.status,
+
+		visibility: data.visibility ?? defaults.visibility,
+
+		searchable: data.searchable ?? defaults.searchable,
+
+		featured: data.featured ?? defaults.featured,
+
+		metadata: {
+			...(defaults.metadata ?? {}),
+			...(data.metadata ?? {}),
+		},
+
+		createdBy: actor.id,
+
+		updatedBy: actor.id,
+	};
+}
+```
 
 ```js
 `~\server\src\modules\offering\components\categories\builders\categories.builder.js`;
@@ -184,10 +257,9 @@ import { validateRequest } from "../../../../../shared/validation/index.js";
 
 import { categoriesService } from "../services/index.js";
 
-import {
-	businessOfferingParamsSchema,
-	setCategoriesRequestSchema,
-} from "../validators/index.js";
+import { setCategoriesRequestSchema } from "../validators/index.js";
+
+import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 const getCategories = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
@@ -197,7 +269,10 @@ const getCategories = asyncHandler(async (req, res) => {
 		req,
 	);
 
-	const categories = await categoriesService.getByOffering(params.offeringId);
+	const categories = await categoriesService.getByOffering(
+		params.businessId,
+		params.offeringId,
+	);
 
 	return success(
 		res,
@@ -246,12 +321,13 @@ import { categoriesRepository } from "../repositories/index.js";
 
 import categoryService from "../../../../commerce/services/category.service.js";
 
-import { offeringRepository } from "../../../repositories/index.js";
-
-import businessService from "../../../../business/services/business.service.js";
-
 import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
 import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+
+import {
+	ensureBusinessExists,
+	ensureOfferingExists,
+} from "../../shared/index.js";
 
 /**
  * #### POST and DELETE?
@@ -275,25 +351,6 @@ class CategoriesService {
 	}
 
 	/**
-	 * Ensures that the Offering exists and belongs to the supplied business.
-	 */
-	async ensureOfferingExists(businessId, offeringId) {
-		const offering = await offeringRepository.findByBusinessAndId(
-			businessId,
-			offeringId,
-		);
-
-		if (!offering) {
-			throw new AppError(
-				"Offering not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		return offering;
-	}
-	/**
 	 * Replaces all category assignments for an Offering.
 	 *
 	 * Validation of the categories payload is performed by the Categories Component before this service is invoked.
@@ -312,9 +369,9 @@ class CategoriesService {
 	 * 10. Return resulting assignments.
 	 */
 	async setCategories({ businessId, offeringId, categoryIds = [], actor }) {
-		await businessService.ensureExists(businessId);
+		await ensureBusinessExists(businessId);
 
-		await this.ensureOfferingExists(businessId, offeringId);
+		await ensureOfferingExists(businessId, offeringId);
 
 		const uniqueCategoryIds = [...new Set(categoryIds.map(String))];
 
@@ -357,7 +414,11 @@ class CategoriesService {
 		}
 	}
 
-	async getByOffering(offeringId) {
+	async getByOffering(businessId, offeringId) {
+		await ensureBusinessExists(businessId);
+
+		await ensureOfferingExists(businessId, offeringId);
+
 		const assignments =
 			await categoriesRepository.findByOffering(offeringId);
 
@@ -368,6 +429,69 @@ class CategoriesService {
 export const categoriesService = new CategoriesService();
 
 export default categoriesService;
+```
+
+```js
+`~\server\src\modules\offering\components\categories\models\categories.model.js`;
+
+import mongoose from "mongoose";
+
+const categoriesSchema = new mongoose.Schema(
+	{
+		business: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Business",
+			required: true,
+			index: true,
+		},
+
+		offering: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Offering",
+			required: true,
+			index: true,
+		},
+
+		category: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Category",
+			required: true,
+			index: true,
+		},
+
+		createdBy: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
+
+		updatedBy: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
+	},
+	{
+		timestamps: true,
+	},
+);
+
+categoriesSchema.index(
+	{
+		offering: 1,
+		category: 1,
+	},
+	{
+		unique: true,
+	},
+);
+
+categoriesSchema.index({
+	business: 1,
+	offering: 1,
+});
+
+export default mongoose.model("OfferingCategory", categoriesSchema);
 ```
 
 ```js
@@ -471,4 +595,239 @@ router
 	);
 
 export default router;
+```
+
+```js
+`~\server\src\modules\offering\components\attributes\services\attributes.service.js`;
+
+import mongoose from "mongoose";
+
+import { attributesFactory } from "../builders/index.js";
+import { attributesPresenter } from "../presenters/index.js";
+import { attributesRepository } from "../repositories/index.js";
+
+import { normalizeAttributes } from "../validators/index.js";
+
+import {
+	ensureBusinessExists,
+	ensureOfferingExists,
+} from "../../shared/index.js";
+
+class AttributesService {
+	async setAttributes({ businessId, offeringId, attributes = [], actor }) {
+		await ensureBusinessExists(businessId);
+
+		await ensureOfferingExists(businessId, offeringId);
+
+		const normalizedAttributes = normalizeAttributes(attributes);
+
+		const session = await mongoose.startSession();
+
+		try {
+			session.startTransaction();
+
+			await attributesRepository.deleteByOffering(offeringId, session);
+
+			const assignments = normalizedAttributes.map((attribute) =>
+				attributesFactory.createAttribute({
+					businessId,
+					offeringId,
+					attribute,
+					actor,
+				}),
+			);
+
+			const created = await attributesRepository.createMany(
+				assignments,
+				session,
+			);
+
+			await session.commitTransaction();
+
+			return attributesPresenter.presentCollection(created);
+		} catch (error) {
+			await session.abortTransaction();
+			throw error;
+		} finally {
+			await session.endSession();
+		}
+	}
+
+	async getByOffering(businessId, offeringId) {
+		await ensureBusinessExists(businessId);
+
+		await ensureOfferingExists(businessId, offeringId);
+
+		const attributes =
+			await attributesRepository.findByOffering(offeringId);
+
+		return attributesPresenter.presentCollection(attributes);
+	}
+}
+
+export const attributesService = new AttributesService();
+
+export default attributesService;
+```
+
+```js
+`~\server\src\modules\offering\components\attributes\attributes.component.js`;
+
+import componentContract from "../component.contract.js";
+
+import attributesSchema from "./validators/attributes.schema.js";
+import { normalizeAttributes } from "./validators/index.js";
+
+import { attributesService } from "./services/index.js";
+
+export const attributesComponent = {
+	...componentContract,
+
+	validateCreate(context) {
+		if (context.data.attributes === undefined) {
+			return;
+		}
+
+		attributesSchema.parse(context.data.attributes);
+	},
+
+	validateUpdate(context) {
+		if (context.data.attributes === undefined) {
+			return;
+		}
+
+		attributesSchema.parse(context.data.attributes);
+	},
+
+	beforeCreate(context) {
+		if (context.data.attributes === undefined) {
+			return;
+		}
+
+		context.data.attributes = normalizeAttributes(context.data.attributes);
+	},
+
+	beforeUpdate(context) {
+		if (context.data.attributes === undefined) {
+			return;
+		}
+
+		context.data.attributes = normalizeAttributes(context.data.attributes);
+	},
+
+	async afterCreate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.attributes === undefined) {
+			return;
+		}
+
+		const attributes = await attributesService.setAttributes({
+			businessId,
+			offeringId: offering.id,
+			attributes: data.attributes,
+			actor,
+		});
+
+		state.attributes = attributes;
+	},
+
+	async afterUpdate(context) {
+		const { businessId, offering, data, actor, state } = context;
+
+		if (data.attributes === undefined) {
+			return;
+		}
+
+		const attributes = await attributesService.setAttributes({
+			businessId,
+			offeringId: offering.id,
+			attributes: data.attributes,
+			actor,
+		});
+
+		state.attributes = attributes;
+	},
+};
+
+export default attributesComponent;
+```
+
+```js
+`~\server\src\modules\offering\components\attributes\validators\attributes.normalizer.js`;
+
+import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
+
+/**
+ * Normalizes an individual attribute.
+ *
+ * Attribute names and values retain their display casing,
+ * while surrounding whitespace is removed.
+ *
+ * Duplicate values are removed case-insensitively.
+ */
+export function normalizeAttribute(attribute) {
+	const name = attribute.name.trim();
+
+	const values = [];
+	const seenValues = new Set();
+
+	for (const value of attribute.values) {
+		const normalizedValue = value.trim();
+		const key = normalizedValue.toLowerCase();
+
+		if (seenValues.has(key)) {
+			continue;
+		}
+
+		seenValues.add(key);
+		values.push(normalizedValue);
+	}
+
+	return {
+		name,
+		values,
+	};
+}
+
+/**
+ * Normalizes the complete attribute collection.
+ *
+ * Attribute names must be unique case-insensitively.
+ *
+ * Example:
+ *
+ * Color
+ * color
+ *
+ * is rejected rather than silently discarded.
+ */
+export function normalizeAttributes(attributes = []) {
+	const normalized = [];
+	const seenNames = new Set();
+
+	for (const attribute of attributes) {
+		const normalizedAttribute = normalizeAttribute(attribute);
+		const key = normalizedAttribute.name.toLowerCase();
+
+		if (seenNames.has(key)) {
+			throw new AppError(
+				`Duplicate attribute name "${normalizedAttribute.name}".`,
+				HTTP_STATUS.BAD_REQUEST,
+				ErrorCodes.BAD_REQUEST,
+			);
+		}
+
+		seenNames.add(key);
+		normalized.push(normalizedAttribute);
+	}
+
+	return normalized;
+}
+
+export default {
+	normalizeAttribute,
+	normalizeAttributes,
+};
 ```

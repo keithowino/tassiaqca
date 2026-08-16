@@ -104,4 +104,8 @@ mediaSchema.index(
 	},
 );
 
-export default mongoose.model("OfferingMedia", mediaSchema);
+export const OfferingMedia =
+	mongoose.models.OfferingMedia ||
+	mongoose.model("OfferingMedia", mediaSchema);
+
+export default OfferingMedia;

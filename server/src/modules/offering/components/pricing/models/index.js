@@ -1,1 +1,1 @@
-export { default as Pricing } from "./pricing.model.js";
+export { default as OfferingPricing } from "./pricing.model.js";
