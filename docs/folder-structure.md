@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-16
+Generated on: 2026-08-17
 
 ```bash
 ├── client/
@@ -683,15 +683,71 @@ Generated on: 2026-08-16
 │   │   │   │   │   │   │   └── setCurrentPricing.schema.js
 │   │   │   │   │   │   └── pricing.component.js
 │   │   │   │   │   ├── seo/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── seo.builder.js
+│   │   │   │   │   │   │   └── seo.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── seo.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── seo.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── seo.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── seo.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── seo.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── seo.service.js
 │   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   └── seo.schema.js
+│   │   │   │   │   │   │   ├── createSeo.schema.js
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── seo.request.schema.js
+│   │   │   │   │   │   │   ├── seo.schema.js
+│   │   │   │   │   │   │   ├── seo.utils.js
+│   │   │   │   │   │   │   └── updateSeo.schema.js
+│   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   └── seo.component.js
 │   │   │   │   │   ├── shared/
-│   │   │   │   │   │   └── validators/
-│   │   │   │   │   │       └── params.schema.js
-│   │   │   │   │   ├── tags/
 │   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   └── params.schema.js
+│   │   │   │   │   │   ├── ensureExists.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── tags/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── tags.builder.js
+│   │   │   │   │   │   │   └── tags.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── tags.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── tags.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── tags.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── tags.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── tags.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── tags.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── setTagsRequest.schema.js
+│   │   │   │   │   │   │   ├── tags.normalizer.js
 │   │   │   │   │   │   │   └── tags.schema.js
+│   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   └── tags.component.js
 │   │   │   │   │   ├── component.contract.js
 │   │   │   │   │   ├── component.pipeline.js

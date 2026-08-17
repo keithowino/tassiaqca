@@ -1640,8 +1640,10 @@ Do not forget to refactor the README.md file after creation and or refactoring o
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Refactor the SEO offering component to facilitate independent REST operations."
+git commit -m "feat(project): Update README.md vision."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
+
+Access and respond to what i have just attached
 
 ---

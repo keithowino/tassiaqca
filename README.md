@@ -1,12 +1,44 @@
-# TassiaQCA
+# TASSIAQCA
 
-![TassiaQCA Banner](./client/public/banner.jfif)
+> Welcome to the neighborhood community-centric e-commerce and business discovery platform.
+
+Written and scripted by [Pickaxe & Shovel](https://pickaxe-and-shovel.vercel.app/).
+
+**Live Demo** https://tassiaqca.vercel.app/
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Vision](#vision)
+- [Platform Model](#platform-model)
+- [Core Experiences](#core-experiences)
+- [Architecture](#architecture)
+    - [Backend Architecture](#backend-architecture)
+    - [Frontend Architecture](#frontend-architecture)
+    - [Project Structure](#project-structure)
+- [Offering Framework](#offering-framework)
+- [Business Operating System](#business-operating-system)
+- [Platform Domains](#platform-domains)
+- [Technology Stack](#technology-stack)
+- [Development](#development)
+    - [Development Principles](#development-principles)
+    - [Current Implementation Status](#current-implementation-status)
+    - [Planned Enhancements](#planned-enhancements)
+    - [Development Roadmap](#development-roadmap)
+- [Acknowledgments](#acknowledgments)
+- [Contact](#contact)
+- [Support the Project](#support-the-project)
+- [Version History](#version-history)
+
+---
 
 ## Overview
 
-TassiaQCA is a community-centric e-commerce and business discovery platform built specifically for the Tassia Complex in Embakasi, Nairobi. As local entrepreneurship continues to grow, many small businesses still struggle with digital visibility while residents often miss nearby products and services.
+TassiaQCA is a community-centric e-commerce and business discovery platform where businesses can showcase their offerings and community members can discover, shop, and engage with nearby vendors—all in one place.
 
-TassiaQCA bridges this gap by creating a centralized local marketplace where businesses can showcase their offerings and community members can discover, shop, and engage with nearby vendors—all in one place.
+TASSIAQCA is a modular, configurable platform designed to enable businesses of
+different sizes and industries to establish, manage, and grow their digital
+presence through a unified ecosystem.
 
 ### The Problem
 
@@ -16,40 +48,724 @@ Small businesses struggle with online visibility, while residents waste time sea
 
 A digital community marketplace where local businesses can list products and services, and residents can discover, order, review, and connect with nearby merchants.
 
-**Live Demo:** https://tassiaqca.vercel.app/
+It is not designed as a traditional e-commerce application.
+
+The platform is being built to support diverse business models including:
+
+- Retail
+- Professional Services
+- Restaurants
+- Hospitality
+- Education
+- Healthcare
+- Rentals
+- Memberships
+- Appointments
+- Courses
+- Digital Products
+- Future business models
+
+The central architectural objective is:
+
+> **Build an operating system for neighborhood commerce rather than another
+> specialized business application.**
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+## Vision
+
+TASSIAQCA is designed as an ecosystem rather than a collection of independent
+applications.
+
+The platform connects:
+
+```text
+Visitors
+   ↓
+Customers
+   ↓
+Businesses
+   ↓
+Business Members
+   ↓
+Administrators
+   ↓
+Developers
+   ↓
+Integrations
+```
+
+Each actor interacts with the platform through an experience appropriate to
+their responsibilities while sharing common infrastructure, identity,
+configuration, and platform capabilities.
+
+The long-term vision is to provide businesses with a single platform through
+which they can:
+
+- Establish an online presence
+- Manage their organization
+- Configure operational capabilities
+- Manage staff
+- Manage commercial offerings
+- Interact with customers
+- Process transactions
+- Manage relationships
+- Analyze performance
+- Expand into new business models
+
+The platform should adapt to the business rather than forcing the business
+to adapt to the software.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
 
 ---
 
-## Key Features
+## Platform Model
 
-### Customer Features
+TASSIAQCA is organized around several architectural layers.
 
-- **Discover Local Businesses** — Browse businesses by category or search by name/service
-- **Shopping Cart with Persistence** — Cart items saved locally across sessions
-- **Order Tracking** — Track orders from pending to completion with real-time status updates
-- **Community Board** — Share announcements, deals, and interact with neighbors
-- **Business Reviews & Ratings** — Rate and review experiences with star ratings
-- **Favorites System** — Save businesses for quick access
-- **Delivery & Pickup Options** — Flexible fulfillment choices with delivery fee calculation
-- **Responsive Design** — Seamless experience across mobile, tablet, and desktop
+```text
+                         TASSIAQCA PLATFORM
+                                │
+        ┌───────────────────────┼───────────────────────┐
+        │                       │                       │
+   Marketplace          Business Operating        Administration
+                              System
+        │                       │                       │
+        └───────────────────────┼───────────────────────┘
+                                │
+                         Business Domains
+                                │
+        ┌───────────────┬───────┼────────┬──────────────┐
+        │               │       │        │              │
+     Identity       Business  Commerce  CRM          Finance
+        │               │       │        │              │
+        └───────────────┴───────┼────────┴──────────────┘
+                                │
+                       Platform Services
+                                │
+        ┌────────┬────────┬──────────┬─────────┬──────────┐
+        │        │        │          │         │          │
+      Audit    Events   Search   Notifications Workflow  Files
+```
 
-### Business Owner Features
+The important architectural distinction is that the **Business Operating
+System is an experience**, not a backend domain.
 
-- **Comprehensive Business Dashboard** — Manage your storefront in one place
-- **Product & Service Management** — Add, edit, and remove listings with stock tracking
-- **Order Management System** — Process and manage customer orders with status updates
-- **Performance Analytics** — Monitor views, ratings, and business activity
-- **Business Submission Workflow** — Submit listings for admin approval
-- **Delivery Configuration** — Set delivery fees and minimum order requirements
-- **Business Hours Management** — Configure operating hours and days
+Likewise, the Marketplace is a customer-facing experience rather than the
+owner of business operational logic.
 
-### Admin Features
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
 
-- **Business Approval System** — Review, approve, or reject business listings
-- **Content Moderation** — Manage reviews, community posts, and user content
-- **User Management** — View and manage user accounts and roles
-- **Platform Analytics** — Monitor ecosystem growth and activity metrics
-- **Category Management** — Create and manage business categories
+---
+
+## Core Experiences
+
+TASSIAQCA is designed around several major platform experiences.
+
+### Public Website
+
+Introduces the platform and provides:
+
+- Landing pages
+- Documentation
+- Business registration
+- Pricing
+- Help
+- Marketing
+- Platform information
+
+---
+
+### Marketplace
+
+The customer-facing experience.
+
+The Marketplace will allow customers to:
+
+- Discover businesses
+- Search offerings
+- View business profiles
+- Browse offerings
+- Compare alternatives
+- Purchase offerings
+- Track their purchases
+- Book services
+- Request quotations
+- Manage favorites
+- Submit and view reviews
+- Manage customer relationships
+- Choose delivery and or pickup options
+    - Flexible fulfillment choices with delivery fee calculation
+- Experience a responsive design
+    - Seamless experience across mobile, tablet, and desktop
+
+The Marketplace should remain independent of the internal operational
+structure of a business.
+
+---
+
+### Business Operating System
+
+The Business Operating System provides the operational workspace for
+businesses.
+
+It dynamically assembles:
+
+```text
+Business
+   ↓
+Business Configuration
+   ↓
+Enabled Capabilities
+   ↓
+Navigation Registry
+   ↓
+Dashboard Builder
+   ↓
+Business Workspace
+```
+
+A retail business may receive:
+
+```text
+Commerce
+├── Products
+├── Categories
+├── Inventory
+├── Suppliers
+└── Orders
+```
+
+A salon may receive:
+
+```text
+Commerce
+├── Services
+├── Staff
+├── Calendar
+└── Appointments
+```
+
+A restaurant may receive:
+
+```text
+Commerce
+├── Menu
+├── Kitchen
+├── Ingredients
+└── Reservations
+```
+
+The platform remains the same.
+
+The business experience changes according to configuration and capabilities.
+
+#### Features
+
+- Comprehensive business workspace
+    - Configure multiple businesses in one place.
+- Performance Analytics
+    - Monitor views, ratings, and business activity
+- And more ...
+
+---
+
+### Platform Administration
+
+Administration provides platform-level control including:
+
+- User management
+    - View and manage user accounts and roles.
+- Business verification
+    - Review, approve, or reject business listings.
+- Content moderation
+    - Manage reviews, community posts, user content, etc.
+- Capability management
+- Configuration
+- Feature flags
+- Platform analytics
+    - Monitor ecosystem growth and activity metrics.
+- System health
+- Governance
+
+Administrative functionality remains separate from business operational
+functionality.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+---
+
+## Architecture
+
+TASSIAQCA follows a modular monolith architecture using Domain-Driven Design
+principles.
+
+The architecture emphasizes:
+
+- Domain boundaries
+- Modular design
+- Configuration over specialization
+- API-first development
+- Security by default
+- Extensibility
+- Shared platform capabilities
+- Clear ownership
+- Incremental delivery
+
+The platform is intentionally designed so that future domains can evolve
+independently without forcing unrelated domains to change.
+
+### Backend Architecture
+
+Backend modules are organized around bounded contexts.
+
+Each module generally follows:
+
+```text
+module/
+├── controllers/
+├── models/
+├── presenters/
+├── repositories/
+├── routes/
+├── services/
+├── validators/
+└── index.js
+```
+
+The dependency direction is:
+
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+Persistence
+```
+
+#### Controllers
+
+Controllers translate HTTP requests into application commands.
+
+Controllers should remain thin.
+
+They must not contain business rules.
+
+#### Services
+
+Services orchestrate domain behavior and contain business rules.
+
+#### Repositories
+
+Repositories isolate persistence operations.
+
+Repositories must not contain domain business rules.
+
+#### Presenters
+
+Presenters transform domain/persistence objects into API response
+representations.
+
+#### Validators
+
+External input is validated using Zod.
+
+---
+
+### Frontend Architecture
+
+The frontend is organized around user experiences rather than directly
+mirroring backend domains.
+
+The target platform experiences are:
+
+```text
+TASSIAQCA
+│
+├── Public Website
+├── Marketplace
+├── Business Operating System
+├── Platform Administration
+└── Developer Tools
+```
+
+Frontend principles include:
+
+- Experience-oriented architecture
+- Shared design language
+- Modular features
+- API-driven behavior
+- Progressive expansion
+- Backend-owned business rules
+
+The frontend should consume configuration and metadata from the backend rather
+than hard-code business capabilities.
+
+---
+
+### Project Structure
+
+The repository follows the current project organization:
+
+```text
+├── client/
+│   ├── public/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── bootstrap/
+│   │   │   ├── config/
+│   │   │   ├── layouts/
+│   │   │   ├── providers/
+│   │   │   └── router/
+│   │   ├── applications/
+│   │   │   ├── administration/
+│   │   │   ├── authentication/
+│   │   │   ├── business/
+│   │   │   ├── gateway/
+│   │   ├── platform/
+│   │   │   ├── api/
+│   │   │   ├── bootstrap/
+│   │   │   ├── configuration/
+│   │   │   ├── context/
+│   │   │   ├── dashboard/
+│   │   │   ├── identity/
+│   │   │   ├── journey/
+│   │   │   ├── navigation/
+│   │   │   ├── registries/
+│   │   │   ├── routing/
+│   │   │   ├── session/
+│   │   │   ├── widgets/
+│   │   │   └── workspace/
+│   │   ├── shared/
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+├── server/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── bootstrap/
+│   │   │   ├── config/
+│   │   │   ├── routes/
+│   │   │   ├── app.js
+│   │   │   └── server.js
+│   │   ├── modules/
+│   │   │   ├── administration/
+│   │   │   ├── analytics/
+│   │   │   ├── audit/
+│   │   │   ├── business/
+│   │   │   ├── businessConfiguration/
+│   │   │   ├── commerce/
+│   │   │   ├── dashboard/
+│   │   │   ├── identity/
+│   │   │   ├── navigation/
+│   │   │   └── offering/
+│   │   └── shared/
+```
+
+The exact implementation structure may evolve as the architecture evolves.
+The Architecture Specification remains the authoritative architectural
+reference.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+---
+
+## Offering Framework
+
+Commerce is intentionally **not product-centric**.
+
+Businesses may create value through:
+
+- Products
+- Services
+- Rentals
+- Bookings
+- Memberships
+- Subscriptions
+- Courses
+- Digital Downloads
+- Packages
+- Future Offering Types
+
+TASSIAQCA therefore introduces the concept of an **Offering**.
+
+```text
+Offering
+│
+├── Product
+├── Service
+├── Rental
+├── Booking
+├── Membership
+├── Subscription
+├── Course
+├── Digital Download
+├── Package
+└── Future Types
+```
+
+An Offering represents something a business makes available to customers.
+
+The concrete implementation determines how that offering behaves operationally.
+
+For example:
+
+```text
+Electronics Store
+      │
+    Laptop
+      │
+   Purchase
+
+
+Salon
+  │
+Haircut
+  │
+ Book
+
+
+Gym
+ │
+Membership
+ │
+Subscribe
+
+
+Lawyer
+  │
+Consultation
+  │
+ Request
+```
+
+From the customer's perspective, all of these are commercial offerings.
+
+The internal business workflows remain specialized.
+
+---
+
+### Product Projection
+
+Product is the first concrete Offering specialization.
+
+The architecture avoids duplicating shared Offering data inside Product.
+
+Conceptually:
+
+```text
+Offering
+│
+├── Shared commercial identity
+├── Name
+├── Slug
+├── Description
+├── Status
+├── Visibility
+└── Lifecycle
+       │
+       ↓
+    Product
+       │
+       ├── SKU
+       └── Product-specific data
+```
+
+This allows future Offering Types to be introduced without redesigning the
+Commerce domain.
+
+The Offering Framework is therefore the foundation for making Commerce
+industry-independent.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+---
+
+## Business Operating System
+
+The Business Operating System is assembled dynamically from capabilities.
+
+It is not:
+
+- A fixed dashboard
+- A fixed industry application
+- A standalone domain
+- A collection of hard-coded business types
+
+Instead:
+
+```text
+Business
+   ↓
+Business Type
+   ↓
+Business Configuration
+   ↓
+Capabilities
+   ↓
+Modules
+   ↓
+Navigation
+   ↓
+Dashboard
+```
+
+This enables different businesses to receive different operational
+experiences while using the same underlying platform.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+---
+
+## Platform Domains
+
+The Architecture Specification defines the following major domains.
+
+### Identity
+
+Responsible for:
+
+- Users
+- Authentication
+- Sessions
+- Roles
+- Permissions
+- Business membership
+- Authorization
+
+---
+
+### Business
+
+Responsible for:
+
+- Businesses
+- Business Types
+- Business Configuration
+- Business Members
+- Branches
+- Branch Assignments
+- Ownership
+- Business-level configuration
+
+---
+
+### Commerce
+
+Responsible for:
+
+- Offerings
+- Offering lifecycle
+- Product specialization
+- Services
+- Rentals
+- Bookings
+- Memberships
+- Packages
+- Pricing
+- Availability
+- Fulfillment
+
+Commerce owns **how businesses commercialize value**, not what type of
+business they are.
+
+---
+
+### Marketplace
+
+Responsible for customer-facing discovery and interaction:
+
+- Discovery
+- Search
+- Business profiles
+- Offering discovery
+- Reviews
+- Favorites
+- Nearby discovery
+- Checkout
+- Booking
+- Recommendations
+
+---
+
+### CRM
+
+Planned capabilities include:
+
+- Customer profiles
+- Loyalty
+- Membership management
+- Campaigns
+- Communication history
+- Segmentation
+- Rewards
+- Engagement analytics
+
+---
+
+### Finance
+
+Planned capabilities include:
+
+- Invoicing
+- Billing
+- Payment reconciliation
+- Expense tracking
+- Financial reporting
+- Tax support
+- Subscription billing
+- Revenue analytics
+
+---
+
+### Analytics
+
+Responsible for future cross-platform analytics and business intelligence.
+
+---
+
+### Messaging
+
+Responsible for communication capabilities and notification delivery.
+
+---
+
+### Scheduling
+
+Provides reusable scheduling capabilities for businesses and offerings.
+
+---
+
+### Administration
+
+Provides platform-level governance and operational management.
+
+---
+
+### Platform Services
+
+Shared infrastructure sits beneath the business domains.
+
+Examples include:
+
+- Audit
+- Event Bus
+- Notifications
+- Search
+- Files
+- Workflow
+- Background Jobs
+- Integrations
+- Logging
+- Monitoring
+
+Platform Services provide infrastructure and should not become owners of
+business-specific rules.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
 
 ---
 
@@ -60,238 +776,234 @@ A digital community marketplace where local businesses can list products and ser
 | Frontend            | React 19 + Vite                      |
 | Styling             | Tailwind CSS                         |
 | Routing             | React Router DOM v7                  |
-| State Management    | React Context API                    |
+| State Management    | React Context API - Planned          |
 | HTTP Client         | Axios                                |
 | Icons               | Lucide React                         |
-| Backend             | Node.js + Express                    |
+| Backend             | Node.js + Express + Zod              |
 | Database            | MongoDB + Mongoose ODM               |
-| Authentication      | JWT (JSON Web Tokens)                |
+| Authentication      | JWT (Cookie-based refresh sessions)  |
 | Password Encryption | bcryptjs                             |
 | Payment Integration | Daraja API (M-Pesa) - Planned        |
 | Maps Integration    | Leaflet + React-Leaflet - Planned    |
 | Build Tool          | Vite                                 |
 | Hosting             | Render (Backend) + Vercel (Frontend) |
 
----
-
-## Architecture
-
-### Frontend Structure
-
-```bash
-
-client/
-├── src/
-│ ├── components/
-│ │ ├── business/ # Business cards, filters, categories
-│ │ ├── common/ # Loading spinners, star ratings, metadata
-│ │ ├── layout/ # Header, footer, bottom navigation
-│ │ └── orders/ # Cart drawer, checkout flow
-│ ├── lib/
-│ │ ├── api.js # Centralized API service layer
-│ │ ├── context/ # Auth, Cart, Data contexts
-│ │ └── MetadataInsert.jsx
-│ ├── pages/ # All route pages
-│ └── App.jsx # Main application with routing
-
-```
-
-### Backend Structure
-
-```bash
-
-server/
-├── src/
-│ ├── controllers/ # Business logic for each entity
-│ ├── models/ # MongoDB schemas (User, Business, Product, etc.)
-│ ├── routes/ # API route definitions
-│ ├── middleware/ # Auth, validation, error handling
-│ └── server.js # Express application entry point
-
-```
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
 
 ---
 
-### API Endpoints
+## Development
+
+### Development Principles
+
+The following principles must be preserved throughout implementation.
+
+#### Architecture Before Features
+
+Features must fit the architecture rather than redefine it.
+
+#### Domain Ownership
+
+Every capability must have a clear architectural owner.
+
+#### Configuration Over Specialization
+
+Prefer configuration and reusable capabilities over business-specific
+implementations.
+
+#### Shared Capabilities First
+
+Common infrastructure should be built before specialized industry features.
+
+#### Thin Controllers
+
+HTTP handling belongs in controllers.
+
+Business rules belong in services.
+
+#### Repository Isolation
+
+Persistence concerns belong in repositories.
+
+#### No Cross-Domain Persistence Coupling
+
+Domains should communicate through service contracts or domain events rather
+than directly depending on another domain's persistence implementation.
+
+#### Incremental Delivery
+
+Implement and verify one architectural capability at a time.
 
 ---
 
-| Method | Endpoint                   | Description              | Access         |
-| :----- | :------------------------- | :----------------------- | :------------- |
-| POST   | /api/auth/register         | User registration        | Public         |
-| POST   | /api/auth/login            | User login               | Public         |
-| POST   | /api/auth/google           | Google OAuth login       | Public         |
-| GET    | /api/auth/me               | Get current user profile | Authenticated  |
-| GET    | /api/businesses            | Get all businesses       | Public         |
-| GET    | /api/businesses/my         | Get user's businesses    | Business Owner |
-| POST   | /api/businesses            | Create new business      | Business Owner |
-| PUT    | /api/businesses/:id        | Update business          | Owner/Admin    |
-| GET    | /api/products/business/:id | Get products by business | Public         |
-| POST   | /api/orders                | Create new order         | Customer       |
-| GET    | /api/orders/my             | Get user's orders        | Customer       |
-| PATCH  | /api/orders/:id/status     | Update order status      | Business Owner |
-| POST   | /api/reviews               | Create business review   | Customer       |
-| GET    | /api/community/posts       | Get community posts      | Public         |
-| POST   | /api/community/posts       | Create community post    | Authenticated  |
+#### Testing & Verification
+
+Testing is part of implementation rather than a final step.
+
+The project uses the following development loop:
+
+```text
+Plan
+  ↓
+Design
+  ↓
+Implement
+  ↓
+REST Client Test
+  ↓
+Verify Response
+  ↓
+Fix
+  ↓
+Commit
+  ↓
+Continue
+```
+
+API endpoints are manually tested using the VS Code REST Client extension
+during development.
+
+The broader architecture also targets:
+
+- Unit testing
+- Integration testing
+- API testing
+- Event testing
+- Security testing
+- Performance testing
+- Accessibility testing
+- End-to-end testing
+- Manual exploratory testing
 
 ---
 
-## Feature Access Matrix
+### Current Implementation Status
 
-| Feature                    | Customer | Business Owner | Admin |
-| :------------------------- | :------: | :------------: | :---: |
-| Browse businesses          |    ✓     |       ✓        |   ✓   |
-| Place orders               |    ✓     |       ✓        |   ✓   |
-| Write reviews              |    ✓     |       ✓        |   ✓   |
-| Community interactions     |    ✓     |       ✓        |   ✓   |
-| Save favorites             |    ✓     |       ✓        |   ✓   |
-| Manage business listing    |    —     |       ✓        |   ✓   |
-| Manage business orders     |    —     |       ✓        |   ✓   |
-| Add/Edit products/services |    —     |       ✓        |   ✓   |
-| View business analytics    |    —     |       ✓        |   ✓   |
-| Configure delivery options |    —     |       ✓        |   ✓   |
-| Approve businesses         |    —     |       —        |   ✓   |
-| Moderate content           |    —     |       —        |   ✓   |
-| Manage categories          |    —     |       —        |   ✓   |
-| View platform analytics    |    —     |       —        |   ✓   |
+#### Platform Foundation
 
----
+##### Identity — Implemented
 
-## Project Structure
+- Registration
+- Login
+- Logout
+- JWT authentication
+- Refresh sessions
+- Session management
+- Password hashing
+- Roles
+- Permissions
+- Business membership
+- Authorization middleware
 
-```bash
-tassiaqca/
-├── client/                    # React frontend application
-│   ├── public/               # Static assets
-│   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   ├── lib/              # Contexts, API, utilities
-│   │   └── pages/            # Route pages
-│   ├── .env.example          # Environment variables template
-│   └── package.json
-│
-├── server/                    # Node.js backend application
-│   ├── src/
-│   │   ├── controllers/      # Request handlers
-│   │   ├── models/           # MongoDB schemas
-│   │   ├── routes/           # API endpoints
-│   │   └── middleware/       # Auth, validation
-│   ├── .env.example          # Environment variables template
-│   └── package.json
-│
-├── .gitignore
-└── README.md
-```
+##### Business — Implemented
 
----
+- Business creation
+- Business updates
+- Ownership
+- Business members
+- Member invitation
+- Member removal
+- Member deactivation
+- Member reactivation
+- Role changes
+- Leaving a business
+- Ownership transfer
 
-## Prerequisites
+##### Branches — Implemented
 
-Before running the project locally, ensure you have:
+- Branch creation
+- Branch listing
+- Branch updates
+- Branch deactivation
+- Branch reactivation
+- Head Office rules
+- Branch validation
+- Branch presenters
 
-- Node.js (v18+ recommended)
-- npm or yarn
-- Git
-- Modern browser
-- MongoDB Atlas account (or local MongoDB instance)
+##### Branch Assignments — Implemented
 
----
+- Member assignment
+- Branch member listing
+- Member branch listing
+- Assignment deactivation
+- Assignment reactivation
+- Primary branch support
+- Cross-business protection
+- Assignment lifecycle
 
-## Installation & Setup
+##### Audit — Implemented
 
-### Clone the repository:
+A reusable Audit module is part of the platform infrastructure.
 
-```bash
-git clone https://github.com/keithowino/tassiaqca.git
-cd tassiaqca
-```
+Audit records include concepts such as:
 
-### Backend Setup:
+- Business
+- Entity
+- Action
+- Actor
+- Metadata
+- IP address
+- User agent
 
-```bash
-cd server
-npm install
-cp .env.example .env.development
-# Edit .env.development with your MongoDB URI and JWT secret
-npm run dev
-```
-
-### Frontend Setup:
-
-```bash
-cd client
-npm install
-cp .env.example .env
-# Edit .env with your API URL
-npm run dev
-```
-
-### Environment Variables
-
-**Backend (.env.development):**
-
-```env
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:3000
-```
-
-**Frontend (.env.development):**
-
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
-```
-
-Open `http://localhost:3000` to view the application.
+Business operations consume the shared Audit capability rather than creating
+independent logging implementations.
 
 ---
 
-## Deployment
+##### Business Configuration
 
-### Backend Deployment (Render)
+The platform has moved beyond fixed business applications.
 
-```bash
-# Connect your GitHub repository to Render
-# Set environment variables in Render dashboard
-# Deploy automatically on push
-```
+The configuration architecture includes the concepts of:
 
-### Frontend Deployment (Vercel)
+- Business Types
+- Capability Registry
+- Module Registry
+- Business Configuration
+- Feature Flags
+- Navigation generation
+- Dashboard generation
+- Capability-driven workspace composition
 
-```bash
-npm run build
-# Connect your GitHub repository to Vercel
-# Set VITE_API_URL to your deployed backend URL
-# Deploy
-```
-
----
-
-## Current Status ✅
-
-- ✅ Complete MongoDB migration from Firebase
-- ✅ JWT authentication system
-- ✅ Business registration and management
-- ✅ Product/service CRUD operations
-- ✅ Shopping cart with localStorage persistence
-- ✅ Order processing system
-- ✅ Review and rating system
-- ✅ Community board with post types
-- ✅ Favorites system
-- ✅ Admin moderation panel
-- ✅ Responsive mobile-first design
-- ✅ CORS and environment configuration
-- ✅ Error handling and validation
+The purpose is to allow the platform to assemble business experiences
+dynamically.
 
 ---
 
-## Planned Enhancements
+##### Commerce / Offering Framework
 
-### Phase 1: Payment & Financial Systems
+The Commerce architecture has been redesigned around the Offering abstraction.
+
+##### Implemented direction
+
+- Offering introduced as the common commercial abstraction.
+- Product is treated as the first concrete specialization.
+- Product no longer owns data that belongs to the shared Offering concept.
+- Product-specific information remains within the Product projection.
+- Commerce responsibilities are separated from Marketplace responsibilities.
+- The architecture is prepared for additional Offering Types.
+
+##### Future Offering Types
+
+```text
+Service
+Rental
+Booking
+Membership
+Subscription
+Course
+Digital Download
+Package
+```
+
+These should extend the Offering architecture rather than create unrelated
+commercial systems.
+
+---
+
+### Planned Enhancements
+
+#### Payment & Financial Systems
 
 - **M-Pesa Integration (Daraja API)** — Direct mobile payments
 - **Multiple Payment Methods** — Card payments, bank transfers
@@ -300,7 +1012,7 @@ npm run build
 - **Business Payouts** — Automated settlement to business owners
 - **Transaction History** — Detailed financial records for users
 
-### Phase 2: Maps & Location Services
+#### Maps & Location Services
 
 - **Interactive Store Locator** — Leaflet.js integration
 - **Real-time Delivery Tracking** — GPS-based order tracking
@@ -309,7 +1021,7 @@ npm run build
 - **Store Directions** — Navigation assistance for pickup
 - **Service Area Management** — Businesses define delivery zones
 
-### Phase 3: Communication & Engagement
+#### Communication & Engagement
 
 - **Push Notifications** — Order updates, promotions, reminders
 - **In-app Messaging** — Direct chat between customers and businesses
@@ -318,7 +1030,7 @@ npm run build
 - **SMS Alerts** — Critical order notifications via text
 - **Community Events Calendar** — Local event management
 
-### Phase 4: AI & Personalization
+#### AI & Personalization
 
 - **AI-Powered Recommendations** — Personalized product suggestions
 - **Smart Search** — Semantic search with natural language processing
@@ -327,7 +1039,7 @@ npm run build
 - **Review Sentiment Analysis** — Automated review insights
 - **Chatbot Support** — AI-powered customer service assistant
 
-### Phase 5: Business Intelligence
+#### Business Intelligence
 
 - **Advanced Analytics Dashboard** — Sales trends, customer behavior
 - **Export Reports** — CSV/PDF exports for business owners
@@ -336,7 +1048,7 @@ npm run build
 - **Peak Hour Analysis** — Optimal operating hours recommendations
 - **Inventory Alerts** — Low stock notifications
 
-### Phase 6: Social & Gamification
+#### Social & Gamification
 
 - **Loyalty Programs** — Points system for repeat customers
 - **Referral System** — Earn rewards for inviting friends
@@ -345,7 +1057,7 @@ npm run build
 - **Flash Sales** — Time-limited discounts and promotions
 - **Group Buying** — Collective purchasing power discounts
 
-### Phase 7: Multi-tenant & Scalability
+#### Multi-tenant & Scalability
 
 - **Multi-language Support** — English + Swahili + other local languages
 - **Multi-currency Support** — Handle different currencies
@@ -354,7 +1066,7 @@ npm run build
 - **White-label Solution** — Customizable for other communities
 - **API Rate Limiting** — Scalable request handling
 
-### Phase 8: Advanced Features
+#### Advanced Features
 
 - **Voice Search** — Hands-free business discovery
 - **Image Recognition** — Search products by photo
@@ -365,67 +1077,175 @@ npm run build
 
 ---
 
-## Development Roadmap
+### Development Roadmap
 
-| Quarter | Focus Area              | Key Deliverables                        |
-| :------ | :---------------------- | :-------------------------------------- |
-| Q1 2026 | Core Platform Stability | Complete MongoDB migration, bug fixes   |
-| Q2 2026 | Payment Integration     | M-Pesa, digital receipts, wallet system |
-| Q3 2026 | Maps & Location         | Store locator, delivery tracking        |
-| Q4 2026 | AI Features             | Recommendations, smart search, chatbot  |
-| Q1 2027 | Mobile Apps             | React Native iOS/Android applications   |
-| Q2 2027 | Scale & Expand          | White-label solution, multi-language    |
+| Quarter | Focus Area                     | Key Deliverables                       |
+| :-----: | :----------------------------- | :------------------------------------- |
+|  2026   | Core Platform Stability        | Complete MongoDB migration, bug fixes  |
+|  2026   | Business Operating System      |                                        |
+|  2026   | Offering Framework             |                                        |
+|  2026   | Retail Commerce                |                                        |
+|  2026   | Marketplace                    |                                        |
+|  2026   | Industry Modules               |                                        |
+|  2026   | Customer Relationship Platform |                                        |
+|  2026   | Financial Platform             |                                        |
+|  2026   | Platform Ecosystem             |                                        |
+|  2026   | Maps & Location                | Store locator, delivery tracking       |
+|  2027   | Intelligence & Automation      | Recommendations, smart search, chatbot |
+|  2027   | Mobile Platform                | React Native iOS/Android applications  |
+|  2027   | Scale & Expand                 | White-label solution, multi-language   |
 
----
+The platform evolves through progressively larger capability layers.
 
-## Known Issues & Troubleshooting
+#### Immediate Development Direction
 
-### CORS Errors
+The current implementation priority is to complete the Offering Framework
+before moving deeper into industry-specific commerce features.
 
-Ensure your backend `CLIENT_URL` environment variable matches your frontend URL exactly (no trailing slash).
+The immediate sequence is:
 
-### MongoDB Connection Issues
+```text
+Offering Framework
+      ↓
+Product Projection
+      ↓
+Offering Type Infrastructure
+      ↓
+Offering Lifecycle
+      ↓
+Additional Offering Types
+      ↓
+Retail Commerce
+      ↓
+Marketplace
+```
 
-- Verify IP whitelist in MongoDB Atlas
-- Check connection string credentials
-- Ensure network allows outbound connections
-
-### JWT Authentication
-
-- Tokens expire after 7 days (configurable)
-- Clear localStorage on logout
-- Tokens are automatically refreshed on protected routes
-
----
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow existing code style and conventions
-- Write meaningful commit messages
-- Update documentation for new features
-- Test thoroughly before submitting PR
+This prevents the Commerce domain from returning to a product-centric
+architecture.
 
 ---
 
-## License
+#### Long-Term Platform
 
-This project is proprietary and confidential.
+The completed platform is intended to support:
 
-See the [LICENSE](./LICENSE) file for additional details.
+```text
+Customers
+    ↓
+Businesses
+    ↓
+Employees
+    ↓
+Administrators
+    ↓
+Developers
+    ↓
+Partners
+    ↓
+AI Agents
+```
 
-All rights reserved.
+Future capabilities may include:
+
+- CRM
+- Finance
+- Messaging
+- Scheduling
+- Logistics
+- Public APIs
+- Developer tools
+- Integrations
+- Webhooks
+- Mobile applications
+- Workflow automation
+- AI-assisted operations
+- Predictive analytics
+- Recommendation systems
+
+These capabilities should be added without compromising existing domain
+boundaries.
 
 ---
+
+#### Architecture Success Criteria
+
+Progress is measured by architectural outcomes rather than raw feature count.
+
+The architecture should eventually demonstrate that:
+
+- New industries can be introduced without redesigning the platform.
+- New Offering Types can be introduced through extension rather than
+  duplication.
+- Business dashboards are generated dynamically.
+- Navigation is capability-driven.
+- Marketplace experiences work across different Offering Types.
+- Cross-domain workflows can operate through events.
+- Frontend experiences remain consistent across industries.
+- Platform capabilities are reusable across multiple business models.
+
+---
+
+#### Documentation
+
+The Architecture Specification is the primary architectural source of truth.
+
+Important project documentation includes:
+
+- `TassiaQCA Architecture Specification.docx`
+- `FOLDER_STRUCTURE.md`
+- `PROJECT_DIAGRAM.md`
+- `README.md`
+
+The Architecture Specification is a living document and should evolve through
+deliberate architectural decisions rather than ad-hoc implementation changes.
+
+---
+
+#### Contributing to the Project
+
+When implementing a new capability:
+
+1. Understand the architecture.
+2. Identify the owning domain.
+3. Define entities and relationships.
+4. Define business rules.
+5. Define permissions.
+6. Define the API surface.
+7. Define repositories.
+8. Define services.
+9. Define presenters.
+10. Define validators.
+11. Implement incrementally.
+12. Test through the REST Client.
+13. Fix discovered issues.
+14. Update documentation where necessary.
+15. Commit the completed change.
+16. Continue to the next capability.
+
+Do not introduce shortcuts that collapse architectural layers or move business
+rules into controllers or repositories.
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+---
+
+# Project Philosophy
+
+TASSIAQCA is intentionally being built as a platform rather than a collection
+of disconnected features.
+
+The guiding principle is:
+
+> **Platform before product.
+> Capabilities before specialization.
+> Configuration before duplication.
+> Architecture before implementation.**
+
+The ultimate objective is to provide neighborhood businesses with a unified
+digital operating environment while giving customers a consistent way to
+discover and interact with businesses regardless of their industry.
+
+This README is deliberately conservative about implementation status. The Architecture Specification describes the **target architecture**, while the current implementation must not be presented as if every planned domain already exists. That distinction is explicitly important because the specification is a living blueprint rather than merely documentation of today's code. :contentReference[oaicite:2]{index=2}
 
 ## Acknowledgments
 
@@ -479,9 +1299,22 @@ For business inquiries or partnerships, please reach out via email.
 | 2.1.0   | 2026-03-01 | Cart system, order management                     |
 | 2.2.0   | 2026-05-01 | Community board, reviews, favorites               |
 | 2.3.0   | 2026-06-01 | Admin panel, analytics, performance optimizations |
+| 2.4.0   | 2026-06-27 | Business domain                                   |
 
 ---
 
 **Built with ❤️ for the Tassia Community**
 
 _Empowering local businesses, connecting neighbors, building community._
+
+> <a>[^ Back to table of contents ^](#table-of-contents)</a>
+
+<style>
+a {
+   color: orange;
+}
+
+a:hover {
+   color: blue;
+}
+</style>
