@@ -1291,12 +1291,19 @@ You mentioned, the key point is not to start implementing Attributes next merely
 - What Offering Types use it?
 - What other components does it depend on?
 - What components may depend on it?
-- Does it operate at Offering level, Variant level, or another entity level?
-- Does it own persistence or merely project/configure existing data?
 - What lifecycle hooks does it participate in?
 - What happens when it is absent?
 - What validation does it perform?
 - What invariants must remain true?
+- What business concept does it represent?
+- What API does it require?
+- What permissions are required?
+- What audit events are required?
+- What registry metadata is required?
+- What frontend experience will eventually consume it?
+- What should be tested through REST Client?
+
+Only after this analysis should implementation begin.
 
 You also recommended to implement the components in this order:
 
@@ -1632,7 +1639,213 @@ First establish ownership correctly. Then we can make the lifecycle transaction-
 
 ---
 
-Do not forget to refactor the README.md file after creation and or refactoring of the remaining offering components
+The Commerce domain should evolve approximately like this:
+
+```bash
+Commerce
+│
+├── Offering Framework
+│
+├── Product
+│   ├── Categories
+│   ├── Variants
+│   ├── Inventory
+│   ├── Images / Media
+│   └── Pricing
+│
+├── Service
+│   └── Scheduling integration
+│
+├── Rental
+│   └── Availability integration
+│
+├── Membership
+│   └── Subscription / Billing integration
+│
+├── Booking
+│   └── Scheduling integration
+│
+├── Package
+│
+├── Course
+│   ├── Enrollment
+│   ├── Instructor
+│   ├── Duration
+│   └── Capacity
+│
+└── Digital Download
+    └── Download / Files integration
+```
+
+---
+
+The major roadmap phases include:
+
+```bash
+Phase 1 — Platform Foundation
+Phase 2 — Business Configuration
+Phase 3 — Offering Framework
+Phase 4 — Retail Commerce
+Phase 5 — Marketplace
+Phase 6 — Industry Modules
+```
+
+---
+
+- While developing the variants offering component;
+
+## Pricing
+
+Pricing is related, but should not be a hard dependency for the first Variant implementation.
+
+A product can have:
+
+```bash
+Product
+├── Variant A
+├── Variant B
+└── Variant C
+
+Pricing
+└── Product/base offering price
+```
+
+Later we may support:
+
+```bash
+Variant A → price override
+Variant B → price override
+Variant C → price override
+```
+
+But that should be an explicit Variant/Pricing integration rather than coupling the initial Variant entity to Pricing.
+
+## What frontend experience eventually consumes it?
+
+The eventual Business OS product editor should expose:
+
+```bash
+Product
+│
+├── General
+├── Categories
+├── Media
+├── SEO
+├── Attributes
+│
+└── Variants
+      │
+      ├── SKU
+      ├── Attribute selections
+      ├── Status
+      ├── Pricing
+      └── Inventory
+```
+
+For example:
+
+```bash
+Product: T-Shirt
+
+Attributes
+
+Color
+[ Red ] [ Blue ] [ Black ]
+
+Size
+[ S ] [ M ] [ L ]
+
+Variants
+
+┌─────────────┬─────────┬───────────┐
+│ Variant     │ SKU     │ Status    │
+├─────────────┼─────────┼───────────┤
+│ Red / S     │ TS-R-S  │ ACTIVE    │
+│ Red / M     │ TS-R-M  │ ACTIVE    │
+│ Blue / M    │ TS-B-M  │ ACTIVE    │
+└─────────────┴─────────┴───────────┘
+```
+
+Later:
+
+```bash
+Variant
+├── Pricing
+├── Inventory
+├── Media
+└── Availability
+```
+
+```bash
+1. Inspect current Product projection/model
+          ↓
+2. Inspect component contract + lifecycle pipeline
+          ↓
+3. Inspect current permissions/audit constants
+          ↓
+4. Design Variant model around the new Offering architecture
+          ↓
+5. Implement builders
+          ↓
+6. Implement model
+          ↓
+7. Repository
+          ↓
+8. Service + invariants
+          ↓
+9. Presenter
+          ↓
+10. Validators/normalizer
+          ↓
+11. Component hooks
+          ↓
+12. Controller/routes
+          ↓
+13. Registry integration
+          ↓
+14. Product activation
+          ↓
+15. REST testing
+```
+
+---
+
+## One important issue before running this
+
+There is an architectural concern with the current Product projection:
+
+```bash
+Product
+└── sku
+```
+
+and now:
+
+```bash
+Offering
+└── Variants
+    └── sku
+```
+
+This means the parent Product may have an SKU while its variants also have SKUs.
+
+That is not necessarily invalid, but the eventual commercial model should decide whether:
+
+```bash
+Product SKU
+```
+
+means the base/non-variant SKU, or whether:
+
+```bash
+Product with variants
+```
+
+should have its identity represented exclusively through variant SKUs.
+
+The earlier ProductVariant design already anticipated SKU per variant and variant inventory/pricing. The newer Offering architecture means we should implement that concept against Offering, not resurrect the old ProductVariant model.
+
+I recommend not solving that during this component implementation. Keep the current Product projection untouched and handle SKU semantics when Inventory and variant-level Pricing are implemented.
 
 ---
 
@@ -1640,7 +1853,7 @@ Do not forget to refactor the README.md file after creation and or refactoring o
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(project): Update README.md vision."
+git commit -m "feat(offering): Create the offering variants component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

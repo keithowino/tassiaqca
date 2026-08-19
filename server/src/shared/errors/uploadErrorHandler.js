@@ -38,7 +38,7 @@ export default function uploadErrorHandler(error, req, res, next) {
 	}
 
 	/**
-	 * Keep this commented block as for  fallback purposes until further notice.
+	 * Keep this commented block for fallback purposes until further notice.
 	 */
 	// if (
 	// 	error.message?.includes("Invalid image") ||

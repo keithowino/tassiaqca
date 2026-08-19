@@ -6,7 +6,7 @@ import categoryController from "../controllers/category.controller.js";
 
 import requirePermission from "../../identity/middleware/requirePermission.js";
 
-import { Permissions } from "../../../shared/constants/index.js";
+import { Permissions } from "../../../shared/index.js";
 
 const router = Router({
 	mergeParams: true,

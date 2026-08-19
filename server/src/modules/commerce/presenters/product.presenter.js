@@ -58,7 +58,7 @@
 
 // // ...
 
-import { getId } from "../../../shared/utils/presenter.js";
+import { getId } from "../../../shared/index.js";
 
 /**
  * Converts a single Product document into a JSON-friendly object by:

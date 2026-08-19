@@ -6,30 +6,22 @@ Content-Type: application/json
 
 ### Set offering attributes
 
-PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ef51c7591965d44febf83/attributes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MDI2NjJkODNmNzkxZTA2ODUyZDVjIiwiaWF0IjoxNzg2NzgzMzMxLCJleHAiOjE3ODY4Njk3MzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.Gxr0DS9wBPTzowFJDjuTxsxrclPK8TltWmQ6BCVqnB0
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8470883355599ffacdddea/attributes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
 Content-Type: application/json
 
-# {
-# 	"attributes": [
-# 		{
-# 			"name": "Color",
-# 			"values": [
-# 				"Black",
-# 				"White",
-# 				"Blue"
-# 			]
-# 		},
-# 		{
-# 			"name": "Size",
-# 			"values": [
-# 				"Small",
-# 				"Medium",
-# 				"Large"
-# 			]
-# 		}
-# 	]
-# }
+{
+	"attributes": [
+		{
+			"name": "Color",
+			"values": ["Black", "Silver"]
+		},
+		{
+			"name": "RAM",
+			"values": ["16GB", "32GB"]
+		}
+	]
+}
 
 # {
 # 	"attributes": [
@@ -50,20 +42,20 @@ Content-Type: application/json
 # 	]
 # }
 
-{
-	"attributes": [
-		{
-			"name": "Color",
-			"values": [
-				"Black",
-				"black",
-				" BLACK ",
-				"White",
-				"white"
-			]
-		}
-	]
-}
+# {
+# 	"attributes": [
+# 		{
+# 			"name": "Color",
+# 			"values": [
+# 				"Black",
+# 				"black",
+# 				" BLACK ",
+# 				"White",
+# 				"white"
+# 			]
+# 		}
+# 	]
+# }
 
 # {
 # 	"attributes": [

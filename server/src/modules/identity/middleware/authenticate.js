@@ -1,9 +1,7 @@
 import accessTokenService from "../security/accessToken.service.js";
 import userRepository from "../repositories/user.repository.js";
 
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
 import sessionService from "../security/session.service.js";
 
 export default async function authenticate(req, res, next) {

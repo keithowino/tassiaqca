@@ -1,4 +1,4 @@
-import { resolveComponents } from "../../../shared/platform/offeringComponents/index.js";
+import { resolveComponents } from "../../../shared/index.js";
 
 /**
  * Executes a hook across every component

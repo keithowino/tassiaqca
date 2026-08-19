@@ -1,6 +1,6 @@
 import authService from "../services/auth.service.js";
 
-import validateRequest from "../../../shared/validation/validateRequest.js";
+import { validateRequest } from "../../../shared/index.js";
 import { userPresenter } from "../presenters/index.js";
 import {
 	loginRequestSchema,

@@ -1,6 +1,6 @@
 import categoryService from "../services/category.service.js";
 
-import validateRequest from "../../../shared/validation/validateRequest.js";
+import { validateRequest, success } from "../../../shared/index.js";
 
 import {
 	createCategorySchema,
@@ -8,8 +8,6 @@ import {
 	categoryParamsSchema,
 	listCategoriesQuerySchema,
 } from "../validators/category.schema.js";
-
-import { success } from "../../../shared/utils/apiResponse.js";
 
 import categoryPresenter from "../presenters/category.presenter.js";
 

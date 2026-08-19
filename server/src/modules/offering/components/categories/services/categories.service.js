@@ -6,8 +6,11 @@ import { categoriesRepository } from "../repositories/index.js";
 
 import categoryService from "../../../../commerce/services/category.service.js";
 
-import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+import {
+	HTTP_STATUS,
+	AppError,
+	ErrorCodes,
+} from "../../../../../shared/index.js";
 
 import {
 	ensureBusinessExists,

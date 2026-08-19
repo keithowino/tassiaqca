@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { requirePermission } from "../../../../identity/index.js";
 
-import { Permissions } from "../../../../../shared/constants/index.js";
+import { Permissions } from "../../../../../shared/index.js";
 
 import { seoController } from "../controllers/index.js";
 

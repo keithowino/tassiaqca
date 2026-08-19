@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-	emailSchema,
-	passwordSchema,
-} from "../../../shared/validation/index.js";
+import { emailSchema, passwordSchema } from "../../../shared/index.js";
 
 const loginRequestSchema = z.object({
 	email: emailSchema,

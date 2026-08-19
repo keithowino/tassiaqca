@@ -128,9 +128,11 @@
 // 	restore,
 // };
 
-import { success } from "../../../shared/utils/apiResponse.js";
-import asyncHandler from "../../../shared/utils/asyncHandler.js";
-import validateRequest from "../../../shared/validation/validateRequest.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+} from "../../../shared/index.js";
 
 import productService from "../services/product.service.js";
 

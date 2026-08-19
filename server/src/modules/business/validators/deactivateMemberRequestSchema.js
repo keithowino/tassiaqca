@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { objectIdSchema } from "../../../shared/validation/index.js";
+import { objectIdSchema } from "../../../shared/index.js";
 
 const deactivateMemberRequestSchema = {
 	params: z.object({

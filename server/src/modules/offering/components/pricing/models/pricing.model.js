@@ -7,7 +7,7 @@ import {
 	CURRENCY_VALUES,
 	OFFERING_PRICE_STATUS,
 	OFFERING_PRICE_STATUS_VALUES,
-} from "../../../../../shared/constants/index.js";
+} from "../../../../../shared/index.js";
 
 /**
  * #### Pricing Model V1

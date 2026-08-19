@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-17
+Generated on: 2026-08-18
 
 ```bash
 ├── client/
@@ -749,6 +749,35 @@ Generated on: 2026-08-17
 │   │   │   │   │   │   │   └── tags.schema.js
 │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   └── tags.component.js
+│   │   │   │   │   ├── variants/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── variants.builder.js
+│   │   │   │   │   │   │   └── variants.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── variants.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringVariant.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── variants.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── variants.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── variants.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── variants.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── variants.normalizer.js
+│   │   │   │   │   │   │   └── variants.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── variants.component.js
 │   │   │   │   │   ├── component.contract.js
 │   │   │   │   │   ├── component.pipeline.js
 │   │   │   │   │   └── index.js
@@ -829,11 +858,11 @@ Generated on: 2026-08-17
 │   │       │   ├── httpStatus.js
 │   │       │   ├── index.js
 │   │       │   ├── inventoryStatus.js
+│   │       │   ├── offeringVariantStatus.js
 │   │       │   ├── permissions.js
 │   │       │   ├── pricing.js
 │   │       │   ├── productImage.js
 │   │       │   ├── ProductStatus.js
-│   │       │   ├── productVariantStatus.js
 │   │       │   └── stockMovement.js
 │   │       ├── database/
 │   │       │   ├── index.js
@@ -848,6 +877,7 @@ Generated on: 2026-08-17
 │   │       │   └── uploadErrorHandler.js
 │   │       ├── events/
 │   │       ├── http/
+│   │       │   ├── index.js
 │   │       │   └── requestMetadata.js
 │   │       ├── middleware/
 │   │       │   └── upload.js
@@ -878,12 +908,13 @@ Generated on: 2026-08-17
 │   │       │   │   ├── offering.constants.js
 │   │       │   │   ├── offering.registry.js
 │   │       │   │   └── offeringCategory.constants.js
-│   │       │   └── registry/
-│   │       │       ├── index.js
-│   │       │       ├── registry.bootstrap.js
-│   │       │       ├── registry.js
-│   │       │       ├── registry.utils.js
-│   │       │       └── registry.validator.js
+│   │       │   ├── registry/
+│   │       │   │   ├── index.js
+│   │       │   │   ├── registry.bootstrap.js
+│   │       │   │   ├── registry.js
+│   │       │   │   ├── registry.utils.js
+│   │       │   │   └── registry.validator.js
+│   │       │   └── index.js
 │   │       ├── services/
 │   │       │   └── imageStorage/
 │   │       │       ├── providers/
@@ -893,18 +924,20 @@ Generated on: 2026-08-17
 │   │       ├── utils/
 │   │       │   ├── apiResponse.js
 │   │       │   ├── asyncHandler.js
+│   │       │   ├── index.js
 │   │       │   ├── presenter.js
 │   │       │   └── slugify.js
-│   │       └── validation/
-│   │           ├── common/
-│   │           │   ├── boolean.schema.js
-│   │           │   ├── email.schema.js
-│   │           │   ├── objectId.schema.js
-│   │           │   ├── password.schema.js
-│   │           │   └── phone.schema.js
-│   │           ├── index.js
-│   │           ├── schemas.js
-│   │           └── validateRequest.js
+│   │       ├── validation/
+│   │       │   ├── common/
+│   │       │   │   ├── boolean.schema.js
+│   │       │   │   ├── email.schema.js
+│   │       │   │   ├── objectId.schema.js
+│   │       │   │   ├── password.schema.js
+│   │       │   │   └── phone.schema.js
+│   │       │   ├── index.js
+│   │       │   ├── schemas.js
+│   │       │   └── validateRequest.js
+│   │       └── index.js
 │   ├── .env.development
 │   ├── .env.example
 │   ├── .env.production

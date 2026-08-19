@@ -2,21 +2,21 @@ import businessRepository from "../repositories/business.repository.js";
 import businessMemberRepository from "../../identity/repositories/businessMember.repository.js";
 import roleRepository from "../../identity/repositories/role.repository.js";
 
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
+import { auditLogService } from "../../audit/index.js";
+
+import { UnknownBusinessTypeError } from "../../businessConfiguration/errors/index.js";
+
+import { businessProvisioningService } from "../../businessConfiguration/services/index.js";
 import {
+	businessTypeRegistry,
+	slugify,
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
 	HTTP_STATUS,
-} from "../../../shared/constants/index.js";
-import { auditLogService } from "../../audit/index.js";
-
-import { businessTypeRegistry } from "../../../shared/platform/businessTypes/index.js";
-import { UnknownBusinessTypeError } from "../../businessConfiguration/errors/index.js";
-
-import { withTransaction } from "../../../shared/database/index.js";
-import { businessProvisioningService } from "../../businessConfiguration/services/index.js";
-import slugify from "../../../shared/utils/slugify.js";
+	AppError,
+	ErrorCodes,
+	withTransaction,
+} from "../../../shared/index.js";
 import * as businessConfigurationService from "../../businessConfiguration/services/businessConfiguration.service.js";
 
 class BusinessService {

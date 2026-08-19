@@ -1,12 +1,10 @@
 import businessService from "../services/business.service.js";
 
-import validateRequest from "../../../shared/validation/validateRequest.js";
-
 import {
 	createBusinessRequestSchema,
 	updateBusinessSchema,
 } from "../validators/index.js";
-import { success } from "../../../shared/utils/apiResponse.js";
+import { validateRequest, success } from "../../../shared/index.js";
 import { businessPresenter } from "../presenters/index.js";
 import { businessConfigurationPresenter } from "../../businessConfiguration/presenters/index.js";
 

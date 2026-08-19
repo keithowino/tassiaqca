@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { objectIdSchema } from "../../../shared/validation/index.js";
-import { PRODUCT_STATUS_VALUES } from "../../../shared/constants/index.js";
+import {
+	objectIdSchema,
+	PRODUCT_STATUS_VALUES,
+} from "../../../shared/index.js";
 
 /*
 |--------------------------------------------------------------------------

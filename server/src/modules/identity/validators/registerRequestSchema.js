@@ -4,7 +4,7 @@ import {
 	emailSchema,
 	passwordSchema,
 	phoneSchema,
-} from "../../../shared/validation/index.js";
+} from "../../../shared/index.js";
 
 const registerRequestSchema = z.object({
 	firstName: z

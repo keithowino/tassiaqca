@@ -1,4 +1,4 @@
-import { getId } from "../../../../../shared/utils/presenter.js";
+import { getId } from "../../../../../shared/index.js";
 
 class PricingPresenter {
 	toNumber(value) {

@@ -4,17 +4,16 @@ import { offeringPresenter } from "../../presenters/index.js";
 import businessRepository from "../../../business/repositories/business.repository.js";
 import { auditLogService } from "../../../audit/index.js";
 
-import slugify from "../../../../shared/utils/slugify.js";
-
 import {
+	slugify,
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
 	HTTP_STATUS,
-} from "../../../../shared/constants/index.js";
+	AppError,
+	ErrorCodes,
+} from "../../../../shared/index.js";
 
 import { OFFERING_STATUS } from "../../constants/index.js";
-
-import { AppError, ErrorCodes } from "../../../../shared/errors/index.js";
 
 import { offeringFactory } from "../../builders/index.js";
 

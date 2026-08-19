@@ -1,6 +1,6 @@
 import lifecycleFactory from "../lifecycles/lifecycle.factory.js";
 import { offeringRepository } from "../repositories/index.js";
-import { offeringRegistry } from "../../../shared/platform/offerings/index.js";
+import { offeringRegistry } from "../../../shared/index.js";
 
 /**
  * Delegation layer

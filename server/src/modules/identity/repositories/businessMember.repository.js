@@ -1,16 +1,5 @@
 import BusinessMember from "../models/BusinessMember.js";
 
-// async function create(memberData, session = null) {
-// 	if (!session) {
-// 		return BusinessMember.create(memberData);
-// 	}
-
-// 	const [member] = await BusinessMember.create([memberData], {
-// 		session,
-// 	});
-
-// 	return member;
-// }
 async function create(memberData, options = {}) {
 	return BusinessMember.create([memberData], options).then(
 		([document]) => document,
@@ -77,17 +66,9 @@ export const findByUser = (userId) =>
 		active: true,
 	});
 
-// async function remove(member, session = null) {
-// 	return member.deleteOne({ session });
-// }
-
 async function remove(member, options = {}) {
 	return member.deleteOne(options);
 }
-
-// async function save(member, session = null) {
-// 	return member.save({ session });
-// }
 
 async function save(member, options = {}) {
 	return member.save(options);

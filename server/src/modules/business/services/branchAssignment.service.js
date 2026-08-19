@@ -1,10 +1,10 @@
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
 import {
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
 	HTTP_STATUS,
-} from "../../../shared/constants/index.js";
+	AppError,
+	ErrorCodes,
+} from "../../../shared/index.js";
 
 import businessRepository from "../repositories/business.repository.js";
 import branchRepository from "../repositories/branch.repository.js";

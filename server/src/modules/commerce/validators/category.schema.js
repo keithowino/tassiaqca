@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { objectIdSchema } from "../../../shared/validation/index.js";
+import { objectIdSchema } from "../../../shared/index.js";
 
 export const createCategorySchema = z.object({
 	name: z

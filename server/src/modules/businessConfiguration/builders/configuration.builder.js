@@ -1,6 +1,8 @@
-import { businessTypeRegistry } from "../../../shared/platform/businessTypes/index.js";
-import { moduleRegistry } from "../../../shared/platform/modules/index.js";
-import { capabilityRegistry } from "../../../shared/platform/capabilities/index.js";
+import {
+	businessTypeRegistry,
+	moduleRegistry,
+	capabilityRegistry,
+} from "../../../shared/index.js";
 import { UnknownBusinessTypeError } from "../errors/index.js";
 
 export const buildConfiguration = (businessTypeId) => {

@@ -226,34 +226,6 @@ const permissions = [
 	},
 
 	/**
-	 * Product Variant
-	 */
-	{
-		key: "PRODUCT_VARIANT_VIEW",
-		name: "View Product Variant",
-	},
-	{
-		key: "PRODUCT_VARIANT_CREATE",
-		name: "Create Product Variant",
-	},
-	{
-		key: "PRODUCT_VARIANT_UPDATE",
-		name: "Update Product Variant",
-	},
-	{
-		key: "PRODUCT_VARIANT_DELETE",
-		name: "Delete Product Variant",
-	},
-	{
-		key: "PRODUCT_VARIANT_ARCHIVE",
-		name: "Archive Product Variant",
-	},
-	{
-		key: "PRODUCT_VARIANT_RESTORE",
-		name: "Restore Product Variant",
-	},
-
-	/**
 	 * Services
 	 */
 	{

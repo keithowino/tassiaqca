@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import {
 	CATEGORY_STATUS,
 	CATEGORY_STATUS_VALUES,
-} from "../../../shared/constants/index.js";
+} from "../../../shared/index.js";
 
 const categorySchema = new mongoose.Schema(
 	{

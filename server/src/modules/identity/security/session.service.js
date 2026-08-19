@@ -5,9 +5,7 @@ import accessTokenService from "./accessToken.service.js";
 import refreshTokenService from "./refreshToken.service.js";
 import { hashToken } from "./tokenHasher.js";
 import userRepository from "../repositories/user.repository.js";
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
 import { sessionPresenter } from "../presenters/index.js";
 
 class SessionService {

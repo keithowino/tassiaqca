@@ -1,10 +1,10 @@
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
 import {
+	AppError,
+	ErrorCodes,
 	HTTP_STATUS,
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
-} from "../../../shared/constants/index.js";
+} from "../../../shared/index.js";
 
 import userRepository from "../../identity/repositories/user.repository.js";
 import roleRepository from "../../identity/repositories/role.repository.js";

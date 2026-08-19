@@ -2,7 +2,7 @@
 
 > Welcome to the neighborhood community-centric e-commerce and business discovery platform.
 
-Written and scripted by [Pickaxe & Shovel](https://pickaxe-and-shovel.vercel.app/).
+Scripted by [Pickaxe & Shovel](https://pickaxe-and-shovel.vercel.app/).
 
 **Live Demo** https://tassiaqca.vercel.app/
 
@@ -1308,13 +1308,3 @@ For business inquiries or partnerships, please reach out via email.
 _Empowering local businesses, connecting neighbors, building community._
 
 > <a>[^ Back to table of contents ^](#table-of-contents)</a>
-
-<style>
-a {
-   color: orange;
-}
-
-a:hover {
-   color: blue;
-}
-</style>

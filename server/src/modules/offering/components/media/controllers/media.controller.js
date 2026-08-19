@@ -1,6 +1,8 @@
-import asyncHandler from "../../../../../shared/utils/asyncHandler.js";
-import { success } from "../../../../../shared/utils/apiResponse.js";
-import { validateRequest } from "../../../../../shared/validation/index.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+} from "../../../../../shared/index.js";
 
 import { mediaService } from "../services/index.js";
 

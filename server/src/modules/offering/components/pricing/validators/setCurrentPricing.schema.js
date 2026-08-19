@@ -4,7 +4,7 @@ import {
 	BILLING_MODEL_VALUES,
 	CURRENCY_VALUES,
 	OFFERING_PRICE_STATUS,
-} from "../../../../../shared/constants/index.js";
+} from "../../../../../shared/index.js";
 
 export const setCurrentPricingSchema = z.object({
 	amount: z.coerce.number().min(0),

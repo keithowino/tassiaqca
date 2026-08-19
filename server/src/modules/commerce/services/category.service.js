@@ -6,16 +6,15 @@ import categoryPresenter from "../presenters/category.presenter.js";
 
 import { auditLogService } from "../../audit/index.js";
 
-import slugify from "../../../shared/utils/slugify.js";
-
 import {
+	slugify,
 	CATEGORY_STATUS,
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
 	HTTP_STATUS,
-} from "../../../shared/constants/index.js";
-
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
+	AppError,
+	ErrorCodes,
+} from "../../../shared/index.js";
 
 /**
  * #### One important refinement

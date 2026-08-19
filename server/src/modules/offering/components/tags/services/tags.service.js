@@ -42,7 +42,6 @@ class TagsService {
 
 			await tagsRepository.deleteByOffering(offeringId, session);
 
-			// const assignments = tags.map((tag) =>
 			const assignments = normalizedTags.map((tag) =>
 				tagsFactory.createTagAssignment({
 					businessId,

@@ -5,7 +5,7 @@ import { offeringController } from "../controllers/index.js";
 import authenticate from "../../identity/middleware/authenticate.js";
 import requirePermission from "../../identity/middleware/requirePermission.js";
 
-import { Permissions } from "../../../shared/constants/index.js";
+import { Permissions } from "../../../shared/index.js";
 
 import { categoriesRoutes } from "../components/categories/routes/index.js";
 import { pricingRoutes } from "../components/pricing/routes/index.js";
@@ -13,6 +13,7 @@ import { mediaRoutes } from "../components/media/routes/index.js";
 import { attributesRoutes } from "../components/attributes/index.js";
 import { tagsRoutes } from "../components/tags/index.js";
 import { seoRoutes } from "../components/seo/index.js";
+import { variantsRoutes } from "../components/variants/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -65,5 +66,7 @@ router.use("/:offeringId/attributes", attributesRoutes);
 router.use("/:offeringId/tags", tagsRoutes);
 
 router.use("/:offeringId/seo", seoRoutes);
+
+router.use("/:offeringId/variants", variantsRoutes);
 
 export default router;

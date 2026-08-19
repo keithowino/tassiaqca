@@ -1,6 +1,9 @@
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
-import offeringRegistry from "../../../shared/platform/offerings/offering.registry.js";
+import {
+	AppError,
+	ErrorCodes,
+	HTTP_STATUS,
+	offeringRegistry,
+} from "../../../shared/index.js";
 
 /**
  * Builds only the core Offering document.

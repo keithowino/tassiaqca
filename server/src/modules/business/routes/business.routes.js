@@ -9,7 +9,7 @@ import {
 
 import authenticate from "../../identity/middleware/authenticate.js";
 import requirePermission from "../../identity/middleware/requirePermission.js";
-import { Permissions } from "../../../shared/constants/index.js";
+import { Permissions } from "../../../shared/index.js";
 
 const router = Router();
 

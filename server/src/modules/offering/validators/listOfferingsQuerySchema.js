@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { OFFERING_TYPES } from "../../../shared/platform/offerings/index.js";
+import { OFFERING_TYPES } from "../../../shared/index.js";
 import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
 
 export const listOfferingsQuerySchema = z.object({

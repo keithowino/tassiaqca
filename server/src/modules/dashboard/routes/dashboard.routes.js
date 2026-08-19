@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import * as controller from "../controllers/dashboard.controller.js";
 
-import { validateRequest } from "../../../shared/validation/index.js";
+import { validateRequest } from "../../../shared/index.js";
 
 import { dashboardParamsSchema } from "../validators/dashboard.validator.js";
 

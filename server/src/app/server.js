@@ -1,6 +1,6 @@
 import app from "./app.js";
 import env from "./config/env.js";
-import { bootstrapPlatformRegistries } from "../shared/platform/registry/index.js";
+import { bootstrapPlatformRegistries } from "../shared/index.js";
 import { connectDatabase } from "./bootstrap/database.js";
 
 async function start() {

@@ -1,16 +1,26 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4MThkOWU2NGU3ZTRiNTQyYjNhNGU3IiwiaWF0IjoxNzg2ODc1Mjk0LCJleHAiOjE3ODY5NjE2OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.HUuLNt-prLFosVCnfuWy7fF5DSKyOLVt009dDfuLNAY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
 Content-Type: application/json
 
-{
-    "type": "PRODUCT",
-    "name": "Dell XPS 16",
-    "shortDescription": "High-performance developer laptop",
-    "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
-    "sku": " dx16-001 "
-}
+# {
+#     "type": "PRODUCT",
+#     "name": "Dell XPS 16",
+#     "shortDescription": "High-performance developer laptop",
+#     "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
+#     "sku": " dx16-001 ",
+#     "attributes": [
+# 		{
+# 			"name": "Color",
+# 			"values": ["Black", "Silver"]
+# 		},
+# 		{
+# 			"name": "RAM",
+# 			"values": ["16GB", "32GB"]
+# 		}
+# 	]
+# }
 
 # {
 #     "type": "SERVICE",
@@ -380,6 +390,39 @@ Content-Type: application/json
 #     },
 #     "categoryIds": ["6a7ace9386a66725a277ec44"]
 # }
+
+# Variants - Lifecycle integration
+
+{
+	"type": "PRODUCT",
+	"name": "Dell XPS 15",
+	"sku": "DXPS15",
+	"attributes": [
+		{
+			"name": "Color",
+			"values": ["Black", "Silver"]
+		},
+		{
+			"name": "RAM",
+			"values": ["16GB", "32GB"]
+		}
+	],
+	"variants": [
+		{
+			"sku": "DXPS15-BLK-16",
+			"attributes": [
+				{
+					"name": "Color",
+					"value": "Black"
+				},
+				{
+					"name": "RAM",
+					"value": "16GB"
+				}
+			]
+		}
+	]
+}
 
 ### List Offerings
 

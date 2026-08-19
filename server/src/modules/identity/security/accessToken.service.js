@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken";
 import env from "../../../app/config/env.js";
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
 
 class AccessTokenService {
 	generate(user, sessionId) {

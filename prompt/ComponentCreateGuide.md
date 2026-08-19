@@ -1,24 +1,61 @@
-We may proceed to converting the Tags component to follow the following structure using the Pricing, Media and or Categories offering components as a point of reference:
-
 ```bash
-├── builders/
-├── controllers/
-├── models/
-├── presenters/
-├── repositories/
-├── routes/
-├── services/
-├── validators/
-└── media.component.js
+PHASE A — Shared Offering Components
+────────────────────────────────────
+
+1. Metadata (covered)
+2. Tags (covered)
+3. Categories (covered)
+4. Media (covered)
+5. SEO (covered)
+
+
+PHASE B — Offering Structure
+────────────────────────────────────
+
+6. Attributes (covered)
+7. Variants
+
+
+PHASE C — Commerce Operations
+────────────────────────────────────
+
+8. Pricing (covered)
+9. Inventory
+
+
+PHASE D — Availability / Time
+────────────────────────────────────
+
+10. Duration
+11. Capacity
+12. Location
+13. Calendar
+14. Scheduling
+
+
+PHASE E — Customer Interaction
+────────────────────────────────────
+
+15. Booking
+16. Registration
+17. Enrollment
+
+
+PHASE F — Specialized Offering Models
+────────────────────────────────────
+
+18. Membership
+19. Subscription
+20. Download
 ```
 
-Here is the current implementation of the media offering component and more for reference.
+The following information shows a portion of the:
 
 ---
 
 - Add:
-    - Component refactor structure
-    - current components contents
+    - `offeringComponent.registry.js`
+    - `offering.registry.js`
     - `offering.routes.js`
 
 ---
@@ -881,3 +918,50 @@ export default {
 	normalizeAttributes,
 };
 ```
+
+```js
+`~\server\src\modules\offering\components\attributes\validators\attributes.schema.js`;
+
+import { z } from "zod";
+
+const attributeSchema = z.object({
+	name: z.string().trim().min(1).max(100),
+
+	values: z.array(z.string().trim().min(1).max(100)).min(1).max(100),
+});
+
+export const attributesSchema = z.array(attributeSchema).max(50);
+
+export default attributesSchema;
+```
+
+We may proceed to creating the Variants offering component, it's implementation should follow the following structure and if you see fit, use the Pricing, Media and or Categories offering components as a point of reference:
+
+```bash
+├── builders/
+├── controllers/
+├── models/
+├── presenters/
+├── repositories/
+├── routes/
+├── services/
+├── validators/
+└── media.component.js
+```
+
+Before implementation analyze:
+
+- What responsibility does it own?
+- What Offering Types use it?
+- What other components does it depend on?
+- What components may depend on it?
+- What lifecycle hooks does it participate in?
+- What validation does it perform?
+- What invariants must remain true?
+- What business concept does it represent?
+- What API does it require?
+- What permissions are required?
+- What audit events are required?
+- What frontend experience will eventually consume it?
+
+Only after this analysis should implementation begin.

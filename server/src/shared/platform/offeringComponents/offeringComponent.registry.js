@@ -10,6 +10,7 @@ import tagsComponent from "../../../modules/offering/components/tags/tags.compon
 import categoriesComponent from "../../../modules/offering/components/categories/categories.component.js";
 import mediaComponent from "../../../modules/offering/components/media/media.component.js";
 import seoComponent from "../../../modules/offering/components/seo/seo.component.js";
+import variantsComponent from "../../../modules/offering/components/variants/variants.component.js";
 
 import attributesComponent from "../../../modules/offering/components/attributes/attributes.component.js";
 
@@ -54,13 +55,16 @@ const components = [
 		id: OFFERING_COMPONENTS.VARIANTS,
 		name: "Variants",
 		description: "Supports multiple purchasable variants.",
-		// implementation: variantsComponent,
+		implementation: variantsComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
 		deprecated: false,
-		dependencies: [OFFERING_COMPONENTS.INVENTORY],
-		metadata: {},
+		dependencies: [OFFERING_COMPONENTS.ATTRIBUTES],
+		metadata: {
+			offeringTypes: ["PRODUCT"],
+			requiresAttributes: true,
+		},
 	},
 
 	{

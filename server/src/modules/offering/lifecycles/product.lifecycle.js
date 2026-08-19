@@ -1,7 +1,6 @@
 import sharedLifecycle from "./shared/offering.lifecycle.js";
 import { productRepository } from "../../commerce/repositories/index.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
+import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
 
 /**
 |--------------------------------------------------

@@ -1,5 +1,4 @@
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
 
 export class BusinessConfigurationError extends AppError {
 	constructor(

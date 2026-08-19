@@ -90,13 +90,6 @@ async function seedRoles() {
 					permissionMap.PRODUCT_PRICE_CREATE,
 					permissionMap.PRODUCT_PRICE_VIEW,
 
-					permissionMap.PRODUCT_VARIANT_VIEW,
-					permissionMap.PRODUCT_VARIANT_CREATE,
-					permissionMap.PRODUCT_VARIANT_UPDATE,
-					permissionMap.PRODUCT_VARIANT_DELETE,
-					permissionMap.PRODUCT_VARIANT_ARCHIVE,
-					permissionMap.PRODUCT_VARIANT_RESTORE,
-
 					permissionMap.SERVICE_CREATE,
 					permissionMap.SERVICE_UPDATE,
 					permissionMap.SERVICE_DELETE,
@@ -143,11 +136,6 @@ async function seedRoles() {
 					permissionMap.PRODUCT_PRICE_CREATE,
 					permissionMap.PRODUCT_PRICE_VIEW,
 
-					permissionMap.PRODUCT_VARIANT_VIEW,
-					permissionMap.PRODUCT_VARIANT_CREATE,
-					permissionMap.PRODUCT_VARIANT_UPDATE,
-					permissionMap.PRODUCT_VARIANT_RESTORE,
-
 					permissionMap.SERVICE_CREATE,
 					permissionMap.SERVICE_UPDATE,
 
@@ -174,8 +162,6 @@ async function seedRoles() {
 					permissionMap.CATEGORY_CREATE,
 
 					permissionMap.INVENTORY_VIEW,
-
-					permissionMap.PRODUCT_VARIANT_VIEW,
 
 					permissionMap.SERVICE_CREATE,
 				],

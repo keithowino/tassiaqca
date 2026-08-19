@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
-import { objectIdSchema } from "../../../shared/validation/index.js";
+import { objectIdSchema } from "../../../shared/index.js";
 
 export const updateOfferingRequestSchema = z
 	.looseObject({

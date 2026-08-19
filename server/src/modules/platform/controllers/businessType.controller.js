@@ -1,6 +1,4 @@
-import { businessTypeRegistry } from "../../../shared/platform/businessTypes/index.js";
-
-import { success } from "../../../shared/utils/apiResponse.js";
+import { businessTypeRegistry, success } from "../../../shared/index.js";
 
 import { businessTypePresenter } from "../presenters/index.js";
 

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
 
-import { OFFERING_TYPES } from "../../../shared/platform/offerings/index.js";
+import { OFFERING_TYPES } from "../../../shared/index.js";
 
 const offeringSchema = new mongoose.Schema(
 	{

@@ -2,12 +2,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "./config/cors.js";
 import routes from "./routes/api.js";
-import requestMetadata from "../shared/http/requestMetadata.js";
 import {
+	requestMetadata,
 	errorHandler,
 	notFound,
 	uploadErrorHandler,
-} from "../shared/errors/index.js";
+} from "../shared/index.js";
 
 const app = express();
 

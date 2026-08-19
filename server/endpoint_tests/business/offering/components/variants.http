@@ -1,0 +1,108 @@
+### Variant - Create
+
+POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+Content-Type: application/json
+
+# {
+# 	"sku": "XPS15-BLK-16",
+# 	"attributes": [
+# 		{
+# 			"name": "Color",
+# 			"value": "Black"
+# 		},
+# 		{
+# 			"name": "RAM",
+# 			"value": "16GB"
+# 		}
+# 	]
+# }
+
+# {
+# 	"sku": "XPS15-BLK-16",
+# 	"attributes": [
+# 		{
+# 			"name": "Color",
+# 			"value": "Silver"
+# 		},
+# 		{
+# 			"name": "RAM",
+# 			"value": "32GB"
+# 		}
+# 	]
+# }
+
+# {
+# 	"sku": "XPS15-SL-32",
+# 	"attributes": [
+# 		{
+# 			"name": "Color",
+# 			"value": "Silver"
+# 		},
+# 		{
+# 			"name": "RAM",
+# 			"value": "32GB"
+# 		}
+# 	]
+# }
+
+# # Invalid attribute
+
+# {
+# 	"sku": "XPS15-RED-16",
+# 	"attributes": [
+# 		{
+# 			"name": "Color",
+# 			"value": "Red"
+# 		},
+# 		{
+# 			"name": "RAM",
+# 			"value": "16GB"
+# 		}
+# 	]
+# }
+
+### variants - List
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+
+### variants - List includeArchived?
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants?includeArchived=true
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+
+### variant - Get 1
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants/6a854d752d518df25ad831b7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+
+### Variant - Update
+
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants/6a854d752d518df25ad831b7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+Content-Type: application/json
+
+{
+	"sku": "XPS15-BLK-32",
+	"attributes": [
+		{
+			"name": "Color",
+			"value": "Black"
+		},
+		{
+			"name": "RAM",
+			"value": "32GB"
+		}
+	]
+}
+
+### Variants - Archive
+
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants/6a854d752d518df25ad831b7/archive
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+
+### Variants - Restore
+
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a854c142d518df25ad831b2/variants/6a854d752d518df25ad831b7/restore
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4

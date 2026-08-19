@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import * as controller from "../controllers/navigation.controller.js";
 
-import { validateRequest } from "../../../shared/validation/index.js";
+import { validateRequest } from "../../../shared/index.js";
 
 import { navigationParamsSchema } from "../validators/navigation.validator.js";
 

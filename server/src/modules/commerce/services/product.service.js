@@ -341,8 +341,7 @@ import productPresenter from "../presenters/product.presenter.js";
 
 import businessRepository from "../../business/repositories/business.repository.js";
 
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../shared/errors/index.js";
+import { HTTP_STATUS, AppError, ErrorCodes } from "../../../shared/index.js";
 
 /*
 |--------------------------------------------------------------------------

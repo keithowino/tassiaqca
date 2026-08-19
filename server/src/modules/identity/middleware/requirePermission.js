@@ -1,7 +1,5 @@
 import businessMemberRepository from "../repositories/businessMember.repository.js";
-import AppError from "../../../shared/errors/AppError.js";
-import ErrorCodes from "../../../shared/errors/ErrorCodes.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
 
 export default function requirePermission(permissionKey) {
 	return async (req, res, next) => {

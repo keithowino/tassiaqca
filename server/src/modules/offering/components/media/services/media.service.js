@@ -7,8 +7,11 @@ import { mediaRepository } from "../repositories/index.js";
 import { offeringRepository } from "../../../repositories/index.js";
 import businessService from "../../../../business/services/business.service.js";
 
-import { HTTP_STATUS } from "../../../../../shared/constants/index.js";
-import { AppError, ErrorCodes } from "../../../../../shared/errors/index.js";
+import {
+	HTTP_STATUS,
+	AppError,
+	ErrorCodes,
+} from "../../../../../shared/index.js";
 
 import {
 	ensureBusinessExists,

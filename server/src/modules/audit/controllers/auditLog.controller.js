@@ -1,5 +1,5 @@
-import validateRequest from "../../../shared/validation/validateRequest.js";
-import { success } from "../../../shared/utils/apiResponse.js";
+import { validateRequest, success } from "../../../shared/index.js";
+
 import auditLogService from "../services/auditLog.service.js";
 import { auditLogPresenter } from "../presenters/index.js";
 import { businessParamsSchema } from "../../business/validators/branchParamsSchema.js";

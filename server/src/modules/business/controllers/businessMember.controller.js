@@ -1,6 +1,5 @@
 import businessMemberService from "../services/businessMember.service.js";
 
-import validateRequest from "../../../shared/validation/validateRequest.js";
 import {
 	changeMemberRoleRequestSchema,
 	deactivateMemberRequestSchema,
@@ -11,8 +10,11 @@ import {
 	transferOwnershipRequestSchema,
 } from "../validators/index.js";
 
-import { success } from "../../../shared/utils/apiResponse.js";
-import { HTTP_STATUS } from "../../../shared/constants/index.js";
+import {
+	validateRequest,
+	success,
+	HTTP_STATUS,
+} from "../../../shared/index.js";
 import { businessMemberPresenter } from "../presenters/index.js";
 
 class BusinessMemberController {

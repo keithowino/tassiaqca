@@ -4,7 +4,7 @@ import {
 	BILLING_MODELS,
 	CURRENCIES,
 	OFFERING_PRICE_STATUS,
-} from "../../../../../shared/constants/index.js";
+} from "../../../../../shared/index.js";
 
 function createPricing({ businessId, offeringId, data, actor }) {
 	return new PricingBuilder()

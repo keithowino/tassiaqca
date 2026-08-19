@@ -1,4 +1,4 @@
-import { OFFERING_PRICE_STATUS } from "../../../../../shared/constants/index.js";
+import { OFFERING_PRICE_STATUS } from "../../../../../shared/index.js";
 import { OfferingPricing } from "../models/index.js";
 
 class PricingRepository {

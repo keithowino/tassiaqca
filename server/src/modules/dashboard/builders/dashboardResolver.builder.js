@@ -1,4 +1,4 @@
-import { moduleRegistry } from "../../../shared/platform/modules/index.js";
+import { moduleRegistry } from "../../../shared/index.js";
 
 export const resolveDashboardModules = (configuration) =>
 	configuration.modules
