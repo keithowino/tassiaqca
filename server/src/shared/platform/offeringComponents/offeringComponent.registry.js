@@ -13,6 +13,7 @@ import seoComponent from "../../../modules/offering/components/seo/seo.component
 import variantsComponent from "../../../modules/offering/components/variants/variants.component.js";
 import attributesComponent from "../../../modules/offering/components/attributes/attributes.component.js";
 import inventoryComponent from "../../../modules/offering/components/inventory/inventory.component.js";
+import durationComponent from "../../../modules/offering/components/duration/duration.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -288,7 +289,7 @@ const components = [
 		id: OFFERING_COMPONENTS.DURATION,
 		name: "Duration",
 		description: "Stores duration information.",
-		// implementation: durationComponent,
+		implementation: durationComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
 		enabled: true,
 		experimental: false,

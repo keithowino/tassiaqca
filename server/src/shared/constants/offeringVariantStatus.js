@@ -1,5 +1,4 @@
 export const OFFERING_VARIANT_STATUS = Object.freeze({
-	DRAFT: "DRAFT",
 	ACTIVE: "ACTIVE",
 	ARCHIVED: "ARCHIVED",
 });

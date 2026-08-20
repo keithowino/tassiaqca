@@ -1911,8 +1911,6 @@ Inventory Component
         └── Procurement Integration
 ```
 
----
-
 ```bash
 inventory/
 └── transactions/
@@ -1928,9 +1926,59 @@ That keeps the current component focused while leaving a clean path toward the I
 
 I recommend not solving that during this component implementation. Keep the current Product projection untouched and handle SKU semantics when Inventory and variant-level Pricing are implemented.
 
+For the first milestone, however, we can implement the Inventory component foundation and leave transaction workflows as the next incremental step.
+
 ---
 
-For the first milestone, however, we can implement the Inventory component foundation and leave transaction workflows as the next incremental step.
+## Whiledeveloping the duration offering component
+
+### Offering Types
+
+Duration should not be Product-specific.
+
+Likely consumers include:
+
+```bash
+| Offering Type | Duration    |
+| ------------- | ----------- |
+| PRODUCT       | Usually no  |
+| SERVICE       | Yes         |
+| RENTAL        | Yes         |
+| BOOKING       | Yes         |
+| COURSE        | Yes         |
+| EVENT         | Yes         |
+| MEMBERSHIP    | Potentially |
+| SUBSCRIPTION  | Potentially |
+```
+
+### One important architectural decision
+
+I would not make Duration depend on Inventory.
+
+The distinction should be:
+
+```bash
+Inventory
+└── How many units are available?
+
+Duration
+└── How long does the offering take?
+
+Capacity
+└── How many participants/resources can it accommodate?
+
+Location
+└── Where does it happen?
+
+Calendar
+└── What dates/times are available?
+
+Scheduling
+└── How are resources/time slots allocated?
+
+Booking
+└── Who reserved it?
+```
 
 ---
 
@@ -1938,7 +1986,7 @@ For the first milestone, however, we can implement the Inventory component found
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering inventory component."
+git commit -m "feat(offering): Create the V1 of the offering duration component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

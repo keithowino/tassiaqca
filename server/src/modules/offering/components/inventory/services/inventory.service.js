@@ -9,7 +9,6 @@ import {
 	ensureOfferingExists,
 } from "../../shared/index.js";
 
-// import { variantsRepository } from "../variants/repositories/index.js";
 import { variantsRepository } from "../../variants/repositories/index.js";
 
 import {

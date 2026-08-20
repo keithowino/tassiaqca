@@ -10,3 +10,4 @@ export * from "./stockMovement.js";
 export * from "./productImage.js";
 export * from "./pricing.js";
 export * from "./offeringVariantStatus.js";
+export * from "./offeringDurationStatus.js";

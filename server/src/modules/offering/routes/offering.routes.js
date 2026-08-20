@@ -14,6 +14,7 @@ import { tagsRoutes } from "../components/tags/index.js";
 import { seoRoutes } from "../components/seo/index.js";
 import { variantsRoutes } from "../components/variants/index.js";
 import { inventoryRoutes } from "../components/inventory/index.js";
+import { durationRoutes } from "../components/duration/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -70,5 +71,7 @@ router.use("/:offeringId/seo", seoRoutes);
 router.use("/:offeringId/variants", variantsRoutes);
 
 router.use("/:offeringId/inventory", inventoryRoutes);
+
+router.use("/:offeringId/duration", durationRoutes);
 
 export default router;

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { requirePermission } from "../../../../identity/index.js";
+import { authenticate, requirePermission } from "../../../../identity/index.js";
 
 import { Permissions } from "../../../../../shared/index.js";
 
@@ -9,6 +9,8 @@ import { attributesController } from "../controllers/index.js";
 const router = Router({
 	mergeParams: true,
 });
+
+router.use(authenticate);
 
 router
 	.route("/")

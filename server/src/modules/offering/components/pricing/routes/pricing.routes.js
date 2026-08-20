@@ -2,13 +2,15 @@ import { Router } from "express";
 
 import pricingController from "../controllers/pricing.controller.js";
 
-import { requirePermission } from "../../../../identity/index.js";
+import { authenticate, requirePermission } from "../../../../identity/index.js";
 
 import { Permissions } from "../../../../../shared/index.js";
 
 const router = Router({
 	mergeParams: true,
 });
+
+router.use(authenticate);
 
 router.get(
 	"/",
