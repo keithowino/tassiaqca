@@ -10,7 +10,7 @@ import {
  * Attribute names and values retain their display casing,
  * while surrounding whitespace is removed.
  *
- * Duplicate values are removed case-insensitively.
+ * Duplicate values are removed cCase-insensitively.
  */
 export function normalizeAttribute(attribute) {
 	const name = attribute.name.trim();

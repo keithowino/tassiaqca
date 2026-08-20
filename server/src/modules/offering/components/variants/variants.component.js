@@ -1,5 +1,6 @@
 import componentContract from "../component.contract.js";
 
+// files from the validators folder have been called/ imported here twice instead of using a single barrel import, i'll have to confirm why the LLM structured it as so.
 import variantsSchema from "./validators/variants.schema.js";
 import { normalizeVariants } from "./validators/index.js";
 

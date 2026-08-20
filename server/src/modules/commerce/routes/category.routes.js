@@ -1,10 +1,8 @@
 import { Router } from "express";
 
-import authenticate from "../../identity/middleware/authenticate.js";
-
 import categoryController from "../controllers/category.controller.js";
 
-import requirePermission from "../../identity/middleware/requirePermission.js";
+import { authenticate, requirePermission } from "../../identity/index.js";
 
 import { Permissions } from "../../../shared/index.js";
 

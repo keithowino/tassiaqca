@@ -2,8 +2,7 @@ import { Router } from "express";
 
 import { offeringController } from "../controllers/index.js";
 
-import authenticate from "../../identity/middleware/authenticate.js";
-import requirePermission from "../../identity/middleware/requirePermission.js";
+import { authenticate, requirePermission } from "../../identity/index.js";
 
 import { Permissions } from "../../../shared/index.js";
 
@@ -14,6 +13,7 @@ import { attributesRoutes } from "../components/attributes/index.js";
 import { tagsRoutes } from "../components/tags/index.js";
 import { seoRoutes } from "../components/seo/index.js";
 import { variantsRoutes } from "../components/variants/index.js";
+import { inventoryRoutes } from "../components/inventory/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -68,5 +68,7 @@ router.use("/:offeringId/tags", tagsRoutes);
 router.use("/:offeringId/seo", seoRoutes);
 
 router.use("/:offeringId/variants", variantsRoutes);
+
+router.use("/:offeringId/inventory", inventoryRoutes);
 
 export default router;

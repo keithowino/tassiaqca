@@ -1845,15 +1845,100 @@ should have its identity represented exclusively through variant SKUs.
 
 The earlier ProductVariant design already anticipated SKU per variant and variant inventory/pricing. The newer Offering architecture means we should implement that concept against Offering, not resurrect the old ProductVariant model.
 
+---
+
+## While developing the inventory offering component
+
+### Frontend consumer
+
+Eventually the Business OS should consume this as a dynamic Inventory capability:
+
+```bash
+Business Dashboard
+      │
+      └── Inventory
+            │
+            ├── Overview
+            │   ├── On Hand
+            │   ├── Reserved
+            │   ├── Available
+            │   └── Low Stock
+            │
+            ├── Stock
+            │   ├── Low Stock
+            │   ├── Out of Stock
+            │   ├── Branch Stock
+            │   ├── Variant Stock
+            │   └── Movement History
+            ├── Adjustments
+            └── Reservations
+```
+
+### What we have deliberately NOT implemented yet
+
+This is important.
+
+We have not put these into the first Inventory implementation:
+
+```bash
+Warehouse
+Stock Movement
+Stock Adjustment Ledger
+Reservation Ledger
+Procurement
+Supplier
+Purchase Order
+Receiving
+```
+
+The Architecture Specification identifies all of these as Inventory/Commerce responsibilities, but implementing them all inside this component would make inventory.component.js an oversized domain. The architecture specifically emphasizes cohesive subdomains and separation of Catalog, Pricing, Inventory, Procurement, Orders and Fulfillment.
+
+So our progression should be:
+
+```bash
+Inventory Component
+        │
+        ├── Inventory State          ← NOW
+        │
+        ├── Stock Movements          ← NEXT
+        │
+        ├── Adjustments
+        │
+        ├── Reservations
+        │
+        ├── Warehouses / Locations
+        │
+        └── Procurement Integration
+```
+
+---
+
+```bash
+inventory/
+└── transactions/
+    ├── models/
+    ├── repositories/
+    ├── services/
+    └── ...
+```
+
+That keeps the current component focused while leaving a clean path toward the Inventory Transactions layer mandated by the Commerce architecture.
+
+## We will not yet implement stock movement/transaction endpoints inside this first component because the architecture identifies Stock Movements as a distinct operational concern. We should introduce that as the next inventory layer rather than hiding a transaction ledger inside the Inventory state model.
+
 I recommend not solving that during this component implementation. Keep the current Product projection untouched and handle SKU semantics when Inventory and variant-level Pricing are implemented.
 
 ---
 
-- We may proceed to testing, in each test give me the complete REST example.
+For the first milestone, however, we can implement the Inventory component foundation and leave transaction workflows as the next incremental step.
+
+---
+
+- We may proceed to Inventory REST testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the offering variants component."
+git commit -m "feat(offering): Create the V1 of the offering inventory component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

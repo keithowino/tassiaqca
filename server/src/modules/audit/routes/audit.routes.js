@@ -1,7 +1,6 @@
 import { Router } from "express";
 import auditLogController from "../controllers/auditLog.controller.js";
-import authenticate from "../../identity/middleware/authenticate.js";
-import requirePermission from "../../identity/middleware/requirePermission.js";
+import { authenticate, requirePermission } from "../../identity/index.js";
 import { Permissions } from "../../../shared/index.js";
 
 /**

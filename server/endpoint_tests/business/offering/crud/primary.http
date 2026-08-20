@@ -1,7 +1,7 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NDcwM2YzMzU1NTk5ZmZhY2RkZGU5IiwiaWF0IjoxNzg3MDY0MzgzLCJleHAiOjE3ODcxNTA3ODMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.w0tUVfDqw84ZCSF7zrRg2gfrWiW6YX_3HxL7O-EXWX4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
 Content-Type: application/json
 
 # {
@@ -393,36 +393,36 @@ Content-Type: application/json
 
 # Variants - Lifecycle integration
 
-{
-	"type": "PRODUCT",
-	"name": "Dell XPS 15",
-	"sku": "DXPS15",
-	"attributes": [
-		{
-			"name": "Color",
-			"values": ["Black", "Silver"]
-		},
-		{
-			"name": "RAM",
-			"values": ["16GB", "32GB"]
-		}
-	],
-	"variants": [
-		{
-			"sku": "DXPS15-BLK-16",
-			"attributes": [
-				{
-					"name": "Color",
-					"value": "Black"
-				},
-				{
-					"name": "RAM",
-					"value": "16GB"
-				}
-			]
-		}
-	]
-}
+# {
+# 	"type": "PRODUCT",
+# 	"name": "Dell XPS 15",
+# 	"sku": "DXPS15",
+# 	"attributes": [
+# 		{
+# 			"name": "Color",
+# 			"values": ["Black", "Silver"]
+# 		},
+# 		{
+# 			"name": "RAM",
+# 			"values": ["16GB", "32GB"]
+# 		}
+# 	],
+# 	"variants": [
+# 		{
+# 			"sku": "DXPS15-BLK-16",
+# 			"attributes": [
+# 				{
+# 					"name": "Color",
+# 					"value": "Black"
+# 				},
+# 				{
+# 					"name": "RAM",
+# 					"value": "16GB"
+# 				}
+# 			]
+# 		}
+# 	]
+# }
 
 ### List Offerings
 

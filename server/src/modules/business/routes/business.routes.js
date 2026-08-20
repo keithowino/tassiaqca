@@ -7,8 +7,7 @@ import {
 	businessMemberController,
 } from "../controllers/index.js";
 
-import authenticate from "../../identity/middleware/authenticate.js";
-import requirePermission from "../../identity/middleware/requirePermission.js";
+import { authenticate, requirePermission } from "../../identity/index.js";
 import { Permissions } from "../../../shared/index.js";
 
 const router = Router();

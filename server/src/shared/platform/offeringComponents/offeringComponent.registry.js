@@ -11,8 +11,8 @@ import categoriesComponent from "../../../modules/offering/components/categories
 import mediaComponent from "../../../modules/offering/components/media/media.component.js";
 import seoComponent from "../../../modules/offering/components/seo/seo.component.js";
 import variantsComponent from "../../../modules/offering/components/variants/variants.component.js";
-
 import attributesComponent from "../../../modules/offering/components/attributes/attributes.component.js";
+import inventoryComponent from "../../../modules/offering/components/inventory/inventory.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -42,13 +42,15 @@ const components = [
 		id: OFFERING_COMPONENTS.INVENTORY,
 		name: "Inventory",
 		description: "Tracks inventory and stock availability.",
-		// implementation: inventoryComponent,
+		implementation: inventoryComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
 		enabled: true,
 		experimental: false,
 		deprecated: false,
 		dependencies: [],
-		metadata: {},
+		metadata: {
+			offeringTypes: ["PRODUCT"],
+		},
 	},
 
 	{

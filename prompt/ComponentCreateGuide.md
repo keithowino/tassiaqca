@@ -13,7 +13,7 @@ PHASE B — Offering Structure
 ────────────────────────────────────
 
 6. Attributes (covered)
-7. Variants
+7. Variants  (covered)
 
 
 PHASE C — Commerce Operations
@@ -49,7 +49,7 @@ PHASE F — Specialized Offering Models
 20. Download
 ```
 
-The following information shows a portion of the:
+The following information shows a portion of some of the implemented offering components and more:
 
 ---
 
