@@ -13,6 +13,7 @@ import variantsComponent from "../../../modules/offering/components/variants/var
 import attributesComponent from "../../../modules/offering/components/attributes/attributes.component.js";
 import inventoryComponent from "../../../modules/offering/components/inventory/inventory.component.js";
 import durationComponent from "../../../modules/offering/components/duration/duration.component.js";
+import capacityComponent from "../../../modules/offering/components/capacity/capacity.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -305,13 +306,15 @@ const components = [
 		id: OFFERING_COMPONENTS.CAPACITY,
 		name: "Capacity",
 		description: "Controls attendee capacity.",
-		// implementation: capacityComponent,
+		implementation: capacityComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EVENTS,
 		enabled: true,
 		experimental: false,
 		deprecated: false,
 		dependencies: [],
-		metadata: {},
+		metadata: {
+			offeringTypes: ["EVENT", "COURSE", "BOOKING"],
+		},
 	},
 
 	{

@@ -2007,7 +2007,7 @@ One registry, two consumers, no duplicated business-type rules.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering duration component."
+git commit -m "feat(offering): Create the V1 of the offering capacity component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

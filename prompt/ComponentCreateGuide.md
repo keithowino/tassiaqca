@@ -26,7 +26,7 @@ PHASE C — Commerce Operations
 PHASE D — Availability / Time
 ────────────────────────────────────
 
-10. Duration
+10. Duration  (covered)
 11. Capacity
 12. Location
 13. Calendar
@@ -51,726 +51,13 @@ PHASE F — Specialized Offering Models
 
 - The following information shows a portion of some of the implemented offering components and more:
 
-```js
-`~\server\src\modules\offering\routes\offering.routes.js`;
+---
 
-import { Router } from "express";
+`offering.routes.js`
+`offeringComponent.registry.js`
+`offering.registry.js`
 
-import { offeringController } from "../controllers/index.js";
-
-import authenticate from "../../identity/middleware/authenticate.js";
-import requirePermission from "../../identity/middleware/requirePermission.js";
-
-import { Permissions } from "../../../shared/index.js";
-
-import { categoriesRoutes } from "../components/categories/routes/index.js";
-import { pricingRoutes } from "../components/pricing/routes/index.js";
-import { mediaRoutes } from "../components/media/routes/index.js";
-import { attributesRoutes } from "../components/attributes/index.js";
-import { tagsRoutes } from "../components/tags/index.js";
-import { seoRoutes } from "../components/seo/index.js";
-import { variantsRoutes } from "../components/variants/index.js";
-import { inventoryRoutes } from "../components/inventory/index.js";
-
-const router = Router({
-	mergeParams: true,
-});
-
-router.use(authenticate);
-
-router
-	.route("/")
-	.get(
-		requirePermission(Permissions.OFFERING_VIEW),
-		offeringController.listOfferings,
-	)
-	.post(
-		requirePermission(Permissions.OFFERING_CREATE),
-		offeringController.createOffering,
-	);
-
-router
-	.route("/:offeringId")
-	.get(
-		requirePermission(Permissions.OFFERING_VIEW),
-		offeringController.getOffering,
-	)
-	.patch(
-		requirePermission(Permissions.OFFERING_UPDATE),
-		offeringController.updateOffering,
-	);
-
-router.patch(
-	"/:offeringId/archive",
-	requirePermission(Permissions.OFFERING_ARCHIVE),
-	offeringController.archiveOffering,
-);
-
-router.patch(
-	"/:offeringId/restore",
-	requirePermission(Permissions.OFFERING_RESTORE),
-	offeringController.restoreOffering,
-);
-
-router.use("/:offeringId/categories", categoriesRoutes);
-
-router.use("/:offeringId/pricing", pricingRoutes);
-
-router.use("/:offeringId/media", mediaRoutes);
-
-router.use("/:offeringId/attributes", attributesRoutes);
-
-router.use("/:offeringId/tags", tagsRoutes);
-
-router.use("/:offeringId/seo", seoRoutes);
-
-router.use("/:offeringId/variants", variantsRoutes);
-
-router.use("/:offeringId/inventory", inventoryRoutes);
-
-export default router;
-```
-
-```js
-`~\server\src\shared\platform\offeringComponents\offeringComponent.registry.js`;
-
-import { createRegistry } from "../registry/index.js";
-
-import { OFFERING_COMPONENTS } from "./offeringComponent.constants.js";
-import { OFFERING_COMPONENT_CATEGORIES } from "./offeringComponentCategory.constants.js";
-
-import pricingComponent from "../../../modules/offering/components/pricing/pricing.component.js";
-
-import metadataComponent from "../../../modules/offering/components/metadata/metadata.component.js";
-import tagsComponent from "../../../modules/offering/components/tags/tags.component.js";
-import categoriesComponent from "../../../modules/offering/components/categories/categories.component.js";
-import mediaComponent from "../../../modules/offering/components/media/media.component.js";
-import seoComponent from "../../../modules/offering/components/seo/seo.component.js";
-import variantsComponent from "../../../modules/offering/components/variants/variants.component.js";
-import attributesComponent from "../../../modules/offering/components/attributes/attributes.component.js";
-import inventoryComponent from "../../../modules/offering/components/inventory/inventory.component.js";
-
-/**
- * From this point onward, adding a new reusable concern becomes entirely declarative:
- * 1. Create a component implementation.
- * 2. Register it in offeringComponent.registry.js.
- * 3. Add it to an offering's components array.
- */
-const components = [
-	/**
-	 * Commercial
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.PRICING,
-		name: "Pricing",
-		description: "Provides pricing information for an offering.",
-		implementation: pricingComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.INVENTORY,
-		name: "Inventory",
-		description: "Tracks inventory and stock availability.",
-		implementation: inventoryComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {
-			offeringTypes: ["PRODUCT"],
-		},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.VARIANTS,
-		name: "Variants",
-		description: "Supports multiple purchasable variants.",
-		implementation: variantsComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [OFFERING_COMPONENTS.ATTRIBUTES],
-		metadata: {
-			offeringTypes: ["PRODUCT"],
-			requiresAttributes: true,
-		},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.CATEGORIES,
-		name: "Categories",
-		description: "Assigns offerings to categories.",
-		implementation: categoriesComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.COMMERCIAL,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	/**
-	 * Content
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.MEDIA,
-		name: "Media",
-		description: "Stores media assets associated with an offering.",
-		implementation: mediaComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.ATTRIBUTES,
-		name: "Attributes",
-		description: "Supports custom attributes for an offering.",
-		implementation: attributesComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.TAGS,
-		name: "Tags",
-		description: "Provides tagging for search and organization.",
-		implementation: tagsComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.SEO,
-		name: "SEO",
-		description: "Stores search engine optimization metadata.",
-		implementation: seoComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.CONTENT,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.METADATA,
-		name: "Metadata",
-		description: "Stores arbitrary structured metadata.",
-		implementation: metadataComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.SHARED,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	/**
-	 * Scheduling
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.SCHEDULING,
-		name: "Scheduling",
-		description: "Provides scheduling support.",
-		// implementation: schedulingComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.CALENDAR,
-		name: "Calendar",
-		description: "Provides calendar integration.",
-		// implementation: calendarComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [OFFERING_COMPONENTS.SCHEDULING],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.BOOKING,
-		name: "Booking",
-		description: "Provides booking functionality.",
-		// implementation: bookingComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [OFFERING_COMPONENTS.SCHEDULING],
-		metadata: {},
-	},
-
-	/**
-	 * Access
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.MEMBERSHIP,
-		name: "Membership",
-		description: "Provides membership access.",
-		// implementation: membershipComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.SUBSCRIPTION,
-		name: "Subscription",
-		description: "Provides recurring subscription support.",
-		// implementation: subscriptionComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.REGISTRATION,
-		name: "Registration",
-		description: "Supports registrations and enrollments.",
-		// implementation: registrationComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	/**
-	 * Digital
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.DOWNLOAD,
-		name: "Download",
-		description: "Provides downloadable assets.",
-		// implementation: downloadComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.DIGITAL,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	/**
-	 * Education
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.ENROLLMENT,
-		name: "Enrollment",
-		description: "Supports learner enrollment.",
-		// implementation: enrollmentComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [OFFERING_COMPONENTS.REGISTRATION],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.INSTRUCTOR,
-		name: "Instructor",
-		description: "Stores instructor information.",
-		// implementation: instructorComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.DURATION,
-		name: "Duration",
-		description: "Stores duration information.",
-		// implementation: durationComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	/**
-	 * Events
-	 */
-
-	{
-		id: OFFERING_COMPONENTS.CAPACITY,
-		name: "Capacity",
-		description: "Controls attendee capacity.",
-		// implementation: capacityComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.EVENTS,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-
-	{
-		id: OFFERING_COMPONENTS.LOCATION,
-		name: "Location",
-		description: "Stores event location.",
-		// implementation: locationComponent,
-		category: OFFERING_COMPONENT_CATEGORIES.EVENTS,
-		enabled: true,
-		experimental: false,
-		deprecated: false,
-		dependencies: [],
-		metadata: {},
-	},
-];
-
-export const offeringComponentRegistry = createRegistry(components);
-
-export default offeringComponentRegistry;
-```
-
-```js
-`~\server\src\shared\platform\offerings\offering.registry.js`;
-
-import { OFFERING_TYPES } from "./offering.constants.js";
-import { OFFERING_CATEGORIES } from "./offeringCategory.constants.js";
-
-import { createRegistry } from "../registry/registry.js";
-
-import { buildOffering } from "../../../modules/offering/builders/index.js";
-
-import {
-	productLifecycle,
-	serviceLifecycle,
-	bookingLifecycle,
-	rentalLifecycle,
-	membershipLifecycle,
-	subscriptionLifecycle,
-	courseLifecycle,
-	eventLifecycle,
-	packageLifecycle,
-	digitalDownloadLifecycle,
-} from "../../../modules/offering/lifecycles/index.js";
-
-import {
-	OFFERING_STATUS,
-	OFFERING_VISIBILITY,
-} from "../../../modules/offering/constants/index.js";
-
-import {
-	productProjection,
-	serviceProjection,
-	rentalProjection,
-	membershipProjection,
-	subscriptionProjection,
-	courseProjection,
-	eventProjection,
-	packageProjection,
-	digitalDownloadProjection,
-	bookingProjection,
-} from "../../../modules/commerce/adapters/index.js";
-import { noopProjection } from "../../../modules/offering/projections/index.js";
-
-import { OFFERING_COMPONENTS } from "../offeringComponents/index.js";
-
-/**
- * For now, every type will use the generic OfferingBuilder. As Product, Booking, Rental, Course, etc. evolve, you simply replace the mapping—without touching the service.
- */
-const baseOffering = {
-	builder: buildOffering,
-
-	lifecycle: null,
-
-	projection: noopProjection,
-
-	capabilities: [],
-
-	modules: [],
-
-	marketplace: {
-		searchable: true,
-		discoverable: true,
-	},
-
-	defaults: {
-		status: OFFERING_STATUS.DRAFT,
-
-		visibility: OFFERING_VISIBILITY.PRIVATE,
-
-		searchable: true,
-
-		featured: false,
-
-		metadata: {},
-	},
-};
-
-const offerings = [
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.PRODUCT,
-		lifecycle: productLifecycle,
-		projection: productProjection,
-		category: OFFERING_CATEGORIES.PHYSICAL,
-		label: "Product",
-		description: "Physical goods sold by a business.",
-
-		/**
-		 * This order is intentional
-		 *
-		 * The pipeline itself executes in registry order. Your current implementation already resolves the registered component implementations and executes the requested lifecycle hook sequentially.
-		 */
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.METADATA,
-			OFFERING_COMPONENTS.TAGS,
-			OFFERING_COMPONENTS.CATEGORIES,
-			OFFERING_COMPONENTS.MEDIA,
-			OFFERING_COMPONENTS.SEO,
-
-			OFFERING_COMPONENTS.ATTRIBUTES,
-			OFFERING_COMPONENTS.VARIANTS,
-
-			OFFERING_COMPONENTS.INVENTORY,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.SERVICE,
-		lifecycle: serviceLifecycle,
-
-		projection: serviceProjection,
-		category: OFFERING_CATEGORIES.TIME_BASED,
-		label: "Service",
-		description: "Professional or business service.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.MEDIA,
-			OFFERING_COMPONENTS.SCHEDULING,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.BOOKING,
-		lifecycle: bookingLifecycle,
-
-		projection: bookingProjection,
-		category: OFFERING_CATEGORIES.TIME_BASED,
-		label: "Booking",
-		description: "Reservable appointment or schedule.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.SCHEDULING,
-			OFFERING_COMPONENTS.BOOKING,
-			OFFERING_COMPONENTS.CALENDAR,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.RENTAL,
-		lifecycle: rentalLifecycle,
-
-		projection: rentalProjection,
-		category: OFFERING_CATEGORIES.PHYSICAL,
-		label: "Rental",
-		description: "Assets rented for a duration.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.MEDIA,
-			OFFERING_COMPONENTS.INVENTORY,
-			OFFERING_COMPONENTS.SCHEDULING,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.MEMBERSHIP,
-		lifecycle: membershipLifecycle,
-
-		projection: membershipProjection,
-		category: OFFERING_CATEGORIES.ACCESS,
-		label: "Membership",
-		description: "Recurring member access.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.MEMBERSHIP,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.SUBSCRIPTION,
-		lifecycle: subscriptionLifecycle,
-
-		projection: subscriptionProjection,
-		category: OFFERING_CATEGORIES.ACCESS,
-		label: "Subscription",
-		description: "Recurring subscription.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.SUBSCRIPTION,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.COURSE,
-		lifecycle: courseLifecycle,
-
-		projection: courseProjection,
-		category: OFFERING_CATEGORIES.DIGITAL,
-		label: "Course",
-		description: "Educational offering.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.MEDIA,
-			OFFERING_COMPONENTS.ENROLLMENT,
-			OFFERING_COMPONENTS.INSTRUCTOR,
-			OFFERING_COMPONENTS.DURATION,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.EVENT,
-		lifecycle: eventLifecycle,
-
-		projection: eventProjection,
-		category: OFFERING_CATEGORIES.EXPERIENCE,
-		label: "Event",
-		description: "Scheduled experience.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.MEDIA,
-			OFFERING_COMPONENTS.REGISTRATION,
-			OFFERING_COMPONENTS.CAPACITY,
-			OFFERING_COMPONENTS.LOCATION,
-			OFFERING_COMPONENTS.SCHEDULING,
-		],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.PACKAGE,
-		lifecycle: packageLifecycle,
-
-		/**
-		 * Default projection for now.
-		 */
-		projection: packageProjection,
-		category: OFFERING_CATEGORIES.EXPERIENCE,
-		label: "Package",
-		description: "Bundle of offerings.",
-
-		components: [OFFERING_COMPONENTS.PRICING, OFFERING_COMPONENTS.MEDIA],
-	},
-
-	{
-		...baseOffering,
-
-		type: OFFERING_TYPES.DIGITAL_DOWNLOAD,
-		lifecycle: digitalDownloadLifecycle,
-
-		/**
-		 * Default projection for now.
-		 */
-		projection: digitalDownloadProjection,
-		category: OFFERING_CATEGORIES.DIGITAL,
-		label: "Digital Download",
-		description: "Downloadable digital asset.",
-
-		components: [
-			OFFERING_COMPONENTS.PRICING,
-			OFFERING_COMPONENTS.MEDIA,
-			OFFERING_COMPONENTS.DOWNLOAD,
-		],
-	},
-
-	/**
-	 * Future offerings guide.
-	 */
-	// {
-	// 	...baseOffering,
-
-	// 	type: OFFERING_TYPES.DIGITAL_DOWNLOAD,
-	// 	lifecycle: digitalDownloadLifecycle,
-
-	// 	/**
-	// 	 * Default projection for now.
-	// 	 */
-	// 	projection: noopProjection,
-	// 	category: OFFERING_CATEGORIES.DIGITAL,
-	// 	label: "Digital Download",
-	// 	description: "Downloadable digital asset.",
-	// },
-];
-
-export const offeringRegistry = createRegistry(
-	offerings,
-	(offering) => offering.type,
-);
-
-export default offeringRegistry;
-```
+---
 
 ```js
 `~\server\src\modules\offering\builders\offering.builder.js`;
@@ -1104,6 +391,7 @@ const setCurrentPricing = asyncHandler(async (req, res) => {
 		offeringId: params.offeringId,
 		data: body,
 		actor: req.user,
+		requestMetadata: req.requestMetadata,
 	});
 
 	return success(res, pricing, "Offering price updated successfully.");
@@ -1150,6 +438,15 @@ import {
 	ensureOfferingExists,
 } from "../../shared/index.js";
 
+import {
+	AUDIT_ACTIONS,
+	AUDIT_ENTITY_TYPES,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+
+import { auditLogService } from "../../../../audit/index.js";
+
 /**
  * Pricing Domain Service
  *
@@ -1163,6 +460,18 @@ import {
  * price or a replacement.
  */
 class PricingService {
+	ensurePricingComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.PRICING,
+			"Pricing is not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {};
+	}
+
 	/**
 	 * Sets the current price for an Offering.
 	 *
@@ -1180,10 +489,18 @@ class PricingService {
 	 * 7. Commit transaction.
 	 * 8. Return created price.
 	 */
-	async setCurrentPrice({ businessId, offeringId, data, actor }) {
+	async setCurrentPrice({
+		businessId,
+		offeringId,
+		data,
+		actor,
+		requestMetadata,
+	}) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensurePricingComponentSupported(offering);
 
 		const session = await mongoose.startSession();
 
@@ -1215,6 +532,16 @@ class PricingService {
 
 			const created = await pricingRepository.create(pricing, session);
 
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_PRICING,
+				entityId: created.id,
+				action: AUDIT_ACTIONS.OFFERING_PRICING_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(created),
+			});
+
 			await session.commitTransaction();
 
 			return pricingPresenter.present(created);
@@ -1230,7 +557,9 @@ class PricingService {
 	async getCurrent(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensurePricingComponentSupported(offering);
 
 		const pricing =
 			await pricingRepository.findCurrentByOffering(offeringId);
@@ -1241,7 +570,9 @@ class PricingService {
 	async getHistory(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensurePricingComponentSupported(offering);
 
 		const history =
 			await pricingRepository.findHistoryByOffering(offeringId);
@@ -1427,7 +758,7 @@ import { OfferingPricing } from "../models/index.js";
 
 class PricingRepository {
 	async create(data, session = null) {
-		const [pricing] = await Pricing.create([data], {
+		const [pricing] = await OfferingPricing.create([data], {
 			session,
 		});
 
@@ -1441,18 +772,18 @@ class PricingRepository {
 	}
 
 	async findById(id) {
-		return Pricing.findById(id);
+		return OfferingPricing.findById(id);
 	}
 
 	async findCurrentByOffering(offeringId, session = null) {
-		return Pricing.findOne({
+		return OfferingPricing.findOne({
 			offering: offeringId,
 			isCurrent: true,
 		}).session(session);
 	}
 
 	async findHistoryByOffering(offeringId) {
-		return Pricing.find({
+		return OfferingPricing.find({
 			offering: offeringId,
 		}).sort({
 			effectiveFrom: -1,
@@ -1460,7 +791,7 @@ class PricingRepository {
 	}
 
 	async findCurrentByBusiness(businessId) {
-		return Pricing.find({
+		return OfferingPricing.find({
 			business: businessId,
 			isCurrent: true,
 		}).sort({
@@ -1473,7 +804,7 @@ class PricingRepository {
 		{ effectiveTo = new Date(), updatedBy = null } = {},
 		session = null,
 	) {
-		const current = await Pricing.findOne({
+		const current = await OfferingPricing.findOne({
 			offering: offeringId,
 			isCurrent: true,
 		}).session(session);
@@ -1494,7 +825,7 @@ class PricingRepository {
 	 * Administrative cleanup only
 	 */
 	async delete(id) {
-		return Pricing.findByIdAndDelete(id);
+		return OfferingPricing.findByIdAndDelete(id);
 	}
 }
 
@@ -1712,11 +1043,43 @@ import {
 	ensureOfferingExists,
 } from "../../shared/index.js";
 
+import {
+	AUDIT_ACTIONS,
+	AUDIT_ENTITY_TYPES,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+import { auditLogService } from "../../../../audit/index.js";
+
 class AttributesService {
-	async setAttributes({ businessId, offeringId, attributes = [], actor }) {
+	ensureAttributeComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.ATTRIBUTES,
+			"Attributes are not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {
+			offeringId: data.offering,
+			createdBy: data.createdBy,
+			updatedBy: data.updatedBy,
+		};
+	}
+
+	async setAttributes({
+		businessId,
+		offeringId,
+		attributes = [],
+		actor,
+		requestMetadata,
+	}) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureAttributeComponentSupported(offering);
 
 		const normalizedAttributes = normalizeAttributes(attributes);
 
@@ -1741,6 +1104,16 @@ class AttributesService {
 				session,
 			);
 
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_ATTRIBUTES,
+				entityId: created.id,
+				action: AUDIT_ACTIONS.OFFERING_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(created),
+			});
+
 			await session.commitTransaction();
 
 			return attributesPresenter.presentCollection(created);
@@ -1755,7 +1128,9 @@ class AttributesService {
 	async getByOffering(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureAttributeComponentSupported(offering);
 
 		const attributes =
 			await attributesRepository.findByOffering(offeringId);
@@ -1950,737 +1325,7 @@ export const attributesSchema = z.array(attributeSchema).max(50);
 export default attributesSchema;
 ```
 
-```js
-`~\server\src\modules\offering\components\variants\models\offeringVariant.model.js`;
-
-import mongoose from "mongoose";
-
-import {
-	OFFERING_VARIANT_STATUS,
-	OFFERING_VARIANT_STATUS_VALUES,
-} from "../../../../../shared/index.js";
-
-const variantAttributeSchema = new mongoose.Schema(
-	{
-		name: {
-			type: String,
-			required: true,
-			trim: true,
-		},
-
-		value: {
-			type: String,
-			required: true,
-			trim: true,
-		},
-	},
-	{
-		_id: false,
-	},
-);
-
-const offeringVariantSchema = new mongoose.Schema(
-	{
-		business: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Business",
-			required: true,
-			index: true,
-		},
-
-		offering: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Offering",
-			required: true,
-			index: true,
-		},
-
-		sku: {
-			type: String,
-			required: true,
-			trim: true,
-			uppercase: true,
-		},
-
-		slug: {
-			type: String,
-			required: true,
-			trim: true,
-			lowercase: true,
-		},
-
-		attributes: {
-			type: [variantAttributeSchema],
-			required: true,
-
-			validate: {
-				validator(attributes) {
-					return attributes.length > 0;
-				},
-
-				message: "At least one variant attribute is required.",
-			},
-		},
-
-		/**
-		 * Cached for analytics and filtering.
-		 * Maintained by the service layer.
-		 */
-		attributeCount: {
-			type: Number,
-			required: true,
-			min: 1,
-		},
-
-		/**
-		 * Canonical representation of the attribute combination.
-		 *
-		 * Example:
-		 *
-		 * color=black|ram=16gb|storage=512gb
-		 *
-		 * Used for duplicate detection.
-		 *
-		 * Maintained by the service layer.
-		 */
-		attributeSignature: {
-			type: String,
-			required: true,
-			trim: true,
-			select: false,
-		},
-
-		status: {
-			type: String,
-			enum: OFFERING_VARIANT_STATUS_VALUES,
-			default: OFFERING_VARIANT_STATUS.ACTIVE,
-			index: true,
-		},
-
-		createdBy: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
-
-		updatedBy: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
-	},
-	{
-		timestamps: true,
-		versionKey: false,
-	},
-);
-
-/**
- * Offering variants within a business.
- */
-offeringVariantSchema.index({
-	business: 1,
-	offering: 1,
-});
-
-/**
- * SKU uniqueness.
- */
-offeringVariantSchema.index(
-	{
-		business: 1,
-		sku: 1,
-	},
-	{
-		unique: true,
-	},
-);
-
-/**
- * Slug uniqueness.
- */
-offeringVariantSchema.index(
-	{
-		offering: 1,
-		slug: 1,
-	},
-	{
-		unique: true,
-	},
-);
-
-/**
- * Prevent duplicate attribute combinations for the same offering.
- */
-offeringVariantSchema.index(
-	{
-		offering: 1,
-		attributeSignature: 1,
-	},
-	{
-		unique: true,
-	},
-);
-
-/**
- * Business/status queries.
- */
-offeringVariantSchema.index({
-	business: 1,
-	status: 1,
-});
-
-export const OfferingVariant =
-	mongoose.models.OfferingVariant ||
-	mongoose.model("OfferingVariant", offeringVariantSchema);
-
-export default OfferingVariant;
-```
-
-```js
-`~\server\src\modules\offering\components\variants\services\variants.service.js`;
-
-import mongoose from "mongoose";
-
-import { variantsFactory } from "../builders/index.js";
-import { variantsPresenter } from "../presenters/index.js";
-import { variantsRepository } from "../repositories/index.js";
-
-import { normalizeVariant, normalizeVariants } from "../validators/index.js";
-
-import {
-	ensureBusinessExists,
-	ensureOfferingExists,
-} from "../../shared/index.js";
-
-import { attributesRepository } from "../../attributes/repositories/index.js";
-
-import { auditLogService } from "../../../../audit/index.js";
-
-import {
-	AUDIT_ACTIONS,
-	AUDIT_ENTITY_TYPES,
-	HTTP_STATUS,
-	AppError,
-	ErrorCodes,
-} from "../../../../../shared/index.js";
-
-class VariantsService {
-	async ensureProductOffering(offering) {
-		if (offering.type !== "PRODUCT") {
-			throw new AppError(
-				"Variants are currently supported only for Product offerings.",
-				HTTP_STATUS.BAD_REQUEST,
-				ErrorCodes.BAD_REQUEST,
-			);
-		}
-	}
-
-	async ensureSkuIsUnique(businessId, sku, excludeId = null) {
-		const existing = await variantsRepository.findByBusinessAndSku(
-			businessId,
-			sku,
-		);
-
-		if (existing && String(existing.id) !== String(excludeId)) {
-			throw new AppError(
-				"A variant with this SKU already exists.",
-				HTTP_STATUS.CONFLICT,
-				ErrorCodes.CONFLICT,
-			);
-		}
-	}
-
-	async ensureAttributesExist(offeringId, attributes) {
-		const definitions =
-			await attributesRepository.findByOffering(offeringId);
-
-		for (const selected of attributes) {
-			const definition = definitions.find(
-				(attribute) =>
-					attribute.name.toLowerCase() ===
-					selected.name.toLowerCase(),
-			);
-
-			if (!definition) {
-				throw new AppError(
-					`Variant attribute "${selected.name}" is not defined for this offering.`,
-					HTTP_STATUS.BAD_REQUEST,
-					ErrorCodes.BAD_REQUEST,
-				);
-			}
-
-			const validValue = definition.values.some(
-				(value) => value.toLowerCase() === selected.value.toLowerCase(),
-			);
-
-			if (!validValue) {
-				throw new AppError(
-					`Value "${selected.value}" is not valid for attribute "${definition.name}".`,
-					HTTP_STATUS.BAD_REQUEST,
-					ErrorCodes.BAD_REQUEST,
-				);
-			}
-		}
-	}
-
-	async ensureSignatureIsUnique(
-		offeringId,
-		attributeSignature,
-		excludeId = null,
-	) {
-		const existing = await variantsRepository.findByOfferingAndSignature(
-			offeringId,
-			attributeSignature,
-			excludeId,
-		);
-
-		if (existing) {
-			throw new AppError(
-				"This attribute combination already exists for this offering.",
-				HTTP_STATUS.CONFLICT,
-				ErrorCodes.CONFLICT,
-			);
-		}
-	}
-
-	async create({ businessId, offeringId, data, actor, requestMetadata }) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const variant = normalizeVariant(data);
-
-		await this.ensureSkuIsUnique(businessId, variant.sku);
-
-		await this.ensureAttributesExist(offeringId, variant.attributes);
-
-		await this.ensureSignatureIsUnique(
-			offeringId,
-			variant.attributeSignature,
-		);
-
-		const document = variantsFactory.createVariant({
-			businessId,
-			offeringId,
-			variant,
-			actor,
-		});
-
-		const created = await variantsRepository.create(document);
-
-		await auditLogService.log({
-			business: businessId,
-			entityType: AUDIT_ENTITY_TYPES.OFFERING_VARIANT,
-			entityId: created.id,
-			action: AUDIT_ACTIONS.OFFERING_VARIANT_CREATED,
-			actor,
-			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: created.sku,
-				attributes: created.attributes,
-				attributeSignature: created.attributeSignature,
-			},
-		});
-
-		return variantsPresenter.present(created);
-	}
-
-	async list({ businessId, offeringId, includeArchived = true }) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const variants = await variantsRepository.findByOffering(offeringId, {
-			includeArchived,
-		});
-
-		return variantsPresenter.presentCollection(variants);
-	}
-
-	async getById({ businessId, offeringId, variantId }) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const variant = await variantsRepository.findByOfferingAndId(
-			offeringId,
-			variantId,
-		);
-
-		if (!variant) {
-			throw new AppError(
-				"Offering variant not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		return variantsPresenter.present(variant);
-	}
-
-	async update({
-		businessId,
-		offeringId,
-		variantId,
-		data,
-		actor,
-		requestMetadata,
-	}) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const variant = await variantsRepository.findByOfferingAndId(
-			offeringId,
-			variantId,
-		);
-
-		if (!variant) {
-			throw new AppError(
-				"Offering variant not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		const normalized = normalizeVariant({
-			sku: data.sku ?? variant.sku,
-			slug: data.slug ?? variant.slug,
-			attributes: data.attributes ?? variant.attributes,
-			status: data.status ?? variant.status,
-		});
-
-		if (normalized.sku !== variant.sku) {
-			await this.ensureSkuIsUnique(
-				businessId,
-				normalized.sku,
-				variant.id,
-			);
-		}
-
-		await this.ensureAttributesExist(offeringId, normalized.attributes);
-
-		if (normalized.attributeSignature !== variant.attributeSignature) {
-			await this.ensureSignatureIsUnique(
-				offeringId,
-				normalized.attributeSignature,
-				variant.id,
-			);
-		}
-
-		variant.sku = normalized.sku;
-		variant.slug = normalized.slug;
-		variant.attributes = normalized.attributes;
-		variant.attributeCount = normalized.attributeCount;
-		variant.attributeSignature = normalized.attributeSignature;
-		variant.status = normalized.status;
-		variant.updatedBy = actor.id;
-
-		const updated = await variantsRepository.save(variant);
-
-		await auditLogService.log({
-			business: businessId,
-			entityType: AUDIT_ENTITY_TYPES.OFFERING_VARIANT,
-			entityId: updated.id,
-			action: AUDIT_ACTIONS.OFFERING_VARIANT_UPDATED,
-			actor,
-			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: updated.sku,
-				attributes: updated.attributes,
-				status: updated.status,
-			},
-		});
-
-		return variantsPresenter.present(updated);
-	}
-
-	async archive({
-		businessId,
-		offeringId,
-		variantId,
-		actor,
-		requestMetadata,
-	}) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const variant = await variantsRepository.findByOfferingAndId(
-			offeringId,
-			variantId,
-		);
-
-		if (!variant) {
-			throw new AppError(
-				"Offering variant not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		if (variant.status === "ARCHIVED") {
-			throw new AppError(
-				"Offering variant is already archived.",
-				HTTP_STATUS.BAD_REQUEST,
-				ErrorCodes.BAD_REQUEST,
-			);
-		}
-
-		variant.status = "ARCHIVED";
-		variant.updatedBy = actor.id;
-
-		const archived = await variantsRepository.save(variant);
-
-		await auditLogService.log({
-			business: businessId,
-			entityType: AUDIT_ENTITY_TYPES.OFFERING_VARIANT,
-			entityId: archived.id,
-			action: AUDIT_ACTIONS.OFFERING_VARIANT_ARCHIVED,
-			actor,
-			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: archived.sku,
-			},
-		});
-
-		return variantsPresenter.present(archived);
-	}
-
-	async restore({
-		businessId,
-		offeringId,
-		variantId,
-		actor,
-		requestMetadata,
-	}) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const variant = await variantsRepository.findByOfferingAndId(
-			offeringId,
-			variantId,
-		);
-
-		if (!variant) {
-			throw new AppError(
-				"Offering variant not found.",
-				HTTP_STATUS.NOT_FOUND,
-				ErrorCodes.NOT_FOUND,
-			);
-		}
-
-		if (variant.status === "ACTIVE") {
-			throw new AppError(
-				"Offering variant is already active.",
-				HTTP_STATUS.BAD_REQUEST,
-				ErrorCodes.BAD_REQUEST,
-			);
-		}
-
-		variant.status = "ACTIVE";
-		variant.updatedBy = actor.id;
-
-		const restored = await variantsRepository.save(variant);
-
-		await auditLogService.log({
-			business: businessId,
-			entityType: AUDIT_ENTITY_TYPES.OFFERING_VARIANT,
-			entityId: restored.id,
-			action: AUDIT_ACTIONS.OFFERING_VARIANT_RESTORED,
-			actor,
-			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: restored.sku,
-			},
-		});
-
-		return variantsPresenter.present(restored);
-	}
-
-	/**
-	 * Used by the Offering component lifecycle.
-	 *
-	 * Supplying variants replaces the Offering's current
-	 * variant collection.
-	 */
-	async setVariants({ businessId, offeringId, variants = [], actor }) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		await this.ensureProductOffering(offering);
-
-		const normalized = normalizeVariants(variants);
-
-		const seenSkus = new Set();
-		const seenSignatures = new Set();
-
-		for (const variant of normalized) {
-			if (seenSkus.has(variant.sku)) {
-				throw new AppError(
-					`Duplicate variant SKU "${variant.sku}".`,
-					HTTP_STATUS.CONFLICT,
-					ErrorCodes.CONFLICT,
-				);
-			}
-
-			if (seenSignatures.has(variant.attributeSignature)) {
-				throw new AppError(
-					"Duplicate variant attribute combination.",
-					HTTP_STATUS.CONFLICT,
-					ErrorCodes.CONFLICT,
-				);
-			}
-
-			seenSkus.add(variant.sku);
-			seenSignatures.add(variant.attributeSignature);
-
-			await this.ensureAttributesExist(offeringId, variant.attributes);
-
-			await this.ensureSkuIsUnique(businessId, variant.sku);
-		}
-
-		const session = await mongoose.startSession();
-
-		try {
-			session.startTransaction();
-
-			await variantsRepository.deleteByOffering(offeringId, session);
-
-			const documents = normalized.map((variant) =>
-				variantsFactory.createVariant({
-					businessId,
-					offeringId,
-					variant,
-					actor,
-				}),
-			);
-
-			const created = await variantsRepository.createMany(
-				documents,
-				session,
-			);
-
-			await session.commitTransaction();
-
-			return variantsPresenter.presentCollection(created);
-		} catch (error) {
-			await session.abortTransaction();
-			throw error;
-		} finally {
-			await session.endSession();
-		}
-	}
-}
-
-export const variantsService = new VariantsService();
-
-export default variantsService;
-```
-
-```js
-`~\server\src\modules\offering\components\variants\variants.component.js`;
-
-import componentContract from "../component.contract.js";
-
-import variantsSchema from "./validators/variants.schema.js";
-import { normalizeVariants } from "./validators/index.js";
-
-import { variantsService } from "./services/index.js";
-
-export const variantsComponent = {
-	...componentContract,
-
-	validateCreate(context) {
-		if (context.data.variants === undefined) {
-			return;
-		}
-
-		variantsSchema.parse(context.data.variants);
-	},
-
-	validateUpdate(context) {
-		if (context.data.variants === undefined) {
-			return;
-		}
-
-		variantsSchema.parse(context.data.variants);
-	},
-
-	beforeCreate(context) {
-		if (context.data.variants === undefined) {
-			return;
-		}
-
-		context.data.variants = normalizeVariants(context.data.variants);
-	},
-
-	beforeUpdate(context) {
-		if (context.data.variants === undefined) {
-			return;
-		}
-
-		context.data.variants = normalizeVariants(context.data.variants);
-	},
-
-	async afterCreate(context) {
-		const { businessId, offering, data, actor, state } = context;
-
-		if (data.variants === undefined) {
-			return;
-		}
-
-		const variants = await variantsService.setVariants({
-			businessId,
-			offeringId: offering.id,
-			variants: data.variants,
-			actor,
-		});
-
-		state.variants = variants;
-	},
-
-	async afterUpdate(context) {
-		const { businessId, offering, data, actor, state } = context;
-
-		if (data.variants === undefined) {
-			return;
-		}
-
-		const variants = await variantsService.setVariants({
-			businessId,
-			offeringId: offering.id,
-			variants: data.variants,
-			actor,
-		});
-
-		state.variants = variants;
-	},
-};
-
-export default variantsComponent;
-```
-
-We may proceed to creating the Inventory offering component, it's implementation should follow the following structure and if you see fit, use the Pricing, Media and or Categories offering components as a point of reference:
+We may proceed to creating the Capacity offering component, it's implementation should follow the following structure and if you see fit, use the Pricing, Media and or Categories offering components as a point of reference:
 
 ```bash
 ├── builders/
