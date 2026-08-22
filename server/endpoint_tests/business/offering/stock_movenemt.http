@@ -1,0 +1,87 @@
+### Stock Movement - create stock in movement (POST http://localhost:5000/api/v1/businesses/{{businessId}}/stock-movements, {"inventoryId": "{{inventoryId}}", "type": "STOCK_IN", "quantity": 20, "reason": "Supplier delivery", "notes": "Purchase Order #PO-1001"}). This should:
+	### - create a StockMovement document
+	### - increase inventory quantity
+	### - create an Audit Log
+
+POST http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog
+Content-Type: application/json
+
+{
+    "inventoryId": "6a53559f9c212dd935c84356",
+    "type": "STOCK_IN",
+    "quantity": 20,
+    "reason": "Supplier delivery",
+    "notes": "Purchase Order #PO-1001"
+}
+
+# GET http://localhost:5000/api/v1/businesses/6a5265b409bfdeb110fd5f9a/stock-movements
+# Authorization: Bearer YOUR_ACCESS_TOKEN
+
+### Stock Movement - read
+
+GET http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog
+
+### Stock Movement - read 1
+
+GET http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements/6a53593bead45f56f759afa8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog
+
+### Stock Movement - create stock out movement
+
+POST http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog
+Content-Type: application/json
+
+{
+    "inventoryId": "6a53559f9c212dd935c84356",
+    "type": "STOCK_OUT",
+    "quantity": 10,
+    "reason": "Customer purchase",
+    "notes": "Invoice INV-1004"
+}
+
+### Stock Movement - stock adjustment (+/-) ({"inventoryId": "6a53559f9c212dd935c84356", "type": "ADJUSTMENT", "quantity": -3, "reason": "Damaged items", "notes": "Warehouse inspection"})
+
+POST http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog
+Content-Type: application/json
+
+{
+    "inventoryId": "6a53559f9c212dd935c84356",
+    "type": "ADJUSTMENT",
+    "quantity": 5,
+    "reason": "Stock recount",
+    "notes": "Found extra units"
+}
+
+# {
+#     "inventoryId": "6a53559f9c212dd935c84356",
+#     "type": "ADJUSTMENT",
+#     "quantity": -3,
+#     "reason": "Damaged items",
+#     "notes": "Warehouse inspection"
+# }
+
+
+### Stock Movement - Negative Inventory
+
+POST http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog
+Content-Type: application/json
+
+{
+    "inventoryId": "6a53559f9c212dd935c84356",
+    "type": "STOCK_OUT",
+    "quantity": 9999,
+    "reason": "Invalid test",
+    "notes": "Should fail"
+}
+
+# {}
+
+### Stock Movement - Pagination
+
+GET http://localhost:5000/api/v1/businesses/6a5354689c212dd935c84351/stock-movements?page=1&limit=5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTUzNTM0ODljMjEyZGQ5MzVjODQzNGUiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1MzUzNTQ5YzIxMmRkOTM1Yzg0MzUwIiwiaWF0IjoxNzgzODQ1NzE2LCJleHAiOjE3ODM5MzIxMTYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ._LeoV30JfOg5Q9RM-QspWVOCXI3LGKVq_A4lA4hQpog

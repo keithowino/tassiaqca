@@ -44,6 +44,7 @@ const setCategories = asyncHandler(async (req, res) => {
 		offeringId: params.offeringId,
 		categoryIds: body.categoryIds,
 		actor: req.user,
+		requestMetadata: req.requestMetadata,
 	});
 
 	return success(

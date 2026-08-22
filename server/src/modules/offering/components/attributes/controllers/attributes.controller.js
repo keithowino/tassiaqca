@@ -43,6 +43,7 @@ const setAttributes = asyncHandler(async (req, res) => {
 		offeringId: params.offeringId,
 		attributes: body.attributes,
 		actor: req.user,
+		requestMetadata: req.requestMetadata,
 	});
 
 	return success(

@@ -11,7 +11,24 @@ import {
 
 import { normalizeTags } from "../validators/index.js";
 
+import {
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+
 class TagsService {
+	ensureTagsComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.TAGS,
+			"Tags are not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {};
+	}
+
 	/**
 	 * Replaces the complete tag collection for an Offering.
 	 *
@@ -31,7 +48,9 @@ class TagsService {
 	async setTags({ businessId, offeringId, tags = [], actor }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureTagsComponentSupported(offering);
 
 		const normalizedTags = normalizeTags(tags);
 
@@ -70,7 +89,9 @@ class TagsService {
 	async getByOffering(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureTagsComponentSupported(offering);
 
 		const tags = await tagsRepository.findByOffering(offeringId);
 

@@ -1,7 +1,7 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4OTQyOGU2NmY4NjZmNmFiMzEyNmZiIiwiaWF0IjoxNzg3MzgwMzY2LCJleHAiOjE3ODc0NjY3NjYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.jqh_XgKXJPGu4gpvIiVkrmyx4sGStXzJDuFLltlPdmE
 Content-Type: application/json
 
 # {
@@ -29,13 +29,20 @@ Content-Type: application/json
 #     "description": "Automotive repair services"
 # }
 
-
 # {
-#     "type": "BOOKING",
-#     "name": "Tassia Hall",
-#     "shortDescription": "Booking",
-#     "description": "Booking space."
+#     "type": "COURSE",
+#     "name": "Full Stack Web Development",
+#     "shortDescription": "Complete full-stack web development course",
+#     "description": "Learn frontend, backend, databases and deployment."
 # }
+
+
+{
+    "type": "BOOKING",
+    "name": "Tassia Hall",
+    "shortDescription": "Booking",
+    "description": "Booking space."
+}
 
 # Pricing
 
@@ -424,6 +431,19 @@ Content-Type: application/json
 # 	]
 # }
 
+# Duration
+
+# {
+#     "type": "COURSE",
+#     "name": "Advanced Node.js Architecture",
+#     "shortDescription": "Advanced backend architecture course",
+#     "description": "Domain-driven Node.js application architecture.",
+#     "duration": {
+#         "duration": 10,
+#         "unit": "WEEKS"
+#     }
+# }
+
 ### List Offerings
 
 GET http://localhost:5000/api/v1/businesses/6a6c7a15c4217e5be0e7c210/offerings
@@ -436,8 +456,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1Y
 
 ### Update Offering
 
-PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ca3a41af304dbe6488652
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3Yzk4ZDk1MGJkM2RhYWEwMDEzNjE1IiwiaWF0IjoxNzg2NTUwNDg5LCJleHAiOjE3ODY2MzY4ODksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.Ag_W8uWRkBqbEQ5Dya2JtqKFVUGuNVxO4ZquXfTl7lo
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a87ebaf3557ec2629d8394b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
 Content-Type: application/json
 
 # {
@@ -508,27 +528,33 @@ Content-Type: application/json
 # }
 
 # Attribute
-{
-    "attributes": [
-        {
-            "name": "Color",
-            "values": [
-                "Black",
-                "Silver",
-                "Blue"
-            ]
-        },
-        {
-            "name": "RAM",
-            "values": [
-                "16GB",
-                "32GB",
-                "64GB"
-            ]
-        }
-    ]
-}
 
 # {
-#     "description": "Updated description"
+#     "attributes": [
+#         {
+#             "name": "Color",
+#             "values": [
+#                 "Black",
+#                 "Silver",
+#                 "Blue"
+#             ]
+#         },
+#         {
+#             "name": "RAM",
+#             "values": [
+#                 "16GB",
+#                 "32GB",
+#                 "64GB"
+#             ]
+#         }
+#     ]
 # }
+
+# Duration
+
+{
+    "duration": {
+        "duration": 14,
+        "unit": "WEEKS"
+    }
+}

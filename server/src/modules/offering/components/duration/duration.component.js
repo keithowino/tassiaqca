@@ -8,7 +8,7 @@ import {
 
 import { durationService } from "./services/index.js";
 
-const durationComponent = {
+export const durationComponent = {
 	...componentContract,
 
 	validateCreate(context) {
@@ -117,7 +117,5 @@ const durationComponent = {
 		}
 	},
 };
-
-export { durationComponent };
 
 export default durationComponent;

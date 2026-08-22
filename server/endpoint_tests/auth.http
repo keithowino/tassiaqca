@@ -173,23 +173,23 @@ Content-Type: application/json
 ### User A's sessions
 
 GET http://localhost:5000/api/v1/auth/sessions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTVlZGFhMDkyYjQ1MGIxZWVmNjY5IiwiaWF0IjoxNzgzMjU4ODQyLCJleHAiOjE3ODMzNDUyNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T70UXY3fsVc4sXnGqEecquTQmtWXVQsRfQgDE6iTIMw
+Authorization: Bearer {{access token}}
 Content-Type: application/json
 
 ### User B's sessions
 
 GET http://localhost:5000/api/v1/auth/sessions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTViZGZhMDkyYjQ1MGIxZWVmNjY2IiwiaWF0IjoxNzgzMjU4MDc5LCJleHAiOjE3ODMzNDQ0NzksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.GV4AQoPLbYr5DkzEZ7Omxlc3R14N7P5h5ccz2hWAXlo
+Authorization: Bearer {{access token}}
 Content-Type: application/json
 
 ### revoke/ delete 1 of User A's sessions
 
 DELETE http://localhost:5000/api/v1/auth/sessions/6a4a57d7a258d76a2029bbb1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTUwZDQ3N2VjOGZkMmY2ZjgwNTdhIiwiaWF0IjoxNzgzMjU1MjUyLCJleHAiOjE3ODMzNDE2NTIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DlBIxE1Sxq5gIgRs3f23lpXC4A6ANNh_SmiUoduaruA
+Authorization: Bearer {{access token}}
 Content-Type: application/json
 
 ### Revoke other User A's sessions
 
 DELETE http://localhost:5000/api/v1/auth/sessions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0YTVlZGFhMDkyYjQ1MGIxZWVmNjY5IiwiaWF0IjoxNzgzMjU4ODQyLCJleHAiOjE3ODMzNDUyNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.T70UXY3fsVc4sXnGqEecquTQmtWXVQsRfQgDE6iTIMw
+Authorization: Bearer {{access token}}
 Content-Type: application/json

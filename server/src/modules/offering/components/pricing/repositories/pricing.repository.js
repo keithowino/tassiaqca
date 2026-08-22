@@ -3,7 +3,7 @@ import { OfferingPricing } from "../models/index.js";
 
 class PricingRepository {
 	async create(data, session = null) {
-		const [pricing] = await Pricing.create([data], {
+		const [pricing] = await OfferingPricing.create([data], {
 			session,
 		});
 
@@ -17,18 +17,18 @@ class PricingRepository {
 	}
 
 	async findById(id) {
-		return Pricing.findById(id);
+		return OfferingPricing.findById(id);
 	}
 
 	async findCurrentByOffering(offeringId, session = null) {
-		return Pricing.findOne({
+		return OfferingPricing.findOne({
 			offering: offeringId,
 			isCurrent: true,
 		}).session(session);
 	}
 
 	async findHistoryByOffering(offeringId) {
-		return Pricing.find({
+		return OfferingPricing.find({
 			offering: offeringId,
 		}).sort({
 			effectiveFrom: -1,
@@ -36,7 +36,7 @@ class PricingRepository {
 	}
 
 	async findCurrentByBusiness(businessId) {
-		return Pricing.find({
+		return OfferingPricing.find({
 			business: businessId,
 			isCurrent: true,
 		}).sort({
@@ -49,7 +49,7 @@ class PricingRepository {
 		{ effectiveTo = new Date(), updatedBy = null } = {},
 		session = null,
 	) {
-		const current = await Pricing.findOne({
+		const current = await OfferingPricing.findOne({
 			offering: offeringId,
 			isCurrent: true,
 		}).session(session);
@@ -70,7 +70,7 @@ class PricingRepository {
 	 * Administrative cleanup only
 	 */
 	async delete(id) {
-		return Pricing.findByIdAndDelete(id);
+		return OfferingPricing.findByIdAndDelete(id);
 	}
 }
 

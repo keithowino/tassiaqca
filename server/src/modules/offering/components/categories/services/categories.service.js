@@ -10,6 +10,10 @@ import {
 	HTTP_STATUS,
 	AppError,
 	ErrorCodes,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+	AUDIT_ENTITY_TYPES,
+	AUDIT_ACTIONS,
 } from "../../../../../shared/index.js";
 
 import {
@@ -23,6 +27,18 @@ import {
  * As per the AI's recommendation, adding them later merely to make the REST API look CRUD-complete would introduce unnecessary semantics.
  */
 class CategoriesService {
+	ensureCategoriesComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.CATEGORIES,
+			"Categories are not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {};
+	}
+
 	/**
 	 * Ensures that the supplied category IDs are valid MongoDB ObjectIds.
 	 */
@@ -56,10 +72,18 @@ class CategoriesService {
 	 * 9. Commit.
 	 * 10. Return resulting assignments.
 	 */
-	async setCategories({ businessId, offeringId, categoryIds = [], actor }) {
+	async setCategories({
+		businessId,
+		offeringId,
+		categoryIds = [],
+		actor,
+		requestMetadata,
+	}) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureCategoriesComponentSupported(offering);
 
 		const uniqueCategoryIds = [...new Set(categoryIds.map(String))];
 
@@ -91,6 +115,16 @@ class CategoriesService {
 				session,
 			);
 
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_CATEGORIES,
+				entityId: created.id,
+				action: AUDIT_ACTIONS.OFFERING_CATEGORIES_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(created),
+			});
+
 			await session.commitTransaction();
 
 			return categoriesPresenter.presentCollection(created);
@@ -105,7 +139,9 @@ class CategoriesService {
 	async getByOffering(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureCategoriesComponentSupported(offering);
 
 		const assignments =
 			await categoriesRepository.findByOffering(offeringId);

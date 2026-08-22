@@ -48,6 +48,7 @@ const setCurrentPricing = asyncHandler(async (req, res) => {
 		offeringId: params.offeringId,
 		data: body,
 		actor: req.user,
+		requestMetadata: req.requestMetadata,
 	});
 
 	return success(res, pricing, "Offering price updated successfully.");

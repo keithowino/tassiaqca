@@ -21,9 +21,29 @@ import {
 	HTTP_STATUS,
 	AppError,
 	ErrorCodes,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
 } from "../../../../../shared/index.js";
 
 class VariantsService {
+	ensureVariantsComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.VARIANTS,
+			"Variants are not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {
+			offeringId: data.offeringId,
+			sku: data.sku,
+			attributes: data.attributes,
+			attributeSignature: data.attributeSignature,
+			status: data.status,
+		};
+	}
+
 	async ensureProductOffering(offering) {
 		if (offering.type !== "PRODUCT") {
 			throw new AppError(
@@ -107,6 +127,8 @@ class VariantsService {
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
+		this.ensureVariantsComponentSupported(offering);
+
 		await this.ensureProductOffering(offering);
 
 		const variant = normalizeVariant(data);
@@ -136,12 +158,7 @@ class VariantsService {
 			action: AUDIT_ACTIONS.OFFERING_VARIANT_CREATED,
 			actor,
 			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: created.sku,
-				attributes: created.attributes,
-				attributeSignature: created.attributeSignature,
-			},
+			metadata: this.buildAuditMetadata(created),
 		});
 
 		return variantsPresenter.present(created);
@@ -151,6 +168,8 @@ class VariantsService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureVariantsComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -165,6 +184,8 @@ class VariantsService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureVariantsComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -195,6 +216,8 @@ class VariantsService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureVariantsComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -253,12 +276,7 @@ class VariantsService {
 			action: AUDIT_ACTIONS.OFFERING_VARIANT_UPDATED,
 			actor,
 			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: updated.sku,
-				attributes: updated.attributes,
-				status: updated.status,
-			},
+			metadata: this.buildAuditMetadata(updated),
 		});
 
 		return variantsPresenter.present(updated);
@@ -274,6 +292,8 @@ class VariantsService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureVariantsComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -310,10 +330,7 @@ class VariantsService {
 			action: AUDIT_ACTIONS.OFFERING_VARIANT_ARCHIVED,
 			actor,
 			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: archived.sku,
-			},
+			metadata: this.buildAuditMetadata(archived),
 		});
 
 		return variantsPresenter.present(archived);
@@ -329,6 +346,8 @@ class VariantsService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureVariantsComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -365,10 +384,7 @@ class VariantsService {
 			action: AUDIT_ACTIONS.OFFERING_VARIANT_RESTORED,
 			actor,
 			requestMetadata,
-			metadata: {
-				offeringId,
-				sku: restored.sku,
-			},
+			metadata: this.buildAuditMetadata(restored),
 		});
 
 		return variantsPresenter.present(restored);
@@ -384,6 +400,8 @@ class VariantsService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureVariantsComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 

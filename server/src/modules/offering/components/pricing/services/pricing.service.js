@@ -9,6 +9,15 @@ import {
 	ensureOfferingExists,
 } from "../../shared/index.js";
 
+import {
+	AUDIT_ACTIONS,
+	AUDIT_ENTITY_TYPES,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+
+import { auditLogService } from "../../../../audit/index.js";
+
 /**
  * Pricing Domain Service
  *
@@ -22,6 +31,18 @@ import {
  * price or a replacement.
  */
 class PricingService {
+	ensurePricingComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.PRICING,
+			"Pricing is not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {};
+	}
+
 	/**
 	 * Sets the current price for an Offering.
 	 *
@@ -39,10 +60,18 @@ class PricingService {
 	 * 7. Commit transaction.
 	 * 8. Return created price.
 	 */
-	async setCurrentPrice({ businessId, offeringId, data, actor }) {
+	async setCurrentPrice({
+		businessId,
+		offeringId,
+		data,
+		actor,
+		requestMetadata,
+	}) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensurePricingComponentSupported(offering);
 
 		const session = await mongoose.startSession();
 
@@ -74,6 +103,16 @@ class PricingService {
 
 			const created = await pricingRepository.create(pricing, session);
 
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_PRICING,
+				entityId: created.id,
+				action: AUDIT_ACTIONS.OFFERING_PRICING_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(created),
+			});
+
 			await session.commitTransaction();
 
 			return pricingPresenter.present(created);
@@ -89,7 +128,9 @@ class PricingService {
 	async getCurrent(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensurePricingComponentSupported(offering);
 
 		const pricing =
 			await pricingRepository.findCurrentByOffering(offeringId);
@@ -100,7 +141,9 @@ class PricingService {
 	async getHistory(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensurePricingComponentSupported(offering);
 
 		const history =
 			await pricingRepository.findHistoryByOffering(offeringId);

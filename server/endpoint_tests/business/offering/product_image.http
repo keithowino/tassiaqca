@@ -1,0 +1,108 @@
+### Product Image - create ({"productId": "6a549e57f904ed96377f22fd", "url": "https://res.cloudinary.com/demo/image/upload/v1234567890/products/dell-xps-13-front.jpg", "storageKey": "products/dell-xps-13-front", "altText": "Dell XPS 13 Front View", "isPrimary": true, "sortOrder": 1})
+
+POST http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NDlkOTFmOTA0ZWQ5NjM3N2YyMmY5IiwiaWF0IjoxNzgzOTMwMjU3LCJleHAiOjE3ODQwMTY2NTcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.uO0x-74xtobxCBGfcmwasznziGkTFJQwXmdAMNf-rYg
+Content-Type: application/json
+
+# {
+# 	"productId": "6a54aaf055340597b1648ffb",
+# 	"url": "https://res.cloudinary.com/demo/image/upload/v1234567890/products/dell-xps-13-front.jpg",
+# 	"storageKey": "products/dell-xps-13-front",
+# 	"altText": "Dell XPS 13 Front View",
+# 	"isPrimary": true,
+# 	"sortOrder": 1
+# }
+
+# {
+# 	"productId": "6a54aaf055340597b1648ffb",
+# 	"url": "https://res.cloudinary.com/demo/image/upload/v1234567890/products/dell-xps-13-back.jpg",
+# 	"storageKey": "products/dell-xps-13-back",
+# 	"altText": "Dell XPS 13 Rear View",
+# 	"sortOrder": 2
+# }
+
+# (invalid productId)
+
+# {
+# 	"productId": "688888888888888888888888",
+# 	"url": "https://example.com/image.jpg",
+# 	"storageKey": "products/example",
+# 	"altText": "Invalid Product"
+# }
+
+{}
+
+###
+
+### Upload Product Image
+
+POST http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NWYxZDk1MDNkYWI2ZGNkY2U1ZTJkIiwiaWF0IjoxNzg0MDE3MzY5LCJleHAiOjE3ODQxMDM3NjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZSLunSfIixzO9Git6Pl_6xp-FguswZsNTtSR_tp1jaA
+Content-Type: multipart/form-data; boundary=ProductImageBoundary
+
+--ProductImageBoundary
+Content-Disposition: form-data; name="productId"
+
+6a54aaf055340597b1648ffb
+--ProductImageBoundary
+Content-Disposition: form-data; name="altText"
+
+Dell XPS 13 Front View
+--ProductImageBoundary
+Content-Disposition: form-data; name="isPrimary"
+
+true
+--ProductImageBoundary
+Content-Disposition: form-data; name="sortOrder"
+
+1
+--ProductImageBoundary
+Content-Disposition: form-data; name="image"; filename="dell-front.jpg"
+Content-Type: image/txt
+
+# < ../../../../../assets/pictures/Screenshot 2026-04-15 023840.png
+# --ProductImageBoundary--
+
+< ../../../../../assets/pictures/6mb.txt
+--ProductImageBoundary--
+
+### Product Image - read
+
+GET http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NWYxZDk1MDNkYWI2ZGNkY2U1ZTJkIiwiaWF0IjoxNzg0MDE3MzY5LCJleHAiOjE3ODQxMDM3NjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZSLunSfIixzO9Git6Pl_6xp-FguswZsNTtSR_tp1jaA
+
+### Product Image - read (invalid business)
+
+GET http://localhost:5000/api/v1/businesses/688888888888888888888888/product-images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NDlkOTFmOTA0ZWQ5NjM3N2YyMmY5IiwiaWF0IjoxNzgzOTMwMjU3LCJleHAiOjE3ODQwMTY2NTcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.uO0x-74xtobxCBGfcmwasznziGkTFJQwXmdAMNf-rYg
+
+### Product Image - read 1
+
+GET http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/6a55e528a514d1b8a2d607ed
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NDlkOTFmOTA0ZWQ5NjM3N2YyMmY5IiwiaWF0IjoxNzgzOTMwMjU3LCJleHAiOjE3ODQwMTY2NTcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.uO0x-74xtobxCBGfcmwasznziGkTFJQwXmdAMNf-rYg
+
+### ### Product Image - read 1 (GET http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/688888888888888888888888)
+
+GET http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/688888888888888888888888
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NDlkOTFmOTA0ZWQ5NjM3N2YyMmY5IiwiaWF0IjoxNzgzOTMwMjU3LCJleHAiOjE3ODQwMTY2NTcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.uO0x-74xtobxCBGfcmwasznziGkTFJQwXmdAMNf-rYg
+
+### Product Image - update
+
+PATCH http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/6a54ab8b55340597b1648fff
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NDlkOTFmOTA0ZWQ5NjM3N2YyMmY5IiwiaWF0IjoxNzgzOTMwMjU3LCJleHAiOjE3ODQwMTY2NTcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.uO0x-74xtobxCBGfcmwasznziGkTFJQwXmdAMNf-rYg
+Content-Type: application/json
+
+{
+	"altText": "Updated Dell XPS 13 Front View",
+	"sortOrder": 5
+}
+
+### Product Image - set primary (PATCH http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/:imageId/primary)
+
+PATCH http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/6a54ab8b55340597b1648fff/primary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NDlkOTFmOTA0ZWQ5NjM3N2YyMmY5IiwiaWF0IjoxNzgzOTMwMjU3LCJleHAiOjE3ODQwMTY2NTcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.uO0x-74xtobxCBGfcmwasznziGkTFJQwXmdAMNf-rYg
+
+### Product Image - delete
+
+DELETE http://localhost:5000/api/v1/businesses/6a549e05f904ed96377f22fa/product-images/6a55f658503dab6dcdce5e33
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTU0OWQ4N2Y5MDRlZDk2Mzc3ZjIyZjciLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE1NWYxZDk1MDNkYWI2ZGNkY2U1ZTJkIiwiaWF0IjoxNzg0MDE3MzY5LCJleHAiOjE3ODQxMDM3NjksImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.ZSLunSfIixzO9Git6Pl_6xp-FguswZsNTtSR_tp1jaA

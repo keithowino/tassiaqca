@@ -40,6 +40,7 @@ const setSeo = asyncHandler(async (req, res) => {
 		offeringId: params.offeringId,
 		data: body,
 		actor: req.user,
+		requestMetadata: req.requestMetadata,
 	});
 
 	return success(res, seo, "Offering SEO updated successfully.");

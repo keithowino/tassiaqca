@@ -11,11 +11,43 @@ import {
 	ensureOfferingExists,
 } from "../../shared/index.js";
 
+import {
+	AUDIT_ACTIONS,
+	AUDIT_ENTITY_TYPES,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+import { auditLogService } from "../../../../audit/index.js";
+
 class AttributesService {
-	async setAttributes({ businessId, offeringId, attributes = [], actor }) {
+	ensureAttributeComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.ATTRIBUTES,
+			"Attributes are not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {
+			offeringId: data.offering,
+			createdBy: data.createdBy,
+			updatedBy: data.updatedBy,
+		};
+	}
+
+	async setAttributes({
+		businessId,
+		offeringId,
+		attributes = [],
+		actor,
+		requestMetadata,
+	}) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureAttributeComponentSupported(offering);
 
 		const normalizedAttributes = normalizeAttributes(attributes);
 
@@ -40,6 +72,16 @@ class AttributesService {
 				session,
 			);
 
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_ATTRIBUTES,
+				entityId: created.id,
+				action: AUDIT_ACTIONS.OFFERING_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(created),
+			});
+
 			await session.commitTransaction();
 
 			return attributesPresenter.presentCollection(created);
@@ -54,7 +96,9 @@ class AttributesService {
 	async getByOffering(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureAttributeComponentSupported(offering);
 
 		const attributes =
 			await attributesRepository.findByOffering(offeringId);

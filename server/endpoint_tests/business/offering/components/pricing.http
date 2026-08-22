@@ -4,19 +4,18 @@ GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
 Content-Type: application/json
 
-### Set Initial Current Price
+### Pricing - Set
 
-PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ef51c7591965d44febf83/pricing
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a89442166f866f6ab3126fc/pricing
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4OTQyOGU2NmY4NjZmNmFiMzEyNmZiIiwiaWF0IjoxNzg3MzgwMzY2LCJleHAiOjE3ODc0NjY3NjYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.jqh_XgKXJPGu4gpvIiVkrmyx4sGStXzJDuFLltlPdmE
 Content-Type: application/json
 
-# {
-# 	"amount": 85000,
-# 	"costPrice": 70000,
-# 	"currency": "KES",
-# 	"billingModel": "ONE_TIME",
-# 	"changeReason": "Update offering price"
-# }
+{
+	"amount": 85000,
+	"costPrice": 70000,
+	"currency": "KES",
+	"billingModel": "ONE_TIME"
+}
 
 # {
 # 	"amount": 105000,
@@ -26,13 +25,13 @@ Content-Type: application/json
 # 	"changeReason": "Third pricing revision"
 # }
 
-{
-	"amount": 107000,
-	"costPrice": 86000,
-	"currency": "KES",
-	"billingModel": "ONE_TIME",
-	"changeReason": "Update"
-}
+# {
+# 	"amount": 107000,
+# 	"costPrice": 86000,
+# 	"currency": "KES",
+# 	"billingModel": "ONE_TIME",
+# 	"changeReason": "Update"
+# }
 
 ### Get Pricing History
 

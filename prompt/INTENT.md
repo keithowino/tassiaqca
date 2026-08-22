@@ -1982,6 +1982,27 @@ Booking
 
 ---
 
+```bash
+                    OFFERING REGISTRY
+                           │
+                           ▼
+                 Component declarations
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+       Lifecycle Pipeline          Direct Component APIs
+             │                           │
+             ▼                           ▼
+      resolveComponents()       supportsComponent()
+             │                           │
+             ▼                           ▼
+       Execute hooks              Allow / Reject
+```
+
+One registry, two consumers, no duplicated business-type rules.
+
+---
+
 - We may proceed to Inventory REST testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.

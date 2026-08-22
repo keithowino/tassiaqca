@@ -15,11 +15,21 @@ import {
 	ErrorCodes,
 	AUDIT_ENTITY_TYPES,
 	AUDIT_ACTIONS,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
 } from "../../../../../shared/index.js";
 
 import { auditLogService } from "../../../../audit/index.js";
 
 class DurationService {
+	ensureDurationComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.DURATION,
+			"Duration is not supported for this offering.",
+		);
+	}
+
 	async ensureDurationDoesNotExist({ businessId, offeringId }) {
 		const existing = await durationRepository.findByOffering(
 			businessId,
@@ -48,6 +58,8 @@ class DurationService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureDurationComponentSupported(offering);
 
 		await this.ensureDurationDoesNotExist({
 			businessId,
@@ -81,6 +93,10 @@ class DurationService {
 
 		await ensureOfferingExists(businessId, offeringId);
 
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureDurationComponentSupported(offering);
+
 		const duration = await durationRepository.findByOffering(
 			businessId,
 			offeringId,
@@ -100,7 +116,9 @@ class DurationService {
 	async update({ businessId, offeringId, data, actor, requestMetadata }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureDurationComponentSupported(offering);
 
 		const duration = await durationRepository.findByOffering(
 			businessId,
@@ -137,7 +155,9 @@ class DurationService {
 	async archive({ businessId, offeringId, actor, requestMetadata }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureDurationComponentSupported(offering);
 
 		const duration = await durationRepository.findByOffering(
 			businessId,
@@ -181,7 +201,9 @@ class DurationService {
 	async restore({ businessId, offeringId, actor, requestMetadata }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureDurationComponentSupported(offering);
 
 		const duration =
 			await durationRepository.findByOfferingIncludingArchived(

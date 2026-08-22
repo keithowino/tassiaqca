@@ -4,7 +4,6 @@ import { OFFERING_COMPONENTS } from "./offeringComponent.constants.js";
 import { OFFERING_COMPONENT_CATEGORIES } from "./offeringComponentCategory.constants.js";
 
 import pricingComponent from "../../../modules/offering/components/pricing/pricing.component.js";
-
 import metadataComponent from "../../../modules/offering/components/metadata/metadata.component.js";
 import tagsComponent from "../../../modules/offering/components/tags/tags.component.js";
 import categoriesComponent from "../../../modules/offering/components/categories/categories.component.js";

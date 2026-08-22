@@ -9,11 +9,33 @@ import {
 	ensureOfferingExists,
 } from "../../shared/index.js";
 
+import {
+	AUDIT_ACTIONS,
+	AUDIT_ENTITY_TYPES,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+import { auditLogService } from "../../../../audit/index.js";
+
 class SeoService {
-	async setSeo({ businessId, offeringId, data, actor }) {
+	ensureSeoComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.SEO,
+			"SEO is not supported for this offering.",
+		);
+	}
+
+	buildAuditMetadata(data) {
+		return {};
+	}
+
+	async setSeo({ businessId, offeringId, data, actor, requestMetadata }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureSeoComponentSupported(offering);
 
 		const normalizedSeo = normalizeSeo(data);
 
@@ -32,6 +54,16 @@ class SeoService {
 
 			const created = await seoRepository.create(seo);
 
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_SEO,
+				entityId: created.id,
+				action: AUDIT_ACTIONS.OFFERING_SEO_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(created),
+			});
+
 			return seoPresenter.present(created);
 		}
 
@@ -44,13 +76,25 @@ class SeoService {
 
 		const updated = await seoRepository.save(existing);
 
+		await auditLogService.log({
+			business: businessId,
+			entityType: AUDIT_ENTITY_TYPES.OFFERING_SEO,
+			entityId: updated.id,
+			action: AUDIT_ACTIONS.OFFERING_SEO_UPDATED,
+			actor,
+			requestMetadata,
+			metadata: this.buildAuditMetadata(created),
+		});
+
 		return seoPresenter.present(updated);
 	}
 
 	async getByOffering(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureSeoComponentSupported(offering);
 
 		const seo = await seoRepository.findByBusinessAndOffering(
 			businessId,

@@ -1,49 +1,35 @@
-### Inventory - Create
+### Duration - Create
 
-POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a89442166f866f6ab3126fc/inventory
+POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a89442166f866f6ab3126fc/duration
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4OTQyOGU2NmY4NjZmNmFiMzEyNmZiIiwiaWF0IjoxNzg3MzgwMzY2LCJleHAiOjE3ODc0NjY3NjYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.jqh_XgKXJPGu4gpvIiVkrmyx4sGStXzJDuFLltlPdmE
 Content-Type: application/json
 
-# {
-# 	"quantity": 100,
-# 	"reservedQuantity": 0,
-# 	"lowStockThreshold": 10
-# }
-
 {
-	"quantity": 50,
-	"reservedQuantity": 0,
-	"lowStockThreshold": 5
+    "duration": 12,
+    "unit": "WEEKS"
 }
 
-### Inventory - Read
+### Duration - Read
 
-GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a86cbb1de9738b97eff87c6/inventory
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a87d48ee8f335d02db5c88e/duration
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
 
-### Inventory - Update
+### Duration - Update
 
-PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a86b9b2de9738b97eff87bb/inventory
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a87d48ee8f335d02db5c88e/duration
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
 Content-Type: application/json
 
 {
-	"lowStockThreshold": 25
+    "unit": "INVALID"
 }
 
-### Inventory - Archive
+### Duration - Archive
 
-PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a86b9b2de9738b97eff87bb/inventory/archive
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a87d48ee8f335d02db5c88e/duration/archive
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
 
-### Inventory - Create Variant Inventory
+### Duration - Restore
 
-POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a86b9b2de9738b97eff87bb/inventory?variantId=6a86b9b3de9738b97eff87be
+PATCH http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a87d48ee8f335d02db5c88e/duration/restore
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4NmI5OGZkZTk3MzhiOTdlZmY4N2JhIiwiaWF0IjoxNzg3MjE0MjIzLCJleHAiOjE3ODczMDA2MjMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.bSz2Thi92K-gX-HQcT7nvVsIg3sK8-fwzrmif9kFzfA
-Content-Type: application/json
-
-{
-    "quantity": 50,
-    "reservedQuantity": 5,
-    "lowStockThreshold": 10
-}

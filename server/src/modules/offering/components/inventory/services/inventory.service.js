@@ -17,10 +17,21 @@ import {
 	ErrorCodes,
 	AUDIT_ENTITY_TYPES,
 	AUDIT_ACTIONS,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
 } from "../../../../../shared/index.js";
+
 import { auditLogService } from "../../../../audit/index.js";
 
 class InventoryService {
+	ensureInventoryComponentSupported(offering) {
+		return ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.INVENTORY,
+			"Inventory is not supported for this offering.",
+		);
+	}
+
 	async ensureProductOffering(offering) {
 		if (offering.type !== "PRODUCT") {
 			throw new AppError(
@@ -107,6 +118,8 @@ class InventoryService {
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
+		this.ensureInventoryComponentSupported(offering);
+
 		await this.ensureProductOffering(offering);
 
 		await this.ensureVariantBelongsToOffering({
@@ -157,6 +170,8 @@ class InventoryService {
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
+		this.ensureInventoryComponentSupported(offering);
+
 		await this.ensureProductOffering(offering);
 
 		const inventory = await inventoryRepository.findByOffering(
@@ -172,6 +187,8 @@ class InventoryService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureInventoryComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -195,6 +212,8 @@ class InventoryService {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureInventoryComponentSupported(offering);
 
 		await this.ensureProductOffering(offering);
 
@@ -253,7 +272,9 @@ class InventoryService {
 	async archive({ businessId, offeringId }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureInventoryComponentSupported(offering);
 
 		await inventoryRepository.archiveByOffering(businessId, offeringId);
 
@@ -266,7 +287,9 @@ class InventoryService {
 	async restore({ businessId, offeringId }) {
 		await ensureBusinessExists(businessId);
 
-		await ensureOfferingExists(businessId, offeringId);
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureInventoryComponentSupported(offering);
 
 		await inventoryRepository.restoreByOffering(businessId, offeringId);
 
