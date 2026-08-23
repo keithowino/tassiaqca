@@ -53,11 +53,6 @@ class InventoryService {
 			return null;
 		}
 
-		// // findByOfferingAndId(offeringId, variantId)
-		// const variant = await variantsRepository.findByBusinessAndId(
-		// 	businessId,
-		// 	variantId,
-		// );
 		const variant = await variantsRepository.findByOfferingAndId(
 			offeringId,
 			variantId,
@@ -85,13 +80,6 @@ class InventoryService {
 			variantId,
 		);
 
-		// if (existing) {
-		// 	throw new AppError(
-		// 		"Inventory already exists for this offering.",
-		// 		HTTP_STATUS.CONFLICT,
-		// 		ErrorCodes.CONFLICT,
-		// 	);
-		// }
 		if (existing) {
 			throw new AppError(
 				variantId

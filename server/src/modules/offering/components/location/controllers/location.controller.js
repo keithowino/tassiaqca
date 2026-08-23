@@ -6,10 +6,10 @@ import {
 
 import { businessOfferingParamsSchema } from "../../shared/index.js";
 
-import { capacityService } from "../services/index.js";
-import { setCapacitySchema } from "../validators/index.js";
+import { locationService } from "../services/index.js";
+import { setLocationSchema } from "../validators/index.js";
 
-const getCapacity = asyncHandler(async (req, res) => {
+const getLocation = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
 			params: businessOfferingParamsSchema,
@@ -17,24 +17,24 @@ const getCapacity = asyncHandler(async (req, res) => {
 		req,
 	);
 
-	const capacity = await capacityService.getCapacity(
+	const location = await locationService.getLocation(
 		params.businessId,
 		params.offeringId,
 	);
 
-	return success(res, capacity, "Offering capacity retrieved successfully.");
+	return success(res, location, "Offering location retrieved successfully.");
 });
 
-const setCapacity = asyncHandler(async (req, res) => {
+const setLocation = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
 			params: businessOfferingParamsSchema,
-			body: setCapacitySchema,
+			body: setLocationSchema,
 		},
 		req,
 	);
 
-	const capacity = await capacityService.setCapacity({
+	const location = await locationService.setLocation({
 		businessId: params.businessId,
 		offeringId: params.offeringId,
 		data: body,
@@ -42,10 +42,10 @@ const setCapacity = asyncHandler(async (req, res) => {
 		requestMetadata: req.requestMetadata,
 	});
 
-	return success(res, capacity, "Offering capacity updated successfully.");
+	return success(res, location, "Offering location updated successfully.");
 });
 
 export default {
-	getCapacity,
-	setCapacity,
+	getLocation,
+	setLocation,
 };

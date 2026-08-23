@@ -8,10 +8,6 @@ async function create(data, session = null) {
 	);
 }
 
-// async function save(inventory, session = null) {
-// 	return OfferingInventory.save(session ? { session } : undefined);
-// }
-
 async function save(inventory, session = null) {
 	if (!inventory) {
 		return null;

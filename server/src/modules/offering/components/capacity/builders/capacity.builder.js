@@ -33,8 +33,4 @@ class CapacityBuilder {
 	}
 }
 
-// export const capacityBuilder = new CapacityBuilder();
-
-// export default capacityBuilder;
-
 export default CapacityBuilder;

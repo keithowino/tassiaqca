@@ -1930,7 +1930,7 @@ For the first milestone, however, we can implement the Inventory component found
 
 ---
 
-## Whiledeveloping the duration offering component
+## While developing the duration offering component
 
 ### Offering Types
 
@@ -2003,11 +2003,17 @@ One registry, two consumers, no duplicated business-type rules.
 
 ---
 
+## While developing the location offering component
+
+One important architectural point: we are deliberately not adding a branch reference to this first Location implementation. The Architecture Specification treats business Locations as organizational configuration and Marketplace as the consumer of published location information. If we later establish a formal relationship between Offerings and Business Branches, that should be an explicit architectural decision rather than being silently embedded into the component now.
+
+---
+
 - We may proceed to Inventory REST testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering capacity component."
+git commit -m "feat(offering): Create the V1 of the offering location component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

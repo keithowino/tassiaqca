@@ -1,19 +1,16 @@
 import { AppError, ErrorCodes, HTTP_STATUS } from "../../index.js";
 import { offeringRegistry } from "./offering.registry.js";
 
-// export function offeringSupportsComponent(offering, componentId) {
-// 	const registration = offeringRegistry.get(offering.type);
-
-// 	if (!registration) {
-// 		return false;
-// 	}
-
-// 	return registration.components?.includes(componentId) ?? false;
-// }
-
 export function offeringSupportsComponent(offering, componentId) {
 	const registration = offeringRegistry.get(offering.type);
 
+	/**
+	 * Previous version
+	 *
+	 * if (!registration) { return false; }
+	 *
+	 * return registration.components?.includes(componentId) ?? false;
+	 */
 	return Boolean(
 		registration &&
 		Array.isArray(registration.components) &&

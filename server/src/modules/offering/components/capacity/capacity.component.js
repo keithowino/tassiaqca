@@ -33,7 +33,7 @@ export const capacityComponent = {
 		const capacity = await capacityService.setCapacity({
 			businessId,
 			offeringId: offering.id,
-			limit: data.capacity.limit,
+			data: data.capacity,
 			actor,
 			requestMetadata,
 		});
@@ -52,7 +52,7 @@ export const capacityComponent = {
 		const capacity = await capacityService.setCapacity({
 			businessId,
 			offeringId: offering.id,
-			limit: data.capacity.limit,
+			data: data.capacity,
 			actor,
 			requestMetadata,
 		});

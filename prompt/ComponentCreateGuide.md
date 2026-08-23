@@ -27,7 +27,7 @@ PHASE D — Availability / Time
 ────────────────────────────────────
 
 10. Duration  (covered)
-11. Capacity
+11. Capacity  (covered)
 12. Location
 13. Calendar
 14. Scheduling

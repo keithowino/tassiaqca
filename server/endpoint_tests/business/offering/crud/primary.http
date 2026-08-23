@@ -1,7 +1,7 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4OTQyOGU2NmY4NjZmNmFiMzEyNmZiIiwiaWF0IjoxNzg3MzgwMzY2LCJleHAiOjE3ODc0NjY3NjYsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.jqh_XgKXJPGu4gpvIiVkrmyx4sGStXzJDuFLltlPdmE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YWM5YzE1MmNkOTUwMWVhYTIyZWY4IiwiaWF0IjoxNzg3NDgwNTEzLCJleHAiOjE3ODc1NjY5MTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.JxsvNv0UEJuHsw263OfmIU8avrakCU43lKWFja5DJ5M
 Content-Type: application/json
 
 # {
@@ -27,6 +27,13 @@ Content-Type: application/json
 #     "name": "Takko Repair",
 #     "shortDescription": "Car repair.",
 #     "description": "Automotive repair services"
+# }
+
+# {
+#     "type": "EVENT",
+#     "name": "Solo Leveler",
+#     "shortDescription": "Ahjin Guild.",
+#     "description": "Opening of the Ahjin Guild."
 # }
 
 # {
@@ -455,6 +462,24 @@ Content-Type: application/json
         "limit": 100
     }
 }
+
+# Location
+
+# {
+#     "type": "EVENT",
+#     "name": "Solo Leveler",
+#     "shortDescription": "Ahjin Guild.",
+#     "description": "Opening of the Ahjin Guild.", 
+#     "location": {
+#         "name": "Ahjin Guild",
+#         "address": "Outer Ring Road",
+#         "city": "Nairobi",
+#         "county": "Nairobi",
+#         "country": "Kenya",
+#         "latitude": -1.3209,
+#         "longitude": 36.8952
+#     }
+# }
 
 
 

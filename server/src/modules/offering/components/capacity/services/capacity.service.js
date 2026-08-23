@@ -12,7 +12,6 @@ import {
 
 import { auditLogService } from "../../../../audit/index.js";
 
-// import { capacityBuilder, capacityFactory } from "../builders/index.js";
 import { capacityFactory } from "../builders/index.js";
 import { capacityPresenter } from "../presenters/index.js";
 import { capacityRepository } from "../repositories/index.js";
@@ -36,7 +35,7 @@ class CapacityService {
 	async setCapacity({
 		businessId,
 		offeringId,
-		limit,
+		data,
 		actor,
 		requestMetadata,
 	}) {
@@ -52,21 +51,14 @@ class CapacityService {
 		);
 
 		if (!capacity) {
-			// const data = capacityBuilder
-			// 	.setBusiness(businessId)
-			// 	.setOffering(offeringId)
-			// 	.setLimit(limit)
-			// 	.setCreatedBy(actor.id)
-			// 	.build();
-
-			const data = capacityFactory.createCapacityAssignment({
+			const assignment = capacityFactory.createCapacityAssignment({
 				businessId,
 				offeringId,
-				limit,
+				data,
 				actor,
 			});
 
-			capacity = await capacityRepository.create(data);
+			capacity = await capacityRepository.create(assignment);
 
 			await auditLogService.log({
 				business: businessId,
@@ -78,7 +70,7 @@ class CapacityService {
 				metadata: this.buildAuditMetadata(capacity),
 			});
 		} else {
-			capacity.limit = limit;
+			capacity.limit = data.limit;
 			capacity.updatedBy = actor.id;
 
 			await capacityRepository.save(capacity);
