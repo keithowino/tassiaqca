@@ -1,0 +1,31 @@
+### Calendar - Create
+
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8acd5c52cd9501eaa22efc/calendar
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YWM5YzE1MmNkOTUwMWVhYTIyZWY4IiwiaWF0IjoxNzg3NDgwNTEzLCJleHAiOjE3ODc1NjY5MTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.JxsvNv0UEJuHsw263OfmIU8avrakCU43lKWFja5DJ5M
+Content-Type: application/json
+
+# {
+#     "name": "Main Service Calendar",
+#     "timezone": "Africa/Nairobi",
+#     "type": "INTERNAL",
+#     "active": true
+# }
+
+# {
+#     "name": "Updated Service Calendar",
+#     "timezone": "Africa/Nairobi",
+#     "type": "INTERNAL",
+#     "active": false
+# }
+
+{
+    "name": "",
+    "timezone": "Africa/Nairobi",
+    "type": "INTERNAL",
+    "active": true
+}
+
+### Calendar - Read
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8acd5c52cd9501eaa22efc/calendar
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YWM5YzE1MmNkOTUwMWVhYTIyZWY4IiwiaWF0IjoxNzg3NDgwNTEzLCJleHAiOjE3ODc1NjY5MTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.JxsvNv0UEJuHsw263OfmIU8avrakCU43lKWFja5DJ5M
