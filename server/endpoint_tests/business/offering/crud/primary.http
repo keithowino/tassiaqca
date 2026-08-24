@@ -483,16 +483,30 @@ Content-Type: application/json
 
 # Scheduling
 
+# {
+#     "type": "SERVICE",
+#     "name": "DexStar Remote",
+#     "shortDescription": "Auto-repair.",
+#     "description": "Remote automotive repair services", 
+#     "scheduling": {
+# 		"mode": "RECURRING",
+# 		"timezone": "Africa/Nairobi",
+# 		"active": true
+# 	}
+# }
+
+# Booking
+
 {
     "type": "SERVICE",
-    "name": "DexStar Remote",
-    "shortDescription": "Auto-repair.",
-    "description": "Remote automotive repair services", 
-    "scheduling": {
-		"mode": "RECURRING",
-		"timezone": "Africa/Nairobi",
-		"active": true
-	}
+    "name": "Consultation",
+    "booking": {
+        "active": true,
+        "confirmationRequired": true,
+        "minimumAdvanceMinutes": 60,
+        "maximumAdvanceMinutes": 43200,
+        "cancellationWindowMinutes": 1440
+    }
 }
 
 

@@ -1,0 +1,36 @@
+### Booking - Create
+
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8befac0e8199f945c3f2b8/booking
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YWM5YzE1MmNkOTUwMWVhYTIyZWY4IiwiaWF0IjoxNzg3NDgwNTEzLCJleHAiOjE3ODc1NjY5MTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.JxsvNv0UEJuHsw263OfmIU8avrakCU43lKWFja5DJ5M
+Content-Type: application/json
+
+# {
+#     "active": true,
+#     "confirmationRequired": true,
+#     "minimumAdvanceMinutes": 60,
+#     "maximumAdvanceMinutes": 43200,
+#     "cancellationWindowMinutes": 1440
+# }
+
+# Invalid advance window
+
+# {
+#     "active": true,
+#     "confirmationRequired": true,
+#     "minimumAdvanceMinutes": 43200,
+#     "maximumAdvanceMinutes": 60,
+#     "cancellationWindowMinutes": 0
+# }
+
+{
+    "active": true,
+    "confirmationRequired": true,
+    "minimumAdvanceMinutes": -60,
+    "maximumAdvanceMinutes": 43200,
+    "cancellationWindowMinutes": 0
+}
+
+### Booking - Read
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8befac0e8199f945c3f2b8/booking
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YWM5YzE1MmNkOTUwMWVhYTIyZWY4IiwiaWF0IjoxNzg3NDgwNTEzLCJleHAiOjE3ODc1NjY5MTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.JxsvNv0UEJuHsw263OfmIU8avrakCU43lKWFja5DJ5M

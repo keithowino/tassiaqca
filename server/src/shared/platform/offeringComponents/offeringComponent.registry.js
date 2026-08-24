@@ -17,6 +17,7 @@ import capacityComponent from "../../../modules/offering/components/capacity/cap
 import locationComponent from "../../../modules/offering/components/location/location.component.js";
 import calendarComponent from "../../../modules/offering/components/calendar/calendar.component.js";
 import schedulingComponent from "../../../modules/offering/components/scheduling/scheduling.component.js";
+import bookingComponent from "../../../modules/offering/components/booking/booking.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -189,7 +190,7 @@ const components = [
 		id: OFFERING_COMPONENTS.BOOKING,
 		name: "Booking",
 		description: "Provides booking functionality.",
-		// implementation: bookingComponent,
+		implementation: bookingComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.SCHEDULING,
 		enabled: true,
 		experimental: false,

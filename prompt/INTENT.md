@@ -1674,11 +1674,90 @@ Scheduling
 
 ---
 
+## While developing the booking offering component
+
+```bash
+Customer selects Service
+        ↓
+Booking configuration
+        ↓
+Scheduling determines available times
+        ↓
+Calendar determines calendar
+        ↓
+Duration determines slot length
+        ↓
+Capacity determines remaining capacity
+        ↓
+Customer submits booking
+        ↓
+Booking transaction
+```
+
+### Frontend experience
+
+Eventually this will feed the Business Operating System's Offering configuration UI.
+
+Conceptually:
+
+```bash
+Offering Configuration
+│
+├── General
+├── Pricing
+├── Availability
+│   ├── Duration
+│   ├── Capacity
+│   ├── Calendar
+│   └── Scheduling
+│
+└── Booking
+    ├── Enable bookings
+    ├── Booking mode
+    ├── Advance booking rules
+    ├── Cancellation rules
+    └── Confirmation settings
+```
+
+### One architectural decision before coding
+
+I recommend the first Booking implementation remain configuration-only:
+
+```bash
+OfferingBooking
+```
+
+rather than immediately creating:
+
+```bash
+Booking
+BookingCustomer
+BookingSlot
+BookingStatus
+BookingPayment
+```
+
+Those represent actual customer transactions and would prematurely collapse booking configuration and booking execution into one model.
+
+That separation is particularly important because the architecture is explicitly designed around reusable capabilities and future Offering Types rather than industry-specific implementations.
+
+I’m deliberately not introducing a customer Booking transaction model yet. This implementation stores the Offering's booking configuration; the future customer booking workflow can consume it.
+
+We should only add:
+
+```bash
+OFFERING_COMPONENTS.BOOKING
+```
+
+to Service, Rental, Event, Course, etc. after verifying the current registry definitions and their intended booking workflows.
+
+---
+
 - We may proceed to Inventory REST testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering scheduling component."
+git commit -m "feat(offering): Create the V1 of the offering booking component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

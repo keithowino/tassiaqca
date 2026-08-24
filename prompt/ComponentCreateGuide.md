@@ -136,228 +136,116 @@ export function buildOffering({ businessId, data, slug, actor }) {
 ```
 
 ```js
-`~\server\src\modules\offering\components\pricing\builders\pricing.builder.js`;
-
-class PricingBuilder {
-	constructor() {
-		this.pricing = {};
-	}
-
-	setBusiness(businessId) {
-		this.pricing.business = businessId;
-		return this;
-	}
-
-	setOffering(offeringId) {
-		this.pricing.offering = offeringId;
-		return this;
-	}
-
-	setAmount(amount) {
-		this.pricing.amount = amount;
-		return this;
-	}
-
-	setCostPrice(costPrice) {
-		this.pricing.costPrice = costPrice ?? null;
-		return this;
-	}
-
-	setCurrency(currency) {
-		this.pricing.currency = currency;
-		return this;
-	}
-
-	setBillingModel(billingModel) {
-		this.pricing.billingModel = billingModel;
-		return this;
-	}
-
-	setEffectiveFrom(date) {
-		this.pricing.effectiveFrom = date;
-		return this;
-	}
-
-	setEffectiveTo(date) {
-		this.pricing.effectiveTo = date;
-		return this;
-	}
-
-	setCurrent(isCurrent = true) {
-		this.pricing.isCurrent = isCurrent;
-		return this;
-	}
-
-	setStatus(status) {
-		this.pricing.status = status;
-		return this;
-	}
-
-	setChangeReason(reason) {
-		this.pricing.changeReason = reason;
-		return this;
-	}
-
-	setMetadata(metadata = {}) {
-		this.pricing.metadata = metadata;
-		return this;
-	}
-
-	setCreatedBy(userId) {
-		this.pricing.createdBy = userId;
-		return this;
-	}
-
-	setUpdatedBy(userId) {
-		this.pricing.updatedBy = userId;
-		return this;
-	}
-
-	build() {
-		return Object.freeze({
-			...this.pricing,
-		});
-	}
-}
-
-export default PricingBuilder;
-```
-
-```js
-`~\server\src\modules\offering\components\pricing\builders\pricing.factory.js`;
-
-import PricingBuilder from "./pricing.builder.js";
-
-import {
-	BILLING_MODELS,
-	CURRENCIES,
-	OFFERING_PRICE_STATUS,
-} from "../../../../../shared/index.js";
-
-function createPricing({ businessId, offeringId, data, actor }) {
-	return new PricingBuilder()
-		.setBusiness(businessId)
-		.setOffering(offeringId)
-		.setAmount(data.amount)
-		.setCostPrice(data.costPrice)
-		.setCurrency(data.currency ?? CURRENCIES.KES)
-		.setBillingModel(data.billingModel ?? BILLING_MODELS.ONE_TIME)
-		.setEffectiveFrom(data.effectiveFrom ?? new Date())
-		.setEffectiveTo(data.effectiveTo ?? null)
-		.setCurrent(true)
-		.setStatus(OFFERING_PRICE_STATUS.ACTIVE)
-		.setChangeReason(data.changeReason)
-		.setMetadata(data.metadata ?? {})
-		.setCreatedBy(actor.id)
-		.build();
-}
-
-export default {
-	createPricing,
-};
-```
-
-```js
-`~\server\src\modules\offering\components\pricing\pricing.component.js`;
+`~\server\src\modules\offering\components\scheduling\scheduling.component.js`;
 
 import componentContract from "../component.contract.js";
 
-import { pricingService } from "./services/index.js";
+import { schedulingService } from "./services/index.js";
 
-import { setCurrentPricingSchema } from "./validators/index.js";
+import { setSchedulingSchema } from "./validators/index.js";
 
-/**
- * Pricing Component
- *
- * Integrates the Pricing domain into the Offering lifecycle.
- *
- * The component never performs pricing logic itself.
- * It delegates all pricing operations to the Pricing Service.
- */
-export const pricingComponent = {
+const schedulingComponent = {
 	...componentContract,
 
 	validateCreate(context) {
-		if (!context.data.pricing) {
+		if (context.data.scheduling === undefined) {
 			return;
 		}
 
-		setCurrentPricingSchema.parse(context.data.pricing);
+		setSchedulingSchema.parse(context.data.scheduling);
 	},
 
 	validateUpdate(context) {
-		if (!context.data.pricing) {
+		if (context.data.scheduling === undefined) {
 			return;
 		}
 
-		setCurrentPricingSchema.parse(context.data.pricing);
+		setSchedulingSchema.parse(context.data.scheduling);
 	},
 
-	/**
-	 * Create the initial price immediately after
-	 * the Offering has been created.
-	 */
 	async afterCreate(context) {
-		const { businessId, offering, data, actor, state } = context;
-
-		if (!data?.pricing) {
+		if (context.data.scheduling === undefined) {
 			return;
 		}
 
-		const pricing = await pricingService.setCurrentPrice({
-			businessId,
-			offeringId: offering.id,
-			data: data.pricing,
-			actor,
+		const scheduling = await schedulingService.setScheduling({
+			businessId: context.businessId,
+			offeringId: context.offering.id,
+			data: context.data.scheduling,
+			actor: context.actor,
+			requestMetadata: context.requestMetadata,
 		});
 
-		state.pricing = pricing;
+		context.state.scheduling = scheduling;
 	},
 
-	/**
-	 * Updating pricing creates a new immutable version.
-	 */
 	async afterUpdate(context) {
-		const { businessId, offering, data, actor, state } = context;
-
-		if (!data?.pricing) {
+		if (context.data.scheduling === undefined) {
 			return;
 		}
 
-		const pricing = await pricingService.setCurrentPrice({
-			businessId,
-			offeringId: offering.id,
-			data: data.pricing,
-			actor,
+		const scheduling = await schedulingService.setScheduling({
+			businessId: context.businessId,
+			offeringId: context.offering.id,
+			data: context.data.scheduling,
+			actor: context.actor,
+			requestMetadata: context.requestMetadata,
 		});
 
-		state.pricing = pricing;
+		context.state.scheduling = scheduling;
 	},
 };
 
-export default pricingComponent;
+export default schedulingComponent;
 ```
 
 ```js
-`~\server\src\modules\offering\components\pricing\controllers\pricing.controller.js`;
+`~\server\src\modules\offering\components\scheduling\routes\scheduling.routes.js`;
+
+import { Router } from "express";
+
+import { authenticate, requirePermission } from "../../../../identity/index.js";
+
+import { Permissions } from "../../../../../shared/index.js";
+
+import { schedulingController } from "../controllers/index.js";
+
+const router = Router({
+	mergeParams: true,
+});
+
+router.use(authenticate);
+
+router.get(
+	"/",
+	requirePermission(Permissions.OFFERING_VIEW),
+	schedulingController.getScheduling,
+);
+
+router.put(
+	"/",
+	requirePermission(Permissions.OFFERING_UPDATE),
+	schedulingController.setScheduling,
+);
+
+export default router;
+```
+
+```js
+`~\server\src\modules\offering\components\scheduling\controllers\scheduling.controller.js`;
 
 import {
-	validateRequest,
 	asyncHandler,
 	success,
+	validateRequest,
 } from "../../../../../shared/index.js";
-
-import { pricingService } from "../services/index.js";
-
-import { setCurrentPricingSchema } from "../validators/index.js";
 
 import { businessOfferingParamsSchema } from "../../shared/index.js";
 
-/**
- * Pricing did need independent API operations, but as domain operations rather than CRUD endpoints.
- */
+import { schedulingService } from "../services/index.js";
+import { setSchedulingSchema } from "../validators/index.js";
 
-const getCurrentPricing = asyncHandler(async (req, res) => {
+const getScheduling = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
 			params: businessOfferingParamsSchema,
@@ -365,28 +253,28 @@ const getCurrentPricing = asyncHandler(async (req, res) => {
 		req,
 	);
 
-	const pricing = await pricingService.getCurrent(
+	const scheduling = await schedulingService.getScheduling(
 		params.businessId,
 		params.offeringId,
 	);
 
 	return success(
 		res,
-		pricing,
-		"Current offering price retrieved successfully.",
+		scheduling,
+		"Offering scheduling retrieved successfully.",
 	);
 });
 
-const setCurrentPricing = asyncHandler(async (req, res) => {
+const setScheduling = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
 			params: businessOfferingParamsSchema,
-			body: setCurrentPricingSchema,
+			body: setSchedulingSchema,
 		},
 		req,
 	);
 
-	const pricing = await pricingService.setCurrentPrice({
+	const scheduling = await schedulingService.setScheduling({
 		businessId: params.businessId,
 		offeringId: params.offeringId,
 		data: body,
@@ -394,44 +282,21 @@ const setCurrentPricing = asyncHandler(async (req, res) => {
 		requestMetadata: req.requestMetadata,
 	});
 
-	return success(res, pricing, "Offering price updated successfully.");
-});
-
-const getPricingHistory = asyncHandler(async (req, res) => {
-	const { params } = validateRequest(
-		{
-			params: businessOfferingParamsSchema,
-		},
-		req,
-	);
-
-	const history = await pricingService.getHistory(
-		params.businessId,
-		params.offeringId,
-	);
-
 	return success(
 		res,
-		history,
-		"Offering pricing history retrieved successfully.",
+		scheduling,
+		"Offering scheduling updated successfully.",
 	);
 });
 
 export default {
-	getCurrentPricing,
-	setCurrentPricing,
-	getPricingHistory,
+	getScheduling,
+	setScheduling,
 };
 ```
 
 ```js
-`~\server\src\modules\offering\components\pricing\services\pricing.service.js`;
-
-import mongoose from "mongoose";
-
-import { pricingFactory } from "../builders/index.js";
-import { pricingPresenter } from "../presenters/index.js";
-import { pricingRepository } from "../repositories/index.js";
+`~\server\src\modules\offering\components\scheduling\services\scheduling.service.js`;
 
 import {
 	ensureBusinessExists,
@@ -447,49 +312,30 @@ import {
 
 import { auditLogService } from "../../../../audit/index.js";
 
-/**
- * Pricing Domain Service
- *
- * Owns pricing business rules.
- *
- * Pricing is immutable.
- * Updating a price creates a new version.
- *
- * The only public write operation is setting the current price.
- * Internally, the service determines whether it is the first
- * price or a replacement.
- */
-class PricingService {
-	ensurePricingComponentSupported(offering) {
-		return ensureOfferingSupportsComponent(
+import { schedulingFactory } from "../builders/index.js";
+import { schedulingPresenter } from "../presenters/index.js";
+import { schedulingRepository } from "../repositories/index.js";
+
+class SchedulingService {
+	ensureSchedulingSupported(offering) {
+		ensureOfferingSupportsComponent(
 			offering,
-			OFFERING_COMPONENTS.PRICING,
-			"Pricing is not supported for this offering.",
+			OFFERING_COMPONENTS.SCHEDULING,
+			"Scheduling is not supported for this offering.",
 		);
 	}
 
-	buildAuditMetadata(data) {
-		return {};
+	buildAuditMetadata(scheduling) {
+		return {
+			offeringId: scheduling.offering,
+			schedulingId: scheduling.id,
+			mode: scheduling.mode,
+			timezone: scheduling.timezone,
+			active: scheduling.active,
+		};
 	}
 
-	/**
-	 * Sets the current price for an Offering.
-	 *
-	 * Validation of the pricing payload is performed by the
-	 * Pricing Component before this service is invoked.
-	 *
-	 * Persistence is transactional:
-	 *
-	 * 1. Ensure business exists.
-	 * 2. Ensure Offering exists within this business.
-	 * 3. Start transaction.
-	 * 4. Find current price.
-	 * 5. Expire current price if one exists.
-	 * 6. Create new immutable price.
-	 * 7. Commit transaction.
-	 * 8. Return created price.
-	 */
-	async setCurrentPrice({
+	async setScheduling({
 		businessId,
 		offeringId,
 		data,
@@ -500,118 +346,161 @@ class PricingService {
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
-		this.ensurePricingComponentSupported(offering);
+		this.ensureSchedulingSupported(offering);
 
-		const session = await mongoose.startSession();
+		let scheduling = await schedulingRepository.findByBusinessAndOffering(
+			businessId,
+			offeringId,
+		);
 
-		try {
-			session.startTransaction();
-
-			const current = await pricingRepository.findCurrentByOffering(
-				offeringId,
-				session,
-			);
-
-			if (current) {
-				await pricingRepository.expireCurrentPrice(
-					offeringId,
-					{
-						effectiveTo: new Date(),
-						updatedBy: actor.id,
-					},
-					session,
-				);
-			}
-
-			const pricing = pricingFactory.createPricing({
+		if (!scheduling) {
+			const assignment = schedulingFactory.createSchedulingAssignment({
 				businessId,
 				offeringId,
 				data,
 				actor,
 			});
 
-			const created = await pricingRepository.create(pricing, session);
+			scheduling = await schedulingRepository.create(assignment);
 
 			await auditLogService.log({
 				business: businessId,
-				entityType: AUDIT_ENTITY_TYPES.OFFERING_PRICING,
-				entityId: created.id,
-				action: AUDIT_ACTIONS.OFFERING_PRICING_CREATED,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_SCHEDULING,
+				entityId: scheduling.id,
+				action: AUDIT_ACTIONS.OFFERING_SCHEDULING_CREATED,
 				actor,
 				requestMetadata,
-				metadata: this.buildAuditMetadata(created),
+				metadata: this.buildAuditMetadata(scheduling),
 			});
+		} else {
+			scheduling.mode = data.mode;
+			scheduling.timezone = data.timezone;
+			scheduling.active = data.active ?? scheduling.active;
+			scheduling.updatedBy = actor.id;
 
-			await session.commitTransaction();
+			await schedulingRepository.save(scheduling);
 
-			return pricingPresenter.present(created);
-		} catch (error) {
-			await session.abortTransaction();
-
-			throw error;
-		} finally {
-			await session.endSession();
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_SCHEDULING,
+				entityId: scheduling.id,
+				action: AUDIT_ACTIONS.OFFERING_SCHEDULING_UPDATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(scheduling),
+			});
 		}
+
+		return schedulingPresenter.present(scheduling);
 	}
 
-	async getCurrent(businessId, offeringId) {
+	async getScheduling(businessId, offeringId) {
 		await ensureBusinessExists(businessId);
 
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
-		this.ensurePricingComponentSupported(offering);
+		this.ensureSchedulingSupported(offering);
 
-		const pricing =
-			await pricingRepository.findCurrentByOffering(offeringId);
+		const scheduling = await schedulingRepository.findByBusinessAndOffering(
+			businessId,
+			offeringId,
+		);
 
-		return pricingPresenter.present(pricing);
-	}
-
-	async getHistory(businessId, offeringId) {
-		await ensureBusinessExists(businessId);
-
-		const offering = await ensureOfferingExists(businessId, offeringId);
-
-		this.ensurePricingComponentSupported(offering);
-
-		const history =
-			await pricingRepository.findHistoryByOffering(offeringId);
-
-		return pricingPresenter.presentCollection(history);
+		return schedulingPresenter.present(scheduling);
 	}
 }
 
-export const pricingService = new PricingService();
+export const schedulingService = new SchedulingService();
 
-export default pricingService;
+export default schedulingService;
 ```
 
 ```js
-`~\server\src\modules\offering\components\pricing\models\pricing.model.js`;
+`~\server\src\modules\offering\components\scheduling\builders\scheduling.builder.js`;
+
+class SchedulingBuilder {
+	constructor() {
+		this.scheduling = {};
+	}
+
+	setBusiness(businessId) {
+		this.scheduling.business = businessId;
+		return this;
+	}
+
+	setOffering(offeringId) {
+		this.scheduling.offering = offeringId;
+		return this;
+	}
+
+	setMode(mode) {
+		this.scheduling.mode = mode;
+		return this;
+	}
+
+	setTimezone(timezone) {
+		this.scheduling.timezone = timezone;
+		return this;
+	}
+
+	setActive(active) {
+		this.scheduling.active = active;
+		return this;
+	}
+
+	setCreatedBy(userId) {
+		this.scheduling.createdBy = userId;
+		return this;
+	}
+
+	setUpdatedBy(userId) {
+		this.scheduling.updatedBy = userId;
+		return this;
+	}
+
+	build() {
+		return Object.freeze({
+			...this.scheduling,
+		});
+	}
+}
+
+export default SchedulingBuilder;
+```
+
+```js
+`~\server\src\modules\offering\components\scheduling\builders\scheduling.factory.js`;
+
+import SchedulingBuilder from "./scheduling.builder.js";
+
+function createSchedulingAssignment({ businessId, offeringId, data, actor }) {
+	return new SchedulingBuilder()
+		.setBusiness(businessId)
+		.setOffering(offeringId)
+		.setMode(data.mode)
+		.setTimezone(data.timezone)
+		.setActive(data.active ?? true)
+		.setCreatedBy(actor.id)
+		.setUpdatedBy(actor.id)
+		.build();
+}
+
+export default {
+	createSchedulingAssignment,
+};
+```
+
+```js
+`~\server\src\modules\offering\components\scheduling\models\OfferingScheduling.js`;
 
 import mongoose from "mongoose";
 
 import {
-	BILLING_MODEL_VALUES,
-	BILLING_MODELS,
-	CURRENCIES,
-	CURRENCY_VALUES,
-	OFFERING_PRICE_STATUS,
-	OFFERING_PRICE_STATUS_VALUES,
+	OFFERING_SCHEDULING_MODE,
+	OFFERING_SCHEDULING_MODE_VALUES,
 } from "../../../../../shared/index.js";
 
-/**
- * #### Pricing Model V1
- *
- * Features such as multiple currencies, tiered pricing, promotions, taxes, regional pricing, and price histories can be layered on later without changing the core model.
- *
- * #### Immutable product pricing.
- *
- * Every price change creates a new document.
- * Existing records are never modified except for lifecycle fields
- * such as isCurrent/status/effectiveTo when superseded.
- */
-const pricingSchema = new mongoose.Schema(
+const offeringSchedulingSchema = new mongoose.Schema(
 	{
 		business: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -627,64 +516,25 @@ const pricingSchema = new mongoose.Schema(
 			index: true,
 		},
 
-		amount: {
-			type: mongoose.Schema.Types.Decimal128,
-			required: true,
-			min: 0,
-		},
-
-		costPrice: {
-			type: mongoose.Schema.Types.Decimal128,
-			default: null,
-			min: 0,
-		},
-
-		currency: {
+		mode: {
 			type: String,
-			enum: CURRENCY_VALUES,
-			default: CURRENCIES.KES,
 			required: true,
+			enum: OFFERING_SCHEDULING_MODE_VALUES,
+			default: OFFERING_SCHEDULING_MODE.FIXED,
 		},
 
-		billingModel: {
+		timezone: {
 			type: String,
-			enum: BILLING_MODEL_VALUES,
-			default: BILLING_MODELS.ONE_TIME,
+			required: true,
+			trim: true,
+			default: "Africa/Nairobi",
+			maxlength: 100,
 		},
 
-		effectiveFrom: {
-			type: Date,
-			default: Date.now,
-			index: true,
-		},
-
-		effectiveTo: {
-			type: Date,
-			default: null,
-		},
-
-		isCurrent: {
+		active: {
 			type: Boolean,
 			default: true,
-		},
-
-		status: {
-			type: String,
-			enum: OFFERING_PRICE_STATUS_VALUES,
-			default: OFFERING_PRICE_STATUS.ACTIVE,
 			index: true,
-		},
-
-		changeReason: {
-			type: String,
-			trim: true,
-			default: null,
-		},
-
-		metadata: {
-			type: Map,
-			of: mongoose.Schema.Types.Mixed,
-			default: {},
 		},
 
 		createdBy: {
@@ -696,7 +546,7 @@ const pricingSchema = new mongoose.Schema(
 		updatedBy: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
-			default: null,
+			required: true,
 		},
 	},
 	{
@@ -705,167 +555,253 @@ const pricingSchema = new mongoose.Schema(
 	},
 );
 
-/*
-|--------------------------------------------------------------------------
-| Indexes
-|--------------------------------------------------------------------------
-*/
-
-/**
- * Price history.
- */
-pricingSchema.index({
-	offering: 1,
-	effectiveFrom: -1,
-});
-
-/**
- * Business queries.
- */
-pricingSchema.index({
-	business: 1,
-	offering: 1,
-});
-
-/**
- * Ensure only one current price exists per product.
- */
-pricingSchema.index(
+offeringSchedulingSchema.index(
 	{
+		business: 1,
 		offering: 1,
-		isCurrent: 1,
 	},
 	{
 		unique: true,
-		partialFilterExpression: {
-			isCurrent: true,
-		},
 	},
 );
 
-export const OfferingPricing =
-	mongoose.models.OfferingPricing ||
-	mongoose.model("OfferingPricing", pricingSchema);
+export const OfferingScheduling =
+	mongoose.models.OfferingScheduling ||
+	mongoose.model("OfferingScheduling", offeringSchedulingSchema);
 
-export default OfferingPricing;
+export default OfferingScheduling;
 ```
 
 ```js
-`~\server\src\modules\offering\components\pricing\repositories\pricing.repository.js`;
+`~\server\src\modules\offering\components\scheduling\repositories\scheduling.repository.js`;
 
-import { OFFERING_PRICE_STATUS } from "../../../../../shared/index.js";
-import { OfferingPricing } from "../models/index.js";
+import { OfferingScheduling } from "../models/index.js";
 
-class PricingRepository {
-	async create(data, session = null) {
-		const [pricing] = await OfferingPricing.create([data], {
-			session,
-		});
-
-		return pricing;
+class SchedulingRepository {
+	async create(data) {
+		return OfferingScheduling.create(data);
 	}
 
-	async save(pricing, session = null) {
-		return pricing.save({
-			session,
-		});
-	}
-
-	async findById(id) {
-		return OfferingPricing.findById(id);
-	}
-
-	async findCurrentByOffering(offeringId, session = null) {
-		return OfferingPricing.findOne({
+	async findByOffering(offeringId) {
+		return OfferingScheduling.findOne({
 			offering: offeringId,
-			isCurrent: true,
-		}).session(session);
-	}
-
-	async findHistoryByOffering(offeringId) {
-		return OfferingPricing.find({
-			offering: offeringId,
-		}).sort({
-			effectiveFrom: -1,
 		});
 	}
 
-	async findCurrentByBusiness(businessId) {
-		return OfferingPricing.find({
+	async findByBusinessAndOffering(businessId, offeringId) {
+		return OfferingScheduling.findOne({
 			business: businessId,
-			isCurrent: true,
-		}).sort({
-			createdAt: -1,
+			offering: offeringId,
 		});
 	}
 
-	async expireCurrentPrice(
-		offeringId,
-		{ effectiveTo = new Date(), updatedBy = null } = {},
-		session = null,
-	) {
-		const current = await OfferingPricing.findOne({
-			offering: offeringId,
-			isCurrent: true,
-		}).session(session);
-
-		if (!current) {
-			return null;
-		}
-
-		current.isCurrent = false;
-		current.effectiveTo = effectiveTo;
-		current.updatedBy = updatedBy;
-		current.status = OFFERING_PRICE_STATUS.INACTIVE;
-
-		return this.save(current, session);
+	async save(scheduling) {
+		return scheduling.save();
 	}
 
-	/**
-	 * Administrative cleanup only
-	 */
-	async delete(id) {
-		return OfferingPricing.findByIdAndDelete(id);
+	async deleteByOffering(offeringId) {
+		return OfferingScheduling.deleteOne({
+			offering: offeringId,
+		});
 	}
 }
 
-export default new PricingRepository();
+export const schedulingRepository = new SchedulingRepository();
+
+export default schedulingRepository;
 ```
 
 ```js
-`~\server\src\modules\offering\components\pricing\routes\pricing.routes.js`;
+`~\server\src\modules\offering\components\scheduling\presenters\scheduling.presenter.js`;
 
-import { Router } from "express";
+import { getId } from "../../../../../shared/index.js";
 
-import pricingController from "../controllers/pricing.controller.js";
+class SchedulingPresenter {
+	present(scheduling) {
+		if (!scheduling) {
+			return null;
+		}
 
-import { requirePermission } from "../../../../identity/index.js";
+		return {
+			id: scheduling.id,
 
-import { Permissions } from "../../../../../shared/index.js";
+			businessId: getId(scheduling.business),
 
-const router = Router({
-	mergeParams: true,
+			offeringId: getId(scheduling.offering),
+
+			mode: scheduling.mode,
+			timezone: scheduling.timezone,
+			active: scheduling.active,
+
+			createdBy: getId(scheduling.createdBy),
+
+			updatedBy: getId(scheduling.updatedBy),
+
+			createdAt: scheduling.createdAt,
+			updatedAt: scheduling.updatedAt,
+		};
+	}
+}
+
+export const schedulingPresenter = new SchedulingPresenter();
+
+export default schedulingPresenter;
+```
+
+```js
+`~\server\src\modules\offering\components\scheduling\validators\scheduling.schema.js`;
+
+import { z } from "zod";
+
+import { OFFERING_SCHEDULING_MODE_VALUES } from "../../../../../shared/index.js";
+
+export const schedulingModeSchema = z.enum(OFFERING_SCHEDULING_MODE_VALUES);
+
+export const setSchedulingSchema = z.object({
+	mode: schedulingModeSchema,
+
+	timezone: z
+		.string()
+		.trim()
+		.min(1, "Timezone is required.")
+		.max(100, "Timezone cannot exceed 100 characters."),
+
+	active: z.boolean().optional(),
 });
 
-router.get(
-	"/",
-	requirePermission(Permissions.OFFERING_VIEW),
-	pricingController.getCurrentPricing,
-);
+export default setSchedulingSchema;
+```
 
-router.put(
-	"/",
-	requirePermission(Permissions.OFFERING_UPDATE),
-	pricingController.setCurrentPricing,
-);
+```js
+`~\server\src\modules\offering\components\calendar\services\calendar.service.js`;
 
-router.get(
-	"/history",
-	requirePermission(Permissions.OFFERING_VIEW),
-	pricingController.getPricingHistory,
-);
+import {
+	ensureBusinessExists,
+	ensureOfferingExists,
+} from "../../shared/index.js";
 
-export default router;
+import {
+	AUDIT_ACTIONS,
+	AUDIT_ENTITY_TYPES,
+	ensureOfferingSupportsComponent,
+	OFFERING_COMPONENTS,
+} from "../../../../../shared/index.js";
+
+import { auditLogService } from "../../../../audit/index.js";
+
+import { calendarFactory } from "../builders/index.js";
+import { calendarPresenter } from "../presenters/index.js";
+import { calendarRepository } from "../repositories/index.js";
+
+class CalendarService {
+	ensureCalendarSupported(offering) {
+		ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.CALENDAR,
+			"Calendar is not supported for this offering.",
+		);
+	}
+
+	ensureSchedulingSupported(offering) {
+		ensureOfferingSupportsComponent(
+			offering,
+			OFFERING_COMPONENTS.SCHEDULING,
+			"Calendar requires Scheduling support.",
+		);
+	}
+
+	buildAuditMetadata(calendar) {
+		return {
+			offeringId: calendar.offering,
+			calendarId: calendar.id,
+			name: calendar.name,
+			timezone: calendar.timezone,
+			type: calendar.type,
+			active: calendar.active,
+		};
+	}
+
+	async setCalendar({
+		businessId,
+		offeringId,
+		data,
+		actor,
+		requestMetadata,
+	}) {
+		await ensureBusinessExists(businessId);
+
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureCalendarSupported(offering);
+
+		this.ensureSchedulingSupported(offering);
+
+		let calendar = await calendarRepository.findByOfferingAndBusiness(
+			businessId,
+			offeringId,
+		);
+
+		if (!calendar) {
+			const assignment = calendarFactory.createCalendarAssignment({
+				businessId,
+				offeringId,
+				data,
+				actor,
+			});
+
+			calendar = await calendarRepository.create(assignment);
+
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_CALENDAR,
+				entityId: calendar.id,
+				action: AUDIT_ACTIONS.OFFERING_CALENDAR_CREATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(calendar),
+			});
+		} else {
+			calendar.name = data.name;
+			calendar.timezone = data.timezone;
+			calendar.type = data.type;
+			calendar.active = data.active ?? true;
+			calendar.updatedBy = actor.id;
+
+			await calendarRepository.save(calendar);
+
+			await auditLogService.log({
+				business: businessId,
+				entityType: AUDIT_ENTITY_TYPES.OFFERING_CALENDAR,
+				entityId: calendar.id,
+				action: AUDIT_ACTIONS.OFFERING_CALENDAR_UPDATED,
+				actor,
+				requestMetadata,
+				metadata: this.buildAuditMetadata(calendar),
+			});
+		}
+
+		return calendarPresenter.present(calendar);
+	}
+
+	async getCalendar(businessId, offeringId) {
+		await ensureBusinessExists(businessId);
+
+		const offering = await ensureOfferingExists(businessId, offeringId);
+
+		this.ensureCalendarSupported(offering);
+
+		const calendar = await calendarRepository.findByOfferingAndBusiness(
+			businessId,
+			offeringId,
+		);
+
+		return calendarPresenter.present(calendar);
+	}
+}
+
+export const calendarService = new CalendarService();
+
+export default calendarService;
 ```
 
 ```js
@@ -1325,7 +1261,7 @@ export const attributesSchema = z.array(attributeSchema).max(50);
 export default attributesSchema;
 ```
 
-We may proceed to creating the Capacity offering component, it's implementation should follow the following structure and if you see fit, use the Pricing, Media and or Categories offering components as a point of reference:
+We may proceed to creating the Booking offering component, it's implementation should follow the same following structure as the others and if you see fit, use the Pricing, Media and or Categories offering components as a point of reference:
 
 ```bash
 ├── builders/
