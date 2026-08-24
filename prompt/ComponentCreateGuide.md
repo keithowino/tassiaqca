@@ -36,8 +36,8 @@ PHASE D — Availability / Time
 PHASE E — Customer Interaction
 ────────────────────────────────────
 
-15. Booking
-16. Registration
+15. Booking (covered)
+16. Registration (covered)
 17. Enrollment
 
 

@@ -1,0 +1,24 @@
+### Registration - Create ( This currently is supposed to be used to create the Registration configuration for an Event offering. )
+
+PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8ad10652cd9501eaa22f04/registration
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YzVlNWVlYTg3M2Q3MjE1MDNjZTY0IiwiaWF0IjoxNzg3NTg0MDk0LCJleHAiOjE3ODc2NzA0OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.m6vWfCBsBU3guTVmvUH7nj0HeOZThrVVQOVtFJCrqpw
+Content-Type: application/json
+
+# {
+#     "active": true,
+#     "approvalRequired": false,
+#     "maximumRegistrations": 100,
+#     "registrationDeadlineMinutes": 60
+# }
+
+{
+    "active": true,
+    "approvalRequired": true,
+    "maximumRegistrations": 150,
+    "registrationDeadlineMinutes": 120
+}
+
+### Registration - Read
+
+GET http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a8ad10652cd9501eaa22f04/registration
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YzVlNWVlYTg3M2Q3MjE1MDNjZTY0IiwiaWF0IjoxNzg3NTg0MDk0LCJleHAiOjE3ODc2NzA0OTQsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.m6vWfCBsBU3guTVmvUH7nj0HeOZThrVVQOVtFJCrqpw

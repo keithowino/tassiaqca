@@ -20,6 +20,7 @@ import { locationRoutes } from "../components/location/index.js";
 import { calendarRoutes } from "../components/calendar/index.js";
 import { schedulingRoutes } from "../components/scheduling/index.js";
 import { bookingRoutes } from "../components/booking/index.js";
+import { registrationRoutes } from "../components/registration/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -88,5 +89,7 @@ router.use("/:offeringId/calendar", calendarRoutes);
 router.use("/:offeringId/scheduling", schedulingRoutes);
 
 router.use("/:offeringId/booking", bookingRoutes);
+
+router.use("/:offeringId/registration", registrationRoutes);
 
 export default router;
