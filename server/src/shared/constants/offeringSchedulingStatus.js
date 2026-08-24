@@ -1,0 +1,9 @@
+export const OFFERING_SCHEDULING_MODE = Object.freeze({
+	FIXED: "FIXED",
+	RECURRING: "RECURRING",
+	ON_DEMAND: "ON_DEMAND",
+});
+
+export const OFFERING_SCHEDULING_MODE_VALUES = Object.freeze(
+	Object.values(OFFERING_SCHEDULING_MODE),
+);

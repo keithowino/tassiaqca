@@ -453,15 +453,15 @@ Content-Type: application/json
 
 # Capacity
 
-{
-    "type": "COURSE",
-    "name": "Dev Ops",
-    "shortDescription": "Complete development courses",
-    "description": "Learn software development.", 
-    "capacity": {
-        "limit": 100
-    }
-}
+# {
+#     "type": "COURSE",
+#     "name": "Dev Ops",
+#     "shortDescription": "Complete development courses",
+#     "description": "Learn software development.", 
+#     "capacity": {
+#         "limit": 100
+#     }
+# }
 
 # Location
 
@@ -480,6 +480,20 @@ Content-Type: application/json
 #         "longitude": 36.8952
 #     }
 # }
+
+# Scheduling
+
+{
+    "type": "SERVICE",
+    "name": "DexStar Remote",
+    "shortDescription": "Auto-repair.",
+    "description": "Remote automotive repair services", 
+    "scheduling": {
+		"mode": "RECURRING",
+		"timezone": "Africa/Nairobi",
+		"active": true
+	}
+}
 
 
 

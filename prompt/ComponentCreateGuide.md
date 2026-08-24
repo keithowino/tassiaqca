@@ -29,8 +29,8 @@ PHASE D — Availability / Time
 10. Duration  (covered)
 11. Capacity  (covered)
 12. Location (covered)
-13. Calendar
-14. Scheduling
+13. Calendar (covered)
+14. Scheduling (covered)
 
 
 PHASE E — Customer Interaction

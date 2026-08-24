@@ -18,6 +18,7 @@ import { durationRoutes } from "../components/duration/index.js";
 import { capacityRoutes } from "../components/capacity/index.js";
 import { locationRoutes } from "../components/location/index.js";
 import { calendarRoutes } from "../components/calendar/index.js";
+import { schedulingRoutes } from "../components/scheduling/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -82,5 +83,7 @@ router.use("/:offeringId/capacity", capacityRoutes);
 router.use("/:offeringId/location", locationRoutes);
 
 router.use("/:offeringId/calendar", calendarRoutes);
+
+router.use("/:offeringId/scheduling", schedulingRoutes);
 
 export default router;

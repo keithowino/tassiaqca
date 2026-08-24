@@ -8,23 +8,6 @@
 
 ---
 
-## Recommended implementation order
-
-Following the pattern established across the Commerce module, I'd implement Pricing in this sequence:
-
-Shared constants
-ProductPrice model
-Validators
-Repository
-Presenter
-Service
-Controller
-Routes
-REST Client tests
-Git commit
-
----
-
 ## Logout Recommended Implementation Order
 
 - POST /auth/logout (done)
@@ -47,57 +30,6 @@ Immediately we gain:
 - ✅ Refresh token rotation
 - ✅ Future MFA support
 - ✅ Device trust
-
----
-
-## After Categories - The Commerce roadmap becomes:
-
-- I recommend following this sequence because each feature builds on the previous one. Categories complete the product organization layer, which Inventory and Catalog functionality will naturally depend on.
-
-1. Product Catalog (done)
-    - Product CRUD
-    - Archive/Restore
-    - Product Presenter
-
-2. Product Categories (done)
-    - Hierarchical categories
-    - Product-category relationships
-
-3. Inventory (done)
-
-4. Product Images (done)
-    - The plan here was to have a:
-        - Cover image
-        - Gallery
-        - Ordering
-    - But we did not or are yet to handle it this way. when or if needed we will implement it. What we have now, the user can add images and one of the images is set as the primary.
-
-5. Pricing (done)
-
-6. Product Variants
-    - Sizes
-    - Colors
-    - Options
-
-7. Attributes
-
-8. Collections
-
-9. Search
-
-10. Branch Inventory (we need to move forward this can be implemented in the future)
-    - Branch-specific stock
-    - Reorder levels
-    - Pricing
-    - Availability
-
-11. Orders
-
-12. Payments
-
-13. Reporting
-
-14. Public Catalog API
 
 ---
 
@@ -143,36 +75,6 @@ TRANSFER_OUT
 
 ---
 
-## Pricing
-
-- The immutable ProductPrice model should support variants with a minimal extension:
-    - ProductPrice
-    - product
-    - variant (nullable)
-    - sellingPrice
-    - costPrice
-    - currency
-    - effectiveFrom
-    - effectiveTo
-    - isCurrent
-- Behavior:
-  variant = null → Base product price.
-  variant = ObjectId → Variant-specific override.
-- This avoids creating a separate pricing subsystem while preserving price history.
-
----
-
-## Permissions
-
-PRODUCT_VARIANT_VIEW
-PRODUCT_VARIANT_CREATE
-PRODUCT_VARIANT_UPDATE
-PRODUCT_VARIANT_DELETE
-PRODUCT_VARIANT_ARCHIVE
-PRODUCT_VARIANT_RESTORE
-
----
-
 ## Future Compatibility
 
 - This design intentionally leaves room for later enhancements without breaking existing APIs:
@@ -183,24 +85,6 @@ PRODUCT_VARIANT_RESTORE
     - Search and filtering by variant attributes.
     - Order line items referencing variants.
     - Branch-specific inventory for variants.
-
----
-
-## Audit Logging
-
-Log all significant lifecycle events:
-
-PRODUCT_VARIANT_CREATED
-PRODUCT_VARIANT_UPDATED
-PRODUCT_VARIANT_ARCHIVED
-PRODUCT_VARIANT_RESTORED
-PRODUCT_VARIANT_DELETED
-
----
-
-## Audit entity
-
-PRODUCT_VARIANT
 
 ---
 
@@ -231,106 +115,17 @@ Business
 
 ---
 
-## Final Implementation Roadmap
-
-### Phase 1 — New Module
-
-- ProductVariant model
-- Repository
-- Service
-- Controller
-- Presenter
-- Validator
-- Routes
-
-## Phase 2 — Extend Existing Modules
-
-### ProductPrice
-
-- Add nullable variant
-- Repository support
-- Service support
-- Presenter support
-- Validators
-- REST tests
-
-### Inventory
-
-- Add nullable variant
-- Repository support
-- Service support
-- Presenter support
-- Validators
-- REST tests
-
-### ProductImage
-
-- Add nullable variant
-- Repository support
-- Service support
-- Presenter support
-- Validators
-- Primary image logic update
-- REST tests
-
-## Phase 3 — API Surface
-
-Introduce nested variant endpoints while keeping related resources reusable:
-
-    ```js
-    /businesses/:businessId/products/:productId/variants
-
-    /businesses/:businessId/products/:productId/variants/:variantId
-
-    /businesses/:businessId/prices
-        ?productId=
-        &variantId=
-
-    /businesses/:businessId/inventory
-        ?productId=
-        &variantId=
-
-    /businesses/:businessId/images
-        ?productId=
-        &variantId=
-    ```
-
----
-
-## Workflow
-
-Vision
-↓
-Architecture Specification
-↓
-Architecture Review
-↓
-Implementation Plan
-↓
-Implementation
-↓
-REST Testing
-↓
-Frontend Integration
-↓
-Documentation Update
-↓
-Git Commit
-
----
-
 ## What happens after the specification?
 
 Then we return to the backend, but with much greater confidence.
 
 We would follow the roadmap you previously approved:
 
-1. Business Configuration Engine
-2. Offering Framework implementation
-3. Finish Retail Commerce
-4. Marketplace
-5. Industry Modules
-6. Frontend implementation
+1. Business Configuration Engine (partially implemented)
+2. Offering Framework implementation (in progress)
+3. Marketplace
+4. Industry Modules
+5. Frontend implementation (partially implemented)
 
 ---
 
@@ -439,9 +234,8 @@ This is the sequence I recommend following:
 7. Business Provisioning Pipeline
 8. Configuration API
 9. Navigation API
-10. Frontend integration
-11. Resume Offering Framework
-12. Resume Retail Commerce (Product Variants)
+10. Frontend integration (partially implemented)
+11. Resume Offering Framework (in progress)
 
 ---
 
@@ -546,7 +340,7 @@ Reset Password
 Email Verification
 ```
 
-- They are important, but your the backend does not yet support endpoints for these flows.
+- They are important, but the backend does not yet support endpoints for these flows.
 
 ---
 
@@ -742,65 +536,6 @@ After this implementation, the complete Journey Engine becomes:
 
 ---
 
-## Business Hub Vision
-
-Instead of a static welcome page, the page should become a dashboard about the entrepreneur rather than about a single business.
-
-```bash
-Business Hub
-──────────────────────────────────────────────
-
-Welcome back, Keith
-
-You currently have
-
-✔ 2 Businesses
-✔ 1 Pending Invitation
-✔ 0 Provisioning Tasks
-
-──────────────────────────────────────────────
-
-Continue Working
-
-┌───────────────────────────────┐
-│ Dexta Tech                    │
-│ Retail                        │
-│ Last opened yesterday         │
-│ [Open Workspace]              │
-└───────────────────────────────┘
-
-┌───────────────────────────────┐
-│ Bonifoods                     │
-│ Restaurant                    │
-│ Last opened today             │
-│ [Open Workspace]              │
-└───────────────────────────────┘
-
-──────────────────────────────────────────────
-
-Quick Actions
-
-+ Create Business
-
-+ Join Business
-
-+ Marketplace
-
-──────────────────────────────────────────────
-
-Pending Invitations
-
-No invitations.
-
-──────────────────────────────────────────────
-
-Recent Activity
-
-Business created yesterday...
-```
-
----
-
 ## Business Card
 
 Every business becomes one reusable component.
@@ -880,20 +615,6 @@ Accept Invitation
 
 Switch Workspace
 ```
-
----
-
-## Recommended implementation order
-
-Now that the Journey Engine foundation is stable, I recommend this sequence:
-
-Fix BootstrapEngine so it only bootstraps an existing workspace and never redirects to onboarding.
-Complete the Business Welcome journey.
-Complete the Business Hub flow (select workspace → bootstrap → workspace, with no flicker).
-Refactor DashboardRenderer into the new Widget Rendering Engine.
-Introduce real widget types (StatWidget, TableWidget, ChartWidget, etc.) that the Widget Rendering Engine can dynamically resolve based on the widget definition returned by the backend.
-
-This ordering keeps responsibilities clean and avoids introducing the Widget Rendering Engine before the navigation and workspace lifecycle are fully correct.
 
 ---
 
@@ -982,54 +703,7 @@ Maintenance
 4. Implement the Offering Registry and integrate it with the (registry bootstrapping, validation utilities, and registry lookups) (covered)
 5. Build repositories, presenters, and services for generic offering lifecycle operations (covered)
 6. Migrate the existing Product implementation to conform to the Offering contract (covered)
-7. Resume Product Variants on top of the new abstraction
-8. Proceed to Marketplace aggregation, which will consume Offerings rather than Products.
-
----
-
-- I recommend we proceed by implementing
-    1. Phase 2 (Offering Builder) (covered)
-    2. Offering Factory and refactor offering.service.js (covered)
-    3. registry-driven defaults and lifecycle behavior. (covered)
-
----
-
-After introducing specialized builders:
-
-```bash
-Factory
-    │
-    ├── PRODUCT ─────────► ProductBuilder
-    │                         │
-    │                         ├── registry defaults
-    │                         ├── variant initialization
-    │                         ├── inventory initialization
-    │                         └── pricing initialization
-    │
-    ├── RENTAL ─────────► RentalBuilder
-    │                         ├── rental policies
-    │                         ├── availability
-    │                         └── deposits
-    │
-    ├── BOOKING ────────► BookingBuilder
-    │                         ├── duration
-    │                         ├── schedule
-    │                         └── calendar
-    │
-    └── SERVICE ────────► ServiceBuilder
-```
-
----
-
-## Recommended implementation order
-
-To keep risk low, I'd implement this incrementally:
-
-1. Move the current shared lifecycle to lifecycles/shared/offering.lifecycle.js (no logic changes). (covered)
-2. Create specialized lifecycle files (product.lifecycle.js, rental.lifecycle.js, booking.lifecycle.js, etc.) that simply spread the shared lifecycle. (covered)
-3. Implement lifecycle.factory.js to resolve the appropriate lifecycle based on offering type. (covered)
-4. Refactor offering.service.js so it delegates to the lifecycle factory instead of importing the shared lifecycle directly. (covered)
-5. Run the existing Offering API test suite unchanged to confirm behavior is identical before adding any type-specific business logic. (covered)
+7. Proceed to Marketplace aggregation, which will consume Offerings rather than Products.
 
 ---
 
@@ -1042,7 +716,7 @@ To keep risk low, I'd implement this incrementally:
 1. Step 1 — Product Adapter (covered)
 2. Step 2 — Product-specific Hooks (covered)
 3. Step 3 — Product Model Simplification (covered)
-4. Step 4 — Resume Product Variants
+4. Step 4 — Resume Product Variants (covered)
 5. Step 5 — Marketplace
 
 When Marketplace arrives it no longer queries Product.
@@ -1061,28 +735,6 @@ Course
 Membership
 Package
 ```
-
-## Recommended next implementation sequence
-
-I recommend the following sequence:
-
-1. Enhance shared/offering.lifecycle.js to support lifecycle hooks (beforeCreate, afterCreate, beforeUpdate, afterUpdate, beforeArchive, afterArchive, beforeRestore, afterRestore). (covered)
-2. Implement Product-specific hooks in product.lifecycle.js, initially moving SKU normalization and SKU uniqueness validation there while leaving behavior unchanged. (covered)
-3. Verify that all Offering Product endpoints still pass existing tests. (covered)
-4. Refactor the legacy Commerce product.service.js into a thin adapter that delegates to the Offering service. (covered)
-5. Remove duplicated generic logic from the Commerce Product module. (covered)
-6. Continue with Product Variants on top of the unified Offering architecture. (close to being implemented)
-
----
-
-## I recommend implementing the milestones in this order:
-
-✅ Add offering reference to Product.js. (covered)
-✅ Extend product.repository.js with offering-based queries. (covered)
-✅ Create commerce/adapters/product.adapter.js. (covered)
-✅ Refactor product.lifecycle.js to use the adapter. (covered)
-✅ Test Offering create/update/archive/restore synchronization. (covered)
-✅ Only then begin simplifying product.service.js by progressively delegating its persistence logic to the adapter or the new Offering flow while keeping the existing Commerce API intact. (covered)
 
 ---
 
@@ -1260,15 +912,6 @@ marketplace presentation
 
 ---
 
-## Implementation order
-
-1. Create the component contract (component.contract.js). (covered)
-2. Implement the component pipeline (component.pipeline.js) that discovers and executes components declared in the offering registry. (covered)
-3. Wire the pipeline into the shared offering lifecycle so component hooks execute alongside the existing projection hooks. (covered)
-4. Incrementally enrich each component with real behavior (pricing persistence, media management, inventory updates, scheduling logic, etc.) without changing the lifecycle orchestration. (in progress)
-
----
-
 ```js
 services: {
     eventBus,
@@ -1322,39 +965,40 @@ PHASE B — Offering Structure
 ────────────────────────────────────
 
 6. Attributes (covered)
-7. Variants
+7. Variants  (covered)
 
 
 PHASE C — Commerce Operations
 ────────────────────────────────────
 
-8. Inventory
+8. Pricing (covered)
+9. Inventory  (partially covered)
 
 
 PHASE D — Availability / Time
 ────────────────────────────────────
 
-9. Duration
-10. Capacity
-11. Location
-12. Calendar
-13. Scheduling
+10. Duration  (covered)
+11. Capacity  (covered)
+12. Location (covered)
+13. Calendar (covered)
+14. Scheduling (covered)
 
 
 PHASE E — Customer Interaction
 ────────────────────────────────────
 
-14. Booking
-15. Registration
-16. Enrollment
+15. Booking
+16. Registration
+17. Enrollment
 
 
 PHASE F — Specialized Offering Models
 ────────────────────────────────────
 
-17. Membership
-18. Subscription
-19. Download
+18. Membership
+19. Subscription
+20. Download
 ```
 
 ---
@@ -1454,6 +1098,8 @@ Event
 
 This is precisely the kind of cross-industry abstraction the Offering Framework is intended to provide. The architecture specification states that the framework should support products, services, rentals, memberships, bookings, packages and future offering types through a common model.
 
+Once i'm done scripting the current offering components confirm that they are being consumed and by the right offering type.
+
 ---
 
 ```bash
@@ -1511,8 +1157,6 @@ Variant
 └── Storage: 512GB
 ```
 
----
-
 ## Attribute component config
 
 ### One important correction to the architecture
@@ -1526,36 +1170,6 @@ slug
 attributeId
 valueId
 variantId
-```
-
----
-
-Components own
-
-Data whose existence depends on a component being enabled:
-
-```bash
-Pricing
-Media
-Categories
-Attributes
-Tags
-SEO
-Inventory
-Variants
-Scheduling
-Calendar
-Booking
-Membership
-Subscription
-Registration
-Download
-Enrollment
-Instructor
-Duration
-Capacity
-Location
-...
 ```
 
 ---
@@ -1692,9 +1306,9 @@ Phase 6 — Industry Modules
 
 ---
 
-- While developing the variants offering component;
+## While developing the variants offering component;
 
-## Pricing
+### Pricing
 
 Pricing is related, but should not be a hard dependency for the first Variant implementation.
 
@@ -1720,7 +1334,7 @@ Variant C → price override
 
 But that should be an explicit Variant/Pricing integration rather than coupling the initial Variant entity to Pricing.
 
-## What frontend experience eventually consumes it?
+### What frontend experience eventually consumes it?
 
 The eventual Business OS product editor should expose:
 
@@ -1810,7 +1424,7 @@ Variant
 
 ---
 
-## One important issue before running this
+### One important issue before running this
 
 There is an architectural concern with the current Product projection:
 
@@ -2009,11 +1623,62 @@ One important architectural point: we are deliberately not adding a branch refer
 
 ---
 
+## While developing the scheduling offering component
+
+### One architectural point to preserve
+
+We should **not** make Scheduling create Calendar automatically.
+
+The dependency is:
+
+```text
+Scheduling
+    ↑
+Calendar
+```
+
+not:
+
+```text
+Scheduling
+    └── automatically creates Calendar
+```
+
+The component registry already expresses Calendar's dependency on Scheduling.
+
+That gives us the intended composability:
+
+```text
+Service
+ └── Scheduling
+
+Booking
+ ├── Scheduling
+ ├── Calendar
+ └── Booking
+
+Rental
+ └── Scheduling
+```
+
+and later:
+
+```text
+Scheduling
+├── Calendar
+├── Availability
+├── Time Slots
+├── Appointments
+└── Reservations
+```
+
+---
+
 - We may proceed to Inventory REST testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering calendar component."
+git commit -m "feat(offering): Create the V1 of the offering scheduling component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 
