@@ -56,7 +56,6 @@ class CalendarService {
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
 		this.ensureCalendarSupported(offering);
-
 		this.ensureSchedulingSupported(offering);
 
 		let calendar = await calendarRepository.findByOfferingAndBusiness(
@@ -112,6 +111,7 @@ class CalendarService {
 		const offering = await ensureOfferingExists(businessId, offeringId);
 
 		this.ensureCalendarSupported(offering);
+		this.ensureSchedulingSupported(offering);
 
 		const calendar = await calendarRepository.findByOfferingAndBusiness(
 			businessId,

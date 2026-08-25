@@ -39,14 +39,15 @@ PHASE E — Customer Interaction
 15. Booking (covered)
 16. Registration (covered)
 17. Enrollment
+18. Instructor
 
 
 PHASE F — Specialized Offering Models
 ────────────────────────────────────
 
-18. Membership
-19. Subscription
-20. Download
+19. Membership
+20. Subscription
+21. Download
 ```
 
 - The following information shows a portion of some of the implemented offering components and more:

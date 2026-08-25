@@ -1757,7 +1757,7 @@ to Service, Rental, Event, Course, etc. after verifying the current registry def
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering registration component."
+git commit -m "feat(offering): Create the V1 of the offering enrollment component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

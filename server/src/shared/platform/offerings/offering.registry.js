@@ -207,9 +207,15 @@ const offerings = [
 		label: "Course",
 		description: "Educational offering.",
 
+		/**
+		 * #### Order matters
+		 *
+		 * - Registration must precede Enrollment because Enrollment declares Registration as a dependency.
+		 */
 		components: [
 			OFFERING_COMPONENTS.PRICING,
 			OFFERING_COMPONENTS.MEDIA,
+			OFFERING_COMPONENTS.REGISTRATION,
 			OFFERING_COMPONENTS.ENROLLMENT,
 			OFFERING_COMPONENTS.INSTRUCTOR,
 			OFFERING_COMPONENTS.DURATION,
