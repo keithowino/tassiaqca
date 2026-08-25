@@ -1,7 +1,7 @@
 ### Create Offering
 
-POST http://localhost:5000/api/v1/businesses/6a8d6eea59b6cb66307fa104/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU
+POST http://localhost:5000/api/v1/businesses/6a8ddf134c68ac745fde97de/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZGRlZTM0YzY4YWM3NDVmZGU5N2RkIiwiaWF0IjoxNzg3NjgyNTMxLCJleHAiOjE3ODc3Njg5MzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.usfmLUnfwo9Vb4_I2aZTfZWoAxkR7ZWrF7Kev2fFAVc
 Content-Type: application/json
 
 # {
@@ -41,6 +41,12 @@ Content-Type: application/json
 #     "name": "Full Stack Web Development",
 #     "shortDescription": "Complete full-stack web development course",
 #     "description": "Learn frontend, backend, databases and deployment."
+# }
+
+# {
+#     "type": "MEMBERSHIP",
+#     "name": "SKUMA SACCO", 
+#     "description": "SACCO"
 # }
 
 
@@ -511,15 +517,29 @@ Content-Type: application/json
 
 # Instructor
 
+# {
+#     "type": "COURSE",
+#     "name": "W3 Schools",
+#     "shortDescription": "Advanced web development course.",
+#     "description": "A comprehensive advanced web development course.",
+#     "instructors": [
+#         "6a8d6eea59b6cb66307fa106", 
+#         "6a8d713459b6cb66307fa10b"
+#     ]
+# }
+
+# Membership
+
 {
-    "type": "COURSE",
-    "name": "W3 Schools",
-    "shortDescription": "Advanced web development course.",
-    "description": "A comprehensive advanced web development course.",
-    "instructors": [
-        "6a8d6eea59b6cb66307fa106", 
-        "6a8d713459b6cb66307fa10b"
-    ]
+    "type": "MEMBERSHIP",
+    "name": "NEEMA SACCO", 
+    "description": "SACCO", 
+    "membership": {
+        "active": true,
+        "approvalRequired": false,
+        "durationMinutes": 43200,
+        "renewable": true
+    }
 }
 
 

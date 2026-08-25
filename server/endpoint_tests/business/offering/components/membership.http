@@ -1,0 +1,22 @@
+### Membership - create
+
+PUT http://localhost:5000/api/v1/businesses/6a8ddf134c68ac745fde97de/offerings/6a8ddf874c68ac745fde97e2/membership
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZGRlZTM0YzY4YWM3NDVmZGU5N2RkIiwiaWF0IjoxNzg3NjgyNTMxLCJleHAiOjE3ODc3Njg5MzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.usfmLUnfwo9Vb4_I2aZTfZWoAxkR7ZWrF7Kev2fFAVc
+Content-Type: application/json
+
+# {
+#     "active": true,
+#     "approvalRequired": false,
+#     "durationMinutes": 43200,
+#     "renewable": true
+# }
+
+{
+    "durationMinutes": 0,
+    "renewable": false
+}
+
+### Membership - Read
+
+GET http://localhost:5000/api/v1/businesses/6a8ddf134c68ac745fde97de/offerings/6a8ddf874c68ac745fde97e2/membership
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZGRlZTM0YzY4YWM3NDVmZGU5N2RkIiwiaWF0IjoxNzg3NjgyNTMxLCJleHAiOjE3ODc3Njg5MzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.usfmLUnfwo9Vb4_I2aZTfZWoAxkR7ZWrF7Kev2fFAVc

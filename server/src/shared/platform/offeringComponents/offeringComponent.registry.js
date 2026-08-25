@@ -21,6 +21,7 @@ import bookingComponent from "../../../modules/offering/components/booking/booki
 import registrationComponent from "../../../modules/offering/components/registration/registration.component.js";
 import enrollmentComponent from "../../../modules/offering/components/enrollment/enrollment.component.js";
 import instructorComponent from "../../../modules/offering/components/instructor/instructor.component.js";
+import membershipComponent from "../../../modules/offering/components/membership/membership.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -210,7 +211,7 @@ const components = [
 		id: OFFERING_COMPONENTS.MEMBERSHIP,
 		name: "Membership",
 		description: "Provides membership access.",
-		// implementation: membershipComponent,
+		implementation: membershipComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
 		enabled: true,
 		experimental: false,

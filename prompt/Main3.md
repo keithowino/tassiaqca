@@ -60,6 +60,9 @@ PHASE D — Availability / Time
 14. Scheduling (covered)
 
 
+
+
+
 PHASE E — Customer Interaction
 ────────────────────────────────────
 
@@ -72,7 +75,7 @@ PHASE E — Customer Interaction
 PHASE F — Specialized Offering Models
 ────────────────────────────────────
 
-19. Membership
+19. Membership (covered)
 20. Subscription
 21. Download
 ```
