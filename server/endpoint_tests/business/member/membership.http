@@ -1,12 +1,12 @@
 ### Successful Invite and Duplicate Invite - (POST http://localhost:5000/api/v1/businesses/<businessId>/members, Authorization: Bearer <owner-access-token>, email = use B's)
 
-POST http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/members
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+POST http://localhost:5000/api/v1/businesses/6a8db4a14e0d320daaccf7fa/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU
 Content-Type: application/json
 
 {
     "email": "rembo1234@gmail.com",
-    "roleId": "6a4b9d5d9e02d993ed14a824"
+    "roleId": "6a6c764de15b316c217dc281"
 }
 
 ### Invite - Unknown User 
@@ -167,6 +167,6 @@ Content-Type: application/json
 
 ### Deactivate/ Reactivate a business member (PATCH http://localhost:5000/api/v1/businesses/{{businessId}}/members/{{memberId}}/reactivate)
 
-PATCH http://localhost:5000/api/v1/businesses/6a4dd552e54d58e47c7f5ecf/members/6a4dda2ab96d851abb5b734f/deactivate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRiOWQ4ODBiZTRkNDU1ZjRlNjhlNTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE0ZGIzOWU1NTEyMzRiMzg3NTcyMzFjIiwiaWF0IjoxNzgzNDc3MTUwLCJleHAiOjE3ODM1NjM1NTAsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DnqN4ycLGB97vwEHzuuf5a6JnHLdM79Cgu6DJh72K90
+PATCH http://localhost:5000/api/v1/businesses/6a8d6eea59b6cb66307fa104/members/6a8d713459b6cb66307fa10b/deactivate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU
 Content-Type: application/json

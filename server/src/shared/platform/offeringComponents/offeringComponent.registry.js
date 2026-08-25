@@ -20,6 +20,7 @@ import schedulingComponent from "../../../modules/offering/components/scheduling
 import bookingComponent from "../../../modules/offering/components/booking/booking.component.js";
 import registrationComponent from "../../../modules/offering/components/registration/registration.component.js";
 import enrollmentComponent from "../../../modules/offering/components/enrollment/enrollment.component.js";
+import instructorComponent from "../../../modules/offering/components/instructor/instructor.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -282,13 +283,15 @@ const components = [
 		id: OFFERING_COMPONENTS.INSTRUCTOR,
 		name: "Instructor",
 		description: "Stores instructor information.",
-		// implementation: instructorComponent,
+		implementation: instructorComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.EDUCATION,
 		enabled: true,
 		experimental: false,
 		deprecated: false,
 		dependencies: [],
-		metadata: {},
+		metadata: {
+			offeringTypes: ["COURSE"],
+		},
 	},
 
 	{

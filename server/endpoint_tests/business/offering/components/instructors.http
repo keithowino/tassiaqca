@@ -1,0 +1,23 @@
+### Instructors - Create
+
+PUT http://localhost:5000/api/v1/businesses/6a8d6eea59b6cb66307fa104/offerings/6a8db7ee4e0d320daaccf803/instructor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU
+Content-Type: application/json
+
+# {
+#     "instructors": [
+#         "6a8d6eea59b6cb66307fa106",
+#         "6a8d713459b6cb66307fa10b"
+#     ]
+# }
+
+{
+    "instructors": [
+        "6a8d713459b6cb66307fa10b"
+    ]
+}
+
+### Instructor - Read
+
+GET http://localhost:5000/api/v1/businesses/6a8d6eea59b6cb66307fa104/offerings/6a8db7ee4e0d320daaccf803/instructor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU

@@ -1,7 +1,7 @@
 ### Create Offering
 
-POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4YWM5YzE1MmNkOTUwMWVhYTIyZWY4IiwiaWF0IjoxNzg3NDgwNTEzLCJleHAiOjE3ODc1NjY5MTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.JxsvNv0UEJuHsw263OfmIU8avrakCU43lKWFja5DJ5M
+POST http://localhost:5000/api/v1/businesses/6a8d6eea59b6cb66307fa104/offerings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU
 Content-Type: application/json
 
 # {
@@ -497,16 +497,29 @@ Content-Type: application/json
 
 # Booking
 
+# {
+#     "type": "SERVICE",
+#     "name": "Consultation",
+#     "booking": {
+#         "active": true,
+#         "confirmationRequired": true,
+#         "minimumAdvanceMinutes": 60,
+#         "maximumAdvanceMinutes": 43200,
+#         "cancellationWindowMinutes": 1440
+#     }
+# }
+
+# Instructor
+
 {
-    "type": "SERVICE",
-    "name": "Consultation",
-    "booking": {
-        "active": true,
-        "confirmationRequired": true,
-        "minimumAdvanceMinutes": 60,
-        "maximumAdvanceMinutes": 43200,
-        "cancellationWindowMinutes": 1440
-    }
+    "type": "COURSE",
+    "name": "W3 Schools",
+    "shortDescription": "Advanced web development course.",
+    "description": "A comprehensive advanced web development course.",
+    "instructors": [
+        "6a8d6eea59b6cb66307fa106", 
+        "6a8d713459b6cb66307fa10b"
+    ]
 }
 
 

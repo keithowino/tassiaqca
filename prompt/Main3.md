@@ -1,14 +1,27 @@
-- Test 1 — Create Enrollment
+- Test 1 — Create / Assign Instructors
+
+```http
+PUT http://localhost:5000/api/v1/businesses/6a8d6eea59b6cb66307fa104/offerings/6a8d728e59b6cb66307fa10d/instructor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkNmUxMDU5YjZjYjY2MzA3ZmExMDIiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE4ZDZlMTA1OWI2Y2I2NjMwN2ZhMTAzIiwiaWF0IjoxNzg3NjUzNjQ4LCJleHAiOjE3ODc3NDAwNDgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.DIw6BztSIE0ZPerU8RoGFeRfy1WVQajAwwqhEor3jiU
+Content-Type: application/json
+
+{
+    "instructors": [
+        "6a8d6eea59b6cb66307fa106",
+        "6a8d713459b6cb66307fa10b"
+    ]
+}
+```
 
 ```js
 // Response
 
-{"success":true,"message":"Offering enrollment updated successfully.","data":{"id":"6a8d4c877f3b79f5263e3a3f","businessId":"6a72d57f8b94e4f1232d4112","offeringId":"6a8ad667e3c755bf9372129c","active":true,"approvalRequired":false,"maximumEnrollments":100,"enrollmentDeadlineMinutes":60,"createdBy":"6a72d55a8b94e4f1232d4110","updatedBy":"6a72d55a8b94e4f1232d4110","createdAt":"2026-08-25T08:04:23.845Z","updatedAt":"2026-08-25T08:04:23.845Z"}}
+{"success":true,"message":"Offering instructors updated successfully.","data":[{"id":"6a8d758f70ad60ff18c2f87d","businessId":"6a8d6eea59b6cb66307fa104","offeringId":"6a8d728e59b6cb66307fa10d","businessMemberId":"6a8d6eea59b6cb66307fa106","active":true,"createdBy":"6a8d6e1059b6cb66307fa102","updatedBy":"6a8d6e1059b6cb66307fa102","createdAt":"2026-08-25T10:59:27.489Z","updatedAt":"2026-08-25T10:59:27.489Z"},{"id":"6a8d758f70ad60ff18c2f87e","businessId":"6a8d6eea59b6cb66307fa104","offeringId":"6a8d728e59b6cb66307fa10d","businessMemberId":"6a8d713459b6cb66307fa10b","active":true,"createdBy":"6a8d6e1059b6cb66307fa102","updatedBy":"6a8d6e1059b6cb66307fa102","createdAt":"2026-08-25T10:59:27.490Z","updatedAt":"2026-08-25T10:59:27.490Z"}]}
 ```
 
 ---
 
-Tests 2 — Retrieve Enrollment, 3 — Update Enrollment, 4 — Invalid Maximum Enrollments, 5 — Invalid Enrollment Deadline, 6 — Unsupported Offering, 7 — Offering Lifecycle Integration all passed successfully and or returned the expected responses.
+Tests 2 — Retrieve Instructors, 3 — Replace Instructor Assignment, 4 — Duplicate Instructor Validation, 5 — Invalid BusinessMember, 6 — Cross-Business BusinessMember, 7 — Inactive BusinessMember, 8 — Unsupported Offering, 9 — Offering Lifecycle Integration, 10 — Audit Verification all passed successfully and or returned the expected responses.
 
 ---
 
@@ -53,7 +66,7 @@ PHASE E — Customer Interaction
 15. Booking (covered)
 16. Registration (covered)
 17. Enrollment (covered)
-18. Instructor
+18. Instructor (covered)
 
 
 PHASE F — Specialized Offering Models
@@ -64,46 +77,46 @@ PHASE F — Specialized Offering Models
 21. Download
 ```
 
-- Let's proceed to build the Instructor offering component, it's implementation should follow the following structure and if you see fit, use the Pricing, Media and or the rest of the crated offering components as a point of reference:
+- Let's proceed to build the Membership offering component, it's implementation should follow the following structure and if you see fit, use the Pricing, Media and or the rest of the crated offering components as a point of reference:
 
 ```text
-server/src/modules/offering/components/instructor/
+server/src/modules/offering/components/membership/
 
 ├── builders/
-│   ├── instructor.builder.js
-│   ├── instructor.factory.js
+│   ├── membership.builder.js
+│   ├── membership.factory.js
 │   └── index.js
 │
 ├── controllers/
-│   ├── instructor.controller.js
+│   ├── membership.controller.js
 │   └── index.js
 │
 ├── models/
-│   ├── instructor.model.js
+│   ├── membership.model.js
 │   └── index.js
 │
 ├── presenters/
-│   ├── instructor.presenter.js
+│   ├── membership.presenter.js
 │   └── index.js
 │
 ├── repositories/
-│   ├── instructor.repository.js
+│   ├── membership.repository.js
 │   └── index.js
 │
 ├── routes/
-│   ├── instructor.routes.js
+│   ├── membership.routes.js
 │   └── index.js
 │
 ├── services/
-│   ├── instructor.service.js
+│   ├── membership.service.js
 │   └── index.js
 │
 ├── validators/
-│   ├── instructor.schema.js
+│   ├── membership.schema.js
 │   ├── index.js
 │   └── ...
 │
-├── instructor.component.js
+├── membership.component.js
 │
 └── index.js
 ```
