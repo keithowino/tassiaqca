@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+import { OFFERING_MEDIA_TYPE_VALUES } from "../../../../../shared/index.js";
+
 const mediaSchema = new mongoose.Schema(
 	{
 		business: {
@@ -28,7 +30,7 @@ const mediaSchema = new mongoose.Schema(
 
 		type: {
 			type: String,
-			enum: ["IMAGE", "VIDEO", "DOCUMENT", "AUDIO"],
+			enum: OFFERING_MEDIA_TYPE_VALUES,
 			required: true,
 		},
 

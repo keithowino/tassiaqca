@@ -1,11 +1,14 @@
 import { z } from "zod";
 
+import { OFFERING_MEDIA_TYPE_VALUES } from "../../../../../shared/index.js";
+
 const mediaItemSchema = z.object({
 	assetId: z.string().trim().min(1).max(200),
 
-	type: z.enum(["IMAGE", "VIDEO", "DOCUMENT", "AUDIO"]),
+	type: z.enum(OFFERING_MEDIA_TYPE_VALUES),
 
-	url: z.string().trim().url(),
+	// url: z.string().trim().url(),
+	url: z.string().trim().pipe(z.url()),
 
 	alt: z.string().trim().max(300).optional(),
 

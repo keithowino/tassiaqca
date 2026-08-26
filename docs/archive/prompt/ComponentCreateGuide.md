@@ -46,8 +46,8 @@ PHASE F — Specialized Offering Models
 ────────────────────────────────────
 
 19. Membership (covered)
-20. Subscription
-21. Download
+20. Subscription (covered)
+21. Download (covered)
 ```
 
 - The following information shows a portion of some of the implemented offering components and more:

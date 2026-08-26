@@ -3,6 +3,7 @@ export { default as COOKIE_NAMES } from "./cookies.js";
 export { default as AUDIT_ACTIONS } from "./auditActions.js";
 export { default as AUDIT_ENTITY_TYPES } from "./auditEntityTypes.js";
 export { default as Permissions } from "./permissions.js";
+
 export * from "./ProductStatus.js";
 export * from "./categoryStatus.js";
 export * from "./inventoryStatus.js";
@@ -14,3 +15,4 @@ export * from "./offeringDurationStatus.js";
 export * from "./offeringCalendarStatus.js";
 export * from "./offeringSchedulingStatus.js";
 export * from "./offeringSubscriptionStatus.js";
+export * from "./offeringMediaStatus.js";

@@ -23,6 +23,7 @@ import enrollmentComponent from "../../../modules/offering/components/enrollment
 import instructorComponent from "../../../modules/offering/components/instructor/instructor.component.js";
 import membershipComponent from "../../../modules/offering/components/membership/membership.component.js";
 import subscriptionComponent from "../../../modules/offering/components/subscription/subscription.component.js";
+import downloadComponent from "../../../modules/offering/components/download/download.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -257,13 +258,15 @@ const components = [
 		id: OFFERING_COMPONENTS.DOWNLOAD,
 		name: "Download",
 		description: "Provides downloadable assets.",
-		// implementation: downloadComponent,
+		implementation: downloadComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.DIGITAL,
 		enabled: true,
 		experimental: false,
 		deprecated: false,
 		dependencies: [],
-		metadata: {},
+		metadata: {
+			offeringTypes: ["DIGITAL_DOWNLOAD"],
+		},
 	},
 
 	/**
