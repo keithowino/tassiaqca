@@ -35,20 +35,17 @@ PHASE A — Shared Offering Components
 4. Media (covered)
 5. SEO (covered)
 
-
 PHASE B — Offering Structure
 ────────────────────────────────────
 
 6. Attributes (covered)
 7. Variants  (covered)
 
-
 PHASE C — Commerce Operations
 ────────────────────────────────────
 
 8. Pricing (covered)
 9. Inventory  (partially covered)
-
 
 PHASE D — Availability / Time
 ────────────────────────────────────
@@ -59,10 +56,6 @@ PHASE D — Availability / Time
 13. Calendar (covered)
 14. Scheduling (covered)
 
-
-
-
-
 PHASE E — Customer Interaction
 ────────────────────────────────────
 
@@ -71,12 +64,11 @@ PHASE E — Customer Interaction
 17. Enrollment (covered)
 18. Instructor (covered)
 
-
 PHASE F — Specialized Offering Models
 ────────────────────────────────────
 
 19. Membership (covered)
-20. Subscription
+20. Subscription (covered)
 21. Download
 ```
 

@@ -24,6 +24,7 @@ import { registrationRoutes } from "../components/registration/index.js";
 import { enrollmentRoutes } from "../components/enrollment/index.js";
 import { instructorRoutes } from "../components/instructor/index.js";
 import { membershipRoutes } from "../components/membership/index.js";
+import { subscriptionRoutes } from "../components/subscription/index.js";
 
 const router = Router({
 	mergeParams: true,
@@ -100,5 +101,7 @@ router.use("/:offeringId/enrollment", enrollmentRoutes);
 router.use("/:offeringId/instructor", instructorRoutes);
 
 router.use("/:offeringId/membership", membershipRoutes);
+
+router.use("/:offeringId/subscription", subscriptionRoutes);
 
 export default router;

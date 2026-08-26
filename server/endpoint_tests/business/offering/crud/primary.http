@@ -49,6 +49,12 @@ Content-Type: application/json
 #     "description": "SACCO"
 # }
 
+{
+    "type": "SUBSCRIPTION",
+    "name": "SKYNET", 
+    "description": "WI-FI connections"
+}
+
 
 # {
 #     "type": "BOOKING",
@@ -530,17 +536,17 @@ Content-Type: application/json
 
 # Membership
 
-{
-    "type": "MEMBERSHIP",
-    "name": "NEEMA SACCO", 
-    "description": "SACCO", 
-    "membership": {
-        "active": true,
-        "approvalRequired": false,
-        "durationMinutes": 43200,
-        "renewable": true
-    }
-}
+# {
+#     "type": "MEMBERSHIP",
+#     "name": "NEEMA SACCO", 
+#     "description": "SACCO", 
+#     "membership": {
+#         "active": true,
+#         "approvalRequired": false,
+#         "durationMinutes": 43200,
+#         "renewable": true
+#     }
+# }
 
 
 

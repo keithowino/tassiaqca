@@ -1753,11 +1753,11 @@ to Service, Rental, Event, Course, etc. after verifying the current registry def
 
 ---
 
-- We may proceed to Inventory REST testing, in each test give me the complete REST example.
+- We may proceed to Subscription REST testing, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Create the V1 of the offering Membership component."
+git commit -m "feat(offering): Create the V1 of the offering Subscription component."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

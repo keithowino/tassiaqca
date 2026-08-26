@@ -13,3 +13,4 @@ export * from "./offeringVariantStatus.js";
 export * from "./offeringDurationStatus.js";
 export * from "./offeringCalendarStatus.js";
 export * from "./offeringSchedulingStatus.js";
+export * from "./offeringSubscriptionStatus.js";

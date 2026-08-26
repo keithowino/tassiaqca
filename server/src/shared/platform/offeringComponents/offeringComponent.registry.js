@@ -22,6 +22,7 @@ import registrationComponent from "../../../modules/offering/components/registra
 import enrollmentComponent from "../../../modules/offering/components/enrollment/enrollment.component.js";
 import instructorComponent from "../../../modules/offering/components/instructor/instructor.component.js";
 import membershipComponent from "../../../modules/offering/components/membership/membership.component.js";
+import subscriptionComponent from "../../../modules/offering/components/subscription/subscription.component.js";
 
 /**
  * From this point onward, adding a new reusable concern becomes entirely declarative:
@@ -224,13 +225,15 @@ const components = [
 		id: OFFERING_COMPONENTS.SUBSCRIPTION,
 		name: "Subscription",
 		description: "Provides recurring subscription support.",
-		// implementation: subscriptionComponent,
+		implementation: subscriptionComponent,
 		category: OFFERING_COMPONENT_CATEGORIES.ACCESS,
 		enabled: true,
 		experimental: false,
 		deprecated: false,
 		dependencies: [],
-		metadata: {},
+		metadata: {
+			offeringTypes: ["SUBSCRIPTION"],
+		},
 	},
 
 	{
