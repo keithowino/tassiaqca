@@ -2,11 +2,6 @@ import { z } from "zod";
 
 import { objectIdSchema } from "../../../../../shared/index.js";
 
-export const inventoryParamsSchema = z.object({
-	businessId: objectIdSchema,
-	offeringId: objectIdSchema,
-});
-
 export const inventoryQuerySchema = z.object({
 	variantId: objectIdSchema.optional(),
 });
@@ -30,7 +25,7 @@ export const inventoryCreateSchema = z
 			data.reservedQuantity > data.quantity
 		) {
 			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
+				code: "custom",
 				path: ["reservedQuantity"],
 				message: "Reserved quantity cannot exceed inventory quantity.",
 			});

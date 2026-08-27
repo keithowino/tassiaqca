@@ -2,13 +2,14 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
 import { tagsService } from "../services/index.js";
 
 import { setTagsRequestSchema } from "../validators/index.js";
 
-import { businessOfferingParamsSchema } from "../../shared/index.js";
+// import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 const getTags = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(

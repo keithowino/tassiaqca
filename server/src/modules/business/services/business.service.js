@@ -17,7 +17,7 @@ import {
 	ErrorCodes,
 	withTransaction,
 } from "../../../shared/index.js";
-import * as businessConfigurationService from "../../businessConfiguration/services/businessConfiguration.service.js";
+import { businessConfigurationService } from "../../businessConfiguration/index.js";
 
 class BusinessService {
 	/*

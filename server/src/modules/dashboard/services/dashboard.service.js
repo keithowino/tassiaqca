@@ -1,16 +1,23 @@
-import * as businessConfigurationService from "../../businessConfiguration/services/businessConfiguration.service.js";
+// import * as businessConfigurationService from "../../businessConfiguration/services/businessConfiguration.service.js";
+import { businessConfigurationService } from "../../businessConfiguration/index.js";
 
 import { resolveDashboardModules, buildDashboard } from "../builders/index.js";
 
 import { presentDashboard } from "../presenters/index.js";
 
-export const getDashboard = async (businessId) => {
-	const configuration =
-		await businessConfigurationService.getConfiguration(businessId);
+class BusinessDashboardService {
+	async getDashboard({ businessId }) {
+		const configuration =
+			await businessConfigurationService.getConfiguration(businessId);
 
-	const modules = resolveDashboardModules(configuration);
+		const modules = resolveDashboardModules(configuration);
 
-	const widgets = buildDashboard(modules);
+		const widgets = buildDashboard(modules);
 
-	return presentDashboard(widgets);
-};
+		return presentDashboard(widgets);
+	}
+}
+
+export const businessDashboardService = new BusinessDashboardService();
+
+export default businessDashboardService;

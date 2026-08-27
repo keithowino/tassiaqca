@@ -47,13 +47,7 @@ export const durationUpdateSchema = z
 		},
 	);
 
-export const durationParamsSchema = z.object({
-	businessId: objectIdSchema,
-	offeringId: objectIdSchema,
-});
-
 export default {
 	durationCreateSchema,
 	durationUpdateSchema,
-	durationParamsSchema,
 };

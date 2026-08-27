@@ -2,11 +2,12 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
 import { subscriptionService } from "../services/index.js";
 import { setSubscriptionSchema } from "../validators/index.js";
-import { businessOfferingParamsSchema } from "../../shared/index.js";
+// import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 export const setSubscription = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(

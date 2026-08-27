@@ -15,10 +15,25 @@ export default function SidebarNavigation({ navigation }) {
 
 					<div className="space-y-1">
 						{section.items.map((item) => (
+							// <NavLink
+							// 	key={item.id}
+							// 	to={`/business${item.path}`}
+							// 	end={item.path === "/"}
+							// 	className={({ isActive }) =>
+							// 		[
+							// 			"block rounded-lg px-3 py-2 transition",
+							// 			isActive
+							// 				? "bg-orange-500 text-white"
+							// 				: "text-slate-700 hover:bg-slate-100",
+							// 		].join(" ")
+							// 	}
+							// >
+							// 	{item.label}
+							// </NavLink>
 							<NavLink
 								key={item.id}
-								to={`/business${item.path}`}
-								end={item.path === "/"}
+								to={`/business${item.route}`}
+								end={item.route === "/"}
 								className={({ isActive }) =>
 									[
 										"block rounded-lg px-3 py-2 transition",

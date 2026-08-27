@@ -1,22 +1,19 @@
 import { Router } from "express";
 
-import * as controller from "../controllers/navigation.controller.js";
+import { navigationController } from "../controllers/index.js";
 
-import { validateRequest } from "../../../shared/index.js";
+import { authenticate, requirePermission } from "../../identity/index.js";
 
-import { navigationParamsSchema } from "../validators/navigation.validator.js";
+import { Permissions } from "../../../shared/index.js";
 
 const router = Router({ mergeParams: true });
 
-router.get("/navigation", async (req, res) => {
-	validateRequest(
-		{
-			params: navigationParamsSchema,
-		},
-		req,
-	);
+router.use(authenticate);
 
-	return controller.getNavigation(req, res);
-});
+router.get(
+	"/navigation",
+	requirePermission(Permissions.BUSINESS_VIEW),
+	navigationController.getNavigation,
+);
 
 export default router;

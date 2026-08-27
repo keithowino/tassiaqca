@@ -1,22 +1,19 @@
 import { Router } from "express";
 
-import * as controller from "../controllers/dashboard.controller.js";
+import { dashboardController } from "../controllers/index.js";
 
-import { validateRequest } from "../../../shared/index.js";
+import { authenticate, requirePermission } from "../../identity/index.js";
 
-import { dashboardParamsSchema } from "../validators/dashboard.validator.js";
+import { Permissions } from "../../../shared/index.js";
 
 const router = Router({ mergeParams: true });
 
-router.get("/dashboard", async (req, res) => {
-	validateRequest(
-		{
-			params: dashboardParamsSchema,
-		},
-		req,
-	);
+router.use(authenticate);
 
-	return controller.getDashboard(req, res);
-});
+router.get(
+	"/dashboard",
+	requirePermission(Permissions.BUSINESS_VIEW),
+	dashboardController.getDashboard,
+);
 
 export default router;

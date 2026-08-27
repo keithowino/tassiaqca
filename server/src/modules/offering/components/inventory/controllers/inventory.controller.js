@@ -2,12 +2,12 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
 import { inventoryService } from "../services/index.js";
 
 import {
-	inventoryParamsSchema,
 	inventoryQuerySchema,
 	inventoryCreateSchema,
 	inventoryUpdateSchema,
@@ -16,7 +16,7 @@ import {
 const listInventory = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
-			params: inventoryParamsSchema,
+			params: businessOfferingParamsSchema,
 		},
 		req,
 	);
@@ -36,7 +36,7 @@ const listInventory = asyncHandler(async (req, res) => {
 const getInventory = asyncHandler(async (req, res) => {
 	const { params, query } = validateRequest(
 		{
-			params: inventoryParamsSchema,
+			params: businessOfferingParamsSchema,
 			query: inventoryQuerySchema,
 		},
 		req,
@@ -58,7 +58,7 @@ const getInventory = asyncHandler(async (req, res) => {
 const createInventory = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
-			params: inventoryParamsSchema,
+			params: businessOfferingParamsSchema,
 			body: inventoryCreateSchema,
 		},
 		req,
@@ -78,7 +78,7 @@ const createInventory = asyncHandler(async (req, res) => {
 const updateInventory = asyncHandler(async (req, res) => {
 	const { params, query, body } = validateRequest(
 		{
-			params: inventoryParamsSchema,
+			params: businessOfferingParamsSchema,
 			query: inventoryQuerySchema,
 			body: inventoryUpdateSchema,
 		},

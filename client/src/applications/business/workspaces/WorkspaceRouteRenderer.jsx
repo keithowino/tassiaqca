@@ -12,19 +12,41 @@ export default function WorkspaceRouteRenderer() {
 		workspace: { navigation },
 	} = useWorkspace();
 
+	/**
+	 * This method modification was added after the client failed to display the dashboard/ widgets as expected.
+	 */
+	const navigationItems = useMemo(() => {
+		if (!navigation?.sections?.length) {
+			return [];
+		}
+
+		return navigation.sections.flatMap((section) => section.items ?? []);
+	}, [navigation]);
+
 	const activeModule = useMemo(() => {
-		if (!navigation?.items) {
+		// if (!navigation?.items) {
+		// 	return null;
+		// }
+		if (!navigationItems.length) {
 			return null;
 		}
 
+		// return (
+		// 	navigation.items.find((item) =>
+		// 		location.pathname.startsWith(
+		// 			`/business${item.path === "/" ? "" : item.path}`,
+		// 		),
+		// 	) ?? navigation.items[0]
+		// );
 		return (
-			navigation.items.find((item) =>
-				location.pathname.startsWith(
-					`/business${item.path === "/" ? "" : item.path}`,
-				),
-			) ?? navigation.items[0]
+			navigationItems.find((item) => {
+				const route = item.route === "/" ? "" : item.route;
+
+				return location.pathname.startsWith(`/business${route}`);
+			}) ?? navigationItems[0]
 		);
-	}, [location.pathname, navigation]);
+		// }, [location.pathname, navigation]);
+	}, [location.pathname, navigationItems]);
 
 	return <BusinessWorkspace module={activeModule} />;
 }

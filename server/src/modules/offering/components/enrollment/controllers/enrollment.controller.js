@@ -2,9 +2,10 @@ import {
 	asyncHandler,
 	success,
 	validateRequest,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
-import { businessOfferingParamsSchema } from "../../shared/index.js";
+// import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 import { enrollmentService } from "../services/index.js";
 import { setEnrollmentSchema } from "../validators/index.js";

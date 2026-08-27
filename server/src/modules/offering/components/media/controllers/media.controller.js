@@ -2,13 +2,14 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
 import { mediaService } from "../services/index.js";
 
 import { setMediaRequestSchema } from "../validators/index.js";
 
-import { businessOfferingParamsSchema } from "../../shared/index.js";
+// import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 const getMedia = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(

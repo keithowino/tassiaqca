@@ -231,7 +231,7 @@ This is the sequence I recommend following:
 4. Business Type Registry (done)
 5. Business Configuration Model (done)
 6. Configuration Service (done)
-7. Business Provisioning Pipeline
+7. Business Provisioning Pipeline (in progress)
 8. Configuration API
 9. Navigation API
 10. Frontend integration (partially implemented)

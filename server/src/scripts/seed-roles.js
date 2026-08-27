@@ -40,6 +40,7 @@ async function seedRoles() {
 				permissions: [
 					permissionMap.BUSINESS_UPDATE,
 					permissionMap.BUSINESS_TRANSFER_OWNERSHIP,
+					permissionMap.BUSINESS_VIEW,
 					permissionMap.AUDIT_LOG_VIEW,
 
 					permissionMap.MEMBER_INVITE,
@@ -104,6 +105,7 @@ async function seedRoles() {
 				description: "Business manager",
 				system: true,
 				permissions: [
+					permissionMap.BUSINESS_VIEW,
 					permissionMap.BRANCH_VIEW,
 
 					permissionMap.OFFERING_CREATE,
@@ -149,6 +151,7 @@ async function seedRoles() {
 				description: "Business staff",
 				system: true,
 				permissions: [
+					permissionMap.BUSINESS_VIEW,
 					permissionMap.BRANCH_VIEW,
 
 					permissionMap.OFFERING_VIEW,

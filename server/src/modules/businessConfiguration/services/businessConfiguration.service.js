@@ -1,4 +1,4 @@
-import * as repository from "../repositories/businessConfiguration.repository.js";
+import { businessConfigurationRepository } from "../repositories/index.js";
 
 import { generateConfiguration } from "./configurationGenerator.service.js";
 
@@ -7,53 +7,119 @@ import {
 	BusinessConfigurationNotFoundError,
 } from "../errors/index.js";
 
-export const provisionConfiguration = async ({
-	businessId,
-	businessType,
-	createdBy,
-	session,
-}) => {
-	const exists = await repository.existsForBusiness(businessId);
+// export const provisionConfiguration = async ({
+// 	businessId,
+// 	businessType,
+// 	createdBy,
+// 	session,
+// }) => {
+// 	const exists = await repository.existsForBusiness(businessId);
 
-	if (exists) {
-		throw new BusinessConfigurationAlreadyExistsError(businessId);
-	}
+// 	if (exists) {
+// 		throw new BusinessConfigurationAlreadyExistsError(businessId);
+// 	}
 
-	const payload = generateConfiguration({
+// 	const payload = generateConfiguration({
+// 		businessId,
+// 		businessType,
+// 		createdBy,
+// 	});
+
+// 	return repository.create(payload, { session });
+// };
+
+// export const getConfiguration = async (businessId) => {
+// 	const configuration = await repository.findByBusiness(businessId);
+
+// 	if (!configuration) {
+// 		throw new BusinessConfigurationNotFoundError(businessId);
+// 	}
+
+// 	return configuration;
+// };
+
+// export const regenerateConfiguration = async ({
+// 	businessId,
+// 	businessType,
+// 	updatedBy,
+// 	session,
+// }) => {
+// 	const payload = generateConfiguration({
+// 		businessId,
+// 		businessType,
+// 		createdBy: updatedBy,
+// 	});
+
+// 	payload.updatedBy = updatedBy;
+
+// 	return repository.replace(businessId, payload, { session });
+// };
+
+// export const updateConfiguration = (businessId, updates, options = {}) =>
+// 	repository.update(businessId, updates, options);
+
+class BusinessConfigurationService {
+	async provisionConfiguration({
 		businessId,
 		businessType,
 		createdBy,
-	});
+		session,
+	}) {
+		const exists =
+			await businessConfigurationRepository.existsForBusiness(businessId);
 
-	return repository.create(payload, { session });
-};
+		if (exists) {
+			throw new BusinessConfigurationAlreadyExistsError(businessId);
+		}
 
-export const getConfiguration = async (businessId) => {
-	const configuration = await repository.findByBusiness(businessId);
+		const payload = generateConfiguration({
+			businessId,
+			businessType,
+			createdBy,
+		});
 
-	if (!configuration) {
-		throw new BusinessConfigurationNotFoundError(businessId);
+		return repository.create(payload, { session });
 	}
 
-	return configuration;
-};
+	async getConfiguration(businessId) {
+		const configuration =
+			await businessConfigurationRepository.findByBusiness(businessId);
 
-export const regenerateConfiguration = async ({
-	businessId,
-	businessType,
-	updatedBy,
-	session,
-}) => {
-	const payload = generateConfiguration({
+		if (!configuration) {
+			throw new BusinessConfigurationNotFoundError(businessId);
+		}
+
+		return configuration;
+	}
+
+	async regenerateConfiguration({
 		businessId,
 		businessType,
-		createdBy: updatedBy,
-	});
+		updatedBy,
+		session,
+	}) {
+		const payload = generateConfiguration({
+			businessId,
+			businessType,
+			createdBy: updatedBy,
+		});
 
-	payload.updatedBy = updatedBy;
+		payload.updatedBy = updatedBy;
 
-	return repository.replace(businessId, payload, { session });
-};
+		return businessConfigurationRepository.replace(businessId, payload, {
+			session,
+		});
+	}
 
-export const updateConfiguration = (businessId, updates, options = {}) =>
-	repository.update(businessId, updates, options);
+	updateConfiguration(businessId, updates, options = {}) {
+		return businessConfigurationRepository.update(
+			businessId,
+			updates,
+			options,
+		);
+	}
+}
+
+const businessConfigurationService = new BusinessConfigurationService();
+
+export default businessConfigurationService;

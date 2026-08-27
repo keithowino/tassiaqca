@@ -1,4 +1,4 @@
-import * as businessConfigurationRepository from "../repositories/businessConfiguration.repository.js";
+import { businessConfigurationRepository } from "../repositories/index.js";
 
 import * as configurationGeneratorService from "./configurationGenerator.service.js";
 
@@ -15,4 +15,6 @@ class BusinessProvisioningService {
 	}
 }
 
-export default new BusinessProvisioningService();
+const businessProvisioningService = new BusinessProvisioningService();
+
+export default businessProvisioningService;

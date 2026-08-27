@@ -1,4 +1,4 @@
-import * as businessConfigurationService from "../../businessConfiguration/services/businessConfiguration.service.js";
+import { businessConfigurationService } from "../../businessConfiguration/index.js";
 
 import {
 	resolveNavigationModules,
@@ -7,13 +7,17 @@ import {
 
 import { presentNavigation } from "../presenters/index.js";
 
-export const getNavigation = async (businessId) => {
-	const configuration =
-		await businessConfigurationService.getConfiguration(businessId);
+class NavigationService {
+	async getNavigation({ businessId }) {
+		const configuration =
+			await businessConfigurationService.getConfiguration(businessId);
 
-	const modules = resolveNavigationModules(configuration);
+		const modules = resolveNavigationModules(configuration);
 
-	const navigation = buildNavigationModel(modules);
+		const navigation = buildNavigationModel(modules);
 
-	return presentNavigation(navigation);
-};
+		return presentNavigation(navigation);
+	}
+}
+
+export default new NavigationService();

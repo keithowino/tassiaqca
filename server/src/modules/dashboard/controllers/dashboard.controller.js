@@ -1,11 +1,27 @@
-import * as dashboardService from "../services/dashboard.service.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+	businessParamsSchema,
+} from "../../../shared/index.js";
 
-import { success } from "../../../shared/index.js";
+import { businessDashboardService } from "../services/index.js";
 
-export const getDashboard = async (req, res) => {
-	const dashboard = await dashboardService.getDashboard(
-		req.params.businessId,
+const getDashboard = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
 	);
 
+	const dashboard = await businessDashboardService.getDashboard({
+		businessId: params.businessId,
+	});
+
 	return success(res, dashboard);
+});
+
+export default {
+	getDashboard,
 };

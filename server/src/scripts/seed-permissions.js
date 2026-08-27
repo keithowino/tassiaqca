@@ -32,6 +32,13 @@ const permissions = [
 		key: "AUDIT_LOG_VIEW",
 		name: "View Audit Logs",
 	},
+	/**
+	 * Added the one below while editing dashboard.routes.js
+	 */
+	{
+		key: "BUSINESS_VIEW",
+		name: "Business View Privileges",
+	},
 
 	/**
 	 * Members

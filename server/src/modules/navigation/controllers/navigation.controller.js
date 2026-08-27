@@ -1,11 +1,27 @@
-import * as navigationService from "../services/navigation.service.js";
+import { navigationService } from "../services/index.js";
 
-import { success } from "../../../shared/index.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+	businessParamsSchema,
+} from "../../../shared/index.js";
 
-export const getNavigation = async (req, res) => {
-	const navigation = await navigationService.getNavigation(
-		req.params.businessId,
+const getNavigation = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
 	);
 
+	const navigation = await navigationService.getNavigation({
+		businessId: params.businessId,
+	});
+
 	return success(res, navigation);
+});
+
+export default {
+	getNavigation,
 };

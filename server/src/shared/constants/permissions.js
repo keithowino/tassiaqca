@@ -6,6 +6,10 @@ const Permissions = {
 	BUSINESS_UPDATE: "BUSINESS_UPDATE",
 	BUSINESS_DELETE: "BUSINESS_DELETE",
 	BUSINESS_TRANSFER_OWNERSHIP: "BUSINESS_TRANSFER_OWNERSHIP",
+	/**
+	 * Added the one below while editing dashboard.routes.js
+	 */
+	BUSINESS_VIEW: "BUSINESS_VIEW",
 
 	AUDIT_LOG_VIEW: "AUDIT_LOG_VIEW",
 

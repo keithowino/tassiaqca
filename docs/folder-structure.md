@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-18
+Generated on: 2026-08-27
 
 ```bash
 ├── client/
@@ -400,7 +400,8 @@ Generated on: 2026-08-18
 │   │   │   │   │   ├── businessConfiguration.presenter.js
 │   │   │   │   │   └── index.js
 │   │   │   │   ├── repositories/
-│   │   │   │   │   └── businessConfiguration.repository.js
+│   │   │   │   │   ├── businessConfiguration.repository.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── services/
 │   │   │   │   │   ├── businessConfiguration.service.js
 │   │   │   │   │   ├── businessProvisioning.service.js
@@ -477,7 +478,8 @@ Generated on: 2026-08-18
 │   │   │   │   │   ├── widgetSizes.js
 │   │   │   │   │   └── widgetTypes.js
 │   │   │   │   ├── controllers/
-│   │   │   │   │   └── dashboard.controller.js
+│   │   │   │   │   ├── dashboard.controller.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── presenters/
 │   │   │   │   │   ├── dashboard.presenter.js
 │   │   │   │   │   └── index.js
@@ -487,7 +489,6 @@ Generated on: 2026-08-18
 │   │   │   │   │   ├── dashboard.service.js
 │   │   │   │   │   └── index.js
 │   │   │   │   ├── validators/
-│   │   │   │   │   └── dashboard.validator.js
 │   │   │   │   └── index.js
 │   │   │   ├── finance/
 │   │   │   ├── identity/
@@ -509,6 +510,7 @@ Generated on: 2026-08-18
 │   │   │   │   │   └── user.presenter.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── businessMember.repository.js
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── permission.repository.js
 │   │   │   │   │   ├── README.md
 │   │   │   │   │   ├── role.repository.js
@@ -543,6 +545,7 @@ Generated on: 2026-08-18
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── navigationSections.js
 │   │   │   │   ├── controllers/
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   └── navigation.controller.js
 │   │   │   │   ├── presenters/
 │   │   │   │   │   ├── index.js
@@ -552,8 +555,6 @@ Generated on: 2026-08-18
 │   │   │   │   ├── services/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── navigation.service.js
-│   │   │   │   ├── validators/
-│   │   │   │   │   └── navigation.validator.js
 │   │   │   │   └── index.js
 │   │   │   ├── offering/
 │   │   │   │   ├── builders/
@@ -593,6 +594,90 @@ Generated on: 2026-08-18
 │   │   │   │   │   │   │   └── updateAttributes.schema.js
 │   │   │   │   │   │   ├── attributes.component.js
 │   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── booking/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── booking.builder.js
+│   │   │   │   │   │   │   ├── booking.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── booking.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── booking.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── booking.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── booking.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── booking.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── booking.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── booking.schema.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── booking.component.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── calendar/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── calendar.builder.js
+│   │   │   │   │   │   │   ├── calendar.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── calendar.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── calendar.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── calendar.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── calendar.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── calendar.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── calendar.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── calendar.schema.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── calendar.component.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── capacity/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── capacity.builder.js
+│   │   │   │   │   │   │   ├── capacity.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── capacity.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── capacity.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── capacity.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── capacity.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── capacity.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── capacity.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── capacity.schema.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── capacity.component.js
+│   │   │   │   │   │   └── index.js
 │   │   │   │   │   ├── categories/
 │   │   │   │   │   │   ├── builders/
 │   │   │   │   │   │   │   ├── categories.builder.js
@@ -623,6 +708,178 @@ Generated on: 2026-08-18
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── updateCategories.schema.js
 │   │   │   │   │   │   └── categories.component.js
+│   │   │   │   │   ├── download/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── download.builder.js
+│   │   │   │   │   │   │   ├── download.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── download.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── download.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── download.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── download.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── download.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── download.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── download.schema.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── download.component.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── duration/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── duration.builder.js
+│   │   │   │   │   │   │   ├── duration.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── duration.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringDuration.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── duration.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── duration.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── duration.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── duration.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── duration.normalizer.js
+│   │   │   │   │   │   │   ├── duration.schema.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── duration.component.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── enrollment/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── enrollment.builder.js
+│   │   │   │   │   │   │   ├── enrollment.factory.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── enrollment.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── enrollment.model.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── enrollment.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── enrollment.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── enrollment.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── enrollment.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── enrollment.schema.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── enrollment.component.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── instructor/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── instructor.builder.js
+│   │   │   │   │   │   │   └── instructor.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── instructor.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── instructor.component.js
+│   │   │   │   │   ├── inventory/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── inventory.builder.js
+│   │   │   │   │   │   │   └── inventory.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── inventory.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringInventory.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── inventory.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── inventory.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── inventory.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── inventory.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── inventory.normalizer.js
+│   │   │   │   │   │   │   └── inventory.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── inventory.component.js
+│   │   │   │   │   ├── location/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── location.builder.js
+│   │   │   │   │   │   │   └── location.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── location.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── location.component.js
 │   │   │   │   │   ├── media/
 │   │   │   │   │   │   ├── builders/
 │   │   │   │   │   │   │   ├── index.js
@@ -651,6 +908,35 @@ Generated on: 2026-08-18
 │   │   │   │   │   │   │   ├── media.request.schema.js
 │   │   │   │   │   │   │   └── media.schema.js
 │   │   │   │   │   │   └── media.component.js
+│   │   │   │   │   ├── membership/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── membership.builder.js
+│   │   │   │   │   │   │   └── membership.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── membership.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── membership.component.js
+│   │   │   │   │   │   └── README.md
 │   │   │   │   │   ├── metadata/
 │   │   │   │   │   │   ├── validators/
 │   │   │   │   │   │   │   └── metadata.schema.js
@@ -682,6 +968,63 @@ Generated on: 2026-08-18
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── setCurrentPricing.schema.js
 │   │   │   │   │   │   └── pricing.component.js
+│   │   │   │   │   ├── registration/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── registration.builder.js
+│   │   │   │   │   │   │   └── registration.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── registration.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   └── registration.component.js
+│   │   │   │   │   ├── scheduling/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── scheduling.builder.js
+│   │   │   │   │   │   │   └── scheduling.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── scheduling.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── OfferingScheduling.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── scheduling.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── scheduling.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── scheduling.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── scheduling.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── scheduling.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── scheduling.component.js
 │   │   │   │   │   ├── seo/
 │   │   │   │   │   │   ├── builders/
 │   │   │   │   │   │   │   ├── index.js
@@ -715,10 +1058,37 @@ Generated on: 2026-08-18
 │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   └── seo.component.js
 │   │   │   │   │   ├── shared/
-│   │   │   │   │   │   ├── validators/
-│   │   │   │   │   │   │   └── params.schema.js
 │   │   │   │   │   │   ├── ensureExists.js
 │   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── subscription/
+│   │   │   │   │   │   ├── builders/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   ├── subscription.builder.js
+│   │   │   │   │   │   │   └── subscription.factory.js
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.controller.js
+│   │   │   │   │   │   ├── models/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.model.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── subscription.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   └── subscription.component.js
 │   │   │   │   │   ├── tags/
 │   │   │   │   │   │   ├── builders/
 │   │   │   │   │   │   │   ├── index.js
@@ -858,6 +1228,11 @@ Generated on: 2026-08-18
 │   │       │   ├── httpStatus.js
 │   │       │   ├── index.js
 │   │       │   ├── inventoryStatus.js
+│   │       │   ├── offeringCalendarStatus.js
+│   │       │   ├── offeringDurationStatus.js
+│   │       │   ├── offeringMediaStatus.js
+│   │       │   ├── offeringSchedulingStatus.js
+│   │       │   ├── offeringSubscriptionStatus.js
 │   │       │   ├── offeringVariantStatus.js
 │   │       │   ├── permissions.js
 │   │       │   ├── pricing.js
@@ -907,6 +1282,7 @@ Generated on: 2026-08-18
 │   │       │   │   ├── index.js
 │   │       │   │   ├── offering.constants.js
 │   │       │   │   ├── offering.registry.js
+│   │       │   │   ├── offering.utils.js
 │   │       │   │   └── offeringCategory.constants.js
 │   │       │   ├── registry/
 │   │       │   │   ├── index.js
@@ -931,11 +1307,12 @@ Generated on: 2026-08-18
 │   │       │   ├── common/
 │   │       │   │   ├── boolean.schema.js
 │   │       │   │   ├── email.schema.js
+│   │       │   │   ├── index.js
 │   │       │   │   ├── objectId.schema.js
+│   │       │   │   ├── params.schema.js
 │   │       │   │   ├── password.schema.js
 │   │       │   │   └── phone.schema.js
 │   │       │   ├── index.js
-│   │       │   ├── schemas.js
 │   │       │   └── validateRequest.js
 │   │       └── index.js
 │   ├── .env.development

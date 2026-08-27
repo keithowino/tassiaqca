@@ -1,5 +1,4 @@
 export {
-	inventoryParamsSchema,
 	inventoryQuerySchema,
 	inventoryCreateSchema,
 	inventoryUpdateSchema,

@@ -2,13 +2,14 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
 import { variantSchema, variantsListQuerySchema } from "../validators/index.js";
 
 import { variantsService } from "../services/index.js";
 
-import { businessOfferingParamsSchema } from "../../shared/index.js";
+// import { businessOfferingParamsSchema } from "../../shared/index.js";
 
 const variantParamsSchema = businessOfferingParamsSchema.extend({
 	variantId: businessOfferingParamsSchema.shape.offeringId,

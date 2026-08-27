@@ -2,12 +2,12 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
+	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
 import { durationService } from "../services/index.js";
 
 import {
-	durationParamsSchema,
 	durationCreateSchema,
 	durationUpdateSchema,
 } from "../validators/index.js";
@@ -15,7 +15,7 @@ import {
 const getDuration = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
-			params: durationParamsSchema,
+			params: businessOfferingParamsSchema,
 		},
 		req,
 	);
@@ -31,7 +31,7 @@ const getDuration = asyncHandler(async (req, res) => {
 const createDuration = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
-			params: durationParamsSchema,
+			params: businessOfferingParamsSchema,
 			body: durationCreateSchema,
 		},
 		req,
@@ -51,7 +51,7 @@ const createDuration = asyncHandler(async (req, res) => {
 const updateDuration = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(
 		{
-			params: durationParamsSchema,
+			params: businessOfferingParamsSchema,
 			body: durationUpdateSchema,
 		},
 		req,
@@ -71,7 +71,7 @@ const updateDuration = asyncHandler(async (req, res) => {
 const archiveDuration = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
-			params: durationParamsSchema,
+			params: businessOfferingParamsSchema,
 		},
 		req,
 	);
@@ -89,7 +89,7 @@ const archiveDuration = asyncHandler(async (req, res) => {
 const restoreDuration = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{
-			params: durationParamsSchema,
+			params: businessOfferingParamsSchema,
 		},
 		req,
 	);
