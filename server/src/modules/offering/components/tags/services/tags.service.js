@@ -4,16 +4,13 @@ import { tagsFactory } from "../builders/index.js";
 import { tagsPresenter } from "../presenters/index.js";
 import { tagsRepository } from "../repositories/index.js";
 
-import {
-	ensureBusinessExists,
-	ensureOfferingExists,
-} from "../../shared/index.js";
-
 import { normalizeTags } from "../validators/index.js";
 
 import {
 	ensureOfferingSupportsComponent,
 	OFFERING_COMPONENTS,
+	ensureBusinessExists,
+	ensureOfferingExists,
 } from "../../../../../shared/index.js";
 
 class TagsService {

@@ -51,4 +51,8 @@ branchAssignmentSchema.index(
 	},
 );
 
-export default mongoose.model("BranchAssignment", branchAssignmentSchema);
+export const BranchAssignment =
+	mongoose.models.BranchAssignment ||
+	mongoose.model("BranchAssignment", branchAssignmentSchema);
+
+export default BranchAssignment;

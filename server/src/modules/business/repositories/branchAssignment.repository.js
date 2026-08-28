@@ -1,4 +1,4 @@
-import BranchAssignment from "../models/BranchAssignment.js";
+import { BranchAssignment } from "../models/index.js";
 
 async function create(data) {
 	return BranchAssignment.create(data);

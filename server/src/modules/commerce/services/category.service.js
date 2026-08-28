@@ -14,6 +14,7 @@ import {
 	HTTP_STATUS,
 	AppError,
 	ErrorCodes,
+	ensureBusinessExists,
 } from "../../../shared/index.js";
 
 /**
@@ -27,19 +28,6 @@ import {
 | Private Helpers
 |--------------------------------------------------------------------------
 */
-async function ensureBusinessExists(businessId) {
-	const business = await businessRepository.findById(businessId);
-
-	if (!business) {
-		throw new AppError(
-			"Business not found.",
-			HTTP_STATUS.NOT_FOUND,
-			ErrorCodes.NOT_FOUND,
-		);
-	}
-
-	return business;
-}
 
 async function ensureCategoryExists(businessId, categoryId) {
 	const category = await categoryRepository.findByBusinessAndId(

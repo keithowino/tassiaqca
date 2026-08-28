@@ -1,7 +1,14 @@
-import businessService from "../../../business/services/business.service.js";
-import { offeringRepository } from "../../repositories/index.js";
+import { businessService } from "../../modules/business/index.js";
+import { offeringRepository } from "../../modules/offering/index.js";
 
-import { AppError, ErrorCodes, HTTP_STATUS } from "../../../../shared/index.js";
+import { AppError, ErrorCodes } from "../errors/index.js";
+import { HTTP_STATUS } from "../constants/index.js";
+
+/*
+|--------------------------------------------------------------------------
+| Universal Helpers
+|--------------------------------------------------------------------------
+*/
 
 export const ensureBusinessExists = async (businessId) => {
 	return businessService.ensureExists(businessId);

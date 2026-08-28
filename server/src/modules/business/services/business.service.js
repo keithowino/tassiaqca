@@ -1,6 +1,8 @@
-import businessRepository from "../repositories/business.repository.js";
-import businessMemberRepository from "../../identity/repositories/businessMember.repository.js";
-import roleRepository from "../../identity/repositories/role.repository.js";
+import { businessRepository } from "../repositories/index.js";
+import {
+	businessMemberRepository,
+	roleRepository,
+} from "../../identity/index.js";
 
 import { auditLogService } from "../../audit/index.js";
 
@@ -18,6 +20,8 @@ import {
 	withTransaction,
 } from "../../../shared/index.js";
 import { businessConfigurationService } from "../../businessConfiguration/index.js";
+import { businessPresenter } from "../presenters/index.js";
+import { businessConfigurationPresenter } from "../../businessConfiguration/index.js";
 
 class BusinessService {
 	/*
@@ -124,7 +128,7 @@ class BusinessService {
 		return membership;
 	}
 
-	async getBusiness(businessId, actorId) {
+	async getBusiness({ businessId, actorId }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -137,7 +141,7 @@ class BusinessService {
 
 		await this.ensureMembership(businessId, actorId);
 
-		return business;
+		return businessPresenter.present(business);
 	}
 
 	/*
@@ -146,7 +150,7 @@ class BusinessService {
 	|--------------------------------------------------------------------------
 	*/
 
-	async create(command, { actorId, requestMetadata }) {
+	async create({ command, actorId, requestMetadata }) {
 		const ownerRole = await this.resolveOwnerRole();
 
 		const businessType = this.resolveBusinessType(command.businessType);
@@ -209,26 +213,11 @@ class BusinessService {
 				{ session },
 			);
 
-			return business;
+			return businessPresenter.present(business);
 		});
 	}
 
-	async updateBusiness(businessId, command, { actorId, requestMetadata }) {
-		// const business = await businessRepository.findById(businessId);
-
-		// if (!business) {
-		// 	throw new AppError(
-		// 		"Business not found.",
-		// 		HTTP_STATUS.NOT_FOUND,
-		// 		ErrorCodes.NOT_FOUND,
-		// 	);
-		// }
-
-		// const updatedBusiness = await businessRepository.update(
-		// 	business,
-		// 	command,
-		// );
-
+	async updateBusiness({ businessId, command, actorId, requestMetadata }) {
 		const business = await this.getBusiness(businessId, actorId);
 
 		const updatedBusiness = await businessRepository.update(
@@ -250,10 +239,10 @@ class BusinessService {
 			},
 		});
 
-		return updatedBusiness;
+		return businessPresenter.present(updatedBusiness);
 	}
 
-	async listBusinesses(actorId) {
+	async listBusinesses({ actorId }) {
 		const memberships = await businessMemberRepository.findByUser(actorId);
 
 		const businessIds = memberships.map(
@@ -264,13 +253,18 @@ class BusinessService {
 			return [];
 		}
 
-		return businessRepository.findByIds(businessIds);
+		const businesses = businessRepository.findByIds(businessIds);
+
+		return businessPresenter.presentMany(businesses);
 	}
 
-	async getConfiguration(businessId, actorId) {
+	async getConfiguration({ businessId, actorId }) {
 		await this.getBusiness(businessId, actorId);
 
-		return businessConfigurationService.getConfiguration(businessId);
+		const configuration =
+			businessConfigurationService.getConfiguration(businessId);
+
+		return businessConfigurationPresenter.present(configuration);
 	}
 }
 

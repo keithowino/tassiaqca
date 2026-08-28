@@ -1,13 +1,10 @@
 import {
-	ensureBusinessExists,
-	ensureOfferingExists,
-} from "../../shared/index.js";
-
-import {
 	AUDIT_ACTIONS,
 	AUDIT_ENTITY_TYPES,
 	ensureOfferingSupportsComponent,
 	OFFERING_COMPONENTS,
+	ensureBusinessExists,
+	ensureOfferingExists,
 } from "../../../../../shared/index.js";
 
 import { auditLogService } from "../../../../audit/index.js";

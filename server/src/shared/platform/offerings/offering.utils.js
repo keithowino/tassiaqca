@@ -36,12 +36,3 @@ export function ensureOfferingSupportsComponent(
 
 	return offering;
 }
-
-/**
- * How to use `ensureOfferingSupportsComponent` in the components services
- */
-// await ensureOfferingSupportsComponent(
-//     offering,
-//     OFFERING_COMPONENTS.DURATION,
-//     "Duration is not supported for this offering.",
-// );

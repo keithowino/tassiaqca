@@ -16,7 +16,7 @@ const createBusinessRequestSchema = z.object({
 
 	phone: z.string().trim().optional(),
 
-	email: z.string().email("Please provide a valid email address.").optional(),
+	email: z.email("Please provide a valid email address.").optional(),
 
 	logo: z.string().optional(),
 

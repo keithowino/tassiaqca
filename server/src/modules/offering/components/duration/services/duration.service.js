@@ -5,11 +5,6 @@ import { durationPresenter } from "../presenters/index.js";
 import { durationRepository } from "../repositories/index.js";
 
 import {
-	ensureBusinessExists,
-	ensureOfferingExists,
-} from "../../shared/index.js";
-
-import {
 	HTTP_STATUS,
 	AppError,
 	ErrorCodes,
@@ -17,6 +12,8 @@ import {
 	AUDIT_ACTIONS,
 	ensureOfferingSupportsComponent,
 	OFFERING_COMPONENTS,
+	ensureBusinessExists,
+	ensureOfferingExists,
 } from "../../../../../shared/index.js";
 
 import { auditLogService } from "../../../../audit/index.js";

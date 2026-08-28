@@ -1,14 +1,15 @@
+import { getId } from "../../../shared/index.js";
+
 class BranchAssignmentPresenter {
 	present(assignment) {
 		return {
 			id: assignment.id,
 
-			businessMember:
-				assignment.businessMember?._id ?? assignment.businessMember,
+			businessMember: getId(assignment.businessMember),
 
-			branch: assignment.branch?._id ?? assignment.branch,
+			branch: getId(assignment.branch),
 
-			assignedBy: assignment.assignedBy?._id ?? assignment.assignedBy,
+			assignedBy: getId(assignment.assignedBy),
 
 			primary: assignment.primary,
 			active: assignment.active,

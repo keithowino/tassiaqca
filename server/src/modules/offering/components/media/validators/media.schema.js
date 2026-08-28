@@ -7,7 +7,6 @@ const mediaItemSchema = z.object({
 
 	type: z.enum(OFFERING_MEDIA_TYPE_VALUES),
 
-	// url: z.string().trim().url(),
 	url: z.string().trim().pipe(z.url()),
 
 	alt: z.string().trim().max(300).optional(),

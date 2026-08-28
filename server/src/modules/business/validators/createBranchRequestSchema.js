@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { businessParamsSchema } from "./branchParamsSchema.js";
+
+import { businessParamsSchema } from "../../../shared/index.js";
 
 const createBranchRequestSchema = {
 	params: businessParamsSchema,
@@ -11,7 +12,7 @@ const createBranchRequestSchema = {
 
 		phone: z.string().trim().max(30).optional(),
 
-		email: z.string().email().optional(),
+		email: z.email().optional(),
 
 		address: z.string().trim().min(2).max(255),
 

@@ -13,7 +13,7 @@ export default function WorkspaceRouteRenderer() {
 	} = useWorkspace();
 
 	/**
-	 * This method modification was added after the client failed to display the dashboard/ widgets as expected.
+	 * The method below was added as a modification after the client failed to display the dashboard/ widgets as expected.
 	 */
 	const navigationItems = useMemo(() => {
 		if (!navigation?.sections?.length) {
@@ -24,9 +24,6 @@ export default function WorkspaceRouteRenderer() {
 	}, [navigation]);
 
 	const activeModule = useMemo(() => {
-		// if (!navigation?.items) {
-		// 	return null;
-		// }
 		if (!navigationItems.length) {
 			return null;
 		}

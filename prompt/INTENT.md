@@ -1757,7 +1757,7 @@ to Service, Rental, Event, Course, etc. after verifying the current registry def
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(offering): Complete the current V1 offering components implementation by creating the the Download offering component."
+git commit -m "feat(Business Domain): Init cleanup and sync."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

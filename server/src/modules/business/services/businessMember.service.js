@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import {
 	AppError,
 	ErrorCodes,
@@ -6,15 +8,19 @@ import {
 	AUDIT_ENTITY_TYPES,
 } from "../../../shared/index.js";
 
-import userRepository from "../../identity/repositories/user.repository.js";
-import roleRepository from "../../identity/repositories/role.repository.js";
-import businessRepository from "../repositories/business.repository.js";
-import businessMemberRepository from "../../identity/repositories/businessMember.repository.js";
-import mongoose from "mongoose";
+import {
+	businessMemberRepository,
+	businessRepository,
+	roleRepository,
+	userRepository,
+} from "../../identity/index.js";
+
 import { auditLogService } from "../../audit/index.js";
 
+import { businessMemberPresenter } from "../presenters/index.js";
+
 class BusinessMemberService {
-	async invite(businessId, command, { actorId, requestMetadata }) {
+	async invite({ businessId, command, actorId, requestMetadata }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -86,7 +92,9 @@ class BusinessMemberService {
 			},
 		});
 
-		return businessMemberRepository.findById(member._id);
+		const target = businessMemberRepository.findById(member._id);
+
+		return businessMemberPresenter.present(target);
 	}
 
 	async ensureOwnerCanLoseOwnership(member) {
@@ -115,10 +123,13 @@ class BusinessMemberService {
 		}
 	}
 
-	async changeRole(
-		{ businessId, memberId, roleId },
-		{ actorId, requestMetadata },
-	) {
+	async changeRole({
+		businessId,
+		memberId,
+		roleId,
+		actorId,
+		requestMetadata,
+	}) {
 		const member = await businessMemberRepository.findById(memberId);
 
 		if (!member || member.business.toString() !== businessId) {
@@ -174,13 +185,15 @@ class BusinessMemberService {
 			},
 		});
 
-		return updatedMember;
+		return businessMemberPresenter.present(updatedMember);
 	}
 
-	async transferOwnership(
-		{ businessId, targetMemberId },
-		{ actorId, requestMetadata },
-	) {
+	async transferOwnership({
+		businessId,
+		targetMemberId,
+		actorId,
+		requestMetadata,
+	}) {
 		const currentMember =
 			await businessMemberRepository.findByUserAndBusiness(
 				actorId,
@@ -299,7 +312,7 @@ class BusinessMemberService {
 		};
 	}
 
-	async leaveBusiness({ businessId }, { actorId, requestMetadata }) {
+	async leaveBusiness({ businessId, actorId, requestMetadata }) {
 		const member = await businessMemberRepository.findByUserAndBusiness(
 			actorId,
 			businessId,
@@ -332,7 +345,7 @@ class BusinessMemberService {
 		};
 	}
 
-	async remove({ businessId, memberId }, { actorId, requestMetadata }) {
+	async remove({ businessId, memberId, actorId, requestMetadata }) {
 		const member = await businessMemberRepository.findById(memberId);
 
 		if (!member) {
@@ -378,7 +391,7 @@ class BusinessMemberService {
 		};
 	}
 
-	async deactivate({ businessId, memberId }, { actorId, requestMetadata }) {
+	async deactivate({ businessId, memberId, actorId, requestMetadata }) {
 		const member = await businessMemberRepository.findByBusinessAndId(
 			businessId,
 			memberId,
@@ -428,10 +441,10 @@ class BusinessMemberService {
 			requestMetadata,
 		});
 
-		return updatedMember;
+		return businessMemberPresenter.present(updatedMember);
 	}
 
-	async reactivate({ businessId, memberId }, { actorId, requestMetadata }) {
+	async reactivate({ businessId, memberId, actorId, requestMetadata }) {
 		const member = await businessMemberRepository.findByBusinessAndId(
 			businessId,
 			memberId,
@@ -471,10 +484,10 @@ class BusinessMemberService {
 			requestMetadata,
 		});
 
-		return updatedMember;
+		return businessMemberPresenter.present(updatedMember);
 	}
 
-	async list(businessId) {
+	async list({ businessId }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -485,7 +498,9 @@ class BusinessMemberService {
 			);
 		}
 
-		return businessMemberRepository.findByBusiness(businessId);
+		const members = businessMemberRepository.findByBusiness(businessId);
+
+		return businessMemberPresenter.presentMany(members);
 	}
 }
 

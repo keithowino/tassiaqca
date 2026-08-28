@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { businessBranchParamsSchema } from "./branchParamsSchema.js";
+
+import { businessBranchParamsSchema } from "../../../shared/index.js";
 
 const updateBranchRequestSchema = {
 	params: businessBranchParamsSchema,

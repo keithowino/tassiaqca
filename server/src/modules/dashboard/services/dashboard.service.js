@@ -1,4 +1,3 @@
-// import * as businessConfigurationService from "../../businessConfiguration/services/businessConfiguration.service.js";
 import { businessConfigurationService } from "../../businessConfiguration/index.js";
 
 import { resolveDashboardModules, buildDashboard } from "../builders/index.js";

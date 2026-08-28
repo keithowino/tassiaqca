@@ -1,220 +1,174 @@
-import businessMemberService from "../services/businessMember.service.js";
+import { businessMemberService } from "../services/index.js";
 
 import {
 	changeMemberRoleRequestSchema,
-	deactivateMemberRequestSchema,
 	inviteMemberRequestSchema,
-	leaveBusinessRequestSchema,
-	reactivateMemberRequestSchema,
-	removeMemberRequestSchema,
-	transferOwnershipRequestSchema,
 } from "../validators/index.js";
 
 import {
 	validateRequest,
+	asyncHandler,
 	success,
+	businessParamsSchema,
 	HTTP_STATUS,
+	businessMemberParamsSchema,
 } from "../../../shared/index.js";
-import { businessMemberPresenter } from "../presenters/index.js";
 
-class BusinessMemberController {
-	async invite(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: inviteMemberRequestSchema,
-				},
-				req,
-			);
+const invite = asyncHandler(async (req, res) => {
+	const { params, body } = validateRequest(
+		{
+			params: businessParamsSchema,
+			body: inviteMemberRequestSchema,
+		},
+		req,
+	);
 
-			const member = await businessMemberService.invite(
-				req.params.businessId,
-				{
-					...body,
-					actorId: req.user._id,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const member = await businessMemberService.invite({
+		businessId: params.businessId,
+		command: body,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				businessMemberPresenter.present(member),
-				"Member invited successfully.",
-				HTTP_STATUS.CREATED,
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(
+		res,
+		member,
+		"Member invited successfully.",
+		HTTP_STATUS.CREATED,
+	);
+});
 
-	async changeRole(req, res, next) {
-		try {
-			const { params, body } = validateRequest(
-				changeMemberRoleRequestSchema,
-				req,
-			);
+const changeRole = asyncHandler(async (req, res) => {
+	const { params, body } = validateRequest(
+		{
+			params: businessMemberParamsSchema,
+			body: changeMemberRoleRequestSchema,
+		},
+		req,
+	);
 
-			const member = await businessMemberService.changeRole(
-				{
-					businessId: params.businessId,
-					memberId: params.memberId,
-					roleId: body.roleId,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const member = await businessMemberService.changeRole({
+		businessId: params.businessId,
+		memberId: params.memberId,
+		roleId: body.roleId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				businessMemberPresenter.present(member),
-				"Member role updated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, member, "Member role updated successfully.");
+});
 
-	async transferOwnership(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				transferOwnershipRequestSchema,
-				req,
-			);
+const transferOwnership = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessMemberParamsSchema,
+		},
+		req,
+	);
 
-			const result = await businessMemberService.transferOwnership(
-				{
-					businessId: params.businessId,
-					targetMemberId: params.memberId,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const result = await businessMemberService.transferOwnership({
+		businessId: params.businessId,
+		targetMemberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(res, result, "Ownership transferred successfully.");
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result, "Ownership transferred successfully.");
+});
 
-	async leave(req, res, next) {
-		try {
-			const { params } = validateRequest(leaveBusinessRequestSchema, req);
+const leave = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
+	);
 
-			const result = await businessMemberService.leaveBusiness(
-				{
-					businessId: params.businessId,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const result = await businessMemberService.leaveBusiness({
+		businessId: params.businessId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(res, result, "Left business successfully.");
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result, "Left business successfully.");
+});
 
-	async remove(req, res, next) {
-		try {
-			const { params } = validateRequest(removeMemberRequestSchema, req);
+const remove = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessMemberParamsSchema,
+		},
+		req,
+	);
 
-			const result = await businessMemberService.remove(
-				{
-					businessId: req.params.businessId,
-					memberId: req.params.memberId,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const result = await businessMemberService.remove({
+		businessId: params.businessId,
+		memberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(res, result, "Member removed successfully.");
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result, "Member removed successfully.");
+});
 
-	async list(req, res, next) {
-		try {
-			const members = await businessMemberService.list(
-				req.params.businessId,
-			);
+const list = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
+	);
 
-			return success(
-				res,
-				businessMemberPresenter.presentMany(members),
-				"Members retrieved successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	const members = await businessMemberService.list({
+		businessId: params.businessId,
+	});
 
-	async deactivate(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				deactivateMemberRequestSchema,
-				req,
-			);
+	return success(res, members, "Members retrieved successfully.");
+});
 
-			const member = await businessMemberService.deactivate(
-				{
-					businessId: params.businessId,
-					memberId: params.memberId,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+const deactivate = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessMemberParamsSchema,
+		},
+		req,
+	);
 
-			return success(
-				res,
-				businessMemberPresenter.present(member),
-				"Member deactivated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	const member = await businessMemberService.deactivate({
+		businessId: params.businessId,
+		memberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-	async reactivate(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				reactivateMemberRequestSchema,
-				req,
-			);
+	return success(res, member, "Member deactivated successfully.");
+});
 
-			const member = await businessMemberService.reactivate(
-				{
-					businessId: params.businessId,
-					memberId: params.memberId,
-				},
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+const reactivate = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessMemberParamsSchema,
+		},
+		req,
+	);
 
-			return success(
-				res,
-				businessMemberPresenter.present(member),
-				"Member reactivated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
-}
+	const member = await businessMemberService.reactivate({
+		businessId: params.businessId,
+		memberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-export default new BusinessMemberController();
+	return success(res, member, "Member reactivated successfully.");
+});
+
+export default {
+	invite,
+	changeRole,
+	transferOwnership,
+	leave,
+	remove,
+	list,
+	deactivate,
+	reactivate,
+};

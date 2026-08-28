@@ -6,11 +6,6 @@ import { variantsRepository } from "../repositories/index.js";
 
 import { normalizeVariant, normalizeVariants } from "../validators/index.js";
 
-import {
-	ensureBusinessExists,
-	ensureOfferingExists,
-} from "../../shared/index.js";
-
 import { attributesRepository } from "../../attributes/repositories/index.js";
 
 import { auditLogService } from "../../../../audit/index.js";
@@ -23,6 +18,8 @@ import {
 	ErrorCodes,
 	ensureOfferingSupportsComponent,
 	OFFERING_COMPONENTS,
+	ensureBusinessExists,
+	ensureOfferingExists,
 } from "../../../../../shared/index.js";
 
 class VariantsService {

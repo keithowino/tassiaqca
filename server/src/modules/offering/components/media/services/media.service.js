@@ -9,12 +9,10 @@ import {
 	OFFERING_COMPONENTS,
 	AUDIT_ENTITY_TYPES,
 	AUDIT_ACTIONS,
-} from "../../../../../shared/index.js";
-
-import {
 	ensureBusinessExists,
 	ensureOfferingExists,
-} from "../../shared/index.js";
+} from "../../../../../shared/index.js";
+
 import { auditLogService } from "../../../../audit/index.js";
 
 class MediaService {

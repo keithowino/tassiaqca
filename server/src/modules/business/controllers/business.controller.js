@@ -1,105 +1,101 @@
-import businessService from "../services/business.service.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+	businessParamsSchema,
+} from "../../../shared/index.js";
+
+import { businessService } from "../services/index.js";
 
 import {
 	createBusinessRequestSchema,
 	updateBusinessSchema,
 } from "../validators/index.js";
-import { validateRequest, success } from "../../../shared/index.js";
-import { businessPresenter } from "../presenters/index.js";
-import { businessConfigurationPresenter } from "../../businessConfiguration/presenters/index.js";
 
-class BusinessController {
-	async create(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: createBusinessRequestSchema,
-				},
-				req,
-			);
+const create = asyncHandler(async (req, res) => {
+	const { body } = validateRequest(
+		{
+			body: createBusinessRequestSchema,
+		},
+		req,
+	);
 
-			const business = await businessService.create(body, {
-				actorId: req.user.id,
-				requestMetadata: req.requestMetadata,
-			});
+	const business = await businessService.create({
+		command: body,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return res.status(201).json({
-				success: true,
-				data: businessPresenter.present(business),
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, business, "Business created successfully.", 201);
+});
 
-	async update(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: updateBusinessSchema,
-				},
-				req,
-			);
+const update = asyncHandler(async (req, res) => {
+	const { params, body } = validateRequest(
+		{
+			params: businessParamsSchema,
+			body: updateBusinessSchema,
+		},
+		req,
+	);
 
-			const business = await businessService.updateBusiness(
-				req.params.businessId,
-				body,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const business = await businessService.updateBusiness({
+		businessId: params.businessId,
+		command: body,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				businessPresenter.present(business),
-				"Business updated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, business, "Business updated successfully.");
+});
 
-	async list(req, res, next) {
-		try {
-			const businesses = await businessService.listBusinesses(
-				req.user.id,
-			);
+const list = asyncHandler(async (req, res) => {
+	const businesses = await businessService.listBusinesses({
+		actorId: req.user.id,
+	});
 
-			return success(res, businessPresenter.presentMany(businesses));
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, businesses, "Businesses retrieved successfully.");
+});
 
-	async get(req, res, next) {
-		try {
-			const business = await businessService.getBusiness(
-				req.params.businessId,
-				req.user.id,
-			);
+const get = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
+	);
 
-			return success(res, businessPresenter.present(business));
-		} catch (error) {
-			next(error);
-		}
-	}
+	const business = await businessService.getBusiness({
+		businessId: params.businessId,
+		actorId: req.user.id,
+	});
 
-	async configuration(req, res, next) {
-		try {
-			const configuration = await businessService.getConfiguration(
-				req.params.businessId,
-				req.user.id,
-			);
+	return success(res, business, "Business retrieved successfully.");
+});
 
-			return success(
-				res,
-				businessConfigurationPresenter.present(configuration),
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
-}
+const configuration = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
+	);
 
-export default new BusinessController();
+	const configuration = await businessService.getConfiguration({
+		businessId: params.businessId,
+		actorId: req.user.id,
+	});
+
+	return success(
+		res,
+		configuration,
+		"Business configuration retrieved successfully.",
+	);
+});
+
+export default {
+	create,
+	update,
+	list,
+	get,
+	configuration,
+};

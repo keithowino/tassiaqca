@@ -341,27 +341,18 @@ import productPresenter from "../presenters/product.presenter.js";
 
 import businessRepository from "../../business/repositories/business.repository.js";
 
-import { HTTP_STATUS, AppError, ErrorCodes } from "../../../shared/index.js";
+import {
+	HTTP_STATUS,
+	AppError,
+	ErrorCodes,
+	ensureBusinessExists,
+} from "../../../shared/index.js";
 
 /*
 |--------------------------------------------------------------------------
 | Private Helpers
 |--------------------------------------------------------------------------
 */
-
-async function ensureBusinessExists(businessId) {
-	const business = await businessRepository.findById(businessId);
-
-	if (!business) {
-		throw new AppError(
-			"Business not found.",
-			HTTP_STATUS.NOT_FOUND,
-			ErrorCodes.NOT_FOUND,
-		);
-	}
-
-	return business;
-}
 
 async function ensureProductExists(businessId, productId) {
 	const product = await productRepository.findByBusinessAndId(

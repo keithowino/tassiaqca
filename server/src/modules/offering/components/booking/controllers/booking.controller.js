@@ -5,8 +5,6 @@ import {
 	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
-// import { businessOfferingParamsSchema } from "../../shared/index.js";
-
 import { bookingService } from "../services/index.js";
 import { setBookingSchema } from "../validators/index.js";
 

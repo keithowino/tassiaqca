@@ -9,8 +9,6 @@ import { seoService } from "../services/index.js";
 
 import { setSeoRequestSchema } from "../validators/index.js";
 
-// import { businessOfferingParamsSchema } from "../../shared/index.js";
-
 const getSeo = asyncHandler(async (req, res) => {
 	const { params } = validateRequest(
 		{

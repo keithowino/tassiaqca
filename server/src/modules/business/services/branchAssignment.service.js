@@ -6,19 +6,26 @@ import {
 	ErrorCodes,
 } from "../../../shared/index.js";
 
-import businessRepository from "../repositories/business.repository.js";
-import branchRepository from "../repositories/branch.repository.js";
-import branchAssignmentRepository from "../repositories/branchAssignment.repository.js";
-import businessMemberRepository from "../../identity/repositories/businessMember.repository.js";
+import {
+	branchAssignmentRepository,
+	branchRepository,
+	businessRepository,
+} from "../repositories/index.js";
+
+import { businessMemberRepository } from "../../identity/index.js";
+
 import { auditLogService } from "../../audit/index.js";
 
+import { branchAssignmentPresenter } from "../presenters/index.js";
+
 class BranchAssignmentService {
-	async assign(
+	async assign({
 		businessId,
 		branchId,
 		businessMemberId,
-		{ actorId, requestMetadata },
-	) {
+		actorId,
+		requestMetadata,
+	}) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -114,15 +121,16 @@ class BranchAssignmentService {
 			},
 		});
 
-		return assignment;
+		return branchAssignmentPresenter.present(assignment);
 	}
 
-	async setPrimary(
+	async setPrimary({
 		businessId,
 		branchId,
 		memberId,
-		{ actorId, requestMetadata },
-	) {
+		actorId,
+		requestMetadata,
+	}) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -212,10 +220,10 @@ class BranchAssignmentService {
 			},
 		});
 
-		return newBranch;
+		return branchAssignmentPresenter.present(newBranch);
 	}
 
-	async listBranchMembers(businessId, branchId) {
+	async listBranchMembers({ businessId, branchId }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -239,10 +247,12 @@ class BranchAssignmentService {
 			);
 		}
 
-		return branchAssignmentRepository.findByBranch(branchId);
+		const assignments = branchAssignmentRepository.findByBranch(branchId);
+
+		return branchAssignmentPresenter.presentCollection(assignments);
 	}
 
-	async listMemberBranches(businessId, businessMemberId) {
+	async listMemberBranches({ businessId, businessMemberId }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -264,15 +274,18 @@ class BranchAssignmentService {
 			);
 		}
 
-		return branchAssignmentRepository.findByMember(member.id);
+		const assignments = branchAssignmentRepository.findByMember(member.id);
+
+		return branchAssignmentPresenter.presentCollection(assignments);
 	}
 
-	async deactivate(
+	async deactivate({
 		businessId,
 		branchId,
 		memberId,
-		{ actorId, requestMetadata },
-	) {
+		actorId,
+		requestMetadata,
+	}) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -357,15 +370,16 @@ class BranchAssignmentService {
 			},
 		});
 
-		return assignment;
+		return branchAssignmentPresenter.present(assignment);
 	}
 
-	async reactivate(
+	async reactivate({
 		businessId,
 		branchId,
 		memberId,
-		{ actorId, requestMetadata },
-	) {
+		actorId,
+		requestMetadata,
+	}) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -440,7 +454,9 @@ class BranchAssignmentService {
 			},
 		});
 
-		return branchAssignmentRepository.save(assignment);
+		branchAssignmentRepository.save(assignment);
+
+		return branchAssignmentPresenter.present(assignment);
 	}
 }
 

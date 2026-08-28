@@ -1,4 +1,4 @@
-import Business from "../models/Business.js";
+import { Business } from "../models/index.js";
 
 async function create(businessData, options = {}) {
 	return Business.create([businessData], options).then(

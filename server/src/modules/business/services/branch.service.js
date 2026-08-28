@@ -7,13 +7,13 @@ import {
 	slugify,
 } from "../../../shared/index.js";
 
-import businessRepository from "../repositories/business.repository.js";
-import branchRepository from "../repositories/branch.repository.js";
+import { branchRepository, businessRepository } from "../repositories/index.js";
 
 import { auditLogService } from "../../audit/index.js";
+import { branchPresenter } from "../presenters/index.js";
 
 class BranchService {
-	async create(businessId, command, { actorId, requestMetadata }) {
+	async create({ businessId, command, actorId, requestMetadata }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -89,10 +89,10 @@ class BranchService {
 			},
 		});
 
-		return branch;
+		return branchPresenter.present(branch);
 	}
 
-	async list(businessId) {
+	async list({ businessId }) {
 		const business = await businessRepository.findById(businessId);
 
 		if (!business) {
@@ -103,7 +103,10 @@ class BranchService {
 			);
 		}
 
-		return branchRepository.findActiveByBusiness(businessId);
+		const branches =
+			await branchRepository.findActiveByBusiness(businessId);
+
+		return branchPresenter.presentCollection(branches);
 	}
 
 	/**
@@ -116,7 +119,7 @@ class BranchService {
 	 * Partial updates only (PATCH semantics)
 	 * Repository remains persistence-only, with no business logic leaking into it
 	 */
-	async update(businessId, branchId, command, { actorId, requestMetadata }) {
+	async update({ businessId, branchId, command, actorId, requestMetadata }) {
 		const branch = await branchRepository.findByBusinessAndId(
 			businessId,
 			branchId,
@@ -231,10 +234,10 @@ class BranchService {
 			},
 		});
 
-		return updatedBranch;
+		return branchPresenter.present(updatedBranch);
 	}
 
-	async deactivate(businessId, branchId, { actorId, requestMetadata }) {
+	async deactivate({ businessId, branchId, actorId, requestMetadata }) {
 		const branch = await branchRepository.findByBusinessAndId(
 			businessId,
 			branchId,
@@ -282,10 +285,10 @@ class BranchService {
 			},
 		});
 
-		return deactivatedBranch;
+		return branchPresenter.present(deactivatedBranch);
 	}
 
-	async reactivate(businessId, branchId, { actorId, requestMetadata }) {
+	async reactivate({ businessId, branchId, actorId, requestMetadata }) {
 		const branch = await branchRepository.findByBusinessAndId(
 			businessId,
 			branchId,
@@ -325,7 +328,7 @@ class BranchService {
 			},
 		});
 
-		return reactivatedBranch;
+		return branchPresenter.present(reactivatedBranch);
 	}
 }
 

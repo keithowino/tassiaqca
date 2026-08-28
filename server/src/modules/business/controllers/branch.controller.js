@@ -1,137 +1,101 @@
-import validateRequest from "../../../shared/validation/validateRequest.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+	businessBranchParamsSchema,
+	businessParamsSchema,
+	branchAssignmentParamsSchema,
+} from "../../../shared/index.js";
 
-import { success } from "../../../shared/utils/apiResponse.js";
-
-import branchService from "../services/branch.service.js";
-import { branchPresenter } from "../presenters/index.js";
+import { branchService } from "../services/index.js";
 
 import {
-	businessParamsSchema,
 	createBranchRequestSchema,
-	deactivateBranchRequestSchema,
-	reactivateBranchRequestSchema,
 	updateBranchRequestSchema,
 } from "../validators/index.js";
 
-class BranchController {
-	async create(req, res, next) {
-		try {
-			const { params, body } = validateRequest(
-				createBranchRequestSchema,
-				req,
-			);
+const create = asyncHandler(async (req, res) => {
+	const { params, body } = validateRequest(updateBranchRequestSchema, req);
 
-			const branch = await branchService.create(params.businessId, body, {
-				actorId: req.user.id,
-				requestMetadata: req.requestMetadata,
-			});
+	const branch = await branchService.create({
+		businessId: params.businessId,
+		command: body,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchPresenter.present(branch),
-				"Branch created successfully.",
-				201,
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, branch, "Branch created successfully.", 201);
+});
 
-	async update(req, res, next) {
-		try {
-			const { params, body } = validateRequest(
-				updateBranchRequestSchema,
-				req,
-			);
+const update = asyncHandler(async (req, res) => {
+	const { params, body } = validateRequest(createBranchRequestSchema, req);
 
-			const branch = await branchService.update(
-				params.businessId,
-				params.branchId,
-				body,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const branch = await branchService.update({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		command: body,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchPresenter.present(branch),
-				"Branch updated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, branch, "Branch updated successfully.", 201);
+});
 
-	async deactivate(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				deactivateBranchRequestSchema,
-				req,
-			);
+const deactivate = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessBranchParamsSchema,
+		},
+		req,
+	);
 
-			const branch = await branchService.deactivate(
-				params.businessId,
-				params.branchId,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const branch = await branchService.deactivate({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchPresenter.present(branch),
-				"Branch deactivated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, branch, "Branch deactivated successfully.");
+});
 
-	async reactivate(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				reactivateBranchRequestSchema,
-				req,
-			);
+const reactivate = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: branchAssignmentParamsSchema,
+		},
+		req,
+	);
 
-			const branch = await branchService.reactivate(
-				params.businessId,
-				params.branchId,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const branch = await branchService.reactivate({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchPresenter.present(branch),
-				"Branch reactivated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, branch, "Branch reactivated successfully.");
+});
 
-	async list(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				{
-					params: businessParamsSchema,
-				},
-				req,
-			);
+const list = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessParamsSchema,
+		},
+		req,
+	);
 
-			const branches = await branchService.list(params.businessId);
+	const branches = await branchService.list({
+		businessId: params.businessId,
+	});
 
-			return success(res, branchPresenter.presentCollection(branches));
-		} catch (error) {
-			next(error);
-		}
-	}
-}
+	return success(res, branches);
+});
 
-export default new BranchController();
+export default {
+	create,
+	update,
+	deactivate,
+	reactivate,
+	list,
+};

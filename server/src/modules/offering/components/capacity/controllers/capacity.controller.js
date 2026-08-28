@@ -5,8 +5,6 @@ import {
 	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
 
-// import { businessOfferingParamsSchema } from "../../shared/index.js";
-
 import { capacityService } from "../services/index.js";
 import { setCapacitySchema } from "../validators/index.js";
 

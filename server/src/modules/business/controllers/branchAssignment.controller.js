@@ -1,174 +1,143 @@
-import validateRequest from "../../../shared/validation/validateRequest.js";
-import { success } from "../../../shared/utils/apiResponse.js";
+import {
+	validateRequest,
+	asyncHandler,
+	success,
+	businessBranchParamsSchema,
+	branchAssignmentParamsSchema,
+	businessMemberParamsSchema,
+} from "../../../shared/index.js";
 
-import branchAssignmentService from "../services/branchAssignment.service.js";
+import { branchAssignmentService } from "../services/index.js";
 
 import {
 	assignBranchMemberRequestSchema,
 	businessBranchParamsSchema,
-	businessMemberParamsSchema,
-	deactivateBranchAssignmentRequestSchema,
-	reactivateBranchAssignmentRequestSchema,
-	setPrimaryBranchAssignmentRequestSchema,
 } from "../validators/index.js";
-import { branchAssignmentPresenter } from "../presenters/index.js";
 
-class BranchAssignmentController {
-	async assign(req, res, next) {
-		try {
-			const { params, body } = validateRequest(
-				assignBranchMemberRequestSchema,
-				req,
-			);
+const assign = asyncHandler(async (req, res) => {
+	const { params, body } = validateRequest(
+		assignBranchMemberRequestSchema,
+		req,
+	);
 
-			const assignment = await branchAssignmentService.assign(
-				params.businessId,
-				params.branchId,
-				body.businessMemberId,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const assignment = await branchAssignmentService.assign({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		businessMemberId: body.businessMemberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchAssignmentPresenter.present(assignment),
-				"Member assigned to branch successfully.",
-				201,
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(
+		res,
+		assignment,
+		"Member assigned to branch successfully.",
+		201,
+	);
+});
 
-	async setPrimary(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				setPrimaryBranchAssignmentRequestSchema,
-				req,
-			);
+const setPrimary = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: branchAssignmentParamsSchema,
+		},
+		req,
+	);
 
-			const assignment = await branchAssignmentService.setPrimary(
-				params.businessId,
-				params.branchId,
-				params.memberId,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const assignment = await branchAssignmentService.setPrimary({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		memberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchAssignmentPresenter.present(assignment),
-				"Primary branch updated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, assignment, "Primary branch updated successfully.");
+});
 
-	async listBranchMembers(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				{
-					params: businessBranchParamsSchema,
-				},
-				req,
-			);
+const listBranchMembers = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessBranchParamsSchema,
+		},
+		req,
+	);
 
-			const assignments = await branchAssignmentService.listBranchMembers(
-				params.businessId,
-				params.branchId,
-			);
+	const assignment = await branchAssignmentService.listBranchMembers({
+		businessId: params.businessId,
+		branchId: params.branchId,
+	});
 
-			return success(
-				res,
-				branchAssignmentPresenter.presentCollection(assignments),
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, assignment);
+});
 
-	async listMemberBranches(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				{
-					params: businessMemberParamsSchema,
-				},
-				req,
-			);
+const listMemberBranches = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: businessMemberParamsSchema,
+		},
+		req,
+	);
 
-			const assignments =
-				await branchAssignmentService.listMemberBranches(
-					params.businessId,
-					params.memberId,
-				);
+	const assignment = await branchAssignmentService.listMemberBranches({
+		businessId: params.businessId,
+		businessMemberId: params.memberId,
+	});
 
-			return success(
-				res,
-				branchAssignmentPresenter.presentCollection(assignments),
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, assignment);
+});
 
-	async deactivate(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				deactivateBranchAssignmentRequestSchema,
-				req,
-			);
+const deactivate = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: branchAssignmentParamsSchema,
+		},
+		req,
+	);
 
-			const assignment = await branchAssignmentService.deactivate(
-				params.businessId,
-				params.branchId,
-				params.memberId,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const assignment = await branchAssignmentService.deactivate({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		memberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchAssignmentPresenter.present(assignment),
-				"Branch assignment deactivated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(
+		res,
+		assignment,
+		"Branch assignment deactivated successfully.",
+	);
+});
 
-	async reactivate(req, res, next) {
-		try {
-			const { params } = validateRequest(
-				reactivateBranchAssignmentRequestSchema,
-				req,
-			);
+const reactivate = asyncHandler(async (req, res) => {
+	const { params } = validateRequest(
+		{
+			params: branchAssignmentParamsSchema,
+		},
+		req,
+	);
 
-			const assignment = await branchAssignmentService.reactivate(
-				params.businessId,
-				params.branchId,
-				params.memberId,
-				{
-					actorId: req.user.id,
-					requestMetadata: req.requestMetadata,
-				},
-			);
+	const assignment = await branchAssignmentService.reactivate({
+		businessId: params.businessId,
+		branchId: params.branchId,
+		memberId: params.memberId,
+		actorId: req.user.id,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return success(
-				res,
-				branchAssignmentPresenter.present(assignment),
-				"Branch assignment reactivated successfully.",
-			);
-		} catch (error) {
-			next(error);
-		}
-	}
-}
+	return success(
+		res,
+		assignment,
+		"Branch assignment reactivated successfully.",
+	);
+});
 
-export default new BranchAssignmentController();
+export default {
+	assign,
+	setPrimary,
+	listBranchMembers,
+	listMemberBranches,
+	deactivate,
+	reactivate,
+};

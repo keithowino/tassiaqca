@@ -105,4 +105,7 @@ branchSchema.index({
 	active: 1,
 });
 
-export default mongoose.model("Branch", branchSchema);
+export const Branch =
+	mongoose.models.Branch || mongoose.model("Branch", branchSchema);
+
+export default Branch;

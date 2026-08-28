@@ -1,4 +1,4 @@
-import Branch from "../models/Branch.js";
+import { Branch } from "../models/index.js";
 
 async function create(data) {
 	return Branch.create(data);

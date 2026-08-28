@@ -4,11 +4,6 @@ import { inventoryPresenter } from "../presenters/index.js";
 
 import { inventoryRepository } from "../repositories/index.js";
 
-import {
-	ensureBusinessExists,
-	ensureOfferingExists,
-} from "../../shared/index.js";
-
 import { variantsRepository } from "../../variants/repositories/index.js";
 
 import {
@@ -19,6 +14,8 @@ import {
 	AUDIT_ACTIONS,
 	ensureOfferingSupportsComponent,
 	OFFERING_COMPONENTS,
+	ensureBusinessExists,
+	ensureOfferingExists,
 } from "../../../../../shared/index.js";
 
 import { auditLogService } from "../../../../audit/index.js";
