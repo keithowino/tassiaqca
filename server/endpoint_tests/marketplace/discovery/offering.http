@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:5000/api/v1
+
+### Featured Offering
+
+GET {{baseUrl}}/marketplace/discovery/offerings/featured
+Accept: application/json

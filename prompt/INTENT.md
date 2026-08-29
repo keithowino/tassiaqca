@@ -1767,13 +1767,13 @@ Once the first aggregation slice is stable, Marketplace is expected to evolve ap
 ```text
 Marketplace Foundation
         ↓
-Offering Aggregation             ✓
+Offering Aggregation            ✓
         ↓
-Business Discovery              ← NEXT
+Business Discovery              ✓
         ↓
-Offering Discovery
+Offering Discovery              ✓
         ↓
-Search
+Search                          ← NEXT
         ↓
 Filtering
         ↓
@@ -1956,7 +1956,7 @@ That distinction matters because the Architecture Specification says Discovery i
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Init development."
+git commit -m "feat(Marketplace): Create the API endpoint for featured offering discovery."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

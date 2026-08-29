@@ -117,6 +117,13 @@ async function listPublishedForMarketplace(payload = {}) {
 	});
 }
 
+async function listFeaturedForMarketplace(payload = {}) {
+	return offeringRepository.findFeaturedForMarketplace({
+		skip: payload.skip ?? 0,
+		limit: payload.limit ?? 20,
+	});
+}
+
 export default {
 	createOffering,
 	listOfferings,
@@ -126,4 +133,5 @@ export default {
 	restoreOffering,
 
 	listPublishedForMarketplace,
+	listFeaturedForMarketplace,
 };
