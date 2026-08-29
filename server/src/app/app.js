@@ -11,6 +11,13 @@ import {
 
 const app = express();
 
+// rm
+app.use((req, res, next) => {
+	console.log("[APP] Incoming request:", req.method, req.originalUrl);
+
+	next();
+});
+
 /**
  * #### Express Setup
  * - Middleware order must be as follows

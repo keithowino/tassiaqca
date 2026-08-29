@@ -10,3 +10,7 @@ export const BUSINESS_TYPES = Object.freeze({
 	MANUFACTURING: "MANUFACTURING",
 	AGRICULTURE: "AGRICULTURE",
 });
+
+export const BUSINESS_TYPE_VALUES = Object.freeze(
+	Object.values(BUSINESS_TYPES),
+);

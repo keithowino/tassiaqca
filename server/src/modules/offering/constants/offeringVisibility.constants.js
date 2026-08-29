@@ -1,8 +1,10 @@
-export const OFFERING_VISIBILITY = {
+export const OFFERING_VISIBILITY = Object.freeze({
 	PRIVATE: "PRIVATE",
 	INTERNAL: "INTERNAL",
 	PUBLIC: "PUBLIC",
 	MARKETPLACE: "MARKETPLACE",
-};
+});
 
-export default OFFERING_VISIBILITY;
+export const OFFERING_VISIBILITY_VALUES = Object.freeze(
+	Object.values(OFFERING_VISIBILITY),
+);

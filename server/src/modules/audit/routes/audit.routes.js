@@ -12,10 +12,11 @@ import { Permissions } from "../../../shared/index.js";
 
 const router = Router();
 
-router.use(authenticate);
+// router.use(authenticate);
 
 router.get(
 	"/businesses/:businessId/audit-logs",
+	authenticate,
 	requirePermission(Permissions.BUSINESS_VIEW),
 	auditLogController.listBusinessLogs,
 );

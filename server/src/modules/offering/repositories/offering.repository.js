@@ -1,3 +1,4 @@
+import { OFFERING_STATUS, OFFERING_VISIBILITY } from "../constants/index.js";
 import { Offering } from "../models/index.js";
 
 /**
@@ -104,6 +105,65 @@ async function findByBusiness(
 	};
 }
 
+async function findPublishedForMarketplace({
+	type,
+	search,
+	skip = 0,
+	limit = 20,
+} = {}) {
+	// const filter = {
+	// 	status: OFFERING_STATUS.PUBLISHED,
+	// 	visibility: OFFERING_VISIBILITY.PUBLIC,
+	// 	searchable: true,
+	// };
+	const filter = {
+		status: OFFERING_STATUS.ACTIVE,
+		visibility: OFFERING_VISIBILITY.PUBLIC,
+		searchable: true,
+	};
+
+	if (type) {
+		filter.type = type;
+	}
+
+	if (search) {
+		filter.$or = [
+			{
+				name: {
+					$regex: search,
+					$options: "i",
+				},
+			},
+			{
+				shortDescription: {
+					$regex: search,
+					$options: "i",
+				},
+			},
+			{
+				description: {
+					$regex: search,
+					$options: "i",
+				},
+			},
+		];
+	}
+
+	const [data, total] = await Promise.all([
+		Offering.find(filter)
+			.sort({ publishedAt: -1, createdAt: -1 })
+			.skip(skip)
+			.limit(limit),
+
+		Offering.countDocuments(filter),
+	]);
+
+	return {
+		data,
+		total,
+	};
+}
+
 export default {
 	create,
 	save,
@@ -117,4 +177,6 @@ export default {
 	existsByBusinessAndSlug,
 
 	findByBusiness,
+
+	findPublishedForMarketplace,
 };

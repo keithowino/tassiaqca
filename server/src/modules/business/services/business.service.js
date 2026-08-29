@@ -255,7 +255,7 @@ class BusinessService {
 
 		const businesses = businessRepository.findByIds(businessIds);
 
-		return businessPresenter.presentMany(businesses);
+		return businessPresenter.presentCollection(businesses);
 	}
 
 	async getConfiguration({ businessId, actorId }) {
@@ -265,6 +265,25 @@ class BusinessService {
 			businessConfigurationService.getConfiguration(businessId);
 
 		return businessConfigurationPresenter.present(configuration);
+	}
+
+	async listPublishedForMarketplace({
+		search,
+		businessType,
+		skip = 0,
+		limit = 20,
+	} = {}) {
+		const result = await businessRepository.findActiveForMarketplace({
+			search,
+			businessType,
+			skip,
+			limit,
+		});
+
+		return {
+			data: businessPresenter.presentPublicCollection(result.data),
+			total: result.total,
+		};
 	}
 }
 

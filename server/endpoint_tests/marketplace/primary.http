@@ -1,0 +1,31 @@
+@baseUrl = http://localhost:5000/api/v1
+@secondaryUrl = {{baseUrl}}/marketplace/offerings
+
+### Marketplace — List Published Offerings
+
+GET {{secondaryUrl}}
+Accept: application/json
+
+### Marketplace — Pagination
+
+GET {{secondaryUrl}}?page=1&limit=5
+Accept: application/json
+
+### Marketplace — Search Offerings
+
+GET {{secondaryUrl}}?search=Dell
+Accept: application/json
+
+### Marketplace — Search + Pagination
+
+GET {{secondaryUrl}}?search=aggregation&page=1&limit=10
+Accept: application/json
+
+### Marketplace — Product Offerings
+
+GET {{secondaryUrl}}?type=PRODUCT
+
+### Marketplace — Offering Type + Search
+
+GET {{secondaryUrl}}?type=PRODUCT&search=Dell&page=1&limit=10
+Accept: application/json

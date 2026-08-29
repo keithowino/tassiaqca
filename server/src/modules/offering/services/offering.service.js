@@ -108,6 +108,15 @@ async function restoreOffering(payload) {
 	});
 }
 
+async function listPublishedForMarketplace(payload = {}) {
+	return offeringRepository.findPublishedForMarketplace({
+		type: payload.type,
+		search: payload.search,
+		skip: payload.skip ?? 0,
+		limit: payload.limit ?? 20,
+	});
+}
+
 export default {
 	createOffering,
 	listOfferings,
@@ -115,4 +124,6 @@ export default {
 	updateOffering,
 	archiveOffering,
 	restoreOffering,
+
+	listPublishedForMarketplace,
 };

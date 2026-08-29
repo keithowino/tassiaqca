@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-27
+Generated on: 2026-08-28
 
 ```bash
 ├── client/
@@ -345,9 +345,10 @@ Generated on: 2026-08-27
 │   │   │   │   │   ├── businessMember.controller.js
 │   │   │   │   │   └── index.js
 │   │   │   │   ├── models/
-│   │   │   │   │   ├── Branch.js
-│   │   │   │   │   ├── BranchAssignment.js
-│   │   │   │   │   └── Business.js
+│   │   │   │   │   ├── branch.model.js
+│   │   │   │   │   ├── branchAssignment.model.js
+│   │   │   │   │   ├── business.model.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── presenters/
 │   │   │   │   │   ├── branch.presenter.js
 │   │   │   │   │   ├── branchAssignment.presenter.js
@@ -358,32 +359,24 @@ Generated on: 2026-08-27
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── branch.repository.js
 │   │   │   │   │   ├── branchAssignment.repository.js
-│   │   │   │   │   └── business.repository.js
+│   │   │   │   │   ├── business.repository.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── routes/
-│   │   │   │   │   └── business.routes.js
+│   │   │   │   │   ├── business.routes.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── services/
 │   │   │   │   │   ├── branch.service.js
 │   │   │   │   │   ├── branchAssignment.service.js
 │   │   │   │   │   ├── business.service.js
-│   │   │   │   │   └── businessMember.service.js
+│   │   │   │   │   ├── businessMember.service.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── validators/
 │   │   │   │   │   ├── assignBranchMemberRequestSchema.js
-│   │   │   │   │   ├── branchParamsSchema.js
 │   │   │   │   │   ├── changeMemberRoleRequestSchema.js
 │   │   │   │   │   ├── createBranchRequestSchema.js
 │   │   │   │   │   ├── createBusinessRequestSchema.js
-│   │   │   │   │   ├── deactivateBranchAssignmentRequestSchema.js
-│   │   │   │   │   ├── deactivateBranchRequestSchema.js
-│   │   │   │   │   ├── deactivateMemberRequestSchema.js
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── inviteMemberRequestSchema.js
-│   │   │   │   │   ├── leaveBusinessRequestSchema.js
-│   │   │   │   │   ├── reactivateBranchAssignmentRequestSchema.js
-│   │   │   │   │   ├── reactivateBranchRequestSchema.js
-│   │   │   │   │   ├── reactivateMemberRequestSchema.js
-│   │   │   │   │   ├── removeMemberRequestSchema.js
-│   │   │   │   │   ├── setPrimaryBranchAssignmentRequestSchema.js
-│   │   │   │   │   ├── transferOwnershipRequestSchema.js
 │   │   │   │   │   ├── updateBranchRequestSchema.js
 │   │   │   │   │   └── updateBusinessSchema.js
 │   │   │   │   └── index.js
@@ -1057,9 +1050,6 @@ Generated on: 2026-08-27
 │   │   │   │   │   │   │   └── updateSeo.schema.js
 │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   └── seo.component.js
-│   │   │   │   │   ├── shared/
-│   │   │   │   │   │   ├── ensureExists.js
-│   │   │   │   │   │   └── index.js
 │   │   │   │   │   ├── subscription/
 │   │   │   │   │   │   ├── builders/
 │   │   │   │   │   │   │   ├── index.js
@@ -1312,6 +1302,7 @@ Generated on: 2026-08-27
 │   │       │   │   ├── params.schema.js
 │   │       │   │   ├── password.schema.js
 │   │       │   │   └── phone.schema.js
+│   │       │   ├── ensureExists.js
 │   │       │   ├── index.js
 │   │       │   └── validateRequest.js
 │   │       └── index.js

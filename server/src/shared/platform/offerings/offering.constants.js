@@ -1,4 +1,4 @@
-export const OFFERING_TYPES = {
+export const OFFERING_TYPES = Object.freeze({
 	PRODUCT: "PRODUCT",
 	SERVICE: "SERVICE",
 	BOOKING: "BOOKING",
@@ -9,6 +9,8 @@ export const OFFERING_TYPES = {
 	EVENT: "EVENT",
 	PACKAGE: "PACKAGE",
 	DIGITAL_DOWNLOAD: "DIGITAL_DOWNLOAD",
-};
+});
 
-export default OFFERING_TYPES;
+export const OFFERING_TYPES_VALUES = Object.freeze(
+	Object.values(OFFERING_TYPES),
+);

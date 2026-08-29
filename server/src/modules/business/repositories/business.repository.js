@@ -44,6 +44,48 @@ async function existsBySlug(slug) {
 	});
 }
 
+async function findActiveForMarketplace({
+	search,
+	businessType,
+	skip = 0,
+	limit = 20,
+} = {}) {
+	const filter = {
+		active: true,
+	};
+
+	if (businessType) {
+		filter.businessType = businessType;
+	}
+
+	if (search) {
+		filter.$or = [
+			{
+				name: {
+					$regex: search,
+					$options: "i",
+				},
+			},
+			{
+				description: {
+					$regex: search,
+					$options: "i",
+				},
+			},
+		];
+	}
+
+	const [data, total] = await Promise.all([
+		Business.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+		Business.countDocuments(filter),
+	]);
+
+	return {
+		data,
+		total,
+	};
+}
+
 export default {
 	create,
 	update,
@@ -53,4 +95,6 @@ export default {
 	save,
 	existsByName,
 	existsBySlug,
+
+	findActiveForMarketplace,
 };

@@ -1,7 +1,6 @@
 import { offeringRepository } from "../../repositories/index.js";
 import { offeringPresenter } from "../../presenters/index.js";
 
-import businessRepository from "../../../business/repositories/business.repository.js";
 import { auditLogService } from "../../../audit/index.js";
 
 import {

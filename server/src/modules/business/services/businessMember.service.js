@@ -10,10 +10,11 @@ import {
 
 import {
 	businessMemberRepository,
-	businessRepository,
+	// businessRepository,
 	roleRepository,
 	userRepository,
 } from "../../identity/index.js";
+import { businessRepository } from "../repositories/index.js";
 
 import { auditLogService } from "../../audit/index.js";
 

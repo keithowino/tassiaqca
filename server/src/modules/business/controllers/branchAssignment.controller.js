@@ -9,10 +9,7 @@ import {
 
 import { branchAssignmentService } from "../services/index.js";
 
-import {
-	assignBranchMemberRequestSchema,
-	businessBranchParamsSchema,
-} from "../validators/index.js";
+import { assignBranchMemberRequestSchema } from "../validators/index.js";
 
 const assign = asyncHandler(async (req, res) => {
 	const { params, body } = validateRequest(

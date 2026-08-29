@@ -888,19 +888,8 @@ Given the current state of the project, I would implement the capability system 
 
 1. Phase 1 — Introduce an Offering Component Registry (covered)
 2. Phase 2 — Replace Boolean Configuration in the Offering Registry (covered)
-3. Phase 3 — Build Component Pipelines (in progress)
-4. Phase 4 — Move Projection Logic into Components
-
-As each component matures, extract common responsibilities from projection adapters into reusable component services. For example:
-
-Pricing service
-Media service
-Inventory service
-Scheduling service
-
-This reduces duplication across Product, Course, Event, Rental, and other offering types.
-
-5. Phase 5 — Enable Dynamic APIs and UI
+3. Phase 3 — Build Component Pipelines (covered)
+4. Phase 4 — Enable Dynamic APIs and UI
 
 Finally, leverage the declared components to dynamically compose:
 
@@ -948,59 +937,6 @@ You mentioned, the key point is not to start implementing Attributes next merely
 
 Only after this analysis should implementation begin.
 
-You also recommended to implement the components in this order:
-
-```bash
-PHASE A — Shared Offering Components
-────────────────────────────────────
-
-1. Metadata (covered)
-2. Tags (covered)
-3. Categories (covered)
-4. Media (covered)
-5. SEO (covered)
-
-
-PHASE B — Offering Structure
-────────────────────────────────────
-
-6. Attributes (covered)
-7. Variants  (covered)
-
-
-PHASE C — Commerce Operations
-────────────────────────────────────
-
-8. Pricing (covered)
-9. Inventory  (partially covered)
-
-
-PHASE D — Availability / Time
-────────────────────────────────────
-
-10. Duration  (covered)
-11. Capacity  (covered)
-12. Location (covered)
-13. Calendar (covered)
-14. Scheduling (covered)
-
-
-PHASE E — Customer Interaction
-────────────────────────────────────
-
-15. Booking
-16. Registration
-17. Enrollment
-
-
-PHASE F — Specialized Offering Models
-────────────────────────────────────
-
-18. Membership
-19. Subscription
-20. Download
-```
-
 ---
 
 ```bash
@@ -1022,31 +958,6 @@ PHASE F — Specialized Offering Models
                             │
                             └───────────────
 ```
-
----
-
-| Component    | Depends on            | Integrates with           | Likely offering types        |
-| ------------ | --------------------- | ------------------------- | ---------------------------- |
-| Metadata     | Offering              | —                         | All                          |
-| Tags         | Offering              | Catalog                   | All                          |
-| Categories   | Offering              | Catalog                   | Product                      |
-| Media        | Offering              | Variants                  | Most                         |
-| SEO          | Offering              | Catalog                   | Public offerings             |
-| Attributes   | Offering              | Variants                  | Product                      |
-| Variants     | Offering + Attributes | Pricing, Inventory, Media | Product                      |
-| Inventory    | Offering/Variant      | Variants                  | Product/Rental               |
-| Duration     | Offering              | Scheduling/Booking        | Service/Course/Rental        |
-| Calendar     | Scheduling model      | Booking                   | Booking/Event                |
-| Scheduling   | Offering              | Calendar/Booking          | Service/Booking/Rental/Event |
-| Booking      | Scheduling            | Calendar, Capacity        | Booking                      |
-| Capacity     | Offering              | Booking/Registration      | Event/Booking                |
-| Location     | Offering              | Scheduling/Events         | Event/Booking                |
-| Registration | Offering              | Capacity/Enrollment       | Event/Course                 |
-| Enrollment   | Offering              | Instructor/Duration       | Course                       |
-| Instructor   | Offering              | Enrollment                | Course                       |
-| Membership   | Offering              | Pricing                   | Membership                   |
-| Subscription | Offering              | Pricing                   | Subscription                 |
-| Download     | Offering              | Media                     | Digital                      |
 
 ---
 
@@ -1753,11 +1664,299 @@ to Service, Rental, Event, Course, etc. after verifying the current registry def
 
 ---
 
-- We may proceed to Download REST testing, in each test give me the complete REST example.
+## Next: Marketplace
+
+```text
+Published Business Data
+        +
+Published Offerings
+        ↓
+   Marketplace
+        ↓
+ ┌───────────────────────┐
+ │ Discovery             │
+ │ Search                │
+ │ Business Profiles     │
+ │ Offering Presentation │
+ │ Recommendations       │
+ │ Reviews               │
+ │ Favorites             │
+ │ Maps                  │
+ │ Community             │
+ └───────────────────────┘
+```
+
+This is consistent with the specification: Marketplace is a customer domain, owns discovery/presentation, and consumes published information from Commerce and Business rather than owning operational data.
+
+---
+
+## Immediate sequence
+
+```text
+1. Marketplace architecture review (covered)
+2. Marketplace domain skeleton (covered)
+3. Marketplace publication/aggregation contract (covered)
+4. Marketplace offering read model
+5. Offering aggregation service
+6. Business aggregation
+7. Marketplace API
+8. REST testing
+9. Marketplace frontend foundation
+10. Search/indexing
+11. Discovery
+12. Recommendations
+13. Reviews/Favorites/etc.
+```
+
+---
+
+## Marketplace domain skeleton
+
+Given the current backend structure, I recommend starting with:
+
+```text
+server/src/modules/marketplace/
+
+├── controllers/
+├── models/
+├── presenters/
+├── repositories/
+├── routes/
+├── services/
+├── validators/
+├── discovery/
+├── search/
+├── profiles/
+├── offerings/
+├── recommendations/
+└── index.js
+```
+
+---
+
+```text
+Commerce
+  owns Offering
+       ↓
+Marketplace
+  owns discovery representation
+       ↓
+Customer
+  discovers Offering
+```
+
+---
+
+```text
+GET /marketplace/offerings
+GET /marketplace/offerings/:id
+GET /marketplace/businesses
+GET /marketplace/businesses/:id
+GET /marketplace/search
+GET /marketplace/discovery
+```
+
+---
+
+## Longer-Term Marketplace Roadmap
+
+Once the first aggregation slice is stable, Marketplace is expected to evolve approximately as follows:
+
+<!-- ✓ | ← NEXT -->
+
+```text
+Marketplace Foundation
+        ↓
+Offering Aggregation             ✓
+        ↓
+Business Discovery              ← NEXT
+        ↓
+Offering Discovery
+        ↓
+Search
+        ↓
+Filtering
+        ↓
+Categories
+        ↓
+Business Profiles
+        ↓
+Offering Profiles
+        ↓
+Nearby / Maps
+        ↓
+Favorites / Collections
+        ↓
+Reviews
+        ↓
+Recommendations
+        ↓
+Checkout / Booking / Request
+```
+
+---
+
+Future Offering Types may include:
+
+- Insurance Policies
+- Medical Procedures
+- Licenses
+- Event Tickets
+- Donations
+- Auction Lots
+- Investments
+- Shared Assets
+
+---
+
+## Marketplace Offering Aggregation
+
+- Marketplace must consume published information rather than own operational data. This is explicitly required by the Architecture Specification.
+- The first Marketplace implementation should therefore NOT create a MongoDB MarketplaceOffering collection. That would prematurely establish a second source of truth.
+- The marketplaceOffering.model.js requested in the original skeleton should consequently not be a Mongoose model at this stage. I recommend leaving it out until we introduce an actual derived/read model backed by publication events.
+- The Marketplace repository can initially act as a source adapter over an explicit Offering read contract, while the eventual implementation can switch to a Marketplace read model/search index without changing the Marketplace service/controller contract.
+- The current Offering service already provides listOfferings(), but its current list implementation is still oriented toward a business-scoped operational listing. We should not misuse that method for public Marketplace discovery.
+
+The first public representation will contain only information that already belongs to the Offering contract. We will not add:
+
+price
+inventory
+SKU
+product category
+scheduling
+availability
+reviews
+ratings
+business profile data
+
+Those belong to later aggregation stages.
+
+I am deliberately not creating models/marketplaceOffering.model.js yet.
+
+That is the correct architectural choice for the current slice.
+
+---
+
+Discovery is intended for exploration and includes:
+
+```text
+Featured Businesses
+Trending Offerings
+Nearby Businesses
+New Businesses
+Popular Categories
+Seasonal Promotions
+```
+
+whereas Search is for precise retrieval across businesses, offerings, categories, services, locations, tags, neighborhoods and brands.
+
+---
+
+The public Business Profile is also explicitly expected to expose:
+
+Business Identity
+Description
+Branding
+Contact Information
+Operating Hours
+Location
+Gallery
+Reviews
+Ratings
+Published Offerings
+
+---
+
+We should not create a Marketplace Business model for this first slice.
+
+---
+
+Target architecture
+
+For this slice:
+
+```text
+Business
+│
+├── Business Model
+│
+├── Business Repository
+│       │
+│       └── findActiveForMarketplace()
+│
+├── Business Service
+│       │
+│       └── listPublishedForMarketplace()
+│
+└── Public Business Contract
+        │
+        ↓
+Marketplace
+│
+└── discovery/
+    ├── repositories/
+    │   └── businessDiscovery.repository.js
+    │
+    ├── services/
+    │   └── businessDiscovery.service.js
+    │
+    ├── presenters/
+    │   └── businessDiscovery.presenter.js
+    │
+    ├── validators/
+    │   └── businessDiscoveryQuery.schema.js
+    │
+    ├── controllers/
+    │   └── businessDiscovery.controller.js
+    │
+    └── routes/
+        └── businessDiscovery.routes.js
+```
+
+---
+
+Later, when Business publication becomes a real domain capability, we can evolve this boundary to:
+
+```text
+Business
+├── active
+├── publicationStatus
+└── publishedAt
+```
+
+---
+
+The existing:
+
+```text
+GET /marketplace/offerings
+```
+
+is an aggregation/listing API.
+
+The new Discovery API should not simply duplicate that endpoint under another URL.
+
+The distinction should be:
+
+```text
+Offering Aggregation
+    ↓
+"What published offerings exist?"
+
+Offering Discovery
+    ↓
+"What offerings should we introduce to the customer?"
+```
+
+That distinction matters because the Architecture Specification says Discovery is optimized for exploration rather than precise retrieval, while Search is intended for locating specific businesses and offerings.
+
+---
+
+- We may proceed to REST tests, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Business Domain): Init cleanup and sync."
+git commit -m "feat(Marketplace): Init development."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

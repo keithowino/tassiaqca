@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:5000/api/v1
+@secondaryUrl = {{baseUrl}}/marketplace/businesses
+
+
+### Business Discovery
+
+GET {{secondaryUrl}}
+Accept: application/json
+
+### Business Discovery — Explicit Pagination
+
+GET {{secondaryUrl}}?page=1&limit=5
+Accept: application/json
+
+### Business Discovery — Business Search
+
+GET {{secondaryUrl}}?search=Rabbituza
+Accept: application/json
+
+### Business Discovery — Search With Pagination
+
+GET {{secondaryUrl}}?search=Rabbituza&page=1&limit=1
+Accept: application/json
+
+### Business Discovery — Type Filter
+
+GET {{secondaryUrl}}?businessType=RETAIL
+Accept: application/json
+
+### Business Discovery — Type + Search
+
+GET {{secondaryUrl}}?businessType=AGRICULTURE&search=Rabbituza
+Accept: application/json
+

@@ -1,8 +1,11 @@
-import { validateRequest, success } from "../../../shared/index.js";
+import {
+	validateRequest,
+	success,
+	businessParamsSchema,
+} from "../../../shared/index.js";
 
 import auditLogService from "../services/auditLog.service.js";
 import { auditLogPresenter } from "../presenters/index.js";
-import { businessParamsSchema } from "../../business/validators/branchParamsSchema.js";
 
 class AuditLogController {
 	async listBusinessLogs(req, res, next) {
