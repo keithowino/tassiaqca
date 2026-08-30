@@ -1971,11 +1971,36 @@ That distinction matters because the Architecture Specification says Discovery i
 
 ---
 
+```text
+Discovery
+    → exploration
+
+Search
+    → precise retrieval
+```
+
+Discovery includes things such as Featured Businesses and Trending Offerings and is explicitly optimized for exploration rather than precise retrieval.
+
+Search, on the other hand, is intended to locate:
+
+```text
+Businesses
+Offerings
+Categories
+Services
+Locations
+Tags
+Neighborhoods
+Brands
+```
+
+---
+
 - We may proceed to REST tests, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the API endpoint for trending offering discovery."
+git commit -m "feat(Marketplace): Create the API endpoint for marketplace/search/offering."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 
