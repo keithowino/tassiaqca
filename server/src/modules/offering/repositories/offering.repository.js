@@ -181,6 +181,36 @@ async function findFeaturedForMarketplace({ skip = 0, limit = 20 } = {}) {
 	};
 }
 
+async function findTrendingForMarketplace({ type, skip = 0, limit = 20 } = {}) {
+	const filter = {
+		status: OFFERING_STATUS.ACTIVE,
+		visibility: OFFERING_VISIBILITY.PUBLIC,
+		searchable: true,
+	};
+
+	if (type) {
+		filter.type = type;
+	}
+
+	const [data, total] = await Promise.all([
+		Offering.find(filter)
+			.sort({
+				featured: -1,
+				publishedAt: -1,
+				createdAt: -1,
+			})
+			.skip(skip)
+			.limit(limit),
+
+		Offering.countDocuments(filter),
+	]);
+
+	return {
+		data,
+		total,
+	};
+}
+
 export default {
 	create,
 	save,
@@ -197,4 +227,5 @@ export default {
 
 	findPublishedForMarketplace,
 	findFeaturedForMarketplace,
+	findTrendingForMarketplace,
 };

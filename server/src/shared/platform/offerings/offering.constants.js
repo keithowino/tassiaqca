@@ -11,6 +11,6 @@ export const OFFERING_TYPES = Object.freeze({
 	DIGITAL_DOWNLOAD: "DIGITAL_DOWNLOAD",
 });
 
-export const OFFERING_TYPES_VALUES = Object.freeze(
+export const OFFERING_TYPE_VALUES = Object.freeze(
 	Object.values(OFFERING_TYPES),
 );

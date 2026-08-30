@@ -1,7 +1,7 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a9017d39104fee22462410a/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5MWI5OTgyYjg0Y2U4OWNjZWQwZjdkIiwiaWF0IjoxNzg3OTM1MTI4LCJleHAiOjE3ODgwMjE1MjgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.BiL0586IUtXuVbc6SzVP635IOXUMKlFdy7QLywqW49M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5M2NhMzU1MWEyODAxOWExOGY2MWIxIiwiaWF0IjoxNzg4MDcwNDUzLCJleHAiOjE3ODgxNTY4NTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.U7H7cLjxBKrLmTi-k3edsntH58YtYgpEQGDUKVNhwP0
 Content-Type: application/json
 
 # {
@@ -36,12 +36,12 @@ Content-Type: application/json
 #     "description": "Opening of the Ahjin Guild."
 # }
 
-{
-    "type": "COURSE",
-    "name": "Full Stack Web Development",
-    "shortDescription": "Complete full-stack web development course",
-    "description": "Learn frontend, backend, databases and deployment."
-}
+# {
+#     "type": "COURSE",
+#     "name": "Full Stack Web Development",
+#     "shortDescription": "Complete full-stack web development course",
+#     "description": "Learn frontend, backend, databases and deployment."
+# }
 
 # {
 #     "type": "MEMBERSHIP",
@@ -55,11 +55,12 @@ Content-Type: application/json
 #     "description": "WI-FI connections"
 # }
 
-# {
-#     "type": "DIGITAL_DOWNLOAD",
-#     "name": "TassiaQCA Architecture Guide",
-#     "description": "Digital architecture documentation."
-# }
+{
+    "type": "DIGITAL_DOWNLOAD",
+    "name": "TassiaQCA Architecture Guide",
+    "description": "Digital architecture documentation.", 
+    "featured": true
+}
 
 # {
 #     "type": "PRODUCT",
@@ -578,8 +579,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1Y
 
 ### Update Offering
 
-PATCH http://localhost:5000/api/v1/businesses/6a9017d39104fee22462410a/offerings/6a927def6af38dc49ad4f75d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5MWI5OTgyYjg0Y2U4OWNjZWQwZjdkIiwiaWF0IjoxNzg3OTM1MTI4LCJleHAiOjE3ODgwMjE1MjgsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.BiL0586IUtXuVbc6SzVP635IOXUMKlFdy7QLywqW49M
+PATCH http://localhost:5000/api/v1/businesses/6a9017d39104fee22462410a/offerings/6a93cac151a28019a18f61b2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5M2NhMzU1MWEyODAxOWExOGY2MWIxIiwiaWF0IjoxNzg4MDcwNDUzLCJleHAiOjE3ODgxNTY4NTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.U7H7cLjxBKrLmTi-k3edsntH58YtYgpEQGDUKVNhwP0
 Content-Type: application/json
 
 # {
@@ -704,5 +705,5 @@ Content-Type: application/json
 # }
 
 {
-    "featured": true
+    "status": "ACTIVE"
 }

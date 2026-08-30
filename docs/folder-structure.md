@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-28
+Generated on: 2026-08-30
 
 ```bash
 ├── client/
@@ -527,6 +527,57 @@ Generated on: 2026-08-28
 │   │   │   │   │   ├── logoutRequestSchema.js
 │   │   │   │   │   ├── refreshRequestSchema.js
 │   │   │   │   │   └── registerRequestSchema.js
+│   │   │   │   ├── index.js
+│   │   │   │   └── README.md
+│   │   │   ├── marketplace/
+│   │   │   │   ├── controllers/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── marketplace.controller.js
+│   │   │   │   ├── discovery/
+│   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   ├── businessDiscovery.controller.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── offeringDiscovery.controller.js
+│   │   │   │   │   │   └── trendingOffering.controller.js
+│   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   ├── businessDiscovery.presenter.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── offeringDiscovery.presenter.js
+│   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   ├── businessDiscovery.repository.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── offeringDiscovery.repository.js
+│   │   │   │   │   │   └── trendingOffering.repository.js
+│   │   │   │   │   ├── routes/
+│   │   │   │   │   │   ├── discovery.routes.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── services/
+│   │   │   │   │   │   ├── businessDiscovery.service.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── offeringDiscovery.service.js
+│   │   │   │   │   │   └── trendingOffering.service.js
+│   │   │   │   │   ├── validators/
+│   │   │   │   │   │   ├── businessDiscoveryQuery.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── offeringDiscoveryQuery.schema.js
+│   │   │   │   │   │   └── trendingOfferingsQuery.schema.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── README.md
+│   │   │   │   ├── presenters/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── marketplaceOffering.presenter.js
+│   │   │   │   ├── repositories/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── marketplaceOffering.repository.js
+│   │   │   │   ├── routes/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── marketplace.routes.js
+│   │   │   │   ├── services/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── marketplace.service.js
+│   │   │   │   ├── validators/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── marketplaceQuery.schema.js
 │   │   │   │   ├── index.js
 │   │   │   │   └── README.md
 │   │   │   ├── navigation/

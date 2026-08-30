@@ -1794,6 +1794,25 @@ Recommendations
 Checkout / Booking / Request
 ```
 
+## Discovery slice
+
+```text
+Marketplace Discovery
+│
+├── Business Discovery
+│   └── Basic Business Listing          ✓
+│
+├── Offering Discovery
+│   ├── Published Offering Listing      ✓
+│   └── Featured Offerings              ✓
+│
+├── Trending Offerings                  ← NEXT
+├── Nearby Businesses
+├── New Businesses
+├── Popular Categories
+└── Seasonal Promotions
+```
+
 ---
 
 Future Offering Types may include:
@@ -1956,7 +1975,7 @@ That distinction matters because the Architecture Specification says Discovery i
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the API endpoint for featured offering discovery."
+git commit -m "feat(Marketplace): Create the API endpoint for trending offering discovery."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

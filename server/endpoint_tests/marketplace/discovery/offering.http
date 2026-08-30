@@ -4,3 +4,28 @@
 
 GET {{baseUrl}}/marketplace/discovery/offerings/featured
 Accept: application/json
+
+### Featured Offering - Explicit Pagination; at the time of testing this there was 2 active offerings tagged as featured. With an endpoint structured as do it returned 1 offering because of limit=1.
+
+GET {{baseUrl}}/marketplace/discovery/offerings/featured?page=2&limit=1
+Accept: application/json
+
+### Trending Offering
+
+GET {{baseUrl}}/marketplace/discovery/offerings/trending
+Accept: application/json
+
+### Trending Offering - Explicit Pagination
+
+GET {{baseUrl}}/marketplace/discovery/offerings/trending?page=1&limit=1
+Accept: application/json
+
+### Trending Offering - Type Filter
+
+GET {{baseUrl}}/marketplace/discovery/offerings/trending?type=PRODUCT
+Accept: application/json
+
+### Trending Offering - Combined Type + Pagination
+
+GET {{baseUrl}}/marketplace/discovery/offerings/trending?type=PRODUCT&page=1&limit=1
+Accept: application/json

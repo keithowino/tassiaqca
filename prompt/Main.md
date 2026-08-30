@@ -1,16 +1,1 @@
-## Test 1
-
-```http
-@baseUrl = http://localhost:5000/api/v1
-
-GET {{baseUrl}}/marketplace/discovery/offerings/featured
-Accept: application/json
-```
-
-```js
-// Response
-
-{"success":true,"message":"Featured marketplace offerings retrieved successfully.","data":{"data":[{"id":"6a927def6af38dc49ad4f75d","businessId":"6a9017d39104fee22462410a","type":"PRODUCT","name":"Marketplace Test Product","slug":"marketplace-test-product","shortDescription":"A product created to verify Marketplace aggregation.","description":"This offering is being created specifically to verify that published Marketplace-visible offerings are returned by the Marketplace API.","visibility":"PUBLIC","featured":true,"metadata":{}}],"pagination":{"total":1,"page":1,"limit":20,"totalPages":1}}}
-```
-
-We may proceed to the remaining REST tests, in each test give me the complete REST example.
+As you have requested here is the current state of the Marketplace aggregation:
