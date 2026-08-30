@@ -1,1 +1,1 @@
-export { default as searchOfferingService } from "./searchOffering.service.js";
+export { default as searchService } from "./search.service.js";

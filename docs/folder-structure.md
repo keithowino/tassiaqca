@@ -572,6 +572,30 @@ Generated on: 2026-08-30
 │   │   │   │   ├── routes/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── marketplace.routes.js
+│   │   │   │   ├── search/
+│   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── search.controller.js
+│   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   ├── businessSearch.presenter.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── searchOffering.presenter.js
+│   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   ├── businessSearch.repository.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── searchOffering.repository.js
+│   │   │   │   │   ├── routes/
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── search.routes.js
+│   │   │   │   │   ├── services/
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── search.service.js
+│   │   │   │   │   ├── validators/
+│   │   │   │   │   │   ├── businessSearchQuery.schema.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── searchOfferingsQuery.schema.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── README.md
 │   │   │   │   ├── services/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── marketplace.service.js

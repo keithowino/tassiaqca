@@ -1,26 +1,26 @@
 import { offeringService } from "../../../offering/index.js";
 
-class SearchOfferingRepository {
-	async findPublished(query = {}) {
-		const { search, type, page = 1, limit = 20 } = query;
+async function findPublished(query = {}) {
+	const { search, type, page = 1, limit = 20 } = query;
 
-		const skip = (page - 1) * limit;
+	const skip = (page - 1) * limit;
 
-		const result = await offeringService.listPublishedForMarketplace({
-			type,
-			search,
-			skip,
-			limit,
-		});
+	const result = await offeringService.listPublishedForMarketplace({
+		type,
+		search,
+		skip,
+		limit,
+	});
 
-		return {
-			offerings: result.data,
-			total: result.total,
-			page,
-			limit,
-			totalPages: Math.ceil(result.total / limit),
-		};
-	}
+	return {
+		offerings: result.data,
+		total: result.total,
+		page,
+		limit,
+		totalPages: Math.ceil(result.total / limit),
+	};
 }
 
-export default new SearchOfferingRepository();
+export default {
+	findPublished,
+};

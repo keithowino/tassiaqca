@@ -2,3 +2,8 @@
 
 GET {{baseUrl}}/marketplace/search/offerings
 Accept: application/json
+
+###
+
+GET {{baseUrl}}/marketplace/search/businesses
+Accept: application/json

@@ -1760,8 +1760,6 @@ GET /marketplace/discovery
 
 ## Longer-Term Marketplace Roadmap
 
-Once the first aggregation slice is stable, Marketplace is expected to evolve approximately as follows:
-
 <!-- ✓ | ← NEXT -->
 
 ```text
@@ -1773,11 +1771,9 @@ Business Discovery              ✓
         ↓
 Offering Discovery              ✓
         ↓
-Search                          ← NEXT
+Search & Filtering              ✓
         ↓
-Filtering
-        ↓
-Categories
+Categories                      ← NEXT
         ↓
 Business Profiles
         ↓
@@ -2000,7 +1996,7 @@ Brands
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the API endpoint for marketplace/search/offering."
+git commit -m "feat(Marketplace): Create the API endpoint for marketplace/search/business."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

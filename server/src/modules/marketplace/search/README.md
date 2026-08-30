@@ -18,14 +18,6 @@ Business search
 
 The specification says Marketplace Search will eventually support businesses, businessType, offerings, categories, services, locations, tags, neighborhoods and brands, etc. but it does not require all of those to be implemented simultaneously.
 
-Our first validated slice is therefore:
+## Business domain: add the Marketplace-facing query contract
 
-```text
-Search
-│
-└── Offerings
-    ├── text search
-    ├── type filter
-    ├── pagination
-    └── published-only boundary
-```
+Business currently has active, but it does not have a separate published, visibility, or searchable field. Therefore, for this first Business Search implementation, we should treat active businesses as the public searchable business set, consistent with the Business Discovery implementation you have already tested.

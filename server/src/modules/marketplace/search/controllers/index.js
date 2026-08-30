@@ -1,1 +1,1 @@
-export { default as searchOfferingController } from "./searchOffering.controller.js";
+export { default as searchController } from "./search.controller.js";

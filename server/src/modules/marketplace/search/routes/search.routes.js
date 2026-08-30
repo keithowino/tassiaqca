@@ -1,9 +1,11 @@
 import { Router } from "express";
 
-import { searchOfferingController } from "../controllers/index.js";
+import { searchController } from "../controllers/index.js";
 
 const router = Router();
 
-router.get("/offerings", searchOfferingController.searchOfferings);
+router.get("/offerings", searchController.searchOfferings);
+
+router.get("/businesses", searchController.searchBusinesses);
 
 export default router;
