@@ -114,6 +114,7 @@ class OfferingService {
 		return offeringRepository.findPublishedForMarketplace({
 			type: payload.type,
 			search: payload.search,
+			businessId: payload.businessId,
 			skip: payload.skip ?? 0,
 			limit: payload.limit ?? 20,
 		});
@@ -132,6 +133,10 @@ class OfferingService {
 			skip: payload.skip ?? 0,
 			limit: payload.limit ?? 20,
 		});
+	}
+
+	async findPublishedForMarketplaceBySlug(slug) {
+		return offeringRepository.findPublishedForMarketplaceBySlug(slug);
 	}
 }
 

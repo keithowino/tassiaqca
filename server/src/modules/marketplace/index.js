@@ -6,3 +6,4 @@ export * from "./routes/index.js";
 
 export * from "./discovery/index.js";
 export * from "./search/index.js";
+export * from "./profiles/index.js";

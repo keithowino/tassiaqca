@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:5000/api/v1
+
+###
+
+GET {{baseUrl}}/marketplace/profiles/businesses/the-cuniculturist
+Accept: application/json
+
+###
+
+GET {{baseUrl}}/marketplace/profiles/offerings/dell-xps-16
+Accept: application/json

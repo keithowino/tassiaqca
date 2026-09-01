@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-08-30
+Generated on: 2026-09-01
 
 ```bash
 ├── client/
@@ -433,6 +433,7 @@ Generated on: 2026-08-30
 │   │   │   │   │   └── Subscription.js
 │   │   │   │   ├── presenters/
 │   │   │   │   │   ├── category.presenter.js
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   └── product.presenter.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── booking.repository.js
@@ -449,10 +450,13 @@ Generated on: 2026-08-30
 │   │   │   │   │   └── subscription.repository.js
 │   │   │   │   ├── routes/
 │   │   │   │   │   ├── category.routes.js
+│   │   │   │   │   ├── commerce.routes.js
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── product.routes.js
 │   │   │   │   │   └── README.md
 │   │   │   │   ├── services/
 │   │   │   │   │   ├── category.service.js
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   └── product.service.js
 │   │   │   │   ├── validators/
 │   │   │   │   │   ├── category.schema.js
@@ -530,6 +534,27 @@ Generated on: 2026-08-30
 │   │   │   │   ├── index.js
 │   │   │   │   └── README.md
 │   │   │   ├── marketplace/
+│   │   │   │   ├── categories/
+│   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   ├── category.controller.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── marketplaceCategory.presenter.js
+│   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   ├── category.repository.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── routes/
+│   │   │   │   │   │   ├── category.routes.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── services/
+│   │   │   │   │   │   ├── category.service.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── validators/
+│   │   │   │   │   │   ├── categoryQuery.schema.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── README.md
 │   │   │   │   ├── controllers/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── marketplace.controller.js
@@ -566,6 +591,26 @@ Generated on: 2026-08-30
 │   │   │   │   ├── presenters/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── marketplaceOffering.presenter.js
+│   │   │   │   ├── profiles/
+│   │   │   │   │   ├── businesses/
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── businessProfile.controller.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── businessProfile.presenter.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── businessProfile.repository.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── businessProfile.routes.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── businessProfile.service.js
+│   │   │   │   │   │   │   └── index.js
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── marketplaceOffering.repository.js
@@ -775,7 +820,8 @@ Generated on: 2026-08-30
 │   │   │   │   │   │   │   ├── createCategories.schema.js
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── updateCategories.schema.js
-│   │   │   │   │   │   └── categories.component.js
+│   │   │   │   │   │   ├── categories.component.js
+│   │   │   │   │   │   └── index.js
 │   │   │   │   │   ├── download/
 │   │   │   │   │   │   ├── builders/
 │   │   │   │   │   │   │   ├── download.builder.js

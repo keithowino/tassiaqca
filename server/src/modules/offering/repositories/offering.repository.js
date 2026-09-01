@@ -108,6 +108,7 @@ async function findByBusiness(
 async function findPublishedForMarketplace({
 	type,
 	search,
+	businessId,
 	skip = 0,
 	limit = 20,
 } = {}) {
@@ -116,6 +117,10 @@ async function findPublishedForMarketplace({
 		visibility: OFFERING_VISIBILITY.PUBLIC,
 		searchable: true,
 	};
+
+	if (businessId) {
+		filter.business = businessId;
+	}
 
 	if (type) {
 		filter.type = type;
@@ -211,6 +216,15 @@ async function findTrendingForMarketplace({ type, skip = 0, limit = 20 } = {}) {
 	};
 }
 
+async function findPublishedForMarketplaceBySlug(slug) {
+	return Offering.findOne({
+		slug,
+		status: OFFERING_STATUS.ACTIVE,
+		visibility: OFFERING_VISIBILITY.PUBLIC,
+		searchable: true,
+	});
+}
+
 export default {
 	create,
 	save,
@@ -228,4 +242,5 @@ export default {
 	findPublishedForMarketplace,
 	findFeaturedForMarketplace,
 	findTrendingForMarketplace,
+	findPublishedForMarketplaceBySlug,
 };
