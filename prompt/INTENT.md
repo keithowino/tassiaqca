@@ -1773,9 +1773,9 @@ Offering Discovery              ✓
         ↓
 Search & Filtering              ✓
         ↓
-Categories                      ← NEXT
+Categories                      ✓
         ↓
-Business Profiles
+Business Profiles               ← NEXT
         ↓
 Offering Profiles
         ↓
@@ -1996,7 +1996,7 @@ Brands
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the API endpoint for marketplace/search/business."
+git commit -m "feat(Marketplace): Create the API endpoint for marketplace/categories."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

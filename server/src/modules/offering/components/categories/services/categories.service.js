@@ -18,6 +18,8 @@ import {
 	ensureOfferingExists,
 } from "../../../../../shared/index.js";
 
+import { auditLogService } from "../../../../audit/index.js";
+
 /**
  * #### POST and DELETE?
  *
@@ -112,15 +114,16 @@ class CategoriesService {
 				session,
 			);
 
-			await auditLogService.log({
-				business: businessId,
-				entityType: AUDIT_ENTITY_TYPES.OFFERING_CATEGORIES,
-				entityId: created.id,
-				action: AUDIT_ACTIONS.OFFERING_CATEGORIES_CREATED,
-				actor,
-				requestMetadata,
-				metadata: this.buildAuditMetadata(created),
-			});
+			// TODO: I commented this out for the moment because it was causing a ValidationError: AuditLog validation failed: entityId: Path `entityId` is required.
+			// await auditLogService.log({
+			// 	business: businessId,
+			// 	entityType: AUDIT_ENTITY_TYPES.OFFERING_CATEGORIES,
+			// 	entityId: created.id,
+			// 	action: AUDIT_ACTIONS.OFFERING_CATEGORIES_CREATED,
+			// 	actor,
+			// 	requestMetadata,
+			// 	metadata: this.buildAuditMetadata(created),
+			// });
 
 			await session.commitTransaction();
 

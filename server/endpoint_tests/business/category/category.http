@@ -1,7 +1,7 @@
 ### Category -  (POST http://localhost:5000/api/v1/businesses/:businessId/categories, {"name": "Electronics", "description": "Electronic devices and accessories"})
 
-POST http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
+POST http://localhost:5000/api/v1/businesses/6a9017d39104fee22462410a/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5NTg4YTYzYjU0ZDM0MGIyZDA2Zjc1IiwiaWF0IjoxNzg4MTg0NzQyLCJleHAiOjE3ODgyNzExNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.unteBsT0iIi1R2jw8TuVP7Sc46on-txBQtJyodJF6OQ
 Content-Type: application/json
 
 # Root category
@@ -21,7 +21,8 @@ Content-Type: application/json
 {
     "name": "Business Laptops",
     "description": "Laptops designed for business and professional use",
-    "parentId": "6a7ace9386a66725a277ec44"
+    "parentId": "6a958e496878bfe4f74cc494", 
+	"position": 10
 }
 
 # {

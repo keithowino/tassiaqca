@@ -97,3 +97,5 @@ offeringSchema.index({
 
 export const Offering =
 	mongoose.models.Offering || mongoose.model("Offering", offeringSchema);
+
+export default Offering;

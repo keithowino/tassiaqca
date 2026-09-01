@@ -87,6 +87,19 @@ categorySchema.index({
 	position: 1,
 });
 
+// TODO: The indexing below was recommended while creating marketplace category, revisit this action.
+// categorySchema.index({
+// 	business: 1,
+// 	status: 1,
+// 	position: 1,
+// });
+
+// categorySchema.index({
+// 	business: 1,
+// 	parent: 1,
+// 	status: 1,
+// });
+
 export const Category =
 	mongoose.models.Category || mongoose.model("Category", categorySchema);
 

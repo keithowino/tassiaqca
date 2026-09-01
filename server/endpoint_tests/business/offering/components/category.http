@@ -4,12 +4,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1Y
 Content-Type: application/json
 
 ### Replace offering categories
-PUT http://localhost:5000/api/v1/businesses/6a72d57f8b94e4f1232d4112/offerings/6a7ecaebc76c130dae23f2a5/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTcyZDU1YThiOTRlNGYxMjMyZDQxMTAiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE3ZGVhODMyNThhNjVkMDA3ZDNlMDEzIiwiaWF0IjoxNzg2NjM2OTMxLCJleHAiOjE3ODY3MjMzMzEsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.zBs4VnFlL4YMra70EIbYhGwFjMAKQNTaK9yl7-XKlbM
+
+PUT http://localhost:5000/api/v1/businesses/6a9017d39104fee22462410a/offerings/6a9675993aa7c3da250f7113/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5NTg4YTYzYjU0ZDM0MGIyZDA2Zjc1IiwiaWF0IjoxNzg4MTg0NzQyLCJleHAiOjE3ODgyNzExNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.unteBsT0iIi1R2jw8TuVP7Sc46on-txBQtJyodJF6OQ
 Content-Type: application/json
 
 {
     "categoryIds": [
-        "6a7acef386a66725a277ec46"
+        "6a966e745e3906fac157eb01"
     ]
 }

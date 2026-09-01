@@ -8,3 +8,4 @@ export { default as eventRepository } from "./event.repository.js";
 export { default as packageRepository } from "./package.repository.js";
 export { default as digitalDownloadRepository } from "./digitalDownload.repository.js";
 export { default as bookingRepository } from "./booking.repository.js";
+export { default as categoryRepository } from "./category.repository.js";

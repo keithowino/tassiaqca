@@ -3,7 +3,7 @@ import { authRoutes as identityRoutes } from "../../modules/identity/index.js";
 import { platformRoutes } from "../../modules/platform/index.js";
 import { businessRoutes } from "../../modules/business/index.js";
 import { auditRoutes } from "../../modules/audit/index.js";
-import commerceRoutes from "../../modules/commerce/index.js";
+import { commerceRoutes } from "../../modules/commerce/index.js";
 import { navigationRoutes } from "../../modules/navigation/index.js";
 import { dashboardRoutes } from "../../modules/dashboard/index.js";
 import { offeringRoutes } from "../../modules/offering/index.js";

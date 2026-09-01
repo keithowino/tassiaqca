@@ -70,74 +70,71 @@ import { getId } from "../../../shared/index.js";
  * Combines the Product projection with its Offering aggregate into a single
  * API response.
  */
-const present = (product) => {
-	if (!product) return null;
+class ProductPresenter {
+	present(product) {
+		if (!product) return null;
 
-	const businessId = getId(product.business);
+		const offering = product.offering;
 
-	const offering = product.offering;
+		return {
+			id: getId(product),
 
-	return {
-		id: product._id.toString(),
+			businessId: getId(product.business),
 
-		businessId,
+			offeringId: getId(offering),
 
-		offeringId: offering?._id?.toString(),
+			/**
+			 * Offering fields
+			 */
+			type: offering?.type,
 
-		/**
-		 * Offering fields
-		 */
-		type: offering?.type,
+			name: offering?.name,
 
-		name: offering?.name,
+			slug: offering?.slug,
 
-		slug: offering?.slug,
+			shortDescription: offering?.shortDescription,
 
-		shortDescription: offering?.shortDescription,
+			description: offering?.description,
 
-		description: offering?.description,
+			status: offering?.status,
 
-		status: offering?.status,
+			visibility: offering?.visibility,
 
-		visibility: offering?.visibility,
+			searchable: offering?.searchable,
 
-		searchable: offering?.searchable,
+			featured: offering?.featured,
 
-		featured: offering?.featured,
+			metadata: offering?.metadata ?? {},
 
-		metadata: offering?.metadata ?? {},
+			/**
+			 * Product fields
+			 */
+			sku: product.sku,
 
-		/**
-		 * Product fields
-		 */
-		sku: product.sku,
+			categoryId: getId(product.category),
 
-		categoryId: product.category?.toString() ?? null,
+			createdBy: getId(product.createdBy),
 
-		createdBy: product.createdBy?.toString(),
+			updatedBy: getId(product.updatedBy),
 
-		updatedBy: product.updatedBy?.toString(),
+			createdAt: product.createdAt,
 
-		createdAt: product.createdAt,
+			updatedAt: product.updatedAt,
+		};
+	}
 
-		updatedAt: product.updatedAt,
-	};
-};
+	presentCollection(result) {
+		return {
+			data: result.products.map((product) => this.present(product)),
 
-const presentCollection = (result) => {
-	return {
-		data: result.products.map(present),
+			pagination: {
+				total: result.total,
+				page: result.page,
+				limit: result.limit,
+				totalPages: result.totalPages,
+			},
+		};
+	}
+}
 
-		pagination: {
-			total: result.total,
-			page: result.page,
-			limit: result.limit,
-			totalPages: result.totalPages,
-		},
-	};
-};
-
-export default {
-	present,
-	presentCollection,
-};
+export default new ProductPresenter();

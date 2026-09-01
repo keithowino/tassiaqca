@@ -337,9 +337,7 @@
 // // ...
 
 import { productRepository } from "../repositories/index.js";
-import productPresenter from "../presenters/product.presenter.js";
-
-import businessRepository from "../../business/repositories/business.repository.js";
+import { productPresenter } from "../presenters/index.js";
 
 import {
 	HTTP_STATUS,
@@ -348,52 +346,54 @@ import {
 	ensureBusinessExists,
 } from "../../../shared/index.js";
 
-/*
-|--------------------------------------------------------------------------
-| Private Helpers
-|--------------------------------------------------------------------------
-*/
+class ProductService {
+	/*
+	|--------------------------------------------------------------------------
+	| Private Helpers
+	|--------------------------------------------------------------------------
+	*/
 
-async function ensureProductExists(businessId, productId) {
-	const product = await productRepository.findByBusinessAndId(
-		businessId,
-		productId,
-	);
-
-	if (!product) {
-		throw new AppError(
-			"Product not found.",
-			HTTP_STATUS.NOT_FOUND,
-			ErrorCodes.NOT_FOUND,
+	async ensureProductExists(businessId, productId) {
+		const product = await productRepository.findByBusinessAndId(
+			businessId,
+			productId,
 		);
+
+		if (!product) {
+			throw new AppError(
+				"Product not found.",
+				HTTP_STATUS.NOT_FOUND,
+				ErrorCodes.NOT_FOUND,
+			);
+		}
+
+		return product;
 	}
 
-	return product;
+	/*
+	|--------------------------------------------------------------------------
+	| Read Services
+	|--------------------------------------------------------------------------
+	*/
+
+	async list({ businessId, query }) {
+		await ensureBusinessExists(businessId);
+
+		const result = await productRepository.findByBusiness(
+			businessId,
+			query,
+		);
+
+		return productPresenter.presentCollection(result);
+	}
+
+	async getById({ businessId, productId }) {
+		await ensureBusinessExists(businessId);
+
+		const product = await ensureProductExists(businessId, productId);
+
+		return productPresenter.present(product);
+	}
 }
 
-/*
-|--------------------------------------------------------------------------
-| Read Services
-|--------------------------------------------------------------------------
-*/
-
-async function list({ businessId, query }) {
-	await ensureBusinessExists(businessId);
-
-	const result = await productRepository.findByBusiness(businessId, query);
-
-	return productPresenter.presentCollection(result);
-}
-
-async function getById({ businessId, productId }) {
-	await ensureBusinessExists(businessId);
-
-	const product = await ensureProductExists(businessId, productId);
-
-	return productPresenter.present(product);
-}
-
-export default {
-	list,
-	getById,
-};
+export default new ProductService();

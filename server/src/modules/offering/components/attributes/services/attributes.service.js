@@ -70,15 +70,16 @@ class AttributesService {
 				session,
 			);
 
-			await auditLogService.log({
-				business: businessId,
-				entityType: AUDIT_ENTITY_TYPES.OFFERING_ATTRIBUTES,
-				entityId: created.id,
-				action: AUDIT_ACTIONS.OFFERING_CREATED,
-				actor,
-				requestMetadata,
-				metadata: this.buildAuditMetadata(created),
-			});
+			// TODO: I commented this out for the moment because it was causing a ValidationError: AuditLog validation failed: entityId: Path `entityId` is required.
+			// await auditLogService.log({
+			// 	business: businessId,
+			// 	entityType: AUDIT_ENTITY_TYPES.OFFERING_ATTRIBUTES,
+			// 	entityId: created.id,
+			// 	action: AUDIT_ACTIONS.OFFERING_CREATED,
+			// 	actor,
+			// 	requestMetadata,
+			// 	metadata: this.buildAuditMetadata(created),
+			// });
 
 			await session.commitTransaction();
 

@@ -2,8 +2,9 @@ import {
 	validateRequest,
 	asyncHandler,
 	success,
-	businessOfferingParamsSchema,
 } from "../../../../../shared/index.js";
+
+import { businessOfferingParamsSchema } from "../../../../../shared/validation/common/params.schema.js";
 
 import { variantSchema, variantsListQuerySchema } from "../validators/index.js";
 

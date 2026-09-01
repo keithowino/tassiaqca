@@ -1,6 +1,6 @@
-import { getId } from "../../../shared/index.js";
+import { getId } from "../../../../shared/index.js";
 
-class CategoryPresenter {
+class MarketplaceCategoryPresenter {
 	present(category) {
 		if (!category) {
 			return null;
@@ -11,13 +11,10 @@ class CategoryPresenter {
 			businessId: getId(category.business),
 			name: category.name,
 			slug: category.slug,
-			description: category.description,
+			description: category.description ?? "",
 			parentId: getId(category.parent),
-			status: category.status,
-			position: category.position,
-			metadata: category.metadata,
-			createdAt: category.createdAt,
-			updatedAt: category.updatedAt,
+			position: category.position ?? 0,
+			offeringCount: category.offeringCount ?? 0,
 		};
 	}
 
@@ -26,4 +23,4 @@ class CategoryPresenter {
 	}
 }
 
-export default new CategoryPresenter();
+export default new MarketplaceCategoryPresenter();

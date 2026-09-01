@@ -1,1 +1,1 @@
-export * from "./offering.model.js";
+export { default as Offering } from "./offering.model.js";

@@ -1,26 +1,26 @@
 ### Create Offering
 
 POST http://localhost:5000/api/v1/businesses/6a9017d39104fee22462410a/offerings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5M2NhMzU1MWEyODAxOWExOGY2MWIxIiwiaWF0IjoxNzg4MDcwNDUzLCJleHAiOjE3ODgxNTY4NTMsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.U7H7cLjxBKrLmTi-k3edsntH58YtYgpEQGDUKVNhwP0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5NTg4YTYzYjU0ZDM0MGIyZDA2Zjc1IiwiaWF0IjoxNzg4MTg0NzQyLCJleHAiOjE3ODgyNzExNDIsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.unteBsT0iIi1R2jw8TuVP7Sc46on-txBQtJyodJF6OQ
 Content-Type: application/json
 
-# {
-#     "type": "PRODUCT",
-#     "name": "Dell XPS 16",
-#     "shortDescription": "High-performance developer laptop",
-#     "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
-#     "sku": " dx16-001 ",
-#     "attributes": [
-# 		{
-# 			"name": "Color",
-# 			"values": ["Black", "Silver"]
-# 		},
-# 		{
-# 			"name": "RAM",
-# 			"values": ["16GB", "32GB"]
-# 		}
-# 	]
-# }
+{
+    "type": "PRODUCT",
+    "name": "Dell XPS 16",
+    "shortDescription": "High-performance developer laptop",
+    "description": "Intel Core Ultra processor, 32GB RAM, 1TB SSD", 
+    "sku": " dx16-001 ",
+    "attributes": [
+		{
+			"name": "Color",
+			"values": ["Black", "Silver"]
+		},
+		{
+			"name": "RAM",
+			"values": ["16GB", "32GB"]
+		}
+	]
+}
 
 # {
 #     "type": "SERVICE",
@@ -55,12 +55,12 @@ Content-Type: application/json
 #     "description": "WI-FI connections"
 # }
 
-{
-    "type": "DIGITAL_DOWNLOAD",
-    "name": "TassiaQCA Architecture Guide",
-    "description": "Digital architecture documentation.", 
-    "featured": true
-}
+# {
+#     "type": "DIGITAL_DOWNLOAD",
+#     "name": "TassiaQCA Architecture Guide",
+#     "description": "Digital architecture documentation.", 
+#     "featured": true
+# }
 
 # {
 #     "type": "PRODUCT",
