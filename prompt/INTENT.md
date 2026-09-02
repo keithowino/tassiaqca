@@ -1696,40 +1696,16 @@ This is consistent with the specification: Marketplace is a customer domain, own
 1. Marketplace architecture review (covered)
 2. Marketplace domain skeleton (covered)
 3. Marketplace publication/aggregation contract (covered)
-4. Marketplace offering read model
-5. Offering aggregation service
-6. Business aggregation
-7. Marketplace API
-8. REST testing
+4. Marketplace offering read model (covered)
+5. Offering aggregation service (covered)
+6. Business aggregation (covered)
+7. Marketplace API (covered)
+8. REST testing (covered)
 9. Marketplace frontend foundation
 10. Search/indexing
 11. Discovery
 12. Recommendations
 13. Reviews/Favorites/etc.
-```
-
----
-
-## Marketplace domain skeleton
-
-Given the current backend structure, I recommend starting with:
-
-```text
-server/src/modules/marketplace/
-
-├── controllers/
-├── models/
-├── presenters/
-├── repositories/
-├── routes/
-├── services/
-├── validators/
-├── discovery/
-├── search/
-├── profiles/
-├── offerings/
-├── recommendations/
-└── index.js
 ```
 
 ---
@@ -1743,17 +1719,6 @@ Marketplace
        ↓
 Customer
   discovers Offering
-```
-
----
-
-```text
-GET /marketplace/offerings
-GET /marketplace/offerings/:id
-GET /marketplace/businesses
-GET /marketplace/businesses/:id
-GET /marketplace/search
-GET /marketplace/discovery
 ```
 
 ---
@@ -1775,19 +1740,19 @@ Search & Filtering              ✓
         ↓
 Categories                      ✓
         ↓
-Business Profiles               ← NEXT
+Business Profiles               ✓
         ↓
-Offering Profiles
+Offering Profiles               ← IN PROGRESS
         ↓
-Nearby / Maps
+Nearby / Maps                   ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
         ↓
-Favorites / Collections
+Favorites / Collections         ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
         ↓
-Reviews
+Reviews                         ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
         ↓
-Recommendations
+Recommendations                 ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
         ↓
-Checkout / Booking / Request
+Checkout / Booking / Request    ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
 ```
 
 ## Discovery slice
@@ -1992,11 +1957,65 @@ Brands
 
 ---
 
+## V2 Marketplace Implementation Sequence
+
+```text
+Marketplace Frontend Foundation
+        ↓
+Marketplace Layout
+        ↓
+Marketplace API Services
+        ↓
+Marketplace Home / Discovery
+        ↓
+Offering Cards
+        ↓
+Business Cards
+        ↓
+Category Navigation
+        ↓
+Marketplace Search
+        ↓
+Business Profile
+        ↓
+Offering Profile
+```
+
+## components/
+
+Marketplace-specific reusable presentation components.
+
+Examples eventually include:
+
+```text
+OfferingCard
+BusinessCard
+CategoryCard
+SearchBar
+Market
+```
+
+# pages/
+
+Route-level Marketplace experiences.
+
+Eventually:
+
+```text
+MarketplaceHomePage
+MarketplaceSearchPage
+BusinessProfilePage
+OfferingProfilePage
+CategoryPage
+```
+
+---
+
 - We may proceed to REST tests, in each test give me the complete REST example.
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the API endpoint for marketplace business and offering profile."
+git commit -m "feat(Marketplace): Init Marketplace Frontend Foundation creation."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

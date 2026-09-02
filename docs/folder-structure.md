@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-09-01
+Generated on: 2026-09-02
 
 ```bash
 ├── client/
@@ -610,6 +610,26 @@ Generated on: 2026-09-01
 │   │   │   │   │   │   │   └── index.js
 │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── offerings/
+│   │   │   │   │   │   ├── controllers/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringProfile.controller.js
+│   │   │   │   │   │   ├── presenters/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringProfile.presenter.js
+│   │   │   │   │   │   ├── repositories/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringProfile.repository.js
+│   │   │   │   │   │   ├── routes/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringProfile.routes.js
+│   │   │   │   │   │   ├── services/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringProfile.service.js
+│   │   │   │   │   │   ├── validators/
+│   │   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   │   └── offeringProfileParams.schema.js
+│   │   │   │   │   │   └── index.js
 │   │   │   │   │   └── index.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── index.js

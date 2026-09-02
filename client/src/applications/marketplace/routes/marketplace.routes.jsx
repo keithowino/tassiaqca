@@ -1,25 +1,14 @@
-import { AuthenticatedRoute } from "../../../platform/routing";
-
-function MarketplacePlaceholder() {
-	return (
-		<div className="container mx-auto h-screen w-screen">
-			<div className="flex flex-col h-full items-center justify-center">
-				<h1>Marketplace</h1>
-				<i>Busy, Busy Me...</i>
-			</div>
-		</div>
-	);
-}
+import MarketplaceLayout from "../layouts/MarketplaceLayout";
+import MarketplaceHomePage from "../pages/MarketplaceHomePage";
 
 const marketplaceRoutes = [
 	{
-		element: <AuthenticatedRoute />,
-
+		path: "/marketplace",
+		element: <MarketplaceLayout />,
 		children: [
 			{
-				path: "/marketplace",
-
-				element: <MarketplacePlaceholder />,
+				index: true,
+				element: <MarketplaceHomePage />,
 			},
 		],
 	},
