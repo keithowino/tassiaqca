@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-09-02
+Generated on: 2026-09-03
 
 ```bash
 ├── client/
@@ -119,9 +119,14 @@ Generated on: 2026-09-02
 │   │   │   └── marketplace/
 │   │   │       ├── components/
 │   │   │       ├── layouts/
+│   │   │       │   └── MarketplaceLayout.jsx
 │   │   │       ├── pages/
+│   │   │       │   └── MarketplaceHomePage.jsx
 │   │   │       ├── routes/
 │   │   │       │   └── marketplace.routes.jsx
+│   │   │       ├── services/
+│   │   │       │   ├── index.js
+│   │   │       │   └── marketplace.service.js
 │   │   │       └── index.js
 │   │   ├── platform/
 │   │   │   ├── api/
@@ -630,7 +635,8 @@ Generated on: 2026-09-02
 │   │   │   │   │   │   │   ├── index.js
 │   │   │   │   │   │   │   └── offeringProfileParams.schema.js
 │   │   │   │   │   │   └── index.js
-│   │   │   │   │   └── index.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── profiles.routes.js
 │   │   │   │   ├── repositories/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── marketplaceOffering.repository.js

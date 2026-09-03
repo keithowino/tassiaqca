@@ -1,34 +1,32 @@
 @baseUrl = http://localhost:5000/api/v1
-@secondaryUrl = {{baseUrl}}/marketplace/discovery/businesses
-
 
 ### Business Discovery
 
-GET {{secondaryUrl}}
+GET {{baseUrl}}/marketplace/discovery/businesses
 Accept: application/json
 
 ### Business Discovery — Explicit Pagination
 
-GET {{secondaryUrl}}?page=1&limit=5
+GET {{baseUrl}}/marketplace/discovery/businesses?page=1&limit=5
 Accept: application/json
 
 ### Business Discovery — Business Search
 
-GET {{secondaryUrl}}?search=Rabbituza
+GET {{baseUrl}}/marketplace/discovery/businesses?search=Rabbituza
 Accept: application/json
 
 ### Business Discovery — Search With Pagination
 
-GET {{secondaryUrl}}?search=Rabbituza&page=1&limit=1
+GET {{baseUrl}}/marketplace/discovery/businesses?search=Rabbituza&page=1&limit=1
 Accept: application/json
 
 ### Business Discovery — Type Filter
 
-GET {{secondaryUrl}}?businessType=RETAIL
+GET {{baseUrl}}/marketplace/discovery/businesses?businessType=RETAIL
 Accept: application/json
 
 ### Business Discovery — Type + Search
 
-GET {{secondaryUrl}}?businessType=AGRICULTURE&search=Rabbituza
+GET {{baseUrl}}/marketplace/discovery/businesses?businessType=AGRICULTURE&search=Rabbituza
 Accept: application/json
 
