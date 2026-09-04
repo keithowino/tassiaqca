@@ -3,6 +3,21 @@
 GET {{baseUrl}}/marketplace/search/offerings
 Accept: application/json
 
+### Filter by Accessories
+
+GET {{baseUrl}}/marketplace/search/offerings?categoryId=6a958e496878bfe4f74cc494
+Accept: application/json
+
+### Marketplace - Category + search
+
+GET {{baseUrl}}/marketplace/search/offerings?categoryId=6a966e745e3906fac157eb01&search=Dell
+Accept: application/json
+
+### Marketplace - Nonexistent category
+
+GET {{baseUrl}}/marketplace/search/offerings?categoryId=000000000000000000000000
+Accept: application/json
+
 ###
 
 GET {{baseUrl}}/marketplace/search/businesses

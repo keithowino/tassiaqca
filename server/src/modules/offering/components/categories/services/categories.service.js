@@ -148,6 +148,12 @@ class CategoriesService {
 
 		return categoriesPresenter.presentCollection(assignments);
 	}
+
+	async listOfferingIdsByCategory(categoryId) {
+		this.validateCategoryIds([categoryId]);
+
+		return categoriesRepository.findOfferingIdsByCategory(categoryId);
+	}
 }
 
 export const categoriesService = new CategoriesService();

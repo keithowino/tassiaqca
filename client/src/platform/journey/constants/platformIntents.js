@@ -1,4 +1,4 @@
-export const PlatformIntent = {
+const intent = {
 	MARKETPLACE: "MARKETPLACE",
 
 	START_BUSINESS: "START_BUSINESS",
@@ -6,4 +6,8 @@ export const PlatformIntent = {
 	JOIN_BUSINESS: "JOIN_BUSINESS",
 
 	ADMINISTRATION: "ADMINISTRATION",
+};
+
+export default {
+	intent,
 };

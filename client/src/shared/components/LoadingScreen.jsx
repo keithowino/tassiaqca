@@ -1,6 +1,6 @@
 import { Heading, Text } from "../ui";
 
-export default function LoadingScreen() {
+export default function LoadingScreen({ message = "Loading..." }) {
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-50">
 			<div className="text-center">
@@ -10,7 +10,7 @@ export default function LoadingScreen() {
 					TassiaQCA
 				</Heading>
 
-				<Text className="mt-2">Preparing your workspace...</Text>
+				<Text className="mt-2">{message}</Text>
 			</div>
 		</div>
 	);

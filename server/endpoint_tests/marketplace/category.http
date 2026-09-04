@@ -34,5 +34,5 @@ Accept: application/json
 
 ###
 
-GET {{baseUrl}}/marketplace/categories?businessId=6a9017d39104fee22462410a&search=Accessories
+GET {{baseUrl}}/marketplace/categories?businessId=6a9017d39104fee22462410a&search=Laptops
 Accept: application/json

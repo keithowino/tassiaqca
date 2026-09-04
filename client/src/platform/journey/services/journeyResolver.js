@@ -1,20 +1,20 @@
-import { PlatformIntent } from "../constants/platformIntents";
+import { PlatformIntents } from "../constants/index.js";
 
 /**
  * Initially keep it simple:
  */
 export function resolveJourney(intent) {
 	switch (intent) {
-		case PlatformIntent.MARKETPLACE:
+		case PlatformIntents.intent.MARKETPLACE:
 			return "/marketplace";
 
-		case PlatformIntent.START_BUSINESS:
+		case PlatformIntents.intent.START_BUSINESS:
 			return "/business/hub";
 
-		case PlatformIntent.JOIN_BUSINESS:
+		case PlatformIntents.intent.JOIN_BUSINESS:
 			return "/business/join";
 
-		case PlatformIntent.ADMINISTRATION:
+		case PlatformIntents.intent.ADMINISTRATION:
 			return "/admin";
 
 		default:

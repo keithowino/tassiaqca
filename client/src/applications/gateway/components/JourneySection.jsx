@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
-
-import journeys from "../data/journeys";
-
 import {
 	PageSection,
 	SectionHeader,
 	FeatureGrid,
 } from "../../../shared/layout";
 
-import { Button, Card, Heading, Text } from "../../../shared/ui";
-import { JourneyLink } from "../../../platform/journey";
+import {
+	Button,
+	Card,
+	Heading,
+	journeys,
+	Text,
+} from "../../../shared/index.js";
+import { JourneyLink } from "../../../platform/index.js";
 
 export default function JourneySection() {
 	return (

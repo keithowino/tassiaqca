@@ -12,11 +12,9 @@ export default function SectionHeader({
 				align === "center" ? "text-center" : "text-left"
 			} ${className}`}
 		>
-			<Heading level={2}>{title}</Heading>
+			<Heading level={3}>{title}</Heading>
 
-			{description && (
-				<Text className="mt-3 max-w-2xl mx-auto">{description}</Text>
-			)}
+			{description && <Text className="mt-3">{description}</Text>}
 		</div>
 	);
 }

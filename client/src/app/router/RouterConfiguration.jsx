@@ -4,7 +4,7 @@ import { authenticationRoutes } from "../../applications/authentication";
 import { bootstrapRoutes } from "../../platform/bootstrap";
 
 import { businessRoutes, onboardingRoutes } from "../../applications/business";
-import marketplaceRoutes from "../../applications/marketplace/routes/marketplace.routes";
+import { marketplaceRoutes } from "../../applications/marketplace/index.js";
 import administrationRoutes from "../../applications/administration/routes/administration.routes";
 import { gatewayRoutes } from "../../applications/gateway";
 

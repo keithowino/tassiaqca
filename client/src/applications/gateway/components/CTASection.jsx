@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 import { PageSection } from "../../../shared/layout";
-import { Button, Heading, Text } from "../../../shared/ui";
-import { JourneyLink, PlatformIntent } from "../../../platform/journey";
+import { Button, Heading, Text } from "../../../shared/index.js";
+import { JourneyLink, PlatformIntents } from "../../../platform/index.js";
 
 export default function CTASection() {
 	return (
@@ -20,7 +20,7 @@ export default function CTASection() {
 				<div className="flex flex-wrap justify-center gap-4 mt-10">
 					<Button
 						as={JourneyLink}
-						intent={PlatformIntent.MARKETPLACE}
+						intent={PlatformIntents.intent.MARKETPLACE}
 						size="lg"
 					>
 						Explore Marketplace
@@ -28,7 +28,7 @@ export default function CTASection() {
 
 					<Button
 						as={JourneyLink}
-						intent={PlatformIntent.START_BUSINESS}
+						intent={PlatformIntents.intent.START_BUSINESS}
 						size="lg"
 						variant="outline"
 						className="border-white text-white hover:bg-white hover:text-black"

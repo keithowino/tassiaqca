@@ -3,9 +3,15 @@ import { Search, MapPin } from "lucide-react";
 import platform from "../../../shared/config/platform.config";
 
 import { Hero } from "../../../shared/layout";
-import { Button, Badge, Heading, Text, TextInput } from "../../../shared/ui";
+import {
+	Button,
+	Badge,
+	Heading,
+	Text,
+	TextInput,
+} from "../../../shared//index.js";
 
-import { JourneyLink, PlatformIntent } from "../../../platform/journey";
+import { JourneyLink, PlatformIntents } from "../../../platform/index.js";
 
 export default function HeroSection() {
 	return (
@@ -39,7 +45,7 @@ export default function HeroSection() {
 
 					<Button
 						as={JourneyLink}
-						intent={PlatformIntent.MARKETPLACE}
+						intent={PlatformIntents.intent.MARKETPLACE}
 						className="absolute right-0.5 top-0.5 bottom-0.5"
 					>
 						Explore
@@ -49,14 +55,14 @@ export default function HeroSection() {
 				<div className="flex flex-wrap justify-center gap-4 mt-10">
 					<Button
 						as={JourneyLink}
-						intent={PlatformIntent.MARKETPLACE}
+						intent={PlatformIntents.intent.MARKETPLACE}
 					>
 						Marketplace
 					</Button>
 
 					<Button
 						as={JourneyLink}
-						intent={PlatformIntent.START_BUSINESS}
+						intent={PlatformIntents.intent.START_BUSINESS}
 						variant="outline"
 						className="bg-white/10 text-white border-white"
 					>

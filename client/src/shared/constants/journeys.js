@@ -1,4 +1,4 @@
-import { PlatformIntent } from "../../../platform/journey";
+import { PlatformIntents } from "../../platform/index.js";
 
 const journeys = [
 	{
@@ -7,7 +7,7 @@ const journeys = [
 		description:
 			"Browse businesses, products, services, and communities around you.",
 		action: "Explore",
-		intent: PlatformIntent.MARKETPLACE,
+		intent: PlatformIntents.intent.MARKETPLACE,
 	},
 
 	{
@@ -16,7 +16,7 @@ const journeys = [
 		description:
 			"Create your business workspace and begin operating online.",
 		action: "Get Started",
-		intent: PlatformIntent.START_BUSINESS,
+		intent: PlatformIntents.intent.START_BUSINESS,
 	},
 
 	{
@@ -25,7 +25,7 @@ const journeys = [
 		description:
 			"Accept an invitation and collaborate with your organization.",
 		action: "Join",
-		intent: PlatformIntent.JOIN_BUSINESS,
+		intent: PlatformIntents.intent.JOIN_BUSINESS,
 	},
 
 	{
@@ -34,7 +34,7 @@ const journeys = [
 		description:
 			"Access your Marketplace, Business OS, or Administration workspace.",
 		action: "Sign In",
-		intent: PlatformIntent.MARKETPLACE,
+		intent: PlatformIntents.intent.MARKETPLACE,
 	},
 ];
 

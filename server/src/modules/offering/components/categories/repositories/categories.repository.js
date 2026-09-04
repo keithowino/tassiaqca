@@ -36,6 +36,12 @@ class CategoriesRepository {
 		});
 	}
 
+	async findOfferingIdsByCategory(categoryId) {
+		return OfferingCategory.find({
+			category: categoryId,
+		}).distinct("offering");
+	}
+
 	async deleteByOffering(offeringId, session = null) {
 		return OfferingCategory.deleteMany(
 			{

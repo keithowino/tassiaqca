@@ -1,6 +1,7 @@
 import lifecycleFactory from "../lifecycles/lifecycle.factory.js";
 import { offeringRepository } from "../repositories/index.js";
 import { offeringRegistry } from "../../../shared/index.js";
+import { categoriesService } from "../components/index.js";
 
 /**
  * Delegation layer
@@ -110,13 +111,40 @@ class OfferingService {
 		});
 	}
 
+	// async listPublishedForMarketplace(payload = {}) {
+	// 	return offeringRepository.findPublishedForMarketplace({
+	// 		type: payload.type,
+	// 		search: payload.search,
+	// 		businessId: payload.businessId,
+	// 		skip: payload.skip ?? 0,
+	// 		limit: payload.limit ?? 20,
+	// 	});
+	// }
+
 	async listPublishedForMarketplace(payload = {}) {
+		const {
+			type,
+			search,
+			businessId,
+			categoryId,
+			skip = 0,
+			limit = 20,
+		} = payload;
+
+		let offeringIds;
+
+		if (categoryId) {
+			offeringIds =
+				await categoriesService.listOfferingIdsByCategory(categoryId);
+		}
+
 		return offeringRepository.findPublishedForMarketplace({
-			type: payload.type,
-			search: payload.search,
-			businessId: payload.businessId,
-			skip: payload.skip ?? 0,
-			limit: payload.limit ?? 20,
+			type,
+			search,
+			businessId,
+			offeringIds,
+			skip,
+			limit,
 		});
 	}
 

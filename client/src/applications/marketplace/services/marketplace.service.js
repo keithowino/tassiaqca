@@ -52,6 +52,15 @@ class MarketplaceService {
 		});
 	}
 
+	async getCategoryOfferings(categoryId, params = {}) {
+		return request.get(`${MARKETPLACE_BASE_URL}/search/offerings`, {
+			params: {
+				...params,
+				categoryId,
+			},
+		});
+	}
+
 	async getBusinessProfile(slug) {
 		return request.get(
 			`${MARKETPLACE_BASE_URL}/profiles/businesses/${encodeURIComponent(slug)}`,

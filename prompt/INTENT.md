@@ -1744,15 +1744,15 @@ Business Profiles               ✓
         ↓
 Offering Profiles               ← IN PROGRESS
         ↓
-Nearby / Maps                   ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
+Nearby / Maps                   ← FUTURE TASK
         ↓
-Favorites / Collections         ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
+Favorites / Collections         ← FUTURE TASK
         ↓
-Reviews                         ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
+Reviews                         ← FUTURE TASK
         ↓
-Recommendations                 ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
+Recommendations                 ← FUTURE TASK
         ↓
-Checkout / Booking / Request    ← SET ASIDE TO BE IMPLEMENTED IN THE FUTURE
+Checkout / Booking / Request    ← FUTURE TASK
 ```
 
 ## Discovery slice
@@ -2015,7 +2015,7 @@ CategoryPage
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the first true API render of `/marketplace`."
+git commit -m "feat(Marketplace): Create the first true API render of `/marketplace/categories/:slug`."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

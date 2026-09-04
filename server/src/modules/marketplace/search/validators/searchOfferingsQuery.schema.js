@@ -14,6 +14,12 @@ const searchOfferingsQuerySchema = z.object({
 		.min(1, "Offering type cannot be empty.")
 		.optional(),
 
+	categoryId: z
+		.string()
+		.trim()
+		.min(1, "Category ID cannot be empty.")
+		.optional(),
+
 	page: z.coerce.number().int().min(1, "Page must be at least 1.").default(1),
 
 	limit: z.coerce

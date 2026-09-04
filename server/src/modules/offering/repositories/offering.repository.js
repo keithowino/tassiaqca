@@ -109,6 +109,7 @@ async function findPublishedForMarketplace({
 	type,
 	search,
 	businessId,
+	offeringIds,
 	skip = 0,
 	limit = 20,
 } = {}) {
@@ -124,6 +125,12 @@ async function findPublishedForMarketplace({
 
 	if (type) {
 		filter.type = type;
+	}
+
+	if (offeringIds) {
+		filter._id = {
+			$in: offeringIds,
+		};
 	}
 
 	if (search) {

@@ -14,7 +14,8 @@ async function findPublished(query = {}) {
 	});
 
 	return {
-		categories: result.data,
+		// categories: result.data,
+		data: result.data,
 		total: result.total,
 		page,
 		limit,

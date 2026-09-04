@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-09-03
+Generated on: 2026-09-04
 
 ```bash
 ├── client/
@@ -118,16 +118,23 @@ Generated on: 2026-09-03
 │   │   │   │   └── index.js
 │   │   │   └── marketplace/
 │   │   │       ├── components/
+│   │   │       │   ├── BusinessCard.jsx
+│   │   │       │   ├── index.js
+│   │   │       │   └── OfferingCard.jsx
 │   │   │       ├── layouts/
+│   │   │       │   ├── index.js
 │   │   │       │   └── MarketplaceLayout.jsx
 │   │   │       ├── pages/
+│   │   │       │   ├── index.js
 │   │   │       │   └── MarketplaceHomePage.jsx
 │   │   │       ├── routes/
+│   │   │       │   ├── index.js
 │   │   │       │   └── marketplace.routes.jsx
 │   │   │       ├── services/
 │   │   │       │   ├── index.js
 │   │   │       │   └── marketplace.service.js
-│   │   │       └── index.js
+│   │   │       ├── index.js
+│   │   │       └── README.md
 │   │   ├── platform/
 │   │   │   ├── api/
 │   │   │   │   ├── interceptors/
