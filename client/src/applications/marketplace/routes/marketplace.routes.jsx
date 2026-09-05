@@ -1,5 +1,9 @@
 import { MarketplaceLayout } from "../layouts/index.js";
-import { CategoryPage, MarketplaceHomePage } from "../pages/index.js";
+import {
+	CategoryPage,
+	MarketplaceHomePage,
+	SearchPage,
+} from "../pages/index.js";
 
 const marketplaceRoutes = [
 	{
@@ -9,6 +13,10 @@ const marketplaceRoutes = [
 			{
 				index: true,
 				element: <MarketplaceHomePage />,
+			},
+			{
+				path: "search",
+				element: <SearchPage />,
 			},
 			{
 				path: "categories/:slug",

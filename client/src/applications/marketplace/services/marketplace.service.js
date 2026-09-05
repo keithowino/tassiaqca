@@ -40,8 +40,13 @@ class MarketplaceService {
 		);
 	}
 
+	// async search(params = {}) {
+	// 	return request.get(`${MARKETPLACE_BASE_URL}/search`, {
+	// 		params,
+	// 	});
+	// }
 	async search(params = {}) {
-		return request.get(`${MARKETPLACE_BASE_URL}/search`, {
+		return request.get(`${MARKETPLACE_BASE_URL}/search/offerings`, {
 			params,
 		});
 	}

@@ -157,3 +157,19 @@ Accessories
 does not mean that requesting Accessories automatically returns every descendant category's offerings.
 
 That is the correct behavior for this slice. If we later want hierarchical category browsing—where selecting Accessories includes Business Laptops and other descendants—that should be designed as a separate category-query capability rather than silently adding recursion to the frontend.
+
+---
+
+## Marketplace search
+
+I would not add pagination controls, autocomplete, debouncing, advanced filters, sorting, or a reusable search hook yet. Those can be introduced after the basic Search slice is working.
+
+### One architectural detail worth noting
+
+I intentionally did not create a useMarketplaceSearch() hook.
+
+At this stage the search workflow belongs only to SearchPage. Creating a hook merely because hooks/ exists would be premature abstraction. Once another Marketplace page needs the same search state/data workflow, we can extract it.
+
+Also, the offering-type list is currently presentation metadata. It does not determine whether an offering is actually searchable or published. Those rules remain on the backend, consistent with the frontend architecture specification.
+
+The selector in `<SearchEntryPoint />` is using fixed offering types, work on that.

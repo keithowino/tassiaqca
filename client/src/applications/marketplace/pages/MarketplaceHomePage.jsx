@@ -8,6 +8,7 @@ import {
 	LoadError,
 	LoadingScreen,
 	PageSection,
+	SearchEntryPoint,
 	SectionHeader,
 	SeedHeader,
 } from "../../../shared/index.js";
@@ -108,6 +109,10 @@ export default function MarketplaceHomePage() {
 				Gateway
 			</SeedHeader>
 
+			<PageSection>
+				{/* This keeps the Home page focused on discovery, while /marketplace/search owns the actual search interaction. */}
+				<SearchEntryPoint />
+			</PageSection>
 			<div className="mt-8 space-y-12">
 				<PageSection>
 					<SectionHeader
