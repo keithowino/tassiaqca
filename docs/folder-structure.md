@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-09-04
+Generated on: 2026-09-05
 
 ```bash
 ├── client/
@@ -52,7 +52,6 @@ Generated on: 2026-09-04
 │   │   │   │   │   │   ├── BusinessCard.jsx
 │   │   │   │   │   │   ├── BusinessList.jsx
 │   │   │   │   │   │   ├── EmptyState.jsx
-│   │   │   │   │   │   ├── HubHeader.jsx
 │   │   │   │   │   │   └── QuickActions.jsx
 │   │   │   │   │   ├── hooks/
 │   │   │   │   │   │   └── useBusinessHub.js
@@ -106,7 +105,6 @@ Generated on: 2026-09-04
 │   │   │   │   ├── data/
 │   │   │   │   │   ├── howItWorks.js
 │   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── journeys.js
 │   │   │   │   │   ├── platformOverview.js
 │   │   │   │   │   └── testimonials.js
 │   │   │   │   ├── layouts/
@@ -125,8 +123,10 @@ Generated on: 2026-09-04
 │   │   │       │   ├── index.js
 │   │   │       │   └── MarketplaceLayout.jsx
 │   │   │       ├── pages/
+│   │   │       │   ├── CategoryPage.jsx
 │   │   │       │   ├── index.js
-│   │   │       │   └── MarketplaceHomePage.jsx
+│   │   │       │   ├── MarketplaceHomePage.jsx
+│   │   │       │   └── SearchPage.jsx
 │   │   │       ├── routes/
 │   │   │       │   ├── index.js
 │   │   │       │   └── marketplace.routes.jsx
@@ -176,8 +176,10 @@ Generated on: 2026-09-04
 │   │   │   │   └── useIdentity.js
 │   │   │   ├── journey/
 │   │   │   │   ├── components/
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   └── JourneyLink.jsx
 │   │   │   │   ├── constants/
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   └── platformIntents.js
 │   │   │   │   ├── context/
 │   │   │   │   │   ├── JourneyContext.jsx
@@ -225,27 +227,36 @@ Generated on: 2026-09-04
 │   │   │   │       ├── SummaryWidget.jsx
 │   │   │   │       ├── TableWidget.jsx
 │   │   │   │       └── UnknownWidget.jsx
-│   │   │   └── workspace/
-│   │   │       ├── api/
-│   │   │       │   └── workspace.api.js
-│   │   │       ├── context/
-│   │   │       │   ├── WorkspaceContext.js
-│   │   │       │   └── WorkspaceProvider.jsx
-│   │   │       ├── hooks/
-│   │   │       │   └── useWorkspace.js
-│   │   │       ├── services/
-│   │   │       │   ├── bootstrapSession.js
-│   │   │       │   └── provisioning.service.js
-│   │   │       ├── types/
-│   │   │       │   └── workspace.initialState.js
-│   │   │       └── index.js
+│   │   │   ├── workspace/
+│   │   │   │   ├── api/
+│   │   │   │   │   └── workspace.api.js
+│   │   │   │   ├── context/
+│   │   │   │   │   ├── WorkspaceContext.js
+│   │   │   │   │   └── WorkspaceProvider.jsx
+│   │   │   │   ├── hooks/
+│   │   │   │   │   └── useWorkspace.js
+│   │   │   │   ├── services/
+│   │   │   │   │   ├── bootstrapSession.js
+│   │   │   │   │   └── provisioning.service.js
+│   │   │   │   ├── types/
+│   │   │   │   │   └── workspace.initialState.js
+│   │   │   │   └── index.js
+│   │   │   └── index.js
 │   │   ├── shared/
 │   │   │   ├── assets/
 │   │   │   ├── components/
-│   │   │   │   └── LoadingScreen.jsx
+│   │   │   │   ├── HeadBack.jsx
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LoadEmptyResponse.jsx
+│   │   │   │   ├── LoadError.jsx
+│   │   │   │   ├── LoadingScreen.jsx
+│   │   │   │   ├── SearchEntryPoint.jsx
+│   │   │   │   └── SeedHeader.jsx
 │   │   │   ├── config/
 │   │   │   │   └── platform.config.js
 │   │   │   ├── constants/
+│   │   │   │   ├── index.js
+│   │   │   │   └── journeys.js
 │   │   │   ├── hooks/
 │   │   │   ├── icons/
 │   │   │   │   └── businessTypeIcons.js
@@ -299,7 +310,8 @@ Generated on: 2026-09-04
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── Text.jsx
 │   │   │   │   └── index.js
-│   │   │   └── utils/
+│   │   │   ├── utils/
+│   │   │   └── index.js
 │   │   ├── App.jsx
 │   │   ├── index.css
 │   │   └── main.jsx

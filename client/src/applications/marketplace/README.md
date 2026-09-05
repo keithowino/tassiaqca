@@ -90,59 +90,6 @@ So this component needs to remain valid for all of those types.
 
 ---
 
-We haven't implemented a Marketplace Category route yet.
-
-We therefore shouldn't pretend these buttons navigate somewhere that doesn't exist.
-
-The progression should be:
-
-```text
-V1
-Browse Categories
-      ↓
-Display available categories
-      ↓
-Category route
-      ↓
-CategoryPage
-      ↓
-Actual category navigation
-```
-
-Once the Category page exists, these can become proper React Router links.
-
----
-
-## Category navigation recommended implementation sequence
-
-```text
-A. Offering Categories boundary
-        ↓
-B. Offering Marketplace query contract
-        ↓
-B2. Marketplace search validator
-        ↓
-C. REST-test category-filtered offerings
-        ↓
-D. Confirm/fix Marketplace service boundary
-        ↓
-E. REST-test final endpoint
-        ↓
-F. Marketplace frontend
-        ↓
-G. CategoryPage
-        ↓
-H. /marketplace/categories/:slug
-        ↓
-I. Home category Links
-        ↓
-J. Browser-test Accessories
-        ↓
-K. Browser-test Business Laptops
-```
-
----
-
 ## One deliberate limitation
 
 We're not implementing recursive parent-category behavior here.

@@ -1,5 +1,6 @@
 import { MarketplaceLayout } from "../layouts/index.js";
 import {
+	BusinessProfilePage,
 	CategoryPage,
 	MarketplaceHomePage,
 	SearchPage,
@@ -17,6 +18,10 @@ const marketplaceRoutes = [
 			{
 				path: "search",
 				element: <SearchPage />,
+			},
+			{
+				path: "businesses/:slug",
+				element: <BusinessProfilePage />,
 			},
 			{
 				path: "categories/:slug",

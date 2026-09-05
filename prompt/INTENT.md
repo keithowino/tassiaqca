@@ -1664,32 +1664,6 @@ to Service, Rental, Event, Course, etc. after verifying the current registry def
 
 ---
 
-## Next: Marketplace
-
-```text
-Published Business Data
-        +
-Published Offerings
-        ↓
-   Marketplace
-        ↓
- ┌───────────────────────┐
- │ Discovery             │
- │ Search                │
- │ Business Profiles     │
- │ Offering Presentation │
- │ Recommendations       │
- │ Reviews               │
- │ Favorites             │
- │ Maps                  │
- │ Community             │
- └───────────────────────┘
-```
-
-This is consistent with the specification: Marketplace is a customer domain, owns discovery/presentation, and consumes published information from Commerce and Business rather than owning operational data.
-
----
-
 ## Immediate sequence
 
 ```text
@@ -1701,9 +1675,9 @@ This is consistent with the specification: Marketplace is a customer domain, own
 6. Business aggregation (covered)
 7. Marketplace API (covered)
 8. REST testing (covered)
-9. Marketplace frontend foundation
-10. Search/indexing
-11. Discovery
+9. Marketplace frontend foundation (covered)
+10. Search/indexing (covered)
+11. Discovery (covered)
 12. Recommendations
 13. Reviews/Favorites/etc.
 ```
@@ -1772,6 +1746,30 @@ Marketplace Discovery
 ├── New Businesses
 ├── Popular Categories
 └── Seasonal Promotions
+```
+
+## Implementation sequence
+
+```text
+Marketplace Frontend Foundation
+↓
+Marketplace Layout                    ✓
+↓
+Marketplace API Services              ✓
+↓
+Marketplace Home / Discovery          ✓
+↓
+Offering Cards                         ✓
+↓
+Business Cards                         ✓
+↓
+Category Navigation                    ✓
+↓
+Marketplace Search                     ✓
+↓
+Business Profile                       ← NEXT
+↓
+Offering Profile
 ```
 
 ---
@@ -2015,7 +2013,7 @@ CategoryPage
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create v1 of `/marketplace/search` page."
+git commit -m "feat(Marketplace): Create the business profile page."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 
