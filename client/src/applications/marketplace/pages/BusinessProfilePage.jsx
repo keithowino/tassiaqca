@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { OfferingCard } from "../components/index.js";
 import { marketplaceService } from "../services/index.js";

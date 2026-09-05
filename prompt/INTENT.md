@@ -2013,7 +2013,7 @@ CategoryPage
 
 - Tests ... all passed successfully and or returned the expected responses.
 
-git commit -m "feat(Marketplace): Create the business profile page."
+git commit -m "feat(Marketplace): Create the offering profile page."
 
 For your information to avoid inconsistencies, here is the current state(s) of a portion of the folder structure and files we recently created or optimized:
 

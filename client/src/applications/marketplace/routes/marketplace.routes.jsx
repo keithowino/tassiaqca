@@ -3,6 +3,7 @@ import {
 	BusinessProfilePage,
 	CategoryPage,
 	MarketplaceHomePage,
+	OfferingProfilePage,
 	SearchPage,
 } from "../pages/index.js";
 
@@ -22,6 +23,10 @@ const marketplaceRoutes = [
 			{
 				path: "businesses/:slug",
 				element: <BusinessProfilePage />,
+			},
+			{
+				path: "offerings/:slug",
+				element: <OfferingProfilePage />,
 			},
 			{
 				path: "categories/:slug",

@@ -120,3 +120,52 @@ At this stage the search workflow belongs only to SearchPage. Creating a hook me
 Also, the offering-type list is currently presentation metadata. It does not determine whether an offering is actually searchable or published. Those rules remain on the backend, consistent with the frontend architecture specification.
 
 The selector in `<SearchEntryPoint />` is using fixed offering types, work on that.
+
+---
+
+## Offering profile v1
+
+### `OfferingProfilePage.jsx`
+
+Why this scope is intentional
+
+The backend currently does not provide:
+
+```text
+price
+images
+variants
+inventory
+availability
+category
+business name
+reviews
+booking information
+```
+
+Therefore we should not create placeholders for those yet.
+
+The architecture already anticipates that the Offering Profile presenter will eventually become richer:
+
+```text
+Offering
+    ↓
+Offering Profile Presenter
+    ↓
+Current:
+    core offering information
+
+Future:
+    categories
+    variants
+    media
+    pricing
+    availability
+    ...
+```
+
+---
+
+## One small consistency check
+
+Because OfferingCard now relies on offering.slug, we should verify that all Marketplace offering presenters provide it.

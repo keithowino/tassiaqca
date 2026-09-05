@@ -1,15 +1,14 @@
 import { Search, MapPin } from "lucide-react";
 
-import platform from "../../../shared/config/platform.config";
-
-import { Hero } from "../../../shared/layout";
 import {
-	Button,
 	Badge,
+	Button,
 	Heading,
+	Hero,
+	platform,
 	Text,
 	TextInput,
-} from "../../../shared//index.js";
+} from "../../../shared/index.js";
 
 import { JourneyLink, PlatformIntents } from "../../../platform/index.js";
 
