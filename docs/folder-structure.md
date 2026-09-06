@@ -1,6 +1,6 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-09-05
+Generated on: 2026-09-06
 
 ```bash
 ├── client/
@@ -123,9 +123,11 @@ Generated on: 2026-09-05
 │   │   │       │   ├── index.js
 │   │   │       │   └── MarketplaceLayout.jsx
 │   │   │       ├── pages/
+│   │   │       │   ├── BusinessProfilePage.jsx
 │   │   │       │   ├── CategoryPage.jsx
 │   │   │       │   ├── index.js
 │   │   │       │   ├── MarketplaceHomePage.jsx
+│   │   │       │   ├── OfferingProfilePage.jsx
 │   │   │       │   └── SearchPage.jsx
 │   │   │       ├── routes/
 │   │   │       │   ├── index.js
@@ -249,10 +251,12 @@ Generated on: 2026-09-05
 │   │   │   │   ├── index.js
 │   │   │   │   ├── LoadEmptyResponse.jsx
 │   │   │   │   ├── LoadError.jsx
+│   │   │   │   ├── LoadExperience.jsx
 │   │   │   │   ├── LoadingScreen.jsx
 │   │   │   │   ├── SearchEntryPoint.jsx
 │   │   │   │   └── SeedHeader.jsx
 │   │   │   ├── config/
+│   │   │   │   ├── index.js
 │   │   │   │   └── platform.config.js
 │   │   │   ├── constants/
 │   │   │   │   ├── index.js
@@ -1306,7 +1310,8 @@ Generated on: 2026-09-05
 │   │   │   │   │   │   └── variants.component.js
 │   │   │   │   │   ├── component.contract.js
 │   │   │   │   │   ├── component.pipeline.js
-│   │   │   │   │   └── index.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── README.md
 │   │   │   │   ├── constants/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── offeringStatus.constants.js

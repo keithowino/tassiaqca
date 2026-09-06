@@ -4,7 +4,6 @@ import PlatformOverviewSection from "../components/PlatformOverviewSection";
 import HowItWorksSection from "../components/HowItWorksSection";
 import CTASection from "../components/CTASection";
 import TestimonialsSection from "../components/TestimonialsSection";
-import FooterSection from "../components/FooterSection";
 
 export default function GatewayPage() {
 	return (
@@ -20,8 +19,6 @@ export default function GatewayPage() {
 			<CTASection />
 
 			<TestimonialsSection />
-
-			<FooterSection />
 		</>
 	);
 }

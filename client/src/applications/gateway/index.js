@@ -1,1 +1,2 @@
-export { default as gatewayRoutes } from "./routes/gateway.routes";
+export * from "./components/index.js";
+export * from "./routes/index.js";

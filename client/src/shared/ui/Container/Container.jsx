@@ -1,6 +1,18 @@
 export default function Container({ children, className = "" }) {
 	return (
-		// <div className={`max-w-6xl mx-auto px-4 ${className}`}>{children}</div>
-		<div className={`container mx-auto px-4 ${className}`}>{children}</div>
+		<div
+			className={[
+				"mx-auto w-full",
+				"max-w-screen-2xl",
+				"px-4",
+				"sm:px-6",
+				"lg:px-8",
+				"xl:px-10",
+				"2xl:px-12",
+				className,
+			].join(" ")}
+		>
+			{children}
+		</div>
 	);
 }

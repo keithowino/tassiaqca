@@ -5,6 +5,7 @@ export default function SectionHeader({
 	description,
 	align = "center",
 	className = "",
+	descriptionClassName = "",
 }) {
 	return (
 		<div
@@ -14,7 +15,11 @@ export default function SectionHeader({
 		>
 			<Heading level={3}>{title}</Heading>
 
-			{description && <Text className="mt-3">{description}</Text>}
+			{description && (
+				<Text className={["mt-3", descriptionClassName].join(" ")}>
+					{description}
+				</Text>
+			)}
 		</div>
 	);
 }
