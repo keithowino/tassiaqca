@@ -1,7 +1,6 @@
-import AuthLayout from "../layouts/AuthLayout";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import { PublicRoute } from "../../../platform/routing";
+import { AuthLayout } from "../layouts/index.js";
+import { LoginPage, RegisterPage, SecurityPage } from "../pages/index.js";
+import { AuthenticatedRoute, PublicRoute } from "../../../platform/index.js";
 
 const authenticationRoutes = [
 	{
@@ -22,6 +21,16 @@ const authenticationRoutes = [
 						element: <RegisterPage />,
 					},
 				],
+			},
+		],
+	},
+
+	{
+		element: <AuthenticatedRoute />,
+		children: [
+			{
+				path: "/account/settings/security",
+				element: <SecurityPage />,
 			},
 		],
 	},

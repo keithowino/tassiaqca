@@ -1,15 +1,17 @@
+import { PageSection } from "../layout/index.js";
 import { Heading, Text } from "../ui";
 import HeadBack from "./HeadBack";
 
 export default function LoadError({
 	error = null,
 	message = "Unable to load the requested content.",
+	action = { action: null, label: "Take action" },
 	headBack = false,
 	to = "/",
 	children,
 }) {
 	return (
-		<section className="min-h-screen flex flex-col justify-center bg-gray-50 px-4 py-2">
+		<PageSection className="border border-red-200 bg-red-50">
 			{headBack && (
 				<div className="absolute top-4 left-4">
 					<HeadBack to={to}>{children}</HeadBack>
@@ -22,13 +24,22 @@ export default function LoadError({
 					</Heading>
 					<Heading
 						level={4}
-						className="text-lg font-semibold text-red-900"
+						className="text-lg font-semibold text-red-800"
 					>
 						{message}
 					</Heading>
 					<Text className="mt-2 text-sm text-red-700">{error}</Text>
 				</div>
+				{action.action && (
+					<button
+						type="button"
+						onClick={action.action}
+						className="mt-4 rounded-md bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+					>
+						{action.label}
+					</button>
+				)}
 			</div>
-		</section>
+		</PageSection>
 	);
 }

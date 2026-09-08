@@ -1,3 +1,1 @@
-export { default as AuthenticatedRoute } from "./components/AuthenticatedRoute";
-
-export { default as PublicRoute } from "./components/PublicRoute";
+export * from "./components/index.js";

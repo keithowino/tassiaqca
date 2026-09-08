@@ -3,12 +3,16 @@ import { Button } from "../index.js";
 
 export default function LoadEmptyResponse({
 	message = "No data available.",
+	description,
 	intent,
 	actionLabel,
 }) {
 	return (
 		<div className="text-center py-8 bg-white rounded-2xl border border-gray-100">
 			<p className="text-gray-500">{message}</p>
+			{description && (
+				<p className="mt-2 text-sm text-gray-600">{description}</p>
+			)}
 			{intent && (
 				<Button
 					as={JourneyLink}

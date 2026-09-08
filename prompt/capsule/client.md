@@ -406,3 +406,122 @@ client/src/
 ```
 
 ---
+
+## Revised 2D.5 structure
+
+We should extend the existing authentication application consistently:
+
+```text
+client/src/applications/authentication/
+│
+├── components/
+│   ├── AuthCard.jsx
+│   ├── AuthFooter.jsx
+│   ├── AuthHeader.jsx
+│   ├── LoginForm.jsx
+│   ├── RegisterForm.jsx
+│   └── session/
+│       ├── SessionCard.jsx
+│       ├── SessionList.jsx
+│       └── ...
+│
+├── hooks/
+│   ├── index.js
+│   └── useSessions.js
+│
+├── layouts/
+│   └── AuthLayout.jsx
+│
+├── pages/
+│   ├── LoginPage.jsx
+│   ├── RegisterPage.jsx
+│   └── SecurityPage.jsx
+│
+├── routes/
+│   └── authentication.routes.jsx
+│
+└── index.js
+```
+
+## 2D.5 implementation sequence
+
+Let's therefore implement this incrementally:
+
+### 2D.5.1 — Route
+
+Add an authenticated /security route.
+
+### 2D.5.2 — Page
+
+Create SecurityPage.jsx.
+
+### 2D.5.3 — Hook
+
+Create useSessions() to own:
+
+- loading state
+- error state
+- session retrieval
+- retry
+
+### 2D.5.4 — Components
+
+Create
+
+```text
+SessionList
+SessionCard
+```
+
+with the current session visually separated from other sessions.
+
+### 2D.5.5 — States
+
+Support:
+
+```text
+loading
+error
+empty-other-sessions
+normal
+```
+
+Then stop.
+
+We should not implement revoke behavior in this pass. That belongs explicitly to:
+
+```text
+2D.6  Revoke individual session
+2D.7  Revoke other sessions
+```
+
+## One more decision: /security vs /account/security
+
+I recommend:
+
+```text
+/security
+```
+
+for this first implementation.
+
+The feature is currently specifically session/security management, not a complete account-management area. Later, when we add:
+
+- profile
+- password change
+- email verification
+- password reset state
+- security
+- perhaps preferences
+
+we can introduce an account/settings hierarchy without prematurely creating one.
+
+So:
+
+```text
+/security
+```
+
+is the smallest correct route for 2D.5.
+
+---

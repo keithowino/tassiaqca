@@ -1,350 +1,384 @@
-# Implementation Plan
+```js
+`~\client\src\applications\authentication\hooks\useLoginForm.js`;
 
-You proposed splitting 2D.5 into five small implementation units:
+import { useState } from "react";
 
-```text
-2D.5
- │
- ├── 2D.5.1 Account/Security route
- │
- ├── 2D.5.2 Security page
- │
- ├── 2D.5.3 Session list
- │
- ├── 2D.5.4 Session cards
- │
- └── 2D.5.5 Loading/error/empty states
+import { useIdentity } from "../../../platform/identity";
+import { useNavigate } from "react-router-dom";
+import { resolveJourney, useJourney } from "../../../platform/journey";
+
+const INITIAL_VALUES = {
+	email: "",
+	password: "",
+};
+
+export default function useLoginForm() {
+	const navigate = useNavigate();
+
+	const { login } = useIdentity();
+
+	const { intent } = useJourney();
+
+	const [values, setValues] = useState(INITIAL_VALUES);
+
+	const [loading, setLoading] = useState(false);
+
+	const [error, setError] = useState(null);
+
+	function update(name, value) {
+		setValues((previous) => ({
+			...previous,
+			[name]: value,
+		}));
+	}
+
+	async function submit(event) {
+		event.preventDefault();
+
+		setLoading(true);
+
+		setError(null);
+
+		try {
+			await login(values);
+
+			navigate(resolveJourney(intent), {
+				replace: true,
+			});
+		} catch (err) {
+			setError(
+				err?.response?.data?.error?.message ?? "Unable to sign in.",
+			);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	return {
+		values,
+		loading,
+		error,
+		update,
+		submit,
+	};
+}
 ```
 
-Then:
+```js
+`~\client\src\applications\authentication\hooks\useRegisterForm.js`;
 
-```text
-2D.6  Revoke individual session
-2D.7  Revoke other sessions
-2D.8  Browser verification
-2D.9  Documentation
+import { useState } from "react";
+
+import { useIdentity } from "../../../platform/identity";
+import { useNavigate } from "react-router-dom";
+import { resolveJourney, useJourney } from "../../../platform/journey";
+
+const INITIAL_VALUES = {
+	firstName: "",
+	lastName: "",
+	email: "",
+	phone: "",
+	password: "",
+	confirmPassword: "",
+};
+
+export default function useRegisterForm() {
+	const navigate = useNavigate();
+
+	const { register } = useIdentity();
+
+	const { intent } = useJourney();
+
+	const [values, setValues] = useState(INITIAL_VALUES);
+
+	const [loading, setLoading] = useState(false);
+
+	const [error, setError] = useState(null);
+
+	function update(name, value) {
+		setValues((previous) => ({
+			...previous,
+			[name]: value,
+		}));
+	}
+
+	async function submit(event) {
+		event.preventDefault();
+
+		setError(null);
+
+		if (values.password !== values.confirmPassword) {
+			setError("Passwords do not match.");
+
+			return;
+		}
+
+		setLoading(true);
+
+		try {
+			await register({
+				firstName: values.firstName,
+				lastName: values.lastName,
+				email: values.email,
+				phone: values.phone,
+				password: values.password,
+			});
+
+			navigate(resolveJourney(intent), {
+				replace: true,
+			});
+		} catch (err) {
+			setError(
+				err?.response?.data?.error?.message ??
+					"Unable to create account.",
+			);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	return {
+		values,
+		loading,
+		error,
+		update,
+		submit,
+	};
+}
 ```
 
-Then you mentioned, the architecture specification says frontend applications use feature-oriented organization, with features containing their own components, pages, hooks, services, types, and utilities.
-
-Therefore, the cleaner long-term structure may actually be:
-
-```text
-client/src/applications/authentication/
-│
-└── features/
-    └── security/
-        ├── components/
-        ├── hooks/
-        ├── pages/
-        └── ...
-```
-
-To confirm this you proposed to inspect the current authentication application:
-
-```text
-├── client/
-│   ├── src/
-│   │   ├── applications/
-│   │   │   ├── authentication/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── AuthCard.jsx
-│   │   │   │   │   ├── AuthFooter.jsx
-│   │   │   │   │   ├── AuthHeader.jsx
-│   │   │   │   │   ├── LoginForm.jsx
-│   │   │   │   │   └── RegisterForm.jsx
-│   │   │   │   ├── hooks/
-│   │   │   │   │   ├── index.js
-│   │   │   │   │   ├── useLoginForm.js
-│   │   │   │   │   └── useRegisterForm.js
-│   │   │   │   ├── layouts/
-│   │   │   │   │   └── AuthLayout.jsx
-│   │   │   │   ├── pages/
-│   │   │   │   │   ├── LoginPage.jsx
-│   │   │   │   │   └── RegisterPage.jsx
-│   │   │   │   ├── routes/
-│   │   │   │   │   └── authentication.routes.jsx
-│   │   │   │   └── index.js
-│   │   │   └── ...
-│   │   └── ...
-│   └── ...
-└── ...
-```
-
-Here are the current states of the following files:
+See how the above two files used the identity provider:
 
 ```jsx
-`~\client\src\applications\authentication\routes\authentication.routes.jsx`;
+`~\client\src\platform\identity\IdentityProvider.jsx`;
 
-import AuthLayout from "../layouts/AuthLayout";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import { PublicRoute } from "../../../platform/routing";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-const authenticationRoutes = [
-	{
-		element: <AuthLayout />,
+import IdentityContext from "./IdentityContext.jsx";
 
-		children: [
-			{
-				element: <PublicRoute />,
+import * as identityService from "./identity.service.js";
 
-				children: [
-					{
-						path: "/login",
-						element: <LoginPage />,
-					},
+import { sessionManager } from "../session/index.js";
 
-					{
-						path: "/register",
-						element: <RegisterPage />,
-					},
-				],
-			},
+/**
+ * #### Why we are not implementing refresh yet
+ * You have a refresh endpoint on the backend, but I recommend not implementing automatic token refresh in the IdentityProvider.
+ *
+ * Instead, it belongs to the HTTP infrastructure because every service (navigation, dashboard, configuration, future modules) relies on apiClient. A response interceptor can detect a 401, call /auth/refresh, update the SessionManager, and retry the original request transparently.
+ *
+ * Keeping refresh logic in the API client means the Identity layer remains focused on authentication workflows, while the networking layer handles token renewal. This separation matches the responsibilities you've established in the backend.
+ */
+export function IdentityProvider({ children }) {
+	const [user, setUser] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const isAuthenticated = user !== null;
+
+	const restoreSession = useCallback(async () => {
+		if (!sessionManager.hasAccessToken()) {
+			setUser(null);
+			setIsLoading(false);
+			return;
+		}
+
+		try {
+			const user = await identityService.me();
+			setUser(user);
+		} catch (error) {
+			sessionManager.clearSession();
+			setUser(null);
+		} finally {
+			setIsLoading(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		restoreSession();
+	}, [restoreSession]);
+
+	useEffect(() => {
+		return sessionManager.subscribe((event) => {
+			if (event.type === "session:cleared") {
+				setUser(null);
+			}
+		});
+	}, []);
+
+	async function login(credentials) {
+		const result = await identityService.login(credentials);
+
+		sessionManager.saveSession({
+			accessToken: result.accessToken,
+			refreshToken: result.refreshToken,
+		});
+
+		const user = await identityService.me();
+
+		setUser(user);
+
+		return user;
+	}
+
+	async function register(command) {
+		const result = await identityService.register(command);
+
+		sessionManager.saveSession({
+			accessToken: result.accessToken,
+			refreshToken: result.refreshToken,
+		});
+
+		const user = await identityService.me();
+
+		setUser(user);
+
+		return user;
+	}
+
+	const logout = useCallback(async () => {
+		try {
+			if (sessionManager.hasRefreshToken()) {
+				await identityService.logout(sessionManager.getRefreshToken());
+			}
+		} finally {
+			sessionManager.clearSession();
+			setUser(null);
+		}
+	}, []);
+
+	const value = useMemo(
+		() => ({
+			user,
+
+			isLoading,
+
+			isAuthenticated,
+
+			login,
+
+			register,
+
+			logout,
+
+			restoreSession,
+		}),
+		[
+			user,
+
+			isLoading,
+
+			isAuthenticated,
+
+			login,
+
+			register,
+
+			logout,
+
+			restoreSession,
 		],
-	},
-];
+	);
 
-export default authenticationRoutes;
-```
-
-```jsx
-`~\client\src\applications\authentication\pages\LoginPage.jsx`;
-
-import AuthCard from "../components/AuthCard";
-import AuthHeader from "../components/AuthHeader";
-import AuthFooter from "../components/AuthFooter";
-import LoginForm from "../components/LoginForm";
-
-export default function LoginPage() {
 	return (
-		<AuthCard>
-			<AuthHeader
-				title="Welcome Back"
-				description="Sign in to continue to your workspace."
-			/>
-
-			<LoginForm />
-
-			<AuthFooter
-				label="Don't have an account?"
-				link="/register"
-				linkLabel="Create one"
-			/>
-		</AuthCard>
+		<IdentityContext.Provider value={value}>
+			{children}
+		</IdentityContext.Provider>
 	);
 }
 ```
 
-```jsx
-`~\client\src\applications\authentication\components\LoginForm.jsx`;
+```js
+`~\client\src\platform\identity\identity.service.js`;
 
-import { Link } from "react-router-dom";
+import { request } from "../api";
 
-import {
-	Button,
-	Form,
-	FormActions,
-	FormError,
-	FormField,
-	FormInput,
-	FormLabel,
-} from "../../../shared/ui";
+export const register = async (payload) => {
+	const { data } = await request.post("/auth/register", payload);
 
-import { useLoginForm } from "../hooks";
+	return data.data;
+};
 
-export default function LoginForm() {
-	const { values, loading, error, update, submit } = useLoginForm();
+export const login = async (payload) => {
+	const { data } = await request.post("/auth/login", payload);
 
-	return (
-		<Form onSubmit={submit}>
-			<FormField>
-				<FormLabel htmlFor="email" required>
-					Email
-				</FormLabel>
+	return data.data;
+};
 
-				<FormInput
-					id="email"
-					type="email"
-					value={values.email}
-					onChange={(event) => update("email", event.target.value)}
-					autoComplete="email"
-				/>
-			</FormField>
+export const refresh = async (refreshToken) => {
+	const { data } = await request.post("/auth/refresh", {
+		refreshToken,
+	});
 
-			<FormField>
-				<FormLabel htmlFor="password" required>
-					Password
-				</FormLabel>
+	return data.data;
+};
 
-				<FormInput
-					id="password"
-					type="password"
-					value={values.password}
-					onChange={(event) => update("password", event.target.value)}
-					autoComplete="current-password"
-				/>
-			</FormField>
+export const logout = async (refreshToken) => {
+	await request.post("/auth/logout", {
+		refreshToken,
+	});
+};
 
-			{error && <FormError>{error}</FormError>}
+export const me = async () => {
+	const response = await request.get("/auth/me");
 
-			<div className="flex justify-end">
-				<Link
-					to="/forgot-password"
-					className="text-sm text-orange-600 hover:underline"
-				>
-					Forgot password?
-				</Link>
-			</div>
+	return response.data.data.user;
+};
 
-			<FormActions>
-				<Button type="submit" className="w-full" disabled={loading}>
-					{loading ? "Signing In..." : "Sign In"}
-				</Button>
-			</FormActions>
-		</Form>
-	);
-}
+export const sessions = async () => {
+	const { data } = await request.get("/auth/sessions");
+
+	return data.data;
+};
+
+export const revokeSession = async (sessionId) => {
+	await request.delete(`/auth/sessions/${sessionId}`);
+};
+
+export const revokeOtherSessions = async () => {
+	await request.delete("/auth/sessions");
+};
 ```
 
-```jsx
-`~\client\src\applications\authentication\pages\RegisterPage.jsx`;
+I mentioned the above two hooks because i wanted for us to confirm whether useSessions hook is consuming the identity provider in a similar and the correct way:
 
-import AuthCard from "../components/AuthCard";
-import AuthHeader from "../components/AuthHeader";
-import AuthFooter from "../components/AuthFooter";
-import RegisterForm from "../components/RegisterForm";
+```js
+`~\client\src\applications\authentication\hooks\useSessions.js`;
 
-export default function RegisterPage() {
-	return (
-		<AuthCard>
-			<AuthHeader
-				title="Create Your Account"
-				description="Join TassiaQCA and start exploring your community."
-			/>
+import { useCallback, useEffect, useState } from "react";
 
-			<RegisterForm />
+import { sessions as fetchSessions } from "../../../platform/identity";
 
-			<AuthFooter
-				label="Already have an account?"
-				link="/login"
-				linkLabel="Sign in"
-			/>
-		</AuthCard>
-	);
-}
-```
+export default function useSessions() {
+	const [sessions, setSessions] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-```jsx
-`~\client\src\applications\authentication\components\RegisterForm.jsx`;
+	const loadSessions = useCallback(async () => {
+		setLoading(true);
+		setError(null);
 
-import {
-	Button,
-	Form,
-	FormActions,
-	FormError,
-	FormField,
-	FormInput,
-	FormLabel,
-} from "../../../shared/ui";
+		try {
+			const result = await fetchSessions();
 
-import { useRegisterForm } from "../hooks";
+			setSessions(result?.sessions ?? []);
+		} catch (err) {
+			setError(
+				err?.message ||
+					"Unable to load your active sessions. Please try again.",
+			);
+		} finally {
+			setLoading(false);
+		}
+	}, []);
 
-export default function RegisterForm() {
-	const { values, loading, error, update, submit } = useRegisterForm();
+	useEffect(() => {
+		loadSessions();
+	}, [loadSessions]);
 
-	return (
-		<Form onSubmit={submit}>
-			<FormField>
-				<FormLabel htmlFor="firstName" required>
-					First Name
-				</FormLabel>
-
-				<FormInput
-					id="firstName"
-					value={values.firstName}
-					onChange={(event) =>
-						update("firstName", event.target.value)
-					}
-					autoComplete="given-name"
-				/>
-			</FormField>
-
-			<FormField>
-				<FormLabel htmlFor="lastName">Last Name</FormLabel>
-
-				<FormInput
-					id="lastName"
-					value={values.lastName}
-					onChange={(event) => update("lastName", event.target.value)}
-					autoComplete="family-name"
-				/>
-			</FormField>
-
-			<FormField>
-				<FormLabel htmlFor="email" required>
-					Email
-				</FormLabel>
-
-				<FormInput
-					id="email"
-					type="email"
-					value={values.email}
-					onChange={(event) => update("email", event.target.value)}
-					autoComplete="email"
-				/>
-			</FormField>
-
-			<FormField>
-				<FormLabel htmlFor="phone">Phone Number</FormLabel>
-
-				<FormInput
-					id="phone"
-					type="tel"
-					value={values.phone}
-					onChange={(event) => update("phone", event.target.value)}
-					autoComplete="tel"
-				/>
-			</FormField>
-
-			<FormField>
-				<FormLabel htmlFor="password" required>
-					Password
-				</FormLabel>
-
-				<FormInput
-					id="password"
-					type="password"
-					value={values.password}
-					onChange={(event) => update("password", event.target.value)}
-					autoComplete="new-password"
-				/>
-			</FormField>
-
-			<FormField>
-				<FormLabel htmlFor="confirmPassword" required>
-					Confirm Password
-				</FormLabel>
-
-				<FormInput
-					id="confirmPassword"
-					type="password"
-					value={values.confirmPassword}
-					onChange={(event) =>
-						update("confirmPassword", event.target.value)
-					}
-					autoComplete="new-password"
-				/>
-			</FormField>
-
-			<FormError>{error}</FormError>
-
-			<FormActions>
-				<Button type="submit" className="w-full" disabled={loading}>
-					{loading ? "Creating Account..." : "Create Account"}
-				</Button>
-			</FormActions>
-		</Form>
-	);
+	return {
+		sessions,
+		loading,
+		error,
+		reload: loadSessions,
+	};
 }
 ```
