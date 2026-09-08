@@ -1,7 +1,12 @@
 import accessTokenService from "../security/accessToken.service.js";
 import userRepository from "../repositories/user.repository.js";
 
-import { AppError, ErrorCodes, HTTP_STATUS } from "../../../shared/index.js";
+import {
+	AppError,
+	ErrorCodes,
+	getId,
+	HTTP_STATUS,
+} from "../../../shared/index.js";
 import sessionService from "../security/session.service.js";
 
 export default async function authenticate(req, res, next) {
@@ -28,12 +33,10 @@ export default async function authenticate(req, res, next) {
 
 		const payload = accessTokenService.verify(token);
 
-		req.sessionId = payload.sid;
-
-		/**
-		 * This way, every authenticated request refreshes the activity timestamp.
-		 */
-		await sessionService.touch(req.sessionId);
+		const session = await sessionService.validateAccessSession(
+			payload.sid,
+			payload.sub,
+		);
 
 		const user = await userRepository.findById(payload.sub);
 
@@ -46,6 +49,7 @@ export default async function authenticate(req, res, next) {
 		}
 
 		req.user = user;
+		req.sessionId = getId(session);
 
 		next();
 	} catch (error) {

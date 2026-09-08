@@ -1,6 +1,5 @@
 import { Router } from "express";
 import authController from "../controllers/auth.controller.js";
-import { refreshRequestSchema } from "../validators/index.js";
 import authenticate from "../middleware/authenticate.js";
 
 const router = Router();

@@ -1,10 +1,31 @@
 # TassiaQCA Folder Structure
 
-Generated on: 2026-09-06
+Generated on: 2026-09-08
 
 ```bash
 ├── client/
 │   ├── public/
+│   │   ├── admin.jpeg
+│   │   ├── apple-touch-icon.png
+│   │   ├── banner.jfif
+│   │   ├── BingSiteAuth.xml
+│   │   ├── business-profile.jpeg
+│   │   ├── cart.png
+│   │   ├── community.jpeg
+│   │   ├── dashboard.jpeg
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon-96x96.png
+│   │   ├── favicon.ico
+│   │   ├── favicon.svg
+│   │   ├── home.jpeg
+│   │   ├── image-generator.png
+│   │   ├── mainifest.json
+│   │   ├── robots.txt
+│   │   ├── screenshot-mobile.jpeg
+│   │   ├── site_image.png
+│   │   ├── web-app-manifest-192x192.png
+│   │   └── web-app-manifest-512x512.png
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── bootstrap/
@@ -96,9 +117,11 @@ Generated on: 2026-09-06
 │   │   │   │   ├── components/
 │   │   │   │   │   ├── ActionGrid.jsx
 │   │   │   │   │   ├── CTASection.jsx
-│   │   │   │   │   ├── FooterSection.jsx
+│   │   │   │   │   ├── GatewayFooter.jsx
+│   │   │   │   │   ├── GatewayHeader.jsx
 │   │   │   │   │   ├── HeroSection.jsx
 │   │   │   │   │   ├── HowItWorksSection.jsx
+│   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── JourneySection.jsx
 │   │   │   │   │   ├── PlatformOverviewSection.jsx
 │   │   │   │   │   └── TestimonialsSection.jsx
@@ -108,16 +131,24 @@ Generated on: 2026-09-06
 │   │   │   │   │   ├── platformOverview.js
 │   │   │   │   │   └── testimonials.js
 │   │   │   │   ├── layouts/
-│   │   │   │   │   └── GatewayLayout.jsx
+│   │   │   │   │   ├── GatewayLayout.jsx
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── pages/
-│   │   │   │   │   └── GatewayPage.jsx
+│   │   │   │   │   ├── AboutPage.jsx
+│   │   │   │   │   ├── GatewayPage.jsx
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── PrivacyPage.jsx
+│   │   │   │   │   └── TermsPage.jsx
 │   │   │   │   ├── routes/
-│   │   │   │   │   └── gateway.routes.jsx
+│   │   │   │   │   ├── gateway.routes.jsx
+│   │   │   │   │   └── index.js
 │   │   │   │   └── index.js
 │   │   │   └── marketplace/
 │   │   │       ├── components/
 │   │   │       │   ├── BusinessCard.jsx
 │   │   │       │   ├── index.js
+│   │   │       │   ├── MarketplaceFooter.jsx
+│   │   │       │   ├── MarketplaceHeader.jsx
 │   │   │       │   └── OfferingCard.jsx
 │   │   │       ├── layouts/
 │   │   │       │   ├── index.js
@@ -253,6 +284,7 @@ Generated on: 2026-09-06
 │   │   │   │   ├── LoadError.jsx
 │   │   │   │   ├── LoadExperience.jsx
 │   │   │   │   ├── LoadingScreen.jsx
+│   │   │   │   ├── LoadLogo.jsx
 │   │   │   │   ├── SearchEntryPoint.jsx
 │   │   │   │   └── SeedHeader.jsx
 │   │   │   ├── config/
@@ -265,6 +297,9 @@ Generated on: 2026-09-06
 │   │   │   ├── icons/
 │   │   │   │   └── businessTypeIcons.js
 │   │   │   ├── layout/
+│   │   │   │   ├── AppShell/
+│   │   │   │   │   ├── AppShell.jsx
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── FeatureGrid/
 │   │   │   │   │   ├── FeatureGrid.jsx
 │   │   │   │   │   └── index.js
@@ -277,6 +312,13 @@ Generated on: 2026-09-06
 │   │   │   │   ├── SectionHeader/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   └── SectionHeader.jsx
+│   │   │   │   ├── SiteFooter/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── SiteFooter.jsx
+│   │   │   │   ├── SiteHeader/
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   └── SiteHeader.jsx
 │   │   │   │   └── index.js
 │   │   │   ├── services/
 │   │   │   ├── styles/
@@ -552,7 +594,8 @@ Generated on: 2026-09-06
 │   │   │   │   │   └── tokenHasher.js
 │   │   │   │   ├── services/
 │   │   │   │   │   ├── auth.service.js
-│   │   │   │   │   └── businessMember.service.js
+│   │   │   │   │   ├── businessMember.service.js
+│   │   │   │   │   └── index.js
 │   │   │   │   ├── validators/
 │   │   │   │   │   ├── index.js
 │   │   │   │   │   ├── loginRequestSchema.js

@@ -1,6 +1,10 @@
-import authService from "../services/auth.service.js";
+import { authService } from "../services/index.js";
 
-import { validateRequest } from "../../../shared/index.js";
+import {
+	asyncHandler,
+	success,
+	validateRequest,
+} from "../../../shared/index.js";
 import { userPresenter } from "../presenters/index.js";
 import {
 	loginRequestSchema,
@@ -9,145 +13,102 @@ import {
 	registerRequestSchema,
 } from "../validators/index.js";
 
-class AuthController {
-	async sessions(req, res, next) {
-		try {
-			const result = await authService.sessions(
-				req.user._id,
-				req.sessionId,
-			);
+const sessions = asyncHandler(async (req, res) => {
+	const result = await authService.sessions(req.user._id, req.sessionId);
 
-			return res.status(200).json({
-				success: true,
-				data: result,
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result);
+});
 
-	async register(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: registerRequestSchema,
-				},
-				req,
-			);
+const register = asyncHandler(async (req, res) => {
+	const { body } = validateRequest(
+		{
+			body: registerRequestSchema,
+		},
+		req,
+	);
 
-			const result = await authService.register(body);
+	const result = await authService.register({
+		data: body,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return res.status(201).json({
-				success: true,
-				data: result,
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result);
+});
 
-	async login(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: loginRequestSchema,
-				},
-				req,
-			);
+const login = asyncHandler(async (req, res) => {
+	const { body } = validateRequest(
+		{
+			body: loginRequestSchema,
+		},
+		req,
+	);
 
-			const result = await authService.login(body);
+	const result = await authService.login({
+		data: body,
+		requestMetadata: req.requestMetadata,
+	});
 
-			return res.status(200).json({
-				success: true,
-				data: result,
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result);
+});
 
-	async refresh(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: refreshRequestSchema,
-				},
-				req,
-			);
+const refresh = asyncHandler(async (req, res) => {
+	const { body } = validateRequest(
+		{
+			body: refreshRequestSchema,
+		},
+		req,
+	);
 
-			const { refreshToken } = body;
+	const { refreshToken } = body;
 
-			const result = await authService.refresh(refreshToken);
+	// const result = await authService.refresh(refreshToken);
+	const result = await authService.refresh(refreshToken, req.requestMetadata);
 
-			return res.status(200).json({
-				success: true,
-				data: result,
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, result);
+});
 
-	async logout(req, res, next) {
-		try {
-			const { body } = validateRequest(
-				{
-					body: logoutRequestSchema,
-				},
-				req,
-			);
+const logout = asyncHandler(async (req, res) => {
+	const { body } = validateRequest(
+		{
+			body: logoutRequestSchema,
+		},
+		req,
+	);
 
-			const { refreshToken } = body;
+	const { refreshToken } = body;
 
-			await authService.logout(refreshToken);
+	await authService.logout(refreshToken);
 
-			return res.status(200).json({
-				success: true,
-				message: "Logged out successfully.",
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, null, "Logged out successfully.");
+});
 
-	async revokeSession(req, res, next) {
-		try {
-			await authService.revokeSession(req.user._id, req.params.sessionId);
+const revokeSession = asyncHandler(async (req, res) => {
+	await authService.revokeSession(req.user._id, req.params.sessionId);
 
-			return res.status(200).json({
-				success: true,
-				message: "Session revoked successfully.",
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, null, "Session revoked successfully.");
+});
 
-	async revokeOtherSessions(req, res, next) {
-		try {
-			await authService.revokeOtherSessions(req.user._id, req.sessionId);
+const revokeOtherSessions = asyncHandler(async (req, res) => {
+	await authService.revokeOtherSessions(req.user._id, req.sessionId);
 
-			return res.status(200).json({
-				success: true,
-				message: "Other sessions revoked successfully.",
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
+	return success(res, null, "Other sessions revoked successfully.");
+});
 
-	async me(req, res, next) {
-		try {
-			return res.status(200).json({
-				success: true,
-				data: {
-					user: userPresenter.present(req.user),
-				},
-			});
-		} catch (error) {
-			next(error);
-		}
-	}
-}
+const me = asyncHandler(async (req, res) => {
+	const result = {
+		user: userPresenter.present(req.user),
+	};
 
-export default new AuthController();
+	return success(res, result);
+});
+
+export default {
+	sessions,
+	register,
+	login,
+	refresh,
+	logout,
+	revokeSession,
+	revokeOtherSessions,
+	me,
+};

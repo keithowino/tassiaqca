@@ -12,8 +12,8 @@ class AuthService {
 		return sessionService.list(userId, currentSessionId);
 	}
 
-	async register(command) {
-		const existingUser = await userRepository.findByEmail(command.email);
+	async register({ data, requestMetadata }) {
+		const existingUser = await userRepository.findByEmail(data.email);
 
 		if (existingUser) {
 			throw new AppError(
@@ -23,17 +23,18 @@ class AuthService {
 			);
 		}
 
-		const hashedPassword = await passwordService.hash(command.password);
+		const hashedPassword = await passwordService.hash(data.password);
 
 		const user = await userRepository.create({
-			firstName: command.firstName,
-			lastName: command.lastName,
-			email: command.email,
-			phone: command.phone,
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+			phone: data.phone,
 			password: hashedPassword,
 		});
 
-		const tokens = await sessionService.create(user);
+		// const tokens = await sessionService.create(user);
+		const tokens = await sessionService.create(user, requestMetadata);
 
 		return {
 			user: userPresenter.present(user),
@@ -41,8 +42,8 @@ class AuthService {
 		};
 	}
 
-	async login(command) {
-		const user = await userRepository.findByEmail(command.email);
+	async login({ data, requestMetadata }) {
+		const user = await userRepository.findByEmail(data.email);
 
 		/**
 		 * Never reveal whether the email exists.
@@ -56,7 +57,7 @@ class AuthService {
 		}
 
 		const passwordMatches = await passwordService.compare(
-			command.password,
+			data.password,
 			user.password,
 		);
 
@@ -68,7 +69,8 @@ class AuthService {
 			);
 		}
 
-		const tokens = await sessionService.create(user);
+		// const tokens = await sessionService.create(user);
+		const tokens = await sessionService.create(user, requestMetadata);
 
 		return {
 			user: userPresenter.present(user),

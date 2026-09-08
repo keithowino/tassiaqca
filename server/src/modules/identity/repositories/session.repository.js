@@ -82,13 +82,35 @@ async function revokeAllExcept(userId, sessionId) {
 	);
 }
 
-async function touch(sessionId) {
-	return Session.updateOne(
-		{ _id: sessionId, isRevoked: false },
+/**
+ * ### Why this is preferable
+ *
+ * The database itself enforces all four conditions:
+ * - _id       === sid
+ * - user      === sub
+ * - isRevoked === false
+ * - expiresAt > now
+ * Only when all four match does MongoDB update lastActivityAt.
+ *
+ * So we don't have a window where: validate session -> session gets revoked -> touch revoked session
+ */
+async function touchActiveByIdAndUser(sessionId, userId) {
+	const now = new Date();
+
+	return Session.findOneAndUpdate(
+		{
+			_id: sessionId,
+			user: userId,
+			isRevoked: false,
+			expiresAt: { $gt: now },
+		},
 		{
 			$set: {
-				lastActivityAt: new Date(),
+				lastActivityAt: now,
 			},
+		},
+		{
+			new: true,
 		},
 	);
 }
@@ -104,5 +126,6 @@ export default {
 	revoke,
 	revokeAll,
 	revokeAllExcept,
-	touch,
+
+	touchActiveByIdAndUser,
 };

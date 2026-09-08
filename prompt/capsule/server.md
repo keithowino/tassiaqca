@@ -754,3 +754,22 @@ OFFERING_COMPONENTS.BOOKING
 to Service, Rental, Event, Course, etc. after verifying the current registry definitions and their intended booking workflows.
 
 ---
+
+Example, "Other sessions" requires more than simply having refresh tokens. We need to know whether the existing session model tracks things such as:
+
+```text
+session
+├── id
+├── user
+├── refresh token / token hash
+├── createdAt
+├── expiresAt
+├── revokedAt
+├── lastActivityAt
+├── device
+├── browser
+├── operating system
+└── current-session identification
+```
+
+---

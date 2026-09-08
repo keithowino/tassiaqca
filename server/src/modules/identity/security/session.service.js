@@ -131,8 +131,24 @@ class SessionService {
 		await sessionRepository.revokeAllExcept(userId, currentSessionId);
 	}
 
-	async touch(sessionId) {
-		return sessionRepository.touch(sessionId);
+	/**
+	 * Translates a missing/invalid session into the platform's existing authentication error.
+	 */
+	async validateAccessSession(sessionId, userId) {
+		const session = await sessionRepository.touchActiveByIdAndUser(
+			sessionId,
+			userId,
+		);
+
+		if (!session) {
+			throw new AppError(
+				"Authentication session is invalid or expired.",
+				HTTP_STATUS.UNAUTHORIZED,
+				ErrorCodes.UNAUTHORIZED,
+			);
+		}
+
+		return session;
 	}
 }
 

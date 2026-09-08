@@ -16,25 +16,22 @@ import { sessionManager } from "../session/index.js";
  */
 export function IdentityProvider({ children }) {
 	const [user, setUser] = useState(null);
-
 	const [isLoading, setIsLoading] = useState(true);
 
 	const isAuthenticated = user !== null;
 
 	const restoreSession = useCallback(async () => {
 		if (!sessionManager.hasAccessToken()) {
+			setUser(null);
 			setIsLoading(false);
-
 			return;
 		}
 
 		try {
 			const user = await identityService.me();
-
 			setUser(user);
 		} catch (error) {
 			sessionManager.clearSession();
-
 			setUser(null);
 		} finally {
 			setIsLoading(false);
@@ -45,12 +42,19 @@ export function IdentityProvider({ children }) {
 		restoreSession();
 	}, [restoreSession]);
 
+	useEffect(() => {
+		return sessionManager.subscribe((event) => {
+			if (event.type === "session:cleared") {
+				setUser(null);
+			}
+		});
+	}, []);
+
 	async function login(credentials) {
 		const result = await identityService.login(credentials);
 
 		sessionManager.saveSession({
 			accessToken: result.accessToken,
-
 			refreshToken: result.refreshToken,
 		});
 
@@ -66,7 +70,6 @@ export function IdentityProvider({ children }) {
 
 		sessionManager.saveSession({
 			accessToken: result.accessToken,
-
 			refreshToken: result.refreshToken,
 		});
 
@@ -84,7 +87,6 @@ export function IdentityProvider({ children }) {
 			}
 		} finally {
 			sessionManager.clearSession();
-
 			setUser(null);
 		}
 	}, []);

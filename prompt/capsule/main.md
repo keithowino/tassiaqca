@@ -851,7 +851,7 @@ Here you mentioned "frontend branch/onboarding implementation", we will have to 
 ## Proposed implementation roadmap
 
 ```text
-├── STAGE 1 — EXPERIENCE SHELL
+├── STAGE 1 — EXPERIENCE SHELL (covered)
 │   ├── Shared layout primitives
 │   ├── Gateway/Public shell
 │   ├── Gateway Header
@@ -1022,6 +1022,254 @@ I recommend we lock in this model:
 ---
 
 Establish /about, /privacy, and /terms as Gateway-owned public pages, but only as page foundations for now. We should not invent legal/privacy policy content before we have the platform's actual policies.
+
+---
+
+The Architecture Specification strongly supports this direction: Identity is the foundation of platform security and explicitly includes account verification, session management, credential protection, account recovery, and device awareness. It also defines sessions as securely generated, revocable, time-limited and device-aware, with the lifecycle Login → Session Created → Refresh → Expiration → Revocation.
+
+---
+
+## Stage 2 should become a lifecycle, not seven isolated features
+
+I recommend structuring the stage like this:
+
+```text
+STAGE 2 — AUTHENTICATION LIFECYCLE
+
+                    ┌─────────────────────┐
+                    │      Identity       │
+                    └──────────┬──────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+         Credentials       Sessions          Profile
+              │                │                │
+       ┌──────┼──────┐     ┌───┼────┐           │
+       │      │      │     │   │    │           │
+       ▼      ▼      ▼     ▼   ▼    ▼           ▼
+     Login  Forgot  Reset Current Other       User
+                    Password Session Sessions  Profile
+       │      │      │     │   │    │
+       └──────┴──────┴─────┴───┴────┘
+                       │
+                       ▼
+                 Email Verification
+                       │
+                       ▼
+                 Account Lifecycle
+```
+
+This matters because these aren't independent pages.
+
+For example:
+
+Forgot Password is not merely a form.
+
+It is:
+
+```text
+Request recovery
+       ↓
+Generate secure recovery token
+       ↓
+Persist hashed token
+       ↓
+Send recovery email
+       ↓
+User opens recovery link
+       ↓
+Validate token
+       ↓
+Set new password
+       ↓
+Invalidate appropriate sessions
+       ↓
+Continue authentication
+```
+
+Likewise, logout isn't merely a button:
+
+```text
+User initiates logout
+       ↓
+Revoke server session
+       ↓
+Clear refresh token
+       ↓
+Clear access token
+       ↓
+Clear identity state
+       ↓
+Clear session-dependent frontend state
+       ↓
+Return to public experience
+```
+
+---
+
+## Therefore, I recommend our next implementation slice
+
+Do not create the logout button yet.
+
+Our next implementation should be:
+
+### Stage 2A.1 — Harden server-side session validation (covered)
+
+Specifically:
+
+1. Validate the sid from the access token.
+2. Confirm the session belongs to the authenticated user.
+3. Reject revoked sessions.
+4. Reject expired sessions.
+5. Update lastActivityAt only for valid active sessions.
+6. Preserve the existing repository/service boundaries.
+7. Return the appropriate 401 authentication error.
+
+Then:
+
+### Stage 2A.2 — Implement frontend refresh infrastructure
+
+1. Refresh on 401.
+2. Prevent concurrent refresh races.
+3. Save rotated access + refresh tokens.
+4. Retry the failed request.
+5. If refresh fails, clear the session.
+6. Let authentication state/routing handle the eventual login redirect.
+7. Ensure /auth/refresh itself isn't recursively intercepted.
+
+Then:
+
+### Stage 2A.3 — Verify the lifecycle through REST
+
+We should explicitly test:
+
+```text
+✓ Login
+✓ /me with valid access token
+✓ Refresh
+✓ Old refresh token rejected
+✓ New refresh token accepted
+✓ Logout
+✓ Access token rejected after logout
+✓ Refresh token rejected after logout
+✓ Revoke individual session
+✓ Revoked session's access token rejected
+✓ Revoke other sessions
+✓ Other session tokens rejected
+✓ Current session remains valid
+✓ Expired session rejected
+```
+
+Only after those pass should we move to Stage 2B and 2C.
+
+---
+
+## Stage 2D should therefore be split into two sub-slices
+
+I recommend we formally make it:
+
+```text
+Stage 2D — Session Management UI
+
+2D.1  Harden session backend foundation (covered)
+      │
+      ├── Remove unused weak touch()
+      └── Confirm current-session identification
+
+2D.2  Complete request metadata pipeline (covered)
+      │
+      ├── IP
+      ├── User-Agent
+      ├── Device
+      ├── Browser
+      └── OS
+
+2D.3  Pass request metadata through Auth (covered)
+      │
+      ├── Register
+      ├── Login
+      └── Refresh
+      │
+      ▼
+      Session creation/rotation
+
+2D.4  REST-test session metadata (covered)
+      │
+      ├── Login from browser
+      ├── GET /auth/sessions
+      └── Verify metadata
+
+2D.5  Frontend Account/Security feature
+      │
+      ├── page
+      ├── session list
+      ├── current-session card
+      ├── other-session cards
+      └── loading/error/empty states
+
+2D.6  Revoke individual session
+
+2D.7  Revoke other sessions
+
+2D.8  Browser verification
+
+2D.9  Documentation update
+```
+
+---
+
+## Once those are available, I'll implement in this order:
+
+### Stage 2D.1 — Session foundation (covered)
+
+Remove the unused weak touch() path if confirmed unused.
+Preserve validateAccessSession() as the authoritative access-session check.
+Clean up the obsolete commented authentication code.
+
+### Stage 2D.2 — Request metadata (covered)
+
+Preserve IP extraction.
+Preserve raw User-Agent.
+Add device/browser/OS parsing using an existing dependency if available, otherwise introduce the smallest appropriate dependency.
+Keep parsing in shared HTTP infrastructure rather than Identity business logic.
+
+### Stage 2D.3 — Metadata propagation (covered)
+
+Registration → session metadata.
+Login → session metadata.
+Refresh/rotation → session metadata.
+Ensure rotated sessions retain the appropriate device information.
+Keep the presenter restricted to safe session fields.
+
+---
+
+## Implementation Plan
+
+I recommend splitting 2D.5 into five small implementation units rather than building one large page:
+
+```text
+2D.5
+ │
+ ├── 2D.5.1 Account/Security route
+ │
+ ├── 2D.5.2 Security page
+ │
+ ├── 2D.5.3 Session list
+ │
+ ├── 2D.5.4 Session cards
+ │
+ └── 2D.5.5 Loading/error/empty states
+```
+
+Then:
+
+```text
+2D.6  Revoke individual session
+2D.7  Revoke other sessions
+2D.8  Browser verification
+2D.9  Documentation
+```
 
 ---
 

@@ -1,6 +1,14 @@
+@baseUrl = http://localhost:5000/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJlbWFpbCI6ImRlc2lnbnNvbHV0aW9uczE2MjlAZ21haWwuY29tIiwic2lkIjoiNmE5ZmE5Yjc4ZWQ3YzVkNDc5YjA0YzNhIiwiaWF0IjoxNzg4ODQ4NTY3LCJleHAiOjE3ODg5MzQ5NjcsImF1ZCI6InRhc3NpYXFjYS1jbGllbnQiLCJpc3MiOiJ0YXNzaWFxY2EifQ.RWglcgq3X8tdt_Af2bOnB1oV-XRsVEP0AaTpmmQeD0c
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YThkZGVlMzRjNjhhYzc0NWZkZTk3ZGMiLCJqdGkiOiI5YjMxNmQ3My02MmYyLTQ3NWItYWU2MC1hYzA5MTViNmQ0ZjgiLCJpYXQiOjE3ODg4NDg1NjcsImV4cCI6MTc5MDA1ODE2NywiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.6OHt3F3rcEjxr4jGsi2iHaBjmW7pEwmOmEMx3r1_J5Y
+
+@email = designsolutions1629@gmail.com
+
+@password = keith@1234
+
 ### Register - user A
 
-POST http://localhost:5000/api/v1/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 # {
@@ -43,7 +51,7 @@ Content-Type: application/json
 
 ### Register Invalid email
 
-POST http://localhost:5000/api/v1/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
@@ -56,7 +64,7 @@ Content-Type: application/json
 
 ### Register with weak password
 
-POST http://localhost:5000/api/v1/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
@@ -69,7 +77,7 @@ Content-Type: application/json
 
 ### Register missing first name
 
-POST http://localhost:5000/api/v1/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
@@ -82,114 +90,58 @@ Content-Type: application/json
 
 ### Invalid request
 
-POST http://localhost:5000/api/v1/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {}
 
 ### Login
 
-POST http://localhost:5000/api/v1/auth/login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "designsolutions1629@gmail.com",
-    "password": "keith@1234"
-}
-
-# {
-#     "email": "rembo1234@gmail.com",
-#     "password": "rembo@1234"
-# }
-
-### Login wrong password
-
-POST http://localhost:5000/api/v1/auth/login
-Content-Type: application/json
-
-{
-    "email": "rembo1234@gmail.com",
-    "password": "rembo@123"
-}
-
-### Login non-existing email
-
-POST http://localhost:5000/api/v1/auth/login
-Content-Type: application/json
-
-{
-    "email": "rembo1235@gmail.com",
-    "password": "rembo@1234"
+    "email": "{{email}}",
+    "password": "{{password}}"
 }
 
 ### Successful Refresh ("refreshToken": "<refresh_token_from_login_response>"), then Reuse the Old Refresh Token
 
-POST http://localhost:5000/api/v1/auth/refresh
+POST {{baseUrl}}/auth/refresh
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhNTBjMDc3ZWM4ZmQyZjZmODA1NzgiLCJqdGkiOiI1OWU3ODg5ZC03ZmU3LTQ3M2QtODI2ZS0zOGUwMTA2M2MzYTAiLCJpYXQiOjE3ODMyNTg3MTYsImV4cCI6MTc4NDQ2ODMxNiwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.mrjmZa25J2y09eGIlTx1TFsdwBsXrX9ftBZc7hBz2gs"
+    "refreshToken": "{{refreshToken}}"
 }
 
-### Invalid Refresh Request
+### Authentication — Valid Access Token (First, log in then copy the returned access token.)
 
-POST http://localhost:5000/api/v1/auth/refresh
-Content-Type: application/json
-
-{}
-
-### Completely Invalid Token
-
-POST http://localhost:5000/api/v1/auth/refresh
-Content-Type: application/json
-
-{
-    "refreshToken": "this-is-not-a-jwt"
-}
-
-### Authenticateion — No Authorization Header
-
-GET http://localhost:5000/api/v1/auth/me
-
-### Authenticateion — Invalid Access Token
-
-GET http://localhost:5000/api/v1/auth/me
-Authorization: Bearer this-is-not-a-token
-
-### Authenticateion — Valid Access Token (First, log in then copy the returned access token.)
-
-GET http://localhost:5000/api/v1/auth/me
-Authorization: Bearer this-is-not-a-token
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{accessToken}}
 
 ### Logout ("refreshToken": "{{refreshToken}}")
 
-POST http://localhost:5000/api/v1/auth/logout
+POST {{baseUrl}}/auth/logout
 Content-Type: application/json
 
 {
-	"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRhMmNkNTNmYTQwMGJjZmUyNTc4NzgiLCJqdGkiOiI3NzFjY2U4My1iZTZjLTQ4MDMtYmRlZi01OWE1MjNmZWIxYmIiLCJpYXQiOjE3ODMyNDY0NjAsImV4cCI6MTc4NDQ1NjA2MCwiYXVkIjoidGFzc2lhcWNhLWNsaWVudCIsImlzcyI6InRhc3NpYXFjYSJ9.k2mueQGjtU51Xa25y7WFsSo-h3cTov97oBD1pI3l4hs"
+	"refreshToken": "{{refreshToken}}"
 }
 
-### User A's sessions
+### sessions
 
-GET http://localhost:5000/api/v1/auth/sessions
-Authorization: Bearer {{access token}}
-Content-Type: application/json
-
-### User B's sessions
-
-GET http://localhost:5000/api/v1/auth/sessions
-Authorization: Bearer {{access token}}
+GET {{baseUrl}}/auth/sessions
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 ### revoke/ delete 1 of User A's sessions
 
-DELETE http://localhost:5000/api/v1/auth/sessions/6a4a57d7a258d76a2029bbb1
-Authorization: Bearer {{access token}}
+DELETE {{baseUrl}}/auth/sessions/6a9ead2ead9ee3879986245c
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 ### Revoke other User A's sessions
 
-DELETE http://localhost:5000/api/v1/auth/sessions
-Authorization: Bearer {{access token}}
+DELETE {{baseUrl}}/auth/sessions
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json

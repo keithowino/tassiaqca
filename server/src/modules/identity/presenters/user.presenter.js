@@ -1,3 +1,5 @@
+import { getId } from "../../../shared/index.js";
+
 class UserPresenter {
 	present(user) {
 		if (!user) {
@@ -5,7 +7,7 @@ class UserPresenter {
 		}
 
 		return {
-			id: user.id,
+			id: getId(user),
 			firstName: user.firstName,
 			lastName: user.lastName,
 			email: user.email,

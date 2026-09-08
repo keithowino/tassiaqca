@@ -1,6 +1,8 @@
+import { getId } from "../../../shared/index.js";
+
 class SessionPresenter {
 	present(session, currentSessionId = null) {
-		const sessionId = session.id ?? session._id?.toString();
+		const sessionId = getId(session);
 
 		return {
 			id: sessionId,
